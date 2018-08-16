@@ -6,7 +6,7 @@ matrix:
       python: 3.5
       before_script:
         - sudo apt-get update
-        - sudo apt-get install flake8
+        - sudo apt-get install python3-flake8
       script:
         - flake8
 
@@ -17,6 +17,6 @@ matrix:
         - sudo apt-get install clang-format-3.9
       script:
         - ! find . -iname '*.h' -o -iname '*.cpp' |
-          xargs clang-format -output-replacements-xml |
+          xargs clang-format -output-replacements-xml -style=file |
           grep -F "</replacement>" -q
 
