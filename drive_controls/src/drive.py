@@ -28,7 +28,12 @@ class DriveStick(Widget):
 
     ## Changes the displayed power level
     def update_power(self):
-        self.ids["nub"].pos = (self.pos[0], self.pos[1] + (self.height / 2.0) + (self.power / 100.0 * self.height / 2.0) - (self.ids["nub"].height / 2.0))
+        self.ids["nub"].pos = (
+            self.pos[0], self.pos[1] +
+            (self.height / 2.0) +
+            (self.power / 100.0 * self.height / 2.0) -
+            (self.ids["nub"].height / 2.0)
+        )
 
 
 ## The UI for the drive screen
@@ -84,14 +89,16 @@ class DriveScreen(Widget):
         if self.frame % 6 == 0:
             self._send_drive()
 
-    ## updates left and right based on the press map 
+    ## updates left and right based on the press map
     # also calles the mirroring function
     def _update_presses(self, dt):
         if not self.paused:
             if self.pressed["left_up"] != self.pressed["left_down"]:
-                self.p_left += dt * DriveScreen.sensitivity * (1 if self.pressed["left_up"] else -1)
+                self.p_left += dt * DriveScreen.sensitivity * (
+                    1 if self.pressed["left_up"] else -1)
             if self.pressed["right_up"] != self.pressed["right_down"]:
-                self.p_right += dt * DriveScreen.sensitivity * (1 if self.pressed["right_up"] else -1)
+                self.p_right += dt * DriveScreen.sensitivity * (
+                    1 if self.pressed["right_up"] else -1)
         self._do_mirroring()
         self._should_send_drive()
 
@@ -112,7 +119,7 @@ class DriveScreen(Widget):
             self.pressed["right_up"] = False
         elif keycode[1] == keys["right_down"]:
             self.pressed["right_down"] = False
-        else: 
+        else:
             return False
 
     ## called when a key is pressed
@@ -140,17 +147,19 @@ class DriveScreen(Widget):
                     Color(0.7, 0.7, 0.7)
                 else:
                     Color(0.96, 0.26, 0.21)
-                Rectangle(pos=self.ids["background"].pos, size=self.ids["background"].size)
+                Rectangle(pos=self.ids["background"].pos,
+                          size=self.ids["background"].size)
         elif keycode[1] == keys["kill"]:
             self.p_left = self.p_right = 0
-        else: 
+        else:
             return False
         return True
 
     ## manupulates the right power based on the left depending on the mode
     # also updates displayed power
     def _do_mirroring(self):
-        # TODO: change so if left is not moving, but right is, do the approprate actions
+        # TODO: change so if left is not moving,
+        # but right is, do the approprate actions
         self.p_left = max(-100, min(self.p_left, 100))
         self.p_right = max(-100, min(self.p_right, 100))
         if self.mode == DriveScreen.SPLIT:
@@ -163,12 +172,14 @@ class DriveScreen(Widget):
         self._set_power(int(self.p_left), "left")
         self._set_power(int(self.p_right), "right")
 
-
     ## Visually displays the power level of a given side
     def _set_power(self, power, side):
-        self.ids[side[0]+"_stick"].power = power
-        self.ids[side[0]+"_stick"].update_power()
-        self.ids[side[0]+"_label"].text = "[color=222222]{}: {}[/color]".format(side.capitalize(), power)
+        self.ids[side[0] + " _stick"].power = power
+        self.ids[side[0] + "_stick"].update_power()
+        self.ids[side[0] + "_label"].text = (
+            "[color=222222]{}: {}[/color]".format(
+                side.capitalize(), power)
+        )
 
 
 ## Kivy application
@@ -176,6 +187,7 @@ class DriveScreen(Widget):
 class DriveApp(App):
     def build(self):
         return DriveScreen()
+
 
 if __name__ == "__main__":
     DriveApp().run()
