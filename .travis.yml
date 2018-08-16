@@ -1,0 +1,22 @@
+#TODO: install ROS
+
+matrix:
+  include:
+    - language: python
+      python: 3.5
+      before_script:
+        - sudo apt-get update
+        - sudo apt-get intall -y flake8
+      script:
+        - flake8
+
+    - language: c++
+      compiler: gcc
+      before_script:
+        - sudo apt-get update
+        - sudo apt-get install -y clang-format
+      script:
+        - ! find . -iname '*.h' -o -iname '*.cpp' |
+          xargs clang-format -output-replacements-xml |
+          grep -F "</replacement>" -q
+
