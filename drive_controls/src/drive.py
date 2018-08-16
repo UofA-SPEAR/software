@@ -4,6 +4,8 @@ from kivy.core.window import Window
 from kivy.clock import Clock
 from kivy.graphics import Color, Rectangle
 
+from send_ros import Driver
+
 ## Key mappings for the drive system
 keys = {"left_up": "i",
         "left_down": "k",
@@ -21,12 +23,12 @@ keys = {"left_up": "i",
 # this would show either the left or right power
 class DriveStick(Widget):
     def __init__(self, power=0, **kwargs):
-        super().__init__(**kwargs)
+        super(DriveStick, self).__init__(**kwargs)
         self.power = power
 
     ## Changes the displayed power level
     def update_power(self):
-        self.ids["nub"].pos = (self.pos[0], self.pos[1] + (self.height / 2) + (self.power / 100 * self.height / 2) - (self.ids["nub"].height / 2))
+        self.ids["nub"].pos = (self.pos[0], self.pos[1] + (self.height / 2.0) + (self.power / 100.0 * self.height / 2.0) - (self.ids["nub"].height / 2.0))
 
 
 ## The UI for the drive screen
@@ -44,7 +46,7 @@ class DriveScreen(Widget):
     # creates listeners for keyboard
     # also sets schedulded function calls
     def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+        super(DriveScreen, self).__init__(**kwargs)
 
         # setup variable
         self.mode = DriveScreen.SPLIT
@@ -53,6 +55,10 @@ class DriveScreen(Widget):
         self.paused = True
         self.pressed = {"left_up": False, "left_down": False,
                         "right_up": False, "right_down": False}
+        self.frame = 0
+
+        # setup ros node
+        self.driver = Driver()
 
         # keyboard listener setup
         self._keyboard = Window.request_keyboard(self._keyboard_closed, self)
@@ -67,6 +73,17 @@ class DriveScreen(Widget):
         self.p_left = left
         self.p_right = right
 
+    ## Sends the drive command through ros using our published
+    def _send_drive(self):
+        self.driver.send_cmd(int(self.p_left), int(self.p_right))
+
+    ## checks to see if you should send the drive command
+    # if so, sends the command
+    def _should_send_drive(self):
+        self.frame += 1
+        if self.frame % 6 == 0:
+            self._send_drive()
+
     ## updates left and right based on the press map 
     # also calles the mirroring function
     def _update_presses(self, dt):
@@ -76,6 +93,7 @@ class DriveScreen(Widget):
             if self.pressed["right_up"] != self.pressed["right_down"]:
                 self.p_right += dt * DriveScreen.sensitivity * (1 if self.pressed["right_up"] else -1)
         self._do_mirroring()
+        self._should_send_drive()
 
     ## release keyboard listener bindings
     def _keyboard_closed(self):
