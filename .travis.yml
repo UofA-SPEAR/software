@@ -16,7 +16,7 @@ matrix:
         - sudo apt-get update
         - sudo apt-get install clang-format-3.9
       script:
-        - ! find . -iname '*.h' -o -iname '*.cpp' |
-          xargs clang-format -output-replacements-xml -style=file -dump-config
-          #grep -F "</replacement>"
+        - \! find . -iname '*.h' -o -iname '*.cpp' |
+          xargs clang-format -output-replacements-xml -style=file
+          grep -F "</replacement>"
 
