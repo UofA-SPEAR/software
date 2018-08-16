@@ -9,7 +9,7 @@ First is ROS, which we use for almost everything on the rover. The second is for
 encoding video. The third is Kivy, which is what the UI is written in.
 
 ROS: follow the instructions
-[here](http://wiki.ros.org/melodic/Installation/Ubuntu)
+[here](http://wiki.ros.org/kinetic/Installation/Ubuntu)
 x264: `$ apt-get install libx264-dev`
 Cython: `$ python3 -m pip install cython --user`
 Pygame: `$ python3 -m pip install pygame --user`
