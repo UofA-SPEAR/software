@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/UofA-SPEAR/station2.svg?branch=master)](https://travis-ci.org/UofA-SPEAR/station2)
 # Station 2
 This is the ground control package. It contains all the tools nessesary for
 controlling the rover. 
