@@ -14,4 +14,7 @@ class Driver():
         msg.left = left
         msg.right = right
         self.pub.publish(msg)
-        return not rospy.is_shutdown()
+
+    def is_ros_down(self):
+        return rospy.is_shutdown()
+
