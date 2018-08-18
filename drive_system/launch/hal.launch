@@ -1,0 +1,6 @@
+<launch>
+	<node name="udp_receiver" pkg="nimbro_topic_transport" type="udp_receiver" output="screen">
+		<param name="port" value="17001" />
+	</node>
+    <node name="drive_receiver" pkg="drive_system" type="drive_receiver" output="screen"> </node>
+</launch>
