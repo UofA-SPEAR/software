@@ -8,9 +8,9 @@ void driveCallback(const drive_system::drive_cmd::ConstPtr& msg)
 
 int main(int argc, char** argv)
 {
-  ros::init(argc, argv, "listener");
+  ros::init(argc, argv, "drive_receiver");
   ros::NodeHandle n;
-  ros::Subscriber sub = n.subscribe("/receive_drive", 10, driveCallback);
+  ros::Subscriber sub = n.subscribe("/drive", 10, driveCallback);
 
   ros::spin();
 
