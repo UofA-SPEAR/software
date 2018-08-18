@@ -1,3 +1,5 @@
+#! /usr/bin/env python
+
 from kivy.app import App
 from kivy.uix.widget import Widget
 from kivy.core.window import Window
@@ -174,7 +176,7 @@ class DriveScreen(Widget):
 
     ## Visually displays the power level of a given side
     def _set_power(self, power, side):
-        self.ids[side[0] + " _stick"].power = power
+        self.ids[side[0] + "_stick"].power = power
         self.ids[side[0] + "_stick"].update_power()
         self.ids[side[0] + "_label"].text = (
             "[color=222222]{}: {}[/color]".format(

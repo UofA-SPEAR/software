@@ -1,4 +1,3 @@
-#! /usr/bin/env python
 import rospy
 from drive_controls.msg import drive_cmd
 
