@@ -82,7 +82,9 @@ class DriveScreen(Widget):
 
     ## Sends the drive command through ros using our published
     def _send_drive(self):
-        self.driver.send_cmd(int(self.p_left), int(self.p_right))
+        if not self.driver.send_cmd(int(self.p_left), int(self.p_right)):
+            # it will only reach here if ros has shutdown
+            App.get_running_app().Stop() # this closes the app
 
     ## checks to see if you should send the drive command
     # if so, sends the command
