@@ -1,4 +1,4 @@
 topics:
- - name: "/send_drive"
+ - name: "/drive"
    compress: true # enable bz2 compression
    rate: 20.0 # rate limit at 20Hz
