@@ -1,5 +1,5 @@
 import rospy
-from drive_controls.msg import drive_cmd
+from drive_system.msg import drive_cmd
 
 
 class Driver():
