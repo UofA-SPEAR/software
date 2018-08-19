@@ -12,7 +12,7 @@
   <node name="udp_sender" pkg="nimbro_topic_transport" type="udp_sender" output="screen">
     <param name="destination_addr" value="jacob" />
     <param name="destination_port" value="17001" />
-    <rosparam command="load" file="$(find camera_system)/launch/topics.yaml" />
+    <rosparam command="load" file="$(find rover2)/launch/topics.yaml" />
   </node>
 
   <!-- TODO: put on station2

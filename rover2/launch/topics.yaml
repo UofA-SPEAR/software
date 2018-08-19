@@ -1,5 +1,5 @@
 
 topics:
- - name: "/main_cam/image/raw"
+ - name: "/main_cam/image_raw"
    compress: true # enable bz2 compression
    rate: 60.0 # rate limit at 60Hz
