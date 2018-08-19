@@ -105,7 +105,7 @@ class DriveScreen(Widget):
             self._should_send_drive()
         if self.driver.is_ros_down():
             # it will only reach here if ros has shutdown
-            App.get_running_app().Stop() # this closes the app
+            App.get_running_app().Stop()  # this closes the app
 
     ## release keyboard listener bindings
     def _keyboard_closed(self):

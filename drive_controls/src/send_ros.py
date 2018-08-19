@@ -17,4 +17,3 @@ class Driver():
 
     def is_ros_down(self):
         return rospy.is_shutdown()
-
