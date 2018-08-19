@@ -24,6 +24,7 @@ rm -rf nimbro_network
 
 ###### Link our packages
 ln -s $DIR/drive_system
+ln -s $DIR/rover2
 
 ###### Build everything
 cd ~/ros
