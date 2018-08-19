@@ -1,3 +1,5 @@
+#! /usr/bin/env python
+
 from kivy.app import App
 from kivy.uix.widget import Widget
 from kivy.core.window import Window
@@ -99,8 +101,11 @@ class DriveScreen(Widget):
             if self.pressed["right_up"] != self.pressed["right_down"]:
                 self.p_right += dt * DriveScreen.sensitivity * (
                     1 if self.pressed["right_up"] else -1)
-        self._do_mirroring()
-        self._should_send_drive()
+            self._do_mirroring()
+            self._should_send_drive()
+        if self.driver.is_ros_down():
+            # it will only reach here if ros has shutdown
+            App.get_running_app().Stop()  # this closes the app
 
     ## release keyboard listener bindings
     def _keyboard_closed(self):
@@ -174,7 +179,7 @@ class DriveScreen(Widget):
 
     ## Visually displays the power level of a given side
     def _set_power(self, power, side):
-        self.ids[side[0] + " _stick"].power = power
+        self.ids[side[0] + "_stick"].power = power
         self.ids[side[0] + "_stick"].update_power()
         self.ids[side[0] + "_label"].text = (
             "[color=222222]{}: {}[/color]".format(
