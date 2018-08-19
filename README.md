@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/UofA-SPEAR/station2.svg?branch=master)](https://travis-ci.org/UofA-SPEAR/station2)
 # Station 2
 This is the ground control package. It contains all the tools nessesary for
 controlling the rover. 
@@ -9,11 +10,11 @@ First is ROS, which we use for almost everything on the rover. The second is for
 encoding video. The third is Kivy, which is what the UI is written in.
 
 ROS: follow the instructions
-[here](http://wiki.ros.org/kinetic/Installation/Ubuntu)
-x264: `$ apt-get install libx264-dev`
-Cython: `$ python3 -m pip install cython --user`
-Pygame: `$ python3 -m pip install pygame --user`
-Kivy: `$ python3 -m pip install kivy --user`
+[here](http://wiki.ros.org/kinetic/Installation/Ubuntu)<br>
+x264: `$ apt-get install libx264-dev`<br>
+Cython: `$ python3 -m pip install cython --user`<br>
+Pygame: `$ python3 -m pip install pygame --user`<br>
+Kivy: `$ python3 -m pip install kivy --user`<br>
 
 Then clone the repository, and run the `unpack.sh` command located within.
 

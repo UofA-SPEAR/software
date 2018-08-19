@@ -1,0 +1,22 @@
+#TODO: install ROS
+
+matrix:
+  include:
+    - language: python
+      python: 3.5
+      before_script:
+        - sudo apt-get update
+        - sudo apt-get install pep8
+      script:
+        - pep8 --ignore=E266 .
+
+    - language: c++
+      compiler: gcc
+      before_script:
+        - sudo apt-get update
+        - sudo apt-get install clang-format-3.9
+      script:
+        - "! find . -iname '*.h' -o -iname '*.cpp' |
+          xargs clang-format -output-replacements-xml -style=file |
+          grep -F \"</replacement>\""
+
