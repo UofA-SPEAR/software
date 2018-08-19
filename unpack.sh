@@ -27,7 +27,11 @@ ln -s $DIR/arm_controls
 ln -s $DIR/camera_controls
 ln -s $DIR/drive_controls
 ln -s $DIR/sensors_controls
+ln -s $DIR/station2
 
 ###### Build everything
 cd ~/ros
 catkin_make
+
+###### Finish
+printf "Thanks for unpacking!\nNow that your enviroment is setup, you should never have to do this again."
