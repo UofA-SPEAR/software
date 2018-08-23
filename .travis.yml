@@ -29,3 +29,6 @@ matrix:
         - docker build --rm -t spear-env - < spear-env.Dockerfile
       script:
         - docker build --rm -t spear-rover2 .
+
+notifications:
+  email: false
