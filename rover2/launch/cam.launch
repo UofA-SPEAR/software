@@ -1,12 +1,17 @@
 <launch>
-  <!-- Set this to your camera's name -->
-  <arg name="cam_name" value="main_cam" />
 
-  <!-- Start the GSCAM node -->
+  <!-- Start the for cam 1 -->
+  <node pkg="gscam" type="gscam" name="camera_1">
   <env name="GSCAM_CONFIG" value="v4l2src device=/dev/video1 ! video/x-raw-yuv,framerate=30/1,width=640,height=480 ! ffmpegcolorspace " />
-  <node pkg="gscam" type="gscam" name="$(arg cam_name)">
-    <param name="camera_name" value="$(arg cam_name)" />
-    <remap from="camera/image_raw" to="/$(arg cam_name)/image_raw" />
+    <param name="camera_name" value="camera_1" />
+    <remap from="camera/image_raw" to="/camera_1/image_raw" />
+  </node>
+
+  <!-- Start the for cam 2 -->
+  <node pkg="gscam" type="gscam" name="camera_2">
+  <env name="GSCAM_CONFIG" value="v4l2src device=/dev/video2 ! video/x-raw-yuv,framerate=30/1,width=640,height=480 ! ffmpegcolorspace " />
+    <param name="camera_name" value="camera_2" />
+    <remap from="camera/image_raw" to="/camera_2/image_raw" />
   </node>
 
   <node name="udp_sender" pkg="nimbro_topic_transport" type="udp_sender" output="screen">
@@ -15,8 +20,4 @@
     <rosparam command="load" file="$(find rover2)/launch/topics.yaml" />
   </node>
 
-  <!-- TODO: put on station2
-  <node pkg="image_view" type="image_view" name="creative_view_rect" >
-    <remap from="image" to="/$(arg cam_name)/image_rect_color" />
-  </node> -->
 </launch>
