@@ -15,6 +15,8 @@ x264: `$ apt-get install libx264-dev`<br>
 Cython: `$ python3 -m pip install cython --user`<br>
 Pygame: `$ python3 -m pip install pygame --user`<br>
 Kivy: `$ python3 -m pip install kivy --user`<br>
+Qt (required by Nimbro): `$ apt-get install libqt4-dev`<br>
+    `$ apt-get install qt4-qmake`<br>
 
 Then clone the repository, and run the `unpack.sh` command located within.
 
