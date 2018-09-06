@@ -12,11 +12,13 @@ encoding video. The third is Kivy, which is what the UI is written in.
 ROS: follow the instructions
 [here](http://wiki.ros.org/kinetic/Installation/Ubuntu)<br>
 x264: `$ apt-get install libx264-dev`<br>
-Cython: `$ python3 -m pip install cython --user`<br>
-Pygame: `$ python3 -m pip install pygame --user`<br>
+Cython: `$ python -m pip install cython --user`<br>
+Pygame: `$ python -m pip install pygame --user`<br>
 Kivy: `$ python3 -m pip install kivy --user`<br>
 libqt (required by Nimbro): `$ apt-get install libqt4-dev`<br>
 qmake (required by Nimbro): `$ apt-get install qt4-qmake`<br>
+
+Note: ROS Kinetic requires the python 2 versions of all modules.
 
 Then clone the repository, and run the `unpack.sh` command located within.
 
