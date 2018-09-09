@@ -34,4 +34,4 @@ cd ~/ros
 catkin_make
 
 ###### Finish
-printf "Thanks for unpacking!\nNow that your enviroment is setup, you should never have to do this again."
+printf "Thanks for unpacking!\nNow that your enviroment is setup, you should never have to do this again.\n"
