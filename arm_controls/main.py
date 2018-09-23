@@ -63,6 +63,7 @@ class WidgetContainer(GridLayout):
 class ArmInterface(App):
 
     def build(self):
+        self.title = 'SPEAR Arm Control Panel'
         widgetcontainer = WidgetContainer()
 
         return widgetcontainer
