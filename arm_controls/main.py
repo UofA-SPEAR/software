@@ -9,6 +9,11 @@ from kivy.uix.label import Label
 from kivy.uix.slider import Slider
 from kivy.properties import NumericProperty
 
+# We will be using the knob class from kivy garden to add a control knob to our app.
+# Use 'pip install kivy-garden' and then 'garden install knob' to install the knob class
+# See here: https://github.com/kivy-garden/garden.knob
+# from kivy.garden.knob import Knob
+
 
 class WidgetContainer(GridLayout):
 
