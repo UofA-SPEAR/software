@@ -5,53 +5,87 @@ const float BICEP_LENGTH = 1.0;
 const float FOREARM_LENGTH = 1.0;
 const float WRIST_LENGTH = 1.0;
 
-//float SHOULDER_OFFSET = 1f;  Should offset doesn't matter, move the coordinate system up by this amount and the result will be the same
+//float SHOULDER_OFFSET = 1.0;  Should offset doesn't matter; move the coordinate system up by this amount and the result will be the same
 const float ELBOW_OFFSET = 1.0;
 
 const float ADJUSTED_SHOULDER_PITCH = atan2(ELBOW_OFFSET, BICEP_LENGTH);
 
+struct angles{
+    float shoulderYaw = 0.0;
+    float shoulderPitch = 0.0;
+    float elbowPitch = 0.0;
+    float wristPitch = 0.0;
+    float wristRoll = 0.0;
+};
+
+struct angles toAnglesInPlane(float x, float y); // Defined at bottom
+
 /*
  * Calculate angles of the two inner arms using wrist position
+ * TODO: Switch int inputs to unsigned char
  */
-float* PosToAngArmsNoWrist(int x, int y, int z){
+struct angles toAnglesFromPosition(int x, int y, int z){
+    struct angles angles;
     //Normalize x, y, z, coordinates 
-    float normX = (float)x/100.0;
-    float normY = (float)y/100.0;
-    float normZ = (float)z/100.0;
+    float xNorm = (float)x/100.0;
+    float yNorm = (float)y/100.0;
+    float zNorm = (float)z/100.0;
 
-    float xy3DReach = hypot(normX, normY); //Needs C++ 11
-    float shoulderYaw = atan2(normY, normX);
+    if(pow(xNorm, 2) + pow(yNorm, 2) + pow(zNorm, 2) > 1){
+	   //Project the position along it's radius onto a unit sphere
+    }
+    
+    //Needs C++ 11
+    angles = toAnglesInPlane(hypot(xNorm, yNorm), zNorm);
+    angles.shoulderYaw = atan2(yNorm, xNorm);
 
-    float elbowPitch = acos(
-        (pow(BICEP_LENGTH, 2) + pow(FOREARM_LENGTH, 2) - pow(xy3DReach, 2))
-	/ (2*BICEP_LENGTH*FOREARM_LENGTH));
-
-    float xy2DReach = hypot(xy3DReach, normZ);
-    float shoulderPitch = acos(
-        (pow(BICEP_LENGTH, 2) + pow(xy2DReach, 2) - pow(FOREARM_LENGTH, 2))
-	/ (2*BICEP_LENGTH*xy2DReach)) - atan2(normZ, xy3DReach);
-
-    static float angles[3] = {shoulderYaw,
-	    shoulderPitch + ADJUSTED_SHOULDER_PITCH, elbowPitch};
     return angles;
 }
 
 /*
- * Calculate angles of arms using tip of wrist position and wrist orientation
+ * Calculate angles of arms using end effector position and wrist orientation
+ * TODO: Switch int inputs to unsigned char
  */
-float* PosToAngAllArms(int x, int y, int z, float alpha){
+struct angles toAnglesWithOrientation(int x, int y, int z, float alpha){
+    struct angles angles;
     //Normalize x, y, z coordinates
-    float normX = (float)x/100.0;
-    float normY = (float)y/100.0;
-    float normZ = (float)z/100.0;
+    float xNorm = (float)x/100.0;
+    float yNorm = (float)y/100.0;
+    float zNorm = (float)z/100.0;
 
-    float x2DReach = sqrt(pow(x, 2) + pow(y, 2));
-    float xy2DReachSquare = pow(x2DReach, 2) + pow(z, 2);
-    float xyReachWrist = sqrt(xy2DReachSquare + pow(WRIST_LENGTH, 2)
-        - (2*WRIST_LENGTH*(x2DReach*cos(alpha) + normZ*sin(alpha))));
+    if(pow(xNorm, 2) + pow(yNorm, 2) + pow(zNorm, 2) > 1){
+	   //Project the position along it's radius onto a unit sphere
+    }
 
-    //Now use same calculations as above with the calculated xyReachWrist
+    //Needs C++ 11
+    angles = toAnglesInPlane(
+        hypot(xNorm, yNorm) - WRIST_LENGTH*cos(alpha),
+	zNorm - WRIST_LENGTH*sin(alpha));
     
-    static float angles[3];
+    angles.wristPitch = alpha;
+    angles.shoulderYaw = atan2(yNorm, xNorm);
+    return angles;
+}
+
+/*
+ * Calculate angles of arms given x, y coordinates of wrist in plane of arm
+ * 
+ * Really should only be used by the other methods as it only sets the
+ * shoulder and elbow pitch fields of the structure
+ */
+struct angles toAnglesInPlane(float x, float y){
+    struct angles angles;
+
+    float xyReachSquared = pow(x, 2) + pow(y, 2);
+    
+    angles.elbowPitch =
+	acos((pow(BICEP_LENGTH, 2) + pow(FOREARM_LENGTH, 2) - xyReachSquared)
+	    / (2*BICEP_LENGTH*FOREARM_LENGTH));
+
+    angles.shoulderPitch =
+        acos((pow(BICEP_LENGTH, 2) + xyReachSquared - pow(FOREARM_LENGTH, 2))
+	    / (2*BICEP_LENGTH*sqrt(xyReachSquared)))
+	- atan2(y, x) + ADJUSTED_SHOULDER_PITCH;
+    
     return angles;
 }
