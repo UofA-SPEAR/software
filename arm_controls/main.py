@@ -19,9 +19,9 @@ class WidgetContainer(GridLayout):
         self.cols = 4
 
         # Define sliders and values for each arm function
-        self.slide_x = Slider(min=-100, max=100, value=0)
-        self.slide_y = Slider(min=-100, max=100, value=0, orientation='vertical')
-        self.slide_z = Slider(min=-100, max=100, value=0, orientation='vertical')
+        self.slide_x = Slider(min=-100,max=100,value=0)
+        self.slide_y = Slider(min=-100,max=100,value=0,orientation='vertical')
+        self.slide_z = Slider(min=-100,max=100,value=0,orientation='vertical')
 
         # Add sliders and labels to grid
         self.add_widget(Label(text='X Position'))
@@ -60,7 +60,7 @@ class WidgetContainer(GridLayout):
 
 
 # Define our app
-class ArmInterface(App):
+class PanelApp(App):
 
     def build(self):
         self.title = 'SPEAR Arm Control Panel'
@@ -72,4 +72,4 @@ class ArmInterface(App):
 
 # Run app
 if __name__ == '__main__':
-    ArmInterface().run()
+    PanelApp().run()
