@@ -1,10 +1,12 @@
+#include <math.h>
+
 //Placeholder values, although actual values shouldn't matter as long as the ratios are maintained (currently they are not)
-const float BICEP_LENGTH = 1f;
-const float FOREARM_LENGTH = 1f;
-const float WRIST_LENGTH = 1f;
+const float BICEP_LENGTH = 1.0;
+const float FOREARM_LENGTH = 1.0;
+const float WRIST_LENGTH = 1.0;
 
 //float SHOULDER_OFFSET = 1f;  Should offset doesn't matter, move the coordinate system up by this amount and the result will be the same
-const float ELBOW_OFFSET = 1f;
+const float ELBOW_OFFSET = 1.0;
 
 const float ADJUSTED_SHOULDER_PITCH = atan2(ELBOW_OFFSET, BICEP_LENGTH);
 
@@ -13,9 +15,9 @@ const float ADJUSTED_SHOULDER_PITCH = atan2(ELBOW_OFFSET, BICEP_LENGTH);
  */
 float* PosToAngArmsNoWrist(int x, int y, int z){
     //Normalize x, y, z, coordinates 
-    float normX = (float)x/100f;
-    float normY = (float)y/100f;
-    float normZ = (float)z/100f;
+    float normX = (float)x/100.0;
+    float normY = (float)y/100.0;
+    float normZ = (float)z/100.0;
 
     float xy3DReach = hypot(normX, normY); //Needs C++ 11
     float shoulderYaw = atan2(normY, normX);
@@ -39,9 +41,9 @@ float* PosToAngArmsNoWrist(int x, int y, int z){
  */
 float* PosToAngAllArms(int x, int y, int z, float alpha){
     //Normalize x, y, z coordinates
-    float normX = (float)x/100f;
-    float normY = (float)y/100f;
-    float normZ = (float)z/100f;
+    float normX = (float)x/100.0;
+    float normY = (float)y/100.0;
+    float normZ = (float)z/100.0;
 
     float x2DReach = sqrt(pow(x, 2) + pow(y, 2));
     float xy2DReachSquare = pow(x2DReach, 2) + pow(z, 2);
