@@ -69,6 +69,7 @@ class PanelApp(App):
 
     def build(self):
         self.title = 'SPEAR Arm Control Panel'
+        self.icon = 'window_icon.ico'
         widgetcontainer = WidgetContainer()
 
         return widgetcontainer
