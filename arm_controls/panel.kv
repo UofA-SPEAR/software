@@ -1,52 +1,84 @@
 #:kivy 1.10.1
 
 <WidgetContainer>:
-    slide_x: SlideX
-    slide_y: SlideY
-    slide_z: SlideZ
-    cols: 1
+    cols: 2
+	rows: 2
 
 	BoxLayout:
-		size_hint: None,None
-		size: root.width,root.height/10
-    	Slider:
-        	id: SlideX
-        	max: 100
-        	min: -100
-        	value: 0
-        	text: 'X'
-        	on_value: myValueX.text = str(self.value)
-			size_hint_y: None
-			height: root.height/10
-    	TextInput:
-        	id: myValueX
-			size_hint_y: None
-			height: root.height/10
-        	text: '0'
+		TextInput:
 			multiline: False
-			background_color: [.1,.1,.1,1]
-			foreground_color: [1,1,1,1]
-			on_text_validate: SlideX.value = app.checkInput(self.text)
+			text: 'My textbox'
+
+		Slider:
+			size_hint_x: None
+			width: app.vSlideWidth
+			orientation: 'vertical'
+			max: 100
+			min: -100
+			value: 0
+		Slider:
+			size_hint_x: None
+			width: app.vSlideWidth
+			orientation: 'vertical'
+			max: 100
+			min: -100
+			value: 0
+		TextInput:
+			multiline: False
+			text: 'My textbox'
 		
-	BoxLayout:    
-    	Slider:
-        	id: SlideY
-        	max: 100
-        	min: -100
-        	value: 0
-        	orientation: 'vertical'
-        	on_value: myLabelY.text = "Y: " + str(self.value)
-    	Label:
-        	id: myLabelY
-        	text: 'Y: '
-    
-    	Slider:
-        	id: SlideZ
-        	max: 100
-        	min: -100
-        	value: 0
-        	orientation: 'vertical'
-        	on_value: myLabelZ.text = "Z: " + str(self.value)
-    	Label:
-        	id: myLabelZ
-        	text: 'Z: '
+	BoxLayout:
+		TextInput:
+			multiline: False
+			text: 'My textbox'
+
+		Slider:
+			size_hint_x: None
+			width: app.vSlideWidth
+			orientation: 'vertical'
+			max: 100
+			min: -100
+			value: 0
+		Slider:
+			size_hint_x: None
+			width: app.vSlideWidth
+			orientation: 'vertical'
+			max: 100
+			min: -100
+			value: 0
+		TextInput:
+			multiline: False
+			text: 'My textbox'
+
+	BoxLayout:
+		size_hint_y: None
+		height: app.hGridHeight
+		Slider:
+			orientation: 'horizontal'
+			max: 100
+			min: -100
+			value: 0
+		TextInput:
+			multiline: False
+			text: 'My textbox'
+
+	BoxLayout:
+		size_hint_y: None
+		height: app.hGridHeight
+		Knob:
+			size: 98, 98
+			min: 0
+			max: 360
+			step: 1
+			value: 0
+			show_label: True
+			show_marker: True
+			knob_size: 0.9
+			markeroff_color: 0,0,0,0
+			knobimg_source: "dial.png"
+			
+		TextInput:
+			multiline: False
+			text: 'My textbox'
+
+	
