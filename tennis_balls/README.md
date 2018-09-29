@@ -1,4 +1,4 @@
-Gazebo should be installed from source.
+Contains tennis ball models of multiple colors
 
 INSTALLATION:
 

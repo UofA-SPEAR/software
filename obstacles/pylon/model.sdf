@@ -1,0 +1,27 @@
+<?xml version='1.0'?>
+<sdf version="1.5">
+  <model name="pylon">
+    <static>false</static>
+
+    <link name="ball">
+      <pose>0 0 0.1 1.5708 0 0</pose>
+
+      <collision name="collision">
+        <geometry>
+            <mesh><uri>model://pylon/pylon.dae</uri></mesh>
+        </geometry>
+      </collision>
+
+      <visual name="visual">
+        <geometry>
+            <mesh><uri>model://pylon/pylon.dae</uri></mesh>
+        </geometry>
+      </visual>
+
+      <inertial>
+        <mass>4.5</mass>
+      </inertial>
+
+    </link>
+  </model>
+</sdf>
