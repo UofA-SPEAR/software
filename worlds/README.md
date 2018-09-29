@@ -6,7 +6,7 @@ Move to .gazebo/worlds folder
 
 USAGE:
 
-cd to the .gazebo/worlds and run gazebo via "gazebo <worldname.name>"
+cd to the .gazebo/worlds and run gazebo via "gazebo <worldname.world>"
 
 FILES:
 
