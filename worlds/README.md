@@ -1,4 +1,4 @@
-Contains multiple worlds for testing various aspects of the simulation.r
+Contains multiple worlds for testing various aspects of the simulation
 
 INSTALLATION:
 
