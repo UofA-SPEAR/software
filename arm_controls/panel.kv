@@ -1,65 +1,149 @@
 #:kivy 1.10.1
-
+#:import Factory kivy.factory.Factory
+<inputPopup>:
+	title: 'Manual entry'
+	auto_dismiss: False
+	size_hint: None, None
+	size: 150, 125
+	TextInput:
+		id: boxInput
+		multiline: False
+		on_text_validate: root.dismiss()
+		
 <WidgetContainer>:
     cols: 2
 	rows: 2
 
 	BoxLayout:
-		TextInput:
-			multiline: False
-			text: 'My textbox'
+		Widget:
 		GridLayout:
-			rows: 2
+			rows: 3
+			size_hint_x: None
+			column_default_width: app.vSlideWidth
+			width: self.minimum_width
 			Slider:
+				id: SlideY
 				size_hint_x: None
 				width: app.vSlideWidth
 				orientation: 'vertical'
 				max: 100
 				min: -100
 				value: 0
+				on_touch_move: TextY.text = app.displayInput(self.value)
 			Label:
 				text: 'Y'
 				text_size: self.size
-				size_hint_x: None
 				size_hint_y: None
-				width: app.vSlideWidth
-				height: 20
+				height: app.labelHeight
 				halign: 'center'
 				valign: 'center'
-		Slider:
+			TextInput:
+				id: TextY
+				text: '0.0'
+				text_size: self.size
+				size_hint_y: None
+				height: app.tinputHeight
+				halign: 'center'
+				valign: 'center'
+				multiline: False
+				on_text_validate: SlideY.value = app.checkInput(self.text)
+		GridLayout:
+			rows: 3
 			size_hint_x: None
-			width: app.vSlideWidth
-			orientation: 'vertical'
-			max: 100
-			min: -100
-			value: 0
-		TextInput:
-			multiline: False
-			text: 'My textbox'
-		
+			column_default_width: app.vSlideWidth
+			width: self.minimum_width
+			Slider:
+				id: SlideZ
+				size_hint_x: None
+				width: app.vSlideWidth
+				orientation: 'vertical'
+				max: 100
+				min: -100
+				value: 0
+				on_touch_move: TextZ.text = app.displayInput(self.value)
+			Label:
+				text: 'Z'
+				text_size: self.size
+				size_hint_y: None
+				height: app.labelHeight
+				halign: 'center'
+				valign: 'center'
+			TextInput:
+				id: TextZ
+				text: '0.0'
+				text_size: self.size
+				size_hint_y: None
+				height: app.tinputHeight
+				halign: 'center'
+				valign: 'center'
+				multiline: False
+				on_text_validate: SlideZ.value = app.checkInput(self.text)
+		Widget:
 	BoxLayout:
-		TextInput:
-			multiline: False
-			text: 'My textbox'
-
-		Slider:
+		Widget:
+		GridLayout:
+			rows: 3
 			size_hint_x: None
-			width: app.vSlideWidth
-			orientation: 'vertical'
-			max: 100
-			min: -100
-			value: 0
-		Slider:
+			column_default_width: app.vSlideWidth
+			width: self.minimum_width
+			Slider:
+				id: SlideF
+				size_hint_x: None
+				width: app.vSlideWidth
+				orientation: 'vertical'
+				max: 100
+				min: -100
+				value: 0
+				on_touch_move: TextF.text = app.displayInput(self.value)
+			Label:
+				text: 'Flick'
+				text_size: self.size
+				size_hint_y: None
+				height: app.labelHeight
+				halign: 'center'
+				valign: 'center'
+			TextInput:
+				id: TextF
+				text: '0.0'
+				text_size: self.size
+				size_hint_y: None
+				height: app.tinputHeight
+				halign: 'center'
+				valign: 'center'
+				multiline: False
+				on_text_validate: SlideF.value = app.checkInput(self.text)
+		GridLayout:
+			rows: 3
 			size_hint_x: None
-			width: app.vSlideWidth
-			orientation: 'vertical'
-			max: 100
-			min: -100
-			value: 0
-		TextInput:
-			multiline: False
-			text: 'My textbox'
-
+			column_default_width: app.vSlideWidth
+			width: self.minimum_width
+			Slider:
+				id: SlideG
+				size_hint_x: None
+				width: app.vSlideWidth
+				orientation: 'vertical'
+				max: 100
+				min: -100
+				value: 0
+				on_touch_move: TextG.text = app.displayInput(self.value)
+			Label:
+				text: 'Grab'
+				text_size: self.size
+				size_hint_y: None
+				height: app.labelHeight
+				halign: 'center'
+				valign: 'center'
+			TextInput:
+				id: TextG
+				text: '0.0'
+				text_size: self.size
+				size_hint_y: None
+				height: app.tinputHeight
+				halign: 'center'
+				valign: 'center'
+				multiline: False
+				on_text_validate: SlideG.value = app.checkInput(self.text)
+		Widget:
 	BoxLayout:
 		size_hint_y: None
 		height: app.hGridHeight
