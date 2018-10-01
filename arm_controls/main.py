@@ -5,8 +5,7 @@ from kivy.app import App
 from kivy.uix.gridlayout import GridLayout
 
 from kivy.core.window import Window
-from kivy.uix.label import Widget
-from kivy.uix.label import Label
+from kivy.uix.label import Widget, Label
 from kivy.uix.popup import Popup
 from kivy.uix.textinput import TextInput
 from kivy.uix.slider import Slider
@@ -16,8 +15,6 @@ from kivy.properties import NumericProperty, ListProperty, ObjectProperty, Strin
 # Use 'pip install kivy-garden' and then 'garden install knob' to install the knob class
 # See here: https://github.com/kivy-garden/garden.knob
 from kivy.garden.knob import Knob
-
-
 
 class WidgetContainer(GridLayout):
     pass
@@ -44,13 +41,6 @@ class PanelApp(App):
         except ValueError:
             newNum = 0
         return newNum
-
-class inputPopup(Popup):
-    inputValue = StringProperty(None)
-
-    pass
-
-
 # Run app
 if __name__ == '__main__':
     PanelApp().run()

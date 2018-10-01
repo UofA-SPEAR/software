@@ -25,7 +25,7 @@
 				max: 100
 				min: -100
 				value: 0
-				on_touch_move: TextY.text = app.displayInput(self.value)
+				on_value: TextY.text = app.displayInput(self.value)
 			Label:
 				text: 'Y'
 				text_size: self.size
@@ -58,7 +58,7 @@
 				max: 100
 				min: -100
 				value: 0
-				on_touch_move: TextZ.text = app.displayInput(self.value)
+				on_value: TextZ.text = app.displayInput(self.value)
 			Label:
 				text: 'Z'
 				text_size: self.size
@@ -96,7 +96,7 @@
 				max: 100
 				min: -100
 				value: 0
-				on_touch_move: TextF.text = app.displayInput(self.value)
+				on_value: TextF.text = app.displayInput(self.value)
 			Label:
 				text: 'Flick'
 				text_size: self.size
@@ -129,7 +129,7 @@
 				max: 100
 				min: -100
 				value: 0
-				on_touch_move: TextG.text = app.displayInput(self.value)
+				on_value: TextG.text = app.displayInput(self.value)
 			Label:
 				text: 'Grab'
 				text_size: self.size
@@ -157,7 +157,7 @@
 			max: 100
 			min: -100
 			value: 0
-			on_touch_move: TextX.text = app.displayInput(self.value)
+			on_value: TextX.text = app.displayInput(self.value)
 		GridLayout:
 			rows: 4
 			size_hint_x: None
@@ -221,6 +221,6 @@
 			knob_size: 0.9
 			markeroff_color: 0,0,0,0
 			knobimg_source: "dial.png"
-			on_touch_move: TextWrist.text = app.displayInput(self.value)
+			on_value: TextWrist.text = app.displayInput(self.value)
 
 	
