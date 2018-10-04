@@ -16,3 +16,11 @@ There are so far three main models categories being worked on:
 1. The Mars rover. This model will be able to drive and will additionally have sensors attached to it that allow it to observe the simulated world around it, similar to how our physical rover will receive input.
 2. The simulated world. Currently, we plan to make the world similar to what the surface of Mars looks like, with an emphasis on creating cliffs, walls, and other obstacles for our rover to navigate.
 3. Waypoints. In order for the rover to drive itself, waypoints are required to direct around the map and to the goal. Right now we use tennis balls as waypoints, as they are easy for us to acquire in real life and simplify our image recognition code.
+
+## Worlds
+Completed worlds will also be stored in this repository. To run a world in gazebo use: gazebo <relative_path_to_file>
+Here is a description of the worlds currently stored on this repository:
+
+lit_word.world: An empty world with directional lighting
+
+ball_find_01.world: A small world containing several obstacles and a tennis ball path for the rover to follow
