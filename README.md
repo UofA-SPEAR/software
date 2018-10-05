@@ -18,7 +18,7 @@ There are so far three main models categories being worked on:
 3. Waypoints. In order for the rover to drive itself, waypoints are required to direct around the map and to the goal. Right now we use tennis balls as waypoints, as they are easy for us to acquire in real life and simplify our image recognition code.
 
 ## Worlds
-Completed worlds will also be stored in this repository. To run a world in gazebo use: `gazebo <relative_path_to_file>`
+Completed worlds will also be stored in this repository. To run a world in gazebo use: `gazebo <relative_path_to_file>`.
 Here is a description of the worlds currently stored on this repository:
 
 lit_word.world: An empty world with directional lighting
