@@ -55,7 +55,7 @@ class WidgetContainer(GridLayout):
 class PanelApp(App):
     # Set our variables for various operations
     vSlideWidth = NumericProperty(60) # width of vertical slider
-    hGridHeight = NumericProperty(Window.size[1]/6) # height of bottom row
+    hGridHeight = NumericProperty(Window.size[1]/4) # height of bottom row
     labelHeight = NumericProperty(20) # height of all labels
     tinputHeight = NumericProperty(30) # height of all text boxes
     valueArray = [0,0,0,0,0,0] # set initial values for sendValues check
