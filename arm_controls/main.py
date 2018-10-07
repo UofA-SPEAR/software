@@ -12,6 +12,7 @@ from kivy.uix.slider import Slider
 from kivy.properties import NumericProperty, ListProperty, ObjectProperty, StringProperty, ReferenceListProperty
 from kivy.clock import Clock
 
+
 # We will be using the knob class from kivy garden to add a control knob to our app.
 # Use 'pip install kivy-garden' and then 'garden install knob' to install the knob class
 # See here: https://github.com/kivy-garden/garden.knob
@@ -49,7 +50,86 @@ class WidgetContainer(GridLayout):
             oldValues = newValues # update array for next run
 
         PanelApp.valueArray = oldValues
-    pass
+
+     # Get the joystick events
+     # Make sure to have xboxdrv installed
+    def __init__(self, **kwargs):
+        super(WidgetContainer, self).__init__(**kwargs)
+
+        # get joystick events first
+        Window.bind(on_joy_button_up=self.control_option)
+        Window.bind(on_joy_axis=self.z_control)
+        Window.bind(on_joy_axis=self.x_control)
+        Window.bind(on_joy_axis=self.flick_control)
+
+
+    def control_option(self, win, stickid, release_id):
+    # Switch between x and y axis
+        if release_id == 12:
+            Window.unbind(on_joy_axis=self.x_control)
+            Window.bind(on_joy_axis=self.y_control)
+        elif release_id == 11:
+            Window.unbind(on_joy_axis=self.y_control)
+            Window.bind(on_joy_axis=self.x_control)
+            
+    # Switch among flick, wrist, and grab
+        if release_id == 1:
+            Window.unbind(on_joy_axis=self.flick_control)
+            Window.unbind(on_joy_axis=self.wrist_control)
+            Window.bind(on_joy_axis=self.grab_control)
+
+        elif release_id == 2:
+            Window.unbind(on_joy_axis=self.flick_control)
+            Window.unbind(on_joy_axis=self.grab_control)
+            Window.bind(on_joy_axis=self.wrist_control)
+
+        elif release_id == 3:
+            Window.unbind(on_joy_axis=self.grab_control)
+            Window.unbind(on_joy_axis=self.wrist_control)
+            Window.bind(on_joy_axis=self.flick_control)
+
+    def x_control(self, win, stickid, axisid, value):
+        if value > 0 and axisid == 0:
+            self.valueX.value += 1
+        elif value < 0 and axisid == 0:
+            self.valueX.value -= 1
+
+    def y_control(self, win, stickid, axisid, value):
+        if value < 0 and axisid == 1:
+            self.valueY.value += 1
+        elif value > 0 and axisid == 1:
+            self.valueY.value -= 1
+
+    def z_control(self, win, stickid, axisid, value):
+        if value < 0 and axisid == 4:
+            self.valueZ.value += 1
+        elif value > 0 and axisid == 4:
+            self.valueZ.value -= 1
+            
+    def flick_control(self, win, stickid, axisid, value):
+        if axisid == 5:
+            self.valueF.value += 1
+        elif axisid == 2:
+            self.valueF.value -= 1
+
+    def grab_control(self, win, stickid, axisid, value):
+        if axisid == 5:
+            self.valueG.value += 1
+        elif axisid == 2:
+            self.valueG.value -= 1
+
+    def wrist_control(self, win, stickid, axisid, value):
+        if value < 0 and axisid == 5:
+            if -360 <= self.valueW.value <= 360:
+                self.valueW.value += 1
+            elif self.valueW.value > 360:
+                self.valueW.value = 360
+        elif value > 0 and axisid == 2:
+            if -360 <= self.valueW.value <= 360:
+                self.valueW.value -= 1
+            elif self.valueW.value < -360:
+                self.valueW.value = -360
+
 
 # Define our app
 class PanelApp(App):
@@ -67,7 +147,6 @@ class PanelApp(App):
         widgetcontainer = WidgetContainer()
         # Update changed values to be sent to the rover. Update 5 times per second
         Clock.schedule_interval(lambda dt: widgetcontainer.sendValues(self.valueArray), 1.0 / 5.0)
-
         return widgetcontainer
 
     def displayInput(self, mySlideValue):
@@ -84,6 +163,7 @@ class PanelApp(App):
             errorPop.open()
             newNum = 0
         return newNum
+
 # Run app
 if __name__ == '__main__':
     PanelApp().run()
