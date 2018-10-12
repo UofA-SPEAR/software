@@ -1,6 +1,6 @@
 <?xml version='1.0'?>
 <sdf version="1.5">
-  <model name="tenni_green">
+  <model name="tennis_green">
     <static>false</static>
 
     <link name="ball">

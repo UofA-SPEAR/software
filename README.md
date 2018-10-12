@@ -23,4 +23,6 @@ Here is a description of the worlds currently stored on this repository:
 
 lit_word.world: An empty world with directional lighting
 
+ball_find_00.world: A large world using a 3D model of terrain from mars
+
 ball_find_01.world: A small world containing several obstacles and a tennis ball path for the rover to follow
