@@ -2,7 +2,7 @@
 
 <?xml version='1.0'?>
 <sdf version="1.5">
-  <model name="soccer_ball">
+  <model name="golf_ball">
     <static>false</static>
 
     <link name="ball">
