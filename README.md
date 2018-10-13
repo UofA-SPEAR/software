@@ -35,5 +35,5 @@ square area centered at (0,0) at height z. (n, x, y, and z are user input)
 
 USAGE: Follow the prompt given by the script. It will generate the first part of the XML content in filename (specified
 by the user). The second part of the XML content will be generated in filename2. Copy the content from filename, and paste it
-right above the line "</state>" in your .world file. Next, copy the content from filename2, and paste it right above "</world>"
+right above the line `</state>` in your .world file. Next, copy the content from filename2, and paste it right above `</world>`
 in your .world file. Ensure that proper indentation is maintained when transferring the XML to the .world file.
