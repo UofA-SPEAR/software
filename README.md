@@ -26,3 +26,14 @@ lit_word.world: An empty world with directional lighting
 ball_find_00.world: A large world using a 3D model of terrain from mars
 
 ball_find_01.world: A small world containing several obstacles and a tennis ball path for the rover to follow
+
+## Scripts
+
+Contained in this repository is a python script named "generate_balls.py". This script was created with the purpose of
+generating tennis balls at random locations for our worlds. Generate_balls generates n amount of balls in a x by y
+square area centered at (0,0) at height z. (n, x, y, and z are user input)
+
+USAGE: Follow the prompt given by the script. It will generate the first part of the XML content in filename (specified
+by the user). The second part of the XML content will be generated in filename2. Copy the content from filename, and paste it
+right above the line "</state>" in your .world file. Next, copy the content from filename2, and paste it right above "</world>"
+in your .world file. Ensure that proper indentation is maintained when transferring the XML to the .world file.
