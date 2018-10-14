@@ -64,15 +64,13 @@ class WidgetContainer(GridLayout):
 
 
     def control_option(self, win, stickid, release_id):
-    # Switch between x and y axis
         if release_id == 12:
             Window.unbind(on_joy_axis=self.x_control)
             Window.bind(on_joy_axis=self.y_control)
         elif release_id == 11:
             Window.unbind(on_joy_axis=self.y_control)
             Window.bind(on_joy_axis=self.x_control)
-            
-    # Switch among flick, wrist, and grab
+
         if release_id == 1:
             Window.unbind(on_joy_axis=self.flick_control)
             Window.unbind(on_joy_axis=self.wrist_control)
@@ -90,45 +88,52 @@ class WidgetContainer(GridLayout):
 
     def x_control(self, win, stickid, axisid, value):
         if value > 0 and axisid == 0:
-            self.valueX.value += 1
+            if self.valueX.value < 100:
+                self.valueX.value += 1
         elif value < 0 and axisid == 0:
-            self.valueX.value -= 1
+            if self.valueX.value > -100:
+                self.valueX.value -= 1
+
 
     def y_control(self, win, stickid, axisid, value):
         if value < 0 and axisid == 1:
-            self.valueY.value += 1
+            if self.valueY.value < 100:
+                self.valueY.value += 1
         elif value > 0 and axisid == 1:
-            self.valueY.value -= 1
-
+            if self.valueY.value > -100:
+                self.valueY.value -= 1
+            
     def z_control(self, win, stickid, axisid, value):
         if value < 0 and axisid == 4:
-            self.valueZ.value += 1
+            if self.valueZ.value < 100:
+                self.valueZ.value += 1
         elif value > 0 and axisid == 4:
-            self.valueZ.value -= 1
-            
+            if self.valueZ.value > -100:
+                self.valueZ.value -= 1
+             
     def flick_control(self, win, stickid, axisid, value):
         if axisid == 5:
-            self.valueF.value += 1
+            if self.valueF.value < 100:
+                self.valueF.value += 1
         elif axisid == 2:
-            self.valueF.value -= 1
+            if self.valueF.value > -100:
+                self.valueF.value -= 1
 
     def grab_control(self, win, stickid, axisid, value):
         if axisid == 5:
-            self.valueG.value += 1
+            if self.valueG.value < 100:
+                self.valueG.value += 1
         elif axisid == 2:
-            self.valueG.value -= 1
+            if self.valueG.value > -100:
+                self.valueG.value -= 1
 
     def wrist_control(self, win, stickid, axisid, value):
-        if value < 0 and axisid == 5:
-            if -360 <= self.valueW.value <= 360:
+        if axisid == 5:
+            if self.valueW.value < 360:
                 self.valueW.value += 1
-            elif self.valueW.value > 360:
-                self.valueW.value = 360
-        elif value > 0 and axisid == 2:
-            if -360 <= self.valueW.value <= 360:
+        elif axisid == 2:
+            if self.valueW.value > -360:
                 self.valueW.value -= 1
-            elif self.valueW.value < -360:
-                self.valueW.value = -360
 
 
 # Define our app
