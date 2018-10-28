@@ -1,5 +1,6 @@
 import kivy
 import datetime
+import ros_publisher
 
 from kivy.app import App
 
