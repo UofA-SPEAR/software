@@ -22,6 +22,10 @@ git clone https://github.com/AIS-Bonn/nimbro_network.git
 mv nimbro_network/*/ .
 rm -rf nimbro_network
 
+###### Install ros wrapper package for zed camera
+cd ~/ros/src
+git clone https://github.com/stereolabs/zed-ros-wrapper.git
+
 ###### Link our packages
 ln -s $DIR/drive_system
 ln -s $DIR/rover2
