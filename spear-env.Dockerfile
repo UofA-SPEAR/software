@@ -9,5 +9,6 @@ RUN apt-get update && apt-get install -y qt4-default libx264-dev \
                                          libgstreamer0.10-dev \
                                          libgstreamer-plugins-base0.10-dev \
                                          gstreamer0.10-plugins-good
+                                         ros-kinetic-rtabmap-ros
 
 SHELL ["/ros_entrypoint.sh", "bash", "-c"]
