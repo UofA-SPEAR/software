@@ -1,6 +1,6 @@
 import kivy
 import datetime
-import threading
+# import threading
 from ros_subscribe import Arm_Listener
 
 from kivy.app import App
