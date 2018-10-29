@@ -1,6 +1,7 @@
 import kivy
 import datetime
-import ros_publisher
+import threading
+from ros_subscribe import Arm_Listener
 
 from kivy.app import App
 
@@ -12,6 +13,7 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.slider import Slider
 from kivy.properties import NumericProperty, ListProperty, ObjectProperty, StringProperty, ReferenceListProperty
 from kivy.clock import Clock
+from threading import Thread
 
 
 # We will be using the knob class from kivy garden to add a control knob to our app.
@@ -172,4 +174,5 @@ class PanelApp(App):
 
 # Run app
 if __name__ == '__main__':
+    subThread = Arm_Listener()
     PanelApp().run()
