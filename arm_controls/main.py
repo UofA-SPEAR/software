@@ -11,7 +11,13 @@ from kivy.uix.label import Widget, Label
 from kivy.uix.popup import Popup
 from kivy.uix.textinput import TextInput
 from kivy.uix.slider import Slider
-from kivy.properties import NumericProperty, ListProperty, ObjectProperty, StringProperty, ReferenceListProperty
+from kivy.properties import (
+    NumericProperty,
+    ListProperty,
+    ObjectProperty,
+    StringProperty,
+    ReferenceListProperty
+    )
 from kivy.clock import Clock
 from threading import Thread
 
