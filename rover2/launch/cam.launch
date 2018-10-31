@@ -20,7 +20,4 @@
     <rosparam command="load" file="$(find rover2)/launch/topics.yaml" />
   </node>
 
-  <!-- Setup video compression/ sending via a HTTP server -->
-  <node name="stream_compressor_sender" pkg="web_video_server" type="web_video_server"></node>
-
 </launch>
