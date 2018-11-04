@@ -6,7 +6,7 @@ from threading import Thread
 from std_msgs.msg import String
 
 
-class Arm_Listener(object):
+class Arm_Listener(threading.Thread):
 
     def __init__(self, interval=1):
         self.interval = interval
@@ -20,8 +20,8 @@ class Arm_Listener(object):
 
     def listener(self):
         armTopic = "arm_control"
-        print 'ROS Subscribe node subscribed to topic: ' + armTopic
-        rospy.init_node('panel_listener', anonymous=True)
+        print 'ROS Subscribe node subscribed to topic: ' + armTopic # check to see that thread is running
+        # rospy.init_node('panel_listener', anonymous=True)
 
         rospy.Subscriber(armTopic, String, self.callback)
 

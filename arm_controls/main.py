@@ -1,5 +1,6 @@
 import kivy
 import datetime
+import rospy
 # import threading
 from ros_subscribe import Arm_Listener
 
@@ -180,5 +181,6 @@ class PanelApp(App):
 
 # Run app
 if __name__ == '__main__':
+    rospy.init_node('panel_listener', anonymous=True)
     subThread = Arm_Listener()
     PanelApp().run()
