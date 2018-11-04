@@ -2,14 +2,14 @@
 
   <!-- Start the for cam 1 -->
   <node pkg="gscam" type="gscam" name="camera_1">
-  <env name="GSCAM_CONFIG" value="v4l2src device=/dev/video1 ! video/x-raw-yuv,framerate=30/1,width=640,height=480 ! ffmpegcolorspace " />
+  <env name="GSCAM_CONFIG" value="v4l2src device=/dev/video1 ! video/x-raw-yuv,framerate=30/1,width=640,height=480 ! ffmpegcolorspace ! x264enc bitrate=256 ! flutsmux " />
     <param name="camera_name" value="camera_1" />
     <remap from="camera/image_raw" to="/camera_1/image_raw" />
   </node>
 
   <!-- Start the for cam 2 -->
   <node pkg="gscam" type="gscam" name="camera_2">
-  <env name="GSCAM_CONFIG" value="v4l2src device=/dev/video2 ! video/x-raw-yuv,framerate=30/1,width=640,height=480 ! ffmpegcolorspace " />
+  <env name="GSCAM_CONFIG" value="v4l2src device=/dev/video2 ! video/x-raw-yuv,framerate=30/1,width=640,height=480 ! ffmpegcolorspace ! x264enc bitrate=256 ! flutsmux " />
     <param name="camera_name" value="camera_2" />
     <remap from="camera/image_raw" to="/camera_2/image_raw" />
   </node>
