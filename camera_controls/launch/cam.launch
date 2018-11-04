@@ -1,5 +1,9 @@
 <launch>
 	<node name="udp_receiver" pkg="nimbro_topic_transport" type="udp_receiver" output="screen">
 		<param name="port" value="17001" />
+
+		<!-- The below is temporary, for local testing. -->
+		<remap from="/camera_1/image_raw/compressed" to="/recv/camera_1/image_raw/compressed" />
+		<remap from="/camera_2/image_raw/compressed" to="/recv/camera_2/image_raw/compressed" />
 	</node>
 </launch>
