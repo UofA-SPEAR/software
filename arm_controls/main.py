@@ -3,6 +3,7 @@ import datetime
 import rospy
 # import threading
 from ros_subscribe import callback, listener
+from talker import talker
 
 from kivy.app import App
 
@@ -181,5 +182,10 @@ class PanelApp(App):
 
 # Run app
 if __name__ == '__main__':
-    listener()
     PanelApp().run()
+    listener()
+    try:
+        talker()
+    except rospy.ROSInterruptException:
+        pass
+    

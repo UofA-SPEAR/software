@@ -20,7 +20,7 @@ def callback(data):
 def listener():
     armTopic = "arm_control"
     print 'ROS Subscribe node subscribed to topic: ' + armTopic # check to see that thread is running
-    rospy.init_node('panel_listener', anonymous=True)
+    rospy.init_node('panel_node', anonymous=True)
 
     rospy.Subscriber(armTopic, String, callback)
 
