@@ -1,9 +1,6 @@
 import kivy
 import datetime
-import rospy
-# import threading
-from ros_subscribe import callback, listener
-from talker import talker
+from ros_station import SpinROS, ros_init
 
 from kivy.app import App
 
@@ -180,12 +177,15 @@ class PanelApp(App):
             newNum = 0
         return newNum
 
+
+ros_thread = SpinROS()
+
+
 # Run app
 if __name__ == '__main__':
-    PanelApp().run()
-    listener()
-    try:
-        talker()
-    except rospy.ROSInterruptException:
-        pass
+    ros_init()
     
+    ros_thread.daemon = True
+    ros_thread.start()
+
+    PanelApp().run()
