@@ -160,7 +160,7 @@
       <visual name="visual_wheel_frontleft">
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <sphere radius="0.45447"/>
+          <sphere radius="0.15989"/>
         </geometry>
       </visual>
       <collision name="collision_wheel_frontleft">
