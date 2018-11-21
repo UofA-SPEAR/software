@@ -10915,7 +10915,7 @@
         <link name='link'>
           <pose frame=''>0 -50 1.4 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>nan nan nan nan nan nan</acceleration>
+          <acceleration>0 0 0 0 0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
@@ -10925,7 +10925,7 @@
         <link name='link'>
           <pose frame=''>0 50 1.4 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>nan nan nan nan nan nan</acceleration>
+          <acceleration>0 0 0 0 0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
@@ -10935,7 +10935,7 @@
         <link name='link'>
           <pose frame=''>50 0 1.4 0 -0 1.5707</pose>
           <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>nan nan nan nan nan nan</acceleration>
+          <acceleration>0 0 0 0 0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
@@ -10945,7 +10945,7 @@
         <link name='link'>
           <pose frame=''>-50 0 1.4 0 -0 1.5707</pose>
           <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>nan nan nan nan nan nan</acceleration>
+          <acceleration>0 0 0 0 0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
@@ -10955,7 +10955,7 @@
         <link name='link'>
           <pose frame=''>-0.027205 0.027206 0 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>nan nan nan nan nan nan</acceleration>
+          <acceleration>0 0 0 0 0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
