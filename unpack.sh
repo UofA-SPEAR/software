@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 ###### Get script location
 # https://stackoverflow.com/a/246128
 SOURCE="${BASH_SOURCE[0]}"
@@ -21,6 +22,10 @@ cd ~/ros/src
 git clone https://github.com/AIS-Bonn/nimbro_network.git
 mv nimbro_network/*/ .
 rm -rf nimbro_network
+
+###### Install canros
+python -m pip install uavcan
+git clone https://github.com/MonashUAS/canros.git
 
 ###### Link our packages
 ln -s $DIR/drive_system
