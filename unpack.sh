@@ -30,6 +30,7 @@ git clone https://github.com/MonashUAS/canros.git
 ###### Link our packages
 ln -s $DIR/drive_system
 ln -s $DIR/rover2
+ln -s $DIR/rover2_can
 
 ###### Build everything
 cd ~/ros
