@@ -11,7 +11,7 @@
     <link name="link_camera_front">
     </link>
 
-    <link name="link_chassis">
+    <link name="base_link">
       <inertial>
         <origin xyz="0 0 0.19608" rpy="0 0 0"/>
         <mass value="30.0"/>
@@ -193,65 +193,70 @@
 
     <joint name="link_camera_back" type="fixed">
       <origin xyz="-0.315 1e-05 0.3439" rpy="3.14159 1.5708 0"/>
-      <parent link="link_chassis"/>
+      <parent link="base_link"/>
       <child link="link_camera_back"/>
     </joint>
 
     <joint name="link_camera_depth" type="fixed">
       <origin xyz="0.315 1e-05 0.3439" rpy="0 1.5708 0"/>
-      <parent link="link_chassis"/>
+      <parent link="base_link"/>
       <child link="link_camera_depth"/>
     </joint>
 
     <joint name="link_camera_front" type="fixed">
       <origin xyz="0.315 -0.11999 0.3439" rpy="0 1.5708 0"/>
-      <parent link="link_chassis"/>
+      <parent link="base_link"/>
       <child link="link_camera_front"/>
     </joint>
 
     <joint name="link_suspension_backleft" type="fixed">
       <origin xyz="-0.15754 0.25888 0.07402" rpy="0 0 0"/>
-      <parent link="link_chassis"/>
+      <parent link="base_link"/>
       <child link="link_suspension_backleft"/>
     </joint>
 
     <joint name="link_suspension_backright" type="fixed">
       <origin xyz="-0.15754 -0.25922 0.07402" rpy="0 0 0"/>
-      <parent link="link_chassis"/>
+      <parent link="base_link"/>
       <child link="link_suspension_backright"/>
     </joint>
 
     <joint name="link_suspension_frontleft" type="fixed">
       <origin xyz="0.15754 0.25925 0.07402" rpy="0 0 0"/>
-      <parent link="link_chassis"/>
+      <parent link="base_link"/>
       <child link="link_suspension_frontleft"/>
     </joint>
 
     <joint name="link_suspension_frontright" type="fixed">
       <origin xyz="0.15755 -0.25885 0.07403" rpy="0 0 0"/>
-      <parent link="link_chassis"/>
+      <parent link="base_link"/>
       <child link="link_suspension_frontright"/>
     </joint>
 
-    <joint name="link_wheel_backleft" type="floating">
+    <!-- TODO: figure out what limits should actually be. - Ryan -->
+    <joint name="link_wheel_backleft" type="revolute">
+      <limit effort="100" velocity="100"/>
       <origin xyz="-0.21346 0.01924 -0.08012" rpy="0 0 0"/>
       <parent link="link_suspension_backleft"/>
       <child link="link_wheel_backleft"/>
     </joint>
 
-    <joint name="link_wheel_backright" type="floating">
+    <joint name="link_wheel_backright" type="revolute">
+      <limit effort="100" velocity="100"/>
       <origin xyz="-0.21346 -0.01886 -0.08012" rpy="0 0 0"/>
       <parent link="link_suspension_backright"/>
       <child link="link_wheel_backright"/>
     </joint>
 
-    <joint name="link_wheel_frontleft" type="floating">
+    <joint name="link_wheel_frontleft" type="revolute">
+      <limit effort="100" velocity="100"/>
       <origin xyz="0.21346 0.01886 -0.08012" rpy="0 0 0"/>
       <parent link="link_suspension_frontleft"/>
       <child link="link_wheel_frontleft"/>
     </joint>
 
-    <joint name="link_wheel_frontright" type="floating">
+    <joint name="link_wheel_frontright" type="revolute">
+      <limit effort="100" velocity="100"/>
       <origin xyz="0.21345 -0.01924 -0.08014" rpy="0 0 0"/>
       <parent link="link_suspension_frontright"/>
       <child link="link_wheel_frontright"/>
