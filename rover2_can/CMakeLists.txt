@@ -119,12 +119,6 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-# Build our custom UAVCAN DSDL definitions.
-add_custom_target(rover2_can__uavcan_dsdl ALL libuavcan/libuavcan/dsdl_compiler/libuavcan_dsdlc spear "-O$ENV{HOME}/uavcan_vendor_specific_types"
-	WORKING_DIRECTORY ../../src/rover2_can/uavcan_dsdl
-	COMMENT "Generating custom UAVCAN DSDL definitions."
-)
-
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
 #   src/${PROJECT_NAME}/rover2_can.cpp

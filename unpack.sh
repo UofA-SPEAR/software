@@ -27,10 +27,18 @@ rm -rf nimbro_network
 python -m pip install uavcan
 git clone https://github.com/MonashUAS/canros.git
 
+###### Update/ install git submodules
+git submodule update --init --recursive
+
 ###### Link our packages
 ln -s $DIR/drive_system
 ln -s $DIR/rover2
 ln -s $DIR/rover2_can
+
+###### Link UAVCAN DSDL definitions to the home directory.
+mkdir -p ~/uavcan_vendor_specific_types
+cd ~/uavcan_vendor_specific_types
+ln -s $DIR/rover2_can/uavcan_dsdl/spear
 
 ###### Build everything
 cd ~/ros
