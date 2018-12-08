@@ -11,7 +11,7 @@
 	-->
 	<arg name="interface" default="can0" />
 
-	<node name="rover2_can" pkg="rover2_can" type="rover2_can.py" />
+	<node name="rover2_can" pkg="rover2_can" type="rover2_can.py" output="screen" />
 
 	<!--
 		canros's server uses a launch file to run, so instead of using the
