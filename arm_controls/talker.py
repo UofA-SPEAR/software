@@ -1,7 +1,31 @@
 #!/usr/bin/env python
 # license removed for brevity
+
+import kivy
+import datetime
+
+from kivy.app import App
+
+from kivy.uix.gridlayout import GridLayout
+from kivy.core.window import Window
+from kivy.uix.label import Widget, Label
+from kivy.uix.popup import Popup
+from kivy.uix.textinput import TextInput
+from kivy.uix.slider import Slider
+from kivy.properties import NumericProperty, ListProperty, ObjectProperty, StringProperty, ReferenceListProperty
+from kivy.clock import Clock
+
+
+# We will be using the knob class from kivy garden to add a control knob to our app.
+# Use 'pip install kivy-garden' and then 'garden install knob' to install the knob class
+# See here: https://github.com/kivy-garden/garden.knob
+from kivy.garden.knob import Knob
 import rospy
 from std_msgs.msg import String
+from sensor_msgs.msg import Joy
+from send_joy import Arm_Controller
+
+
 
 class WidgetContainer(GridLayout):
 
@@ -12,13 +36,17 @@ class WidgetContainer(GridLayout):
 
         # Populate array of updated values
         newValues = [
-                self.valueX.value,
-                self.valueY.value,
-                self.valueZ.value,
-                self.valueF.value,
-                self.valueG.value,
-                self.valueW.value,
+        self.valueX.value,
+        self.valueY.value,
+        self.valueZ.value,
+        self.valueF.value,
+        self.valueG.value,
+        self.valueW.value,
         ]
+
+        self.p_axes = self.newValues
+        self.p_buttons = self.newValues
+        self.talker.send_joystate(float(self.p_axes), int(self.p_buttons))
 
         # Check if any changes have been made to values since last fun. If any changes have been made then update values
         if (newValues != oldValues):    
@@ -35,17 +63,41 @@ class WidgetContainer(GridLayout):
             oldValues = newValues # update array for next run
 
         PanelApp.valueArray = oldValues
+        # return newValues
 
      # Get the joystick events
      # Make sure to have xboxdrv installed
     def __init__(self, **kwargs):
         super(WidgetContainer, self).__init__(**kwargs)
 
+        self.p_axes = []
+        self.p_buttons = []
+
+        self.talker = Arm_Controller()
+        rospy.Subscriber("joy", Joy, self.sendValues)
+        rospy.init_node('talkerJoy')
+
         # get joystick events first
         Window.bind(on_joy_button_up=self.control_option)
         Window.bind(on_joy_axis=self.z_control)
         Window.bind(on_joy_axis=self.x_control)
         Window.bind(on_joy_axis=self.flick_control)
+
+    #    ## Sets the power to display, and transmit across ROS
+    # def transmit(self, , buttons):
+    #     self.p_axes = self.sendValues
+    #     self.p_buttons = buttons
+
+    # ## Sends the drive command through ros using our published
+    # def _send_joy(self):
+    #     self.talker.send_joystate(float(self.p_axes), int(self.p_buttons))
+
+    # ## checks to see if you should send the drive command
+    # # if so, sends the command
+    # def _should_send_joy(self):
+    #     self.frame += 1
+    #     if self.frame % 6 == 0:
+    #         self._send_joy()
 
 
     def control_option(self, win, stickid, release_id):
@@ -119,19 +171,57 @@ class WidgetContainer(GridLayout):
         elif axisid == 2:
             if self.valueW.value > -360:
                 self.valueW.value -= 1
-def talker():
 
-    pub = rospy.Publisher('chatter', String, queue_size=10)
-    rospy.init_node('talker', anonymous=True)
-    rate = rospy.Rate(10) # 10hz
-    while not rospy.is_shutdown():
-        hello_str = "hello world %s" % rospy.get_time()
-        rospy.loginfo(hello_str)
-        pub.publish(hello_str)
-        rate.sleep()
+# Define our app
+class PanelApp(App):
+    # Set our variables for various operations
+    vSlideWidth = NumericProperty(60) # width of vertical slider
+    hGridHeight = NumericProperty(Window.size[1]/4) # height of bottom row
+    labelHeight = NumericProperty(20) # height of all labels
+    tinputHeight = NumericProperty(30) # height of all text boxes
+    valueArray = [0,0,0,0,0,0] # set initial values for sendValues check
+    floatNum = 2 # Set decimal precision for all calculations and reported values
 
+    def build(self):
+        self.title = 'SPEAR Arm Control Panel'
+        self.icon = 'window_icon.ico'
+        widgetcontainer = WidgetContainer()
+        # Update changed values to be sent to the rover. Update 5 times per second
+        Clock.schedule_interval(lambda dt: widgetcontainer.sendValues(self.valueArray), 1.0 / 5.0)
+        return widgetcontainer
+
+    def displayInput(self, mySlideValue):
+        return str(round(mySlideValue, 2))
+
+    def checkInput(self, myText):
+        # Convert input from string to floating point
+        try:
+            newNum = round(float(myText),self.floatNum) # round number to desired precision
+        except ValueError: # Report error instead of crashing if input was not a number
+            errorPop = Popup(title='Error',
+                    content=Label(text='Only numbers are allowed'),
+                    size_hint=(None,None), size=(200,100))
+            errorPop.open()
+            newNum = 0
+        return newNum
+
+# Run app
 if __name__ == '__main__':
-    try:
-        talker()
-    except rospy.ROSInterruptException:
-        pass
+    PanelApp().run()
+
+# def talker():
+
+#     pub = rospy.Publisher('chatter', String, queue_size=10)
+#     rospy.init_node('talker', anonymous=True)
+#     rate = rospy.Rate(10) # 10hz
+#     while not rospy.is_shutdown():
+#         hello_str = "hello world %s" % rospy.get_time()
+#         rospy.loginfo(hello_str)
+#         pub.publish(hello_str)
+#         rate.sleep()
+
+# if __name__ == '__main__':
+#     try:
+#         talker()
+#     except rospy.ROSInterruptException:
+#         pass

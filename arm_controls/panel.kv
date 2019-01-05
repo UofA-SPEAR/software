@@ -1,0 +1,92 @@
+#:kivy 1.10.1
+
+<WidgetContainer>:
+    cols: 2
+    rows: 2
+
+    BoxLayout:
+        TextInput:
+            multiline: False
+            text: 'My textbox'
+        GridLayout:
+            rows: 2
+            Slider:
+                size_hint_x: None
+                width: app.vSlideWidth
+                orientation: 'vertical'
+                max: 100
+                min: -100
+                value: 0
+            Label:
+                text: 'Y'
+                text_size: self.size
+                size_hint_x: None
+                size_hint_y: None
+                width: app.vSlideWidth
+                height: 20
+                halign: 'center'
+                valign: 'center'
+        Slider:
+            size_hint_x: None
+            width: app.vSlideWidth
+            orientation: 'vertical'
+            max: 100
+            min: -100
+            value: 0
+        TextInput:
+            multiline: False
+            text: 'My textbox'
+        
+    BoxLayout:
+        TextInput:
+            multiline: False
+            text: 'My textbox'
+
+        Slider:
+            size_hint_x: None
+            width: app.vSlideWidth
+            orientation: 'vertical'
+            max: 100
+            min: -100
+            value: 0
+        Slider:
+            size_hint_x: None
+            width: app.vSlideWidth
+            orientation: 'vertical'
+            max: 100
+            min: -100
+            value: 0
+        TextInput:
+            multiline: False
+            text: 'My textbox'
+
+    BoxLayout:
+        size_hint_y: None
+        height: app.hGridHeight
+        Slider:
+            orientation: 'horizontal'
+            max: 100
+            min: -100
+            value: 0
+        TextInput:
+            multiline: False
+            text: 'My textbox'
+
+    BoxLayout:
+        size_hint_y: None
+        height: app.hGridHeight
+        Knob:
+            size: 98, 98
+            min: 0
+            max: 360
+            step: 1
+            value: 0
+            show_label: True
+            show_marker: True
+            knob_size: 0.9
+            markeroff_color: 0,0,0,0
+            knobimg_source: "dial.png"
+            
+        TextInput:
+            multiline: False
+            text: 'My textbox'
