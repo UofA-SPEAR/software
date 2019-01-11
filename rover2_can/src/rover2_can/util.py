@@ -1,10 +1,6 @@
-#!/usr/bin/env python
-#
-# An interface between ros messages and the uavcan protocol.
+# Utility functions.
 
-from __future__ import print_function
 import canros
-from drive_system.msg import drive_cmd
 from functools import partial
 import rospy
 
@@ -50,7 +46,7 @@ def map_ros_to_can(ros_msg, ros_topic, can_msg, mapping):
         #
         # The keys of the mapping dictionary are used as the property name on the can message.
         for can_msg_param, ros_msg_mapper in mapping.iteritems():
-             setattr(can_msg, can_msg_param, ros_msg_mapper(data))
+            setattr(can_msg, can_msg_param, ros_msg_mapper(data))
 
         can_pub.publish(can_msg)
 
@@ -61,26 +57,5 @@ def map_ros_to_can(ros_msg, ros_topic, can_msg, mapping):
     _can_msg = canros.Message(can_msg)
     rospy.Subscriber(
         ros_topic, ros_msg,
-        partial(cb, _can_msg.Publisher(queue_size=10),
-                _can_msg.Type(), mapping))
-
-
-def main():
-    rospy.init_node("rover2_can")
-
-    ####################################
-    # Set up ROS -> UAVCAN subscribers #
-    ####################################
-
-    # TODO: Map left & right from the ros message to the wheel number & speed
-    #       in the UAVCAN message somehow...
-    map_ros_to_can(drive_cmd, "/drive", "spear.drive.DriveCommand", {
-        "wheel": lambda data: 2,
-        "speed": lambda data: 783
-    })
-
-    rospy.spin()
-
-
-if __name__ == '__main__':
-    main()
+        partial(cb, _can_msg.Publisher(queue_size=10), _can_msg.Type(),
+                mapping))
