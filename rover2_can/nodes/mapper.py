@@ -4,7 +4,8 @@
 
 from drive_system.msg import drive_cmd
 import rospy
-from rover2_can import map_ros_to_can
+from rover2_can import map_ros_to_can, map_can_to_ros
+from rover2_can.msg import NodeStatus
 
 
 def main():
@@ -29,6 +30,18 @@ def main():
         "wheel": lambda data: 3,
         "speed": lambda data: 987
     })
+
+    ####################################
+    # Set up UAVCAN -> ROS subscribers #
+    ####################################
+
+    map_can_to_ros(
+        "uavcan.protocol.NodeStatus", NodeStatus, "/rover2_can/NodeStatus", {
+            "uptime_sec": lambda data: data.uptime_sec,
+            "mode": lambda data: data.mode,
+            "health": lambda data: data.health,
+            "node_id": lambda data: data.canros_uavcan_id
+        })
 
     rospy.spin()
 

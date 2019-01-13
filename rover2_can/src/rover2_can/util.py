@@ -71,3 +71,22 @@ def map_ros_to_can(ros_msg, ros_topic, can_msg, *mappings):
         ros_topic, ros_msg,
         partial(cb, _can_msg.Publisher(queue_size=10), _can_msg.Type(),
                 mappings))
+
+
+def map_can_to_ros(uavcan_message_type, ros_message, ros_topic, *mappings):
+    rospy.loginfo(
+        "Mapping UAVCAN message {} to ros message {} on topic {}.".format(
+            uavcan_message_type, ros_message._type, ros_topic))
+
+    can_msg = canros.Message(uavcan_message_type)
+    pub = rospy.Publisher(ros_topic, ros_message, queue_size=10)
+
+    def cb(data):
+        for mapping in mappings:
+            message_payload = {
+                key: mapper(data)
+                for (key, mapper) in mapping.iteritems()
+            }
+            pub.publish(**message_payload)
+
+    can_msg.Subscriber(callback=cb)
