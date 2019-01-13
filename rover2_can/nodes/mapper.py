@@ -4,7 +4,7 @@
 
 from drive_system.msg import drive_cmd
 import rospy
-from rover2_can import *
+from rover2_can import map_ros_to_can
 
 
 def main():
