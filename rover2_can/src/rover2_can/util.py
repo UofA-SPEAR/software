@@ -5,7 +5,7 @@ from functools import partial
 import rospy
 
 
-def map_ros_to_can(ros_msg, ros_topic, can_msg, *mappings):
+def map_ros_to_can(ros_msg, ros_topic, uavcan_message_type, *mappings):
     """
     Subscribes to the specified ros_topic & message type, maps ros message data
     from ros's format to UAVCAN's format using mapping functions specified in
@@ -31,7 +31,7 @@ def map_ros_to_can(ros_msg, ros_topic, can_msg, *mappings):
         - `ros_topic`: A string. The name of the ros topic you want to
         subscribe to, in the same format that the rest of ros uses.
 
-        - `can_msg`: A string. The name of the UAVCAN message you want to
+        - `uavcan_message_type`: A string. The name of the UAVCAN message you want to
         publish, in the same format as described in UAVCAN's docs.
 
         - `*mappings`: Dictionaries. Keys are the UAVCAN message parameters.
@@ -49,28 +49,24 @@ def map_ros_to_can(ros_msg, ros_topic, can_msg, *mappings):
         several ros message subscribers (therefore saving memory).
     """
 
-    def cb(can_pub, can_msg, mappings, data):
-        # To reduce t
+    rospy.loginfo(
+        "Mapping ros message {} on topic {} to UAVCAN message {}.".format(
+            ros_msg._type, ros_topic, uavcan_message_type))
 
+    can_msg = canros.Message(uavcan_message_type)
+    pub = can_msg.Publisher(queue_size=10)
+    msg = can_msg.Type()
+
+    def cb(data):
         # Loop over the mappings & call the functions within to translate data from
         # the ros message to data on the can message.
         #
         # The keys of the mapping dictionary are used as the property name on the can message.
         for mapping in mappings:
-            for can_msg_param, ros_msg_mapper in mapping.iteritems():
-                setattr(can_msg, can_msg_param, ros_msg_mapper(data))
-            can_pub.publish(can_msg)
+            msg = {key: mapper(data) for (key, mapper) in mapping.iteritems()}
+            pub.publish(**msg)
 
-    rospy.loginfo(
-        "Mapping ros message {} on topic {} to UAVCAN message {}.".format(
-            ros_msg._type, ros_topic, can_msg))
-
-    _can_msg = canros.Message(can_msg)
-
-    rospy.Subscriber(
-        ros_topic, ros_msg,
-        partial(cb, _can_msg.Publisher(queue_size=10), _can_msg.Type(),
-                mappings))
+    rospy.Subscriber(ros_topic, ros_msg, cb)
 
 
 def map_can_to_ros(uavcan_message_type, ros_message, ros_topic, *mappings):
