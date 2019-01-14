@@ -16,3 +16,8 @@ as well as `/hw_interface/arm` for sending out arm commands.
 
 To change the wheel or joint numbers, simply edit `include/hardware_interface/mappings.h`.
 To change how the mappings work or add new mappings, edit `src/interface.cpp`.
+
+## TODO
+
+- Add nimbro networking stuff
+- Add arm translations
