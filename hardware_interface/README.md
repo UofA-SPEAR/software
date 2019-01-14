@@ -9,8 +9,8 @@ It will eventually translate angles to what the arm controllers need at some poi
 
 ## Topics
 
-This will output on `/hardware_if/drive` for sending out wheel commands,
-as well as `/hardware_if/arm` for sending out arm commands.
+This will output on `/hw_interface/drive` for sending out wheel commands,
+as well as `/hw_interface/arm` for sending out arm commands.
 
 ## Modifying
 
