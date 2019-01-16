@@ -5,7 +5,7 @@
 from drive_system.msg import drive_cmd
 import rospy
 from rover2_can import map_ros_to_can, map_can_to_ros
-from rover2_can.msg import NodeStatus
+from rover2_can.msg import DriveStatus, JointStatus, NodeStatus
 
 
 def main():
@@ -34,6 +34,18 @@ def main():
     ####################################
     # Set up UAVCAN -> ROS subscribers #
     ####################################
+
+    map_can_to_ros("spear.arm.JointStatus", JointStatus,
+                   "/rover2_can/JointStatus", {
+                       "joint": lambda data: data.joint,
+                       "angle": lambda data: data.angle
+                   })
+
+    map_can_to_ros("spear.drive.DriveStatus", DriveStatus,
+                   "/rover2_can/DriveStatus", {
+                       "wheel": lambda data: data.wheel,
+                       "speed": lambda data: data.speed
+                   })
 
     map_can_to_ros(
         "uavcan.protocol.NodeStatus", NodeStatus, "/rover2_can/NodeStatus", {
