@@ -1,7 +1,8 @@
 # Utility functions.
 
-import canros
 from functools import partial
+
+import canros
 import rospy
 
 
@@ -40,7 +41,8 @@ def map_ros_to_can(ros_msg, ros_topic, uavcan_message_type, *mappings):
         parameter.
         If more than one mapping is passed, like with:
 
-            map_ros_to_can(RosMsg, "/rostopic", "uavcan.message", { ... mapping 1 ... }, { ... mapping 2 ... }, ...)
+            map_ros_to_can(RosMsg, "/rostopic", "uavcan.message",
+                { ... mapping 1 ... }, { ... mapping 2 ... }, ...)
 
         ...then each mapping will receive the same RosMsg data, and each one
         will publish a unique message to "uavcan.message". This is to deal
@@ -61,7 +63,8 @@ def map_ros_to_can(ros_msg, ros_topic, uavcan_message_type, *mappings):
         # Loop over the mappings & call the functions within to translate data from
         # the ros message to data on the can message.
         #
-        # The keys of the mapping dictionary are used as the property name on the can message.
+        # The keys of the mapping dictionary are used as the property name on
+        # the can message.
         for mapping in mappings:
             msg = {key: mapper(data) for (key, mapper) in mapping.iteritems()}
             pub.publish(**msg)

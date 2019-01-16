@@ -1,5 +1,8 @@
 #TODO: install ROS
 
+git:
+  submodules: false
+
 matrix:
   include:
     - name: "python linting"
