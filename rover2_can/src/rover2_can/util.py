@@ -6,6 +6,16 @@ import canros
 import rospy
 
 
+def test_bit(number, offset):
+    """
+    Tests for the prescence of a bit at `offset` on `number`.
+    Returns True if it does exist, False if it doesn't.
+    """
+    mask = 1 << offset
+    result = True if (number & mask) > 0 else False
+    return result
+
+
 def map_ros_to_can(ros_msg, ros_topic, uavcan_message_type, *mappings):
     """
     Subscribes to the specified ros_topic & message type, maps ros message data
