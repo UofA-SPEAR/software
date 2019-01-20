@@ -5,7 +5,7 @@
 from drive_system.msg import drive_cmd
 import rospy
 from rover2_can import map_ros_to_can, map_can_to_ros, test_bit
-from rover2_can.msg import BatteryInfo, NodeStatus
+from rover2_can.msg import ActuatorStatus, BatteryInfo, NodeStatus
 
 
 def main():
@@ -34,6 +34,16 @@ def main():
     ####################################
     # Set up UAVCAN -> ROS subscribers #
     ####################################
+
+    map_can_to_ros(
+        "uavcan.equipment.actuator.Status", ActuatorStatus,
+        "/rover2_can/ActuatorStatus", {
+            "actuator_id": lambda data: data.actuator_id,
+            "position": lambda data: data.position,
+            "force": lambda data: data.force,
+            "speed": lambda data: data.speed,
+            "power_rating_pct": lambda data: data.power_rating_pct
+        })
 
     map_can_to_ros(
         "uavcan.equipment.power.BatteryInfo",
