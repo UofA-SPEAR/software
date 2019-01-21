@@ -15,7 +15,7 @@ class SpinROS(threading.Thread):
         rospy.spin()
 
 def callback(data): # function is called whenever topic is recieved
-    rospy.loginfo('dodnscndosno')
+    rospy.loginfo('Nice, a topic has been recieved')
 
 def ros_init():
     global joy_publisher
