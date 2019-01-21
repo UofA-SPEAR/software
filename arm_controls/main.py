@@ -15,20 +15,20 @@ from kivy.properties import (
     ListProperty,
     ObjectProperty,
     StringProperty,
-    ReferenceListProperty
-    )
+    ReferenceListProperty)
 from kivy.clock import Clock
 from threading import Thread
 
 
 # We will be using the knob class from kivy garden to add a control knob to our app.
-# Use 'pip install kivy-garden' and then 'garden install knob' to install the knob class
+# Use 'pip install kivy-garden' and then 'garden install knob' to install
+# the knob class
 # See here: https://github.com/kivy-garden/garden.knob
 from kivy.garden.knob import Knob
 
+
 class WidgetContainer(GridLayout):
-
-
+    
     def sendValues(self, oldValues):
         # Send values to rover here. As of now this function only prints values to console
         # This function doesn't do anything unless the values change from the last run
