@@ -3,7 +3,7 @@
 import rospy
 import threading
 from threading import Thread
-#from joyinput.msg import input_axes, input_buttons # Messages need to be compiled
+from arm_controls.msg import joyinput # input_axes, input_buttons # Messages need to be compiled
 
 # from Rover1 Code
 class SpinROS(threading.Thread):
@@ -11,7 +11,11 @@ class SpinROS(threading.Thread):
         super(SpinROS, self).__init__()
 
     def run(self):
+        print('Print thread start')
         rospy.spin()
+
+def callback(data): # function is called whenever topic is recieved
+    rospy.loginfo('dodnscndosno')
 
 def ros_init():
     global joy_publisher
@@ -21,5 +25,5 @@ def ros_init():
     rospy.loginfo("Initializing the arm input node")
     
     # Extra configuration needed
-    #joy_publisher = rospy.Publisher('/user_arm_controls', input_axes, queue_size=50)
-    #button_publisher = rospy.Publisher('/user_arm_controls', input_buttons, queue_size=50)
+    joy_publisher = rospy.Publisher('/user_arm_controls', joyinput, queue_size=50) # initialize the publisher node
+    joy_subscriber = rospy.Subscriber('/user_arm_controls', joyinput, callback) # initialize the Subscriber node
