@@ -10,6 +10,7 @@ project(rover2)
 find_package(catkin REQUIRED COMPONENTS
     roscpp
     cv_bridge
+    image_transport
     OpenCV
     message_generation
 )
