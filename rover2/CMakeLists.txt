@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
     roscpp
     cv_bridge
     OpenCV
+    message_generation
 )
 
 ## System dependencies are found with CMake's conventions
@@ -47,11 +48,12 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
-  #   Message1.msg
-#   Message2.msg
-# )
+# I know I know terrible name but meh
+add_message_files(
+  FILES
+  BallDetect.msg
+  BallDetects.msg
+)
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -109,7 +111,7 @@ catkin_package(
 #  DEPENDS system_lib
 )
 
-###########
+##########
 ## Build ##
 ###########
 
