@@ -6,4 +6,10 @@
   <maintainer email="reckhard@ualberta.ca">Jacob Reckhard</maintainer>
   <license>MIT</license>
   <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>roscpp</build_depend>
+  <exec_depend>roscpp</exec_depend>
+
+  <build_depend>cv_bridge</build_depend>
+  <exec_depend>cv_bridge</exec_depend>
 </package>
