@@ -52,8 +52,8 @@ find_package(catkin REQUIRED COMPONENTS
 # I know I know terrible name but meh
 add_message_files(
   FILES
-  BallDetect.msg
-  BallDetects.msg
+  BallCoord.msg
+  BallCoords.msg
 )
 
 ## Generate services in the 'srv' folder
