@@ -41,10 +41,28 @@ int main(int argc, char** argv) {
     return 0;
 }
 
+
 void imageCallback(const sensor_msgs::ImageConstPtr& msg) {
+    // Find x,y coords and radius of all circles in image
+    std::vector<Vec3f> circles;
+    circles = getCircles(cv_bridge::toCvShare(msg, "bgr8")->image);
 
-    getCircles(cv_bridge::toCvShare(msg, "bgr8")->image);
+    // Generate message
+    rover2::BallCoords outMsg;
+    for (unsigned int i = 0; i < circles.size(); i++) {
+        rover2::BallCoord coord;
+        coord.number = i;
+        coord.x_pos  = circles[i][0];
+        coord.y_pos  = circles[i][1];
+        coord.radius = circles[i][2];
 
+        outMsg.balls.push_back(coord);
+
+        ROS_INFO("Ball found! (X, Y, Radius) -> (%.2f, %.2f, %.2f)",
+                circles[i][0], circles[i][1], circles[i][2]);
+    }
+
+    coords_pub.publish(outMsg);
 }
 
 
