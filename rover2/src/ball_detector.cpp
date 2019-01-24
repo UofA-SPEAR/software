@@ -2,6 +2,7 @@
 
 #include <image_transport/image_transport.h>
 #include <cv_bridge/cv_bridge.h>
+#include <rover2/BallCoords.h>
 
 #include <stdio.h>
 #include <opencv2/opencv.hpp>
@@ -12,32 +13,41 @@
 
 using namespace cv;
 
-std::vector<Vec3f> getCircles(Mat image);
+ros::NodeHandle* node;
+ros::Subscriber image_sub;
+ros::Publisher coords_pub;
 
-int main(int argc, char** argv) {
-    VideoCapture cap(0);
 
-    if (!cap.isOpened()) {
-        return -1;
-    }
-
-    Mat image;
-    cap >> image;
-
-    if (!image.data){
-        printf("No image data \n");
-        return -1;
-    }
-
-    getCircles(image);
-
-    waitKey(0);
-    return 0;
-}
+/** @brief Callback function for recieving raw frames from camera
+ */
+void imageCallback(const sensor_msgs::ImageConstPtr& msg);
 
 /** @brief Function to find the yellow circles within an image.
  * Assumes image is in BGR format.
  */
+std::vector<Vec3f> getCircles(Mat image);
+
+
+int main(int argc, char** argv) {
+    ros::init(argc, argv, "ball_detector");
+    node = new ros::NodeHandle;
+
+    // TODO add ability to change subscribed topic
+    image_sub = node->subscribe("/camera_1/raw", 1, imageCallback);
+    coords_pub = node->advertise<rover2::BallCoords>("/ball_coords", 10);
+
+    ros::spin();
+
+    return 0;
+}
+
+void imageCallback(const sensor_msgs::ImageConstPtr& msg) {
+
+    getCircles(cv_bridge::toCvShare(msg, "bgr8")->image);
+
+}
+
+
 std::vector<Vec3f> getCircles(Mat image) {
 
     // Convert to HSV format
