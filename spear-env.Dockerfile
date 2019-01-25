@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y qt4-default libx264-dev \
                                          ros-kinetic-catch-ros \
                                          ros-kinetic-tf \
                                          ros-kinetic-opencv3 \
+                                         ros-kinetic-cv-bridge \
                                          gstreamer-0.1 \
                                          libgstreamer0.10-dev \
                                          libgstreamer-plugins-base0.10-dev \
