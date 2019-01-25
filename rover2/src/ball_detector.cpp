@@ -33,7 +33,7 @@ int main(int argc, char** argv) {
     node = new ros::NodeHandle;
 
     // TODO add ability to change subscribed topic
-    image_sub = node->subscribe("/camera_1/raw", 1, imageCallback);
+    image_sub = node->subscribe("/camera_1/image_raw", 1, imageCallback);
     coords_pub = node->advertise<rover2::BallCoords>("/ball_coords", 10);
 
     ros::spin();
