@@ -47,22 +47,24 @@ void imageCallback(const sensor_msgs::ImageConstPtr& msg) {
     std::vector<Vec3f> circles;
     circles = getCircles(cv_bridge::toCvShare(msg, "bgr8")->image);
 
-    // Generate message
-    rover2::BallCoords outMsg;
-    for (unsigned int i = 0; i < circles.size(); i++) {
-        rover2::BallCoord coord;
-        coord.number = i;
-        coord.x_pos  = circles[i][0];
-        coord.y_pos  = circles[i][1];
-        coord.radius = circles[i][2];
+    if (circles.size() > 0) {
+        // Generate message
+        rover2::BallCoords outMsg;
+        for (unsigned int i = 0; i < circles.size(); i++) {
+            rover2::BallCoord coord;
+            coord.number = i;
+            coord.x_pos  = circles[i][0];
+            coord.y_pos  = circles[i][1];
+            coord.radius = circles[i][2];
 
-        outMsg.balls.push_back(coord);
+            outMsg.balls.push_back(coord);
 
-        ROS_INFO("Ball found! (X, Y, Radius) -> (%.2f, %.2f, %.2f)",
-                circles[i][0], circles[i][1], circles[i][2]);
+            ROS_INFO("Ball found! (X, Y, Radius) -> (%.2f, %.2f, %.2f)",
+                    circles[i][0], circles[i][1], circles[i][2]);
+        }
+
+        coords_pub.publish(outMsg);
     }
-
-    coords_pub.publish(outMsg);
 }
 
 
@@ -84,9 +86,6 @@ std::vector<Vec3f> getCircles(Mat image) {
     // Circles are held as [ X, Y, radius ]
     std::vector<Vec3f> circles;
     HoughCircles(imgThresholded, circles, CV_HOUGH_GRADIENT, 1, imgThresholded.rows/8, 30, 30, 0, 0);
-    for (size_t i = 0; i < circles.size(); i++){
-        std::cout << "X: " << circles[i][0] << " Y: " << circles[i][1] << " Radius: " << circles[i][2] << "\n";
-    }
 
     return circles;
 
