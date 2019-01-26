@@ -17,6 +17,7 @@ Pygame: `$ python -m pip install pygame --user`<br>
 Kivy: `$ python -m pip install kivy --user`<br>
 Kivy Garden: `$ python -m pip install kivy-garden --user`<br>
 Kivy Knob: `$ garden install knob`<br>
+ROS Joy: `$ sudo apt-get install ros-kinetic-joy`<br>
 libqt (required by Nimbro): `$ apt-get install libqt4-dev`<br>
 qmake (required by Nimbro): `$ apt-get install qt4-qmake`<br>
 
