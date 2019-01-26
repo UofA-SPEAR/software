@@ -1,5 +1,6 @@
 import kivy
 import datetime
+from ros_station import SpinROS, ros_init
 
 from kivy.app import App
 
@@ -9,18 +10,25 @@ from kivy.uix.label import Widget, Label
 from kivy.uix.popup import Popup
 from kivy.uix.textinput import TextInput
 from kivy.uix.slider import Slider
-from kivy.properties import NumericProperty, ListProperty, ObjectProperty, StringProperty, ReferenceListProperty
+from kivy.properties import (
+    NumericProperty,
+    ListProperty,
+    ObjectProperty,
+    StringProperty,
+    ReferenceListProperty)
 from kivy.clock import Clock
+from threading import Thread
 
 
 # We will be using the knob class from kivy garden to add a control knob to our app.
-# Use 'pip install kivy-garden' and then 'garden install knob' to install the knob class
+# Use 'pip install kivy-garden' and then 'garden install knob' to install
+# the knob class
 # See here: https://github.com/kivy-garden/garden.knob
 from kivy.garden.knob import Knob
 
+
 class WidgetContainer(GridLayout):
-
-
+    
     def sendValues(self, oldValues):
         # Send values to rover here. As of now this function only prints values to console
         # This function doesn't do anything unless the values change from the last run
@@ -169,6 +177,15 @@ class PanelApp(App):
             newNum = 0
         return newNum
 
+
+ros_thread = SpinROS()
+
+
 # Run app
 if __name__ == '__main__':
+    ros_init()
+    
+    ros_thread.daemon = True
+    ros_thread.start()
+
     PanelApp().run()
