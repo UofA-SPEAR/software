@@ -1,0 +1,15 @@
+<launch>
+
+  <!-- Start the for cam 1 -->
+  <node pkg="gscam" type="gscam" name="camera_1">
+  <env name="GSCAM_CONFIG" value="v4l2src device=/dev/video1 ! video/x-raw-yuv,framerate=10/1,width=640,height=480 ! ffmpegcolorspace ! x264enc bitrate=256 ! flutsmux " />
+    <param name="camera_name" value="camera_1" />
+    <remap from="camera/image_raw" to="/camera_1/image_raw" />
+  </node>
+
+  <node pkg="rover2" type="ball_detector_node" name="ball_detector_node">
+    <param name="image_topic" value="/camera_1/image_raw" />
+    <param name="output_topic" value="/heeeeyyyyo" />
+  </node>
+
+</launch>
