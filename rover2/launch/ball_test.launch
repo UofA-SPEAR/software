@@ -7,6 +7,9 @@
     <remap from="camera/image_raw" to="/camera_1/image_raw" />
   </node>
 
-  <node pkg="rover2" type="ball_detector_node" name="ball_detector_node" />
+  <node pkg="rover2" type="ball_detector_node" name="ball_detector_node">
+    <param name="image_topic" value="/camera_1/image_raw" />
+    <param name="output_topic" value="/heeeeyyyyo" />
+  </node>
 
 </launch>

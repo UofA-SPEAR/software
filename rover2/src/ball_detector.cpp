@@ -31,12 +31,17 @@ int main(int argc, char** argv)
   ros::init(argc, argv, "ball_detector");
   node = new ros::NodeHandle;
 
+  std::string image_param = ros::this_node::getName();
+  image_param.append("/image_topic");
+
+  std::string output_param = ros::this_node::getName();
+  output_param.append("/output_topic");
 
   std::string image_topic;
   std::string output_topic;
 
-  node->param<std::string>("image_topic", image_topic, "/camera_1/image_raw");
-  node->param<std::string>("output_topic", output_topic, "/ball_coords");
+  node->param<std::string>(image_param, image_topic, "/camera_1/image_raw");
+  node->param<std::string>(output_param, output_topic, "/ball_coords");
 
   // TODO add ability to change subscribed topic
   image_sub = node->subscribe(image_topic, 1, imageCallback);
