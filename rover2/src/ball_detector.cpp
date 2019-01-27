@@ -31,9 +31,16 @@ int main(int argc, char** argv)
   ros::init(argc, argv, "ball_detector");
   node = new ros::NodeHandle;
 
+
+  std::string image_topic;
+  std::string output_topic;
+
+  node->param<std::string>("image_topic", image_topic, "/camera_1/image_raw");
+  node->param<std::string>("output_topic", output_topic, "/ball_coords");
+
   // TODO add ability to change subscribed topic
-  image_sub = node->subscribe("/camera_1/image_raw", 1, imageCallback);
-  coords_pub = node->advertise<rover2::BallCoords>("/ball_coords", 10);
+  image_sub = node->subscribe(image_topic, 1, imageCallback);
+  coords_pub = node->advertise<rover2::BallCoords>(output_topic, 10);
 
   ros::spin();
 
