@@ -107,7 +107,7 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES rover2
-#  CATKIN_DEPENDS other_catkin_pkg
+  CATKIN_DEPENDS std_msgs
 #  DEPENDS system_lib
 )
 
