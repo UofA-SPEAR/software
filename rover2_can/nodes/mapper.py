@@ -3,18 +3,22 @@
 # An interface between ros messages and the uavcan protocol.
 
 from canros import Message as CanrosMessage
-from hardware_interface.msg import wheel_cmd
+from hardware_interface.msg import WheelCmdArray
 import rospy
 from rover2_can import map_ros_to_can, map_can_to_ros, test_bit
 from rover2_can.msg import ActuatorStatus, BatteryInfo, NodeStatus
 
 
-def wheel_cmd_mapper(data):
-    wheel_msg = CanrosMessage("uavcan.equipment.actuator.Command")
-    wheel_msg.actuator_id = data.wheel
-    wheel_msg.command_type = 3  # a.k.a COMMAND_TYPE_SPEED
-    wheel_msg.command_value = data.velocity
-    return [wheel_msg]
+def wheel_cmd_array_mapper(data):
+    out = []
+    for wheel_command in data.wheel_cmds:
+        uavcan_msg = CanrosMessage("uavcan.equipment.actuator.Command")
+        uavcan_msg.actuator_id = wheel_command.wheel
+        uavcan_msg.command_type = 3  # a.k.a. COMMAND_TYPE_SPEED
+        uavcan_msg.command_value = wheel_command.velocity
+        out.append(uavcan_msg)
+
+    return out
 
 
 def main():
@@ -24,9 +28,9 @@ def main():
     # Set up ROS -> UAVCAN subscribers #
     ####################################
 
-    map_ros_to_can(wheel_cmd, '/hw_interface/drive',
+    map_ros_to_can(WheelCmdArray, '/hw_interface/drive',
                    'uavcan.equipment.actuator.ArrayCommand',
-                   {'commands': wheel_cmd_mapper})
+                   {"commands": wheel_cmd_array_mapper})
 
     ####################################
     # Set up UAVCAN -> ROS subscribers #

@@ -77,7 +77,6 @@ def map_ros_to_can(ros_msg, ros_topic, uavcan_message_type, *mappings):
         # the can message.
         for mapping in mappings:
             msg = {key: mapper(data) for (key, mapper) in mapping.iteritems()}
-            rospy.loginfo("{}".format(msg))
             pub.publish(**msg)
 
     rospy.Subscriber(ros_topic, ros_msg, cb)
