@@ -1,6 +1,9 @@
 # Artificial intelligence simulator
 For training our Mars rover, we have decided to create a simulator that allows us to drive around a 3D model of our rover in a virtual world. This virtual world is designed to be similar to the types of environments we may encounter in competition.
 
+## Running with ROS
+The gazebo models and launch files for our rover have been wrapped in a ROS package called "simulator". After cloning this repository, run the "unpack.sh" script. This will set up the ros package. Then, you should be able to launch our rover model in a gazebo simulation using "roslaunch simulator diffdrive.launch".
+
 ## Getting started
 To run our simulator, several dependencies will need to be installed, mainly ROS and Gazebo. We recommend additionally setting up a virtual machine to run our simulator, as it is quite invasive to install on your system and requires that you use Ubuntu Xenial (16.04 LTS). Feel free to use either VirtualBox or VMWare.
 
