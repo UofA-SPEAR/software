@@ -233,12 +233,29 @@
       <child link="link_suspension_frontright"/>
     </joint>
 
+    <!-- Stuff to make the wheels driveable -->
     <joint name="link_wheel_backleft" type="continuous">
       <axis xyz="0 1 0" rpy="0 0 0"/>
       <origin xyz="-0.21346 0.01924 -0.08012" rpy="0 0 0"/>
       <parent link="link_suspension_backleft"/>
       <child link="link_wheel_backleft"/>
     </joint>
+    <transmission name="wheel_backleft_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="wheel_backleft_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="link_wheel_backleft">
+        <hardwareInterface>VelocityJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+    <gazebo reference="link_wheel_backleft">
+      <mu1 value="200.0"/>
+      <mu2 value="100.0"/>
+      <kp value="10000000.0" />
+      <kd value="1.0" />
+      <material>Gazebo/Grey</material>
+    </gazebo>
 
     <joint name="link_wheel_backright" type="continuous">
       <axis xyz="0 1 0" rpy="0 0 0"/>
@@ -246,6 +263,22 @@
       <parent link="link_suspension_backright"/>
       <child link="link_wheel_backright"/>
     </joint>
+    <transmission name="wheel_backright_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="wheel_backright_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="link_wheel_backright">
+        <hardwareInterface>VelocityJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+    <gazebo reference="link_wheel_backright">
+      <mu1 value="200.0"/>
+      <mu2 value="100.0"/>
+      <kp value="10000000.0" />
+      <kd value="1.0" />
+      <material>Gazebo/Grey</material>
+    </gazebo>
 
     <joint name="link_wheel_frontleft" type="continuous">
       <axis xyz="0 1 0" rpy="0 0 0"/>
@@ -253,6 +286,22 @@
       <parent link="link_suspension_frontleft"/>
       <child link="link_wheel_frontleft"/>
     </joint>
+    <transmission name="wheel_frontleft_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="wheel_frontleft_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="link_wheel_frontleft">
+        <hardwareInterface>VelocityJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+    <gazebo reference="link_wheel_frontleft">
+      <mu1 value="200.0"/>
+      <mu2 value="100.0"/>
+      <kp value="10000000.0" />
+      <kd value="1.0" />
+      <material>Gazebo/Grey</material>
+    </gazebo>
 
     <joint name="link_wheel_frontright" type="continuous">
       <axis xyz="0 1 0" rpy="0 0 0"/>
@@ -260,5 +309,27 @@
       <parent link="link_suspension_frontright"/>
       <child link="link_wheel_frontright"/>
     </joint>
+    <transmission name="wheel_frontright_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="wheel_frontright_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="link_wheel_frontright">
+        <hardwareInterface>VelocityJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+    <gazebo reference="link_wheel_frontright">
+      <mu1 value="200.0"/>
+      <mu2 value="100.0"/>
+      <kp value="10000000.0" />
+      <kd value="1.0" />
+      <material>Gazebo/Grey</material>
+    </gazebo>
+
+    <gazebo>
+      <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+        <robotNamespace>/</robotNamespace>
+      </plugin>
+    </gazebo>
 
   </robot>

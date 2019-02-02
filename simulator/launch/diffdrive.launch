@@ -1,6 +1,6 @@
 <!-- Copied from urdf_sim_tutorial package -->
 <launch>
-  <arg name="model" default="$(find simulator)/models/rover_simple/TARS_V2_Simple.urdf"/>
+  <arg name="model" default="$(find simulator)/models/rover/TARS_V2.urdf"/>
   <arg name="rvizconfig" default="$(find urdf_tutorial)/rviz/urdf.rviz" />
 
   <include file="$(find simulator)/launch/gazebo.launch">
