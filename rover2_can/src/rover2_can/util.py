@@ -38,8 +38,8 @@ def map_ros_to_can(ros_msg, ros_topic, uavcan_message_type, *mappings):
 
     # Arguments
 
-    ros_msg (rospy.Message): The rospy-generated datatype for the ros message you want
-    it to subscribe to.
+    ros_msg (rospy.Message): The rospy-generated datatype for the ros message
+    you want it to subscribe to.
 
     ros_topic (string): The name of the ros topic you want to
     subscribe to, in the same format that the rest of ros uses.
@@ -111,8 +111,8 @@ def map_can_to_ros(uavcan_message_type, ros_message, ros_topic, *mappings):
 
     ros_topic (string): The ros topic to publish to.
 
-    *mappings (list&lt;dict&gt;): Dictionaries of mappings from UAVCAN messages to the
-    specified ROS message type. The keys of the dictionaries are the ROS
+    *mappings (list&lt;dict&gt;): Dictionaries of mappings from UAVCAN messages
+    to the specified ROS message type. The keys of the dictionaries are the ROS
     parameters, and the keys are the mapping functions. Each mapping function
     recieves a single argument, `data`, which contains all of the UAVCAN
     message data. The ROS parameter will be set to whatever the mapping

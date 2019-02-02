@@ -64,10 +64,10 @@ def main():
             "hours_to_full_charge":
             lambda data: data.hours_to_full_charge,
 
-            # The UAVCAN BatteryInfo message uses a bitmask for its status_flags
-            # field. While we could potentially use one as well, it would be a lot
-            # easier in the long run if we could just access them as individual
-            # bools. So here we check for each flag.
+            # The UAVCAN BatteryInfo message uses a bitmask for its
+            # status_flags field. While we could potentially use one as well,
+            # it would be a lot easier in the long run if we could just access
+            # them as individual bools. So here we check for each flag.
             "in_use":
             lambda data: test_bit(data.status_flags, 0),
             "charging":

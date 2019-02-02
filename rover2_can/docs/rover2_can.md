@@ -41,8 +41,8 @@ map_ros_to_can(LedPeriod, "/led", "spear.led.BlinkCommand", {
 __Arguments__
 
 
-- __ros_msg (rospy.Message)__: The rospy-generated datatype for the ros message you want
-it to subscribe to.
+- __ros_msg (rospy.Message)__: The rospy-generated datatype for the ros message
+you want it to subscribe to.
 
 - __ros_topic (string)__: The name of the ros topic you want to
 subscribe to, in the same format that the rest of ros uses.
@@ -96,8 +96,8 @@ when building everything.
 
 - __ros_topic (string)__: The ros topic to publish to.
 
-- __*mappings (list&lt;dict&gt;)__: Dictionaries of mappings from UAVCAN messages to the
-specified ROS message type. The keys of the dictionaries are the ROS
+- __*mappings (list&lt;dict&gt;)__: Dictionaries of mappings from UAVCAN messages
+to the specified ROS message type. The keys of the dictionaries are the ROS
 parameters, and the keys are the mapping functions. Each mapping function
 recieves a single argument, `data`, which contains all of the UAVCAN
 message data. The ROS parameter will be set to whatever the mapping
