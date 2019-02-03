@@ -31,9 +31,11 @@ git clone https://github.com/MonashUAS/canros.git
 git submodule update --init --recursive
 
 ###### Link our packages
+# This needs to be moved all back into rover2 at some point
 ln -s $DIR/drive_system
 ln -s $DIR/rover2
 ln -s $DIR/rover2_can
+ln -s $DIR/hardware_interface
 
 ###### Link UAVCAN DSDL definitions to the home directory.
 mkdir -p ~/uavcan_vendor_specific_types
