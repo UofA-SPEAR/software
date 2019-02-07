@@ -9,6 +9,9 @@ while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symli
 done
 DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null && pwd )"
 
+###### Update/ install git submodules
+git submodule update --init --recursive
+
 ###### Setup ros path
 cd ~
 mkdir -p ~/ros/src
@@ -27,13 +30,12 @@ rm -rf nimbro_network
 python -m pip install uavcan
 git clone https://github.com/MonashUAS/canros.git
 
-###### Update/ install git submodules
-git submodule update --init --recursive
-
 ###### Link our packages
-ln -s $DIR/drive_system
+# This needs to be moved all back into rover2 at some point
+ln -s $DIR/drive_controls
 ln -s $DIR/rover2
 ln -s $DIR/rover2_can
+ln -s $DIR/hardware_interface
 
 ###### Link UAVCAN DSDL definitions to the home directory.
 mkdir -p ~/uavcan_vendor_specific_types

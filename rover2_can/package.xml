@@ -56,6 +56,12 @@
   <exec_depend>canros</exec_depend>
   <exec_depend>rospy</exec_depend>
 
+  <!-- For all the messages we rely on: -->
+  <build_depend>message_generation</build_depend>
+  <exec_depend>message_runtime</exec_depend>
+  <build_depend>hardware_interface</build_depend>
+  <exec_depend>hardware_interface</exec_depend>
+
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>
