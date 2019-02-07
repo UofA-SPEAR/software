@@ -1,9 +1,7 @@
 import kivy
 import datetime
 from ros_station import SpinROS, ros_init
-
 from kivy.app import App
-
 from kivy.uix.gridlayout import GridLayout
 from kivy.core.window import Window
 from kivy.uix.label import Widget, Label
@@ -18,14 +16,7 @@ from kivy.properties import (
     ReferenceListProperty)
 from kivy.clock import Clock
 from threading import Thread
-
-
-# We will be using the knob class from kivy garden to add a control knob to our app.
-# Use 'pip install kivy-garden' and then 'garden install knob' to install
-# the knob class
-# See here: https://github.com/kivy-garden/garden.knob
 from kivy.garden.knob import Knob
-
 
 class WidgetContainer(GridLayout):
     
@@ -64,86 +55,6 @@ class WidgetContainer(GridLayout):
     def __init__(self, **kwargs):
         super(WidgetContainer, self).__init__(**kwargs)
 
-        # get joystick events first
-        Window.bind(on_joy_button_up=self.control_option)
-        Window.bind(on_joy_axis=self.z_control)
-        Window.bind(on_joy_axis=self.x_control)
-        Window.bind(on_joy_axis=self.flick_control)
-
-
-    def control_option(self, win, stickid, release_id):
-        if release_id == 12:
-            Window.unbind(on_joy_axis=self.x_control)
-            Window.bind(on_joy_axis=self.y_control)
-        elif release_id == 11:
-            Window.unbind(on_joy_axis=self.y_control)
-            Window.bind(on_joy_axis=self.x_control)
-
-        if release_id == 1:
-            Window.unbind(on_joy_axis=self.flick_control)
-            Window.unbind(on_joy_axis=self.wrist_control)
-            Window.bind(on_joy_axis=self.grab_control)
-
-        elif release_id == 2:
-            Window.unbind(on_joy_axis=self.flick_control)
-            Window.unbind(on_joy_axis=self.grab_control)
-            Window.bind(on_joy_axis=self.wrist_control)
-
-        elif release_id == 3:
-            Window.unbind(on_joy_axis=self.grab_control)
-            Window.unbind(on_joy_axis=self.wrist_control)
-            Window.bind(on_joy_axis=self.flick_control)
-
-    def x_control(self, win, stickid, axisid, value):
-        if value > 0 and axisid == 0:
-            if self.valueX.value < 100:
-                self.valueX.value += 1
-        elif value < 0 and axisid == 0:
-            if self.valueX.value > -100:
-                self.valueX.value -= 1
-
-
-    def y_control(self, win, stickid, axisid, value):
-        if value < 0 and axisid == 1:
-            if self.valueY.value < 100:
-                self.valueY.value += 1
-        elif value > 0 and axisid == 1:
-            if self.valueY.value > -100:
-                self.valueY.value -= 1
-            
-    def z_control(self, win, stickid, axisid, value):
-        if value < 0 and axisid == 4:
-            if self.valueZ.value < 100:
-                self.valueZ.value += 1
-        elif value > 0 and axisid == 4:
-            if self.valueZ.value > -100:
-                self.valueZ.value -= 1
-             
-    def flick_control(self, win, stickid, axisid, value):
-        if axisid == 5:
-            if self.valueF.value < 100:
-                self.valueF.value += 1
-        elif axisid == 2:
-            if self.valueF.value > -100:
-                self.valueF.value -= 1
-
-    def grab_control(self, win, stickid, axisid, value):
-        if axisid == 5:
-            if self.valueG.value < 100:
-                self.valueG.value += 1
-        elif axisid == 2:
-            if self.valueG.value > -100:
-                self.valueG.value -= 1
-
-    def wrist_control(self, win, stickid, axisid, value):
-        if axisid == 5:
-            if self.valueW.value < 360:
-                self.valueW.value += 1
-        elif axisid == 2:
-            if self.valueW.value > -360:
-                self.valueW.value -= 1
-
-
 # Define our app
 class PanelApp(App):
     # Set our variables for various operations
@@ -177,9 +88,7 @@ class PanelApp(App):
             newNum = 0
         return newNum
 
-
 ros_thread = SpinROS()
-
 
 # Run app
 if __name__ == '__main__':
