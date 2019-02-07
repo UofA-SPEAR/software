@@ -53,6 +53,7 @@ add_message_files(
   ActuatorStatus.msg
   NodeStatus.msg
   BatteryInfo.msg
+  PpmMessage.msg
 )
 
 ## Generate services in the 'srv' folder
