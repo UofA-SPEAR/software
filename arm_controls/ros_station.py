@@ -4,6 +4,7 @@ import rospy
 import threading
 from threading import Thread
 from arm_controls.msg import joyinput # input_axes, input_buttons # Messages need to be compiled
+from sensor_msgs.msg import Joy
 
 # from Rover1 Code
 class SpinROS(threading.Thread):
