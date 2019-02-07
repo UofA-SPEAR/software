@@ -32,7 +32,7 @@ git clone https://github.com/MonashUAS/canros.git
 
 ###### Link our packages
 # This needs to be moved all back into rover2 at some point
-ln -s $DIR/drive_system
+ln -s $DIR/drive_controls
 ln -s $DIR/rover2
 ln -s $DIR/rover2_can
 ln -s $DIR/hardware_interface
