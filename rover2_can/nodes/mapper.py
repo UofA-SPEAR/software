@@ -6,7 +6,7 @@ from canros import Message as CanrosMessage
 from hardware_interface.msg import WheelCmdArray
 import rospy
 from rover2_can import map_ros_to_can, map_can_to_ros, test_bit
-from rover2_can.msg import ActuatorStatus, BatteryInfo, NodeStatus
+from rover2_can.msg import ActuatorStatus, BatteryInfo, NodeStatus, PpmMessage
 
 
 def wheel_cmd_array_mapper(data):
@@ -35,6 +35,10 @@ def main():
     ####################################
     # Set up UAVCAN -> ROS subscribers #
     ####################################
+
+    map_can_to_ros("spear.general.PpmMessage", PpmMessage,
+                   "/rover2_can/PpmMessage",
+                   {"channel_data": lambda data: data.channel_data})
 
     map_can_to_ros(
         "uavcan.equipment.actuator.Status", ActuatorStatus,
