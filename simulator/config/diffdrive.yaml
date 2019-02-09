@@ -21,7 +21,7 @@ base_frame_id: base_link
 linear:
   x:
     has_velocity_limits    : true
-    max_velocity           : 0.2   # m/s
+    max_velocity           : 3.0   # m/s
     has_acceleration_limits: true
     max_acceleration       : 0.6   # m/s^2
 angular:
