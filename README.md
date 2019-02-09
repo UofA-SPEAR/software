@@ -2,6 +2,12 @@
 # Rover 2
 This is the rover package. Anything on the rover's computers will be in this package.
 
+## Dependencies
+```bash
+sudo apt update
+sudo apt install python-pip
+```
+
 ## Docker
 
 1. Setup the environment. (you only need to do this once)

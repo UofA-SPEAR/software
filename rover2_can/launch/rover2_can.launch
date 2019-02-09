@@ -1,0 +1,24 @@
+<launch>
+	<!--
+		This launch file will, by default, launch the canros server such that
+		it listens to the "can0" device. You can change it by passing in an
+		"interface" argument, e.g:
+
+			$ roslaunch rover2_can rover2_can.launch interface:=vcan0
+
+		...will make the canros server listen to the "vcan0" device. This is
+		good for local testing.
+	-->
+	<arg name="interface" default="can0" />
+
+	<node name="rover2_can_mapper" pkg="rover2_can" type="mapper.py" output="screen" />
+
+	<!--
+		canros's server uses a launch file to run, so instead of using the
+		<node> tag like we do everywhere else we have to use the <include>
+		tag and pass in arguments.
+	-->
+	<include file="$(find canros)/launch/server.launch">
+		<arg name="can_interface" value="$(arg interface)" />
+	</include>
+</launch>

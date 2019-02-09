@@ -1,7 +1,7 @@
 #include "ros/ros.h"
-#include "drive_system/drive_cmd.h"
+#include "drive_controls/drive_cmd.h"
 
-void driveCallback(const drive_system::drive_cmd::ConstPtr& msg)
+void driveCallback(const drive_controls::drive_cmd::ConstPtr& msg)
 {
   ROS_INFO("[Driving]: (L: %d R: %d)", msg->left, msg->right);
 }

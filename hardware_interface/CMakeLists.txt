@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(rover2)
+project(hardware_interface)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -8,11 +8,12 @@ project(rover2)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-    roscpp
-    cv_bridge
-    image_transport
-    message_generation
-    std_msgs
+  message_generation
+  message_runtime
+  roscpp
+  std_msgs
+  drive_controls
+  rosconsole
 )
 
 ## System dependencies are found with CMake's conventions
@@ -49,9 +50,11 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-add_message_files(FILES
-  BallCoord.msg
-  BallCoords.msg
+add_message_files(
+   FILES
+  wheel_cmd.msg
+  WheelCmdArray.msg
+#   Message2.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -71,7 +74,7 @@ add_message_files(FILES
 ## Generate added messages and services with any dependencies listed here
 generate_messages(
   DEPENDENCIES
-  std_msgs  # Or other packages containing msgs
+  std_msgs
 )
 
 ################################################
@@ -105,26 +108,25 @@ generate_messages(
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES rover2
-  CATKIN_DEPENDS message_runtime std_msgs
+#  LIBRARIES hardware_interface
+   CATKIN_DEPENDS message_generation message_runtime roscpp std_msgs
 #  DEPENDS system_lib
 )
 
-##########
+###########
 ## Build ##
 ###########
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-#   include
+  include
   ${catkin_INCLUDE_DIRS}
-  ${OpenCV_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/rover2.cpp
+#   src/${PROJECT_NAME}/hardware_interface.cpp
 # )
 
 ## Add cmake target dependencies of the library
@@ -135,8 +137,7 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(ball_detector_node src/ball_detector.cpp)
-add_dependencies(ball_detector_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_executable(${PROJECT_NAME}_node src/interface.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -146,12 +147,11 @@ add_dependencies(ball_detector_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-# add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(ball_detector_node
-  ${catkin_LIBRARIES}
-  ${OpenCV_LIBRARIES}
+target_link_libraries(${PROJECT_NAME}_node
+   ${catkin_LIBRARIES}
 )
 
 #############
@@ -194,7 +194,7 @@ target_link_libraries(ball_detector_node
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_rover2.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_hardware_interface.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
