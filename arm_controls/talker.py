@@ -24,6 +24,7 @@ import rospy
 from std_msgs.msg import String
 from sensor_msgs.msg import Joy
 from send_joy import Arm_Controller
+# from arm_controls.msg import Arm
 
 
 
@@ -44,9 +45,9 @@ class WidgetContainer(GridLayout):
         self.valueW.value,
         ]
 
-        self.p_axes = self.newValues
-        self.p_buttons = self.newValues
-        self.talker.send_joystate(float(self.p_axes), int(self.p_buttons))
+        # self.p_axes = self.newValues
+        # self.p_buttons = self.newValues
+        # self.talker.send_joystate(float(self.p_axes), int(self.p_buttons))
 
         # Check if any changes have been made to values since last fun. If any changes have been made then update values
         if (newValues != oldValues):    
@@ -67,15 +68,34 @@ class WidgetContainer(GridLayout):
 
      # Get the joystick events
      # Make sure to have xboxdrv installed
+
+    def callback(data):
+        arm = Arm()
+        arm.x = 200*data.axes[0]
+        arm.y = 200*data.axes[1]
+        arm.z = 200*data.axes[2]
+        pub.publish(arm)
+
+    # Intializes everything
+    def start():
+        # publishing to "turtle1/cmd_vel" to control turtle1
+        global pub
+        pub = rospy.Publisher('arm_control', Arm)
+        # subscribed to joystick inputs on topic "joy"
+        rospy.Subscriber("joy", Joy, callback)
+        # starts the node
+        rospy.init_node('Joy2Arm')
+        # rospy.spin()
+
     def __init__(self, **kwargs):
         super(WidgetContainer, self).__init__(**kwargs)
 
-        self.p_axes = []
-        self.p_buttons = []
+        # self.p_axes = []
+        # self.p_buttons = []
 
-        self.talker = Arm_Controller()
-        rospy.Subscriber("joy", Joy, self.sendValues)
-        rospy.init_node('talkerJoy')
+        # self.talker = Arm_Controller()
+        # rospy.Subscriber("joy", Joy, self.sendValues)
+        # rospy.init_node('talkerJoy')
 
         # get joystick events first
         Window.bind(on_joy_button_up=self.control_option)
