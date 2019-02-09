@@ -9,6 +9,9 @@ while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symli
 done
 DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null && pwd )"
 
+###### Make gazebo see the models
+echo "export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:$DIR/simulator/models" >> ~/.bashrc
+
 ###### Setup ros path
 cd ~
 mkdir -p ~/ros/src
