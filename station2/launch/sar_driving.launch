@@ -1,0 +1,20 @@
+<launch>
+
+
+    <!-- Listens to "/joy", outputs to "/drive" -->
+    <node pkg="station2" name="joystick_reader"
+        type="joy_sender.py" output="screen"/>
+
+    <node pkg="hardware_interface" name="hardware_interface"
+        type="hardware_interface_node" />
+
+
+    <node name="rover2_can_mapper" pkg="rover2_can" 
+        type="mapper.py" output="screen" />
+
+    <arg name="interface" default="can0" />
+    <include file="$(find canros)/launch/server.launch">
+        <arg name="can_interface" value="$(arg interface)" />
+    </include>
+
+</launch>

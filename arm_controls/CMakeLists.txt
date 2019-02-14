@@ -11,7 +11,6 @@ find_package(catkin REQUIRED COMPONENTS
   joy
   rospy
   std_msgs
-  arm_controls
 )
 
 ## System dependencies are found with CMake's conventions
