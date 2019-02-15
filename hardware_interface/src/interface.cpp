@@ -21,6 +21,7 @@ void driveControlsCallback(const drive_controls::drive_cmd::ConstPtr& msg)
   ROS_INFO("Left: %d -- Right: %d", msg->left, msg->right);
 
   hardware_interface::WheelCmdArray wheelCommands;
+  hardware_interface::WheelCmdArray wheelCommands_part2;
   hardware_interface::wheel_cmd wheelCommand;
 
   // Deal with left side
@@ -35,17 +36,19 @@ void driveControlsCallback(const drive_controls::drive_cmd::ConstPtr& msg)
   ROS_INFO("Left wheel %d: %f", wheelCommand.wheel, wheelCommand.velocity);
 
   // Deal with right side
+  // Hacky fix
   wheelCommand.velocity = msg->right;
 
   wheelCommand.wheel = HW_IF_WHEEL_RIGHT_1;
-  wheelCommands.wheel_cmds.push_back(wheelCommand);
+  wheelCommands_part2.wheel_cmds.push_back(wheelCommand);
   ROS_INFO("Right wheel %d: %f", wheelCommand.wheel, wheelCommand.velocity);
 
   wheelCommand.wheel = HW_IF_WHEEL_RIGHT_2;
-  wheelCommands.wheel_cmds.push_back(wheelCommand);
+  wheelCommands_part2.wheel_cmds.push_back(wheelCommand);
   ROS_INFO("Right wheel %d: %f", wheelCommand.wheel, wheelCommand.velocity);
 
   wheel_pub.publish(wheelCommands);
+  wheel_pub.publish(wheelCommands_part2);
 }
 
 int main(int argc, char** argv)
