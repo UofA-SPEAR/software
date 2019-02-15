@@ -12,9 +12,11 @@
     <node name="rover2_can_mapper" pkg="rover2_can" 
         type="mapper.py" output="screen" />
 
-    <arg name="interface" default="can0" />
+    <arg name="can_interface" default="can0" />
+    <arg name="uavcan_id" default="127" />
     <include file="$(find canros)/launch/server.launch">
-        <arg name="can_interface" value="$(arg interface)" />
+        <arg name="can_interface" value="$(arg can_interface)" />
+        <arg name="uavcan_id" value="$(arg uavcan_id)" />
     </include>
 
 </launch>
