@@ -26,6 +26,20 @@ This will setup your catkin workspace for development.
 
 ## Running "remote" launch files ##
 
+Current status is: not working but close.
+
+For now, just ssh into the remote and run the main launch file.
+Then on the local machine, run:
+
+```
+export ROS_MASTER_URI=http://tegra-ubuntu:11311/
+```
+
+And then any nodes you run on your local machine will automatically
+connect to the remote machine.
+
+### How To (not working yet) ###
+
 See [this post](https://answers.ros.org/question/41446/a-is-not-in-your-ssh-known_hosts-file/)
 
 ## Code Formatting ##
