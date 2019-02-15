@@ -24,3 +24,10 @@ Then clone the repository, and run the `unpack.sh` command located within.
 
 This will setup your catkin workspace for development.
 
+## Code Formatting ##
+
+### Python ###
+
+```
+autopep8 --in-place filename.py
+```
