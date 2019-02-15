@@ -1,14 +1,15 @@
 <launch>
 
-    <!-- Hardcoded IP yeah, but we can fix that later -->
     <!-- You will need to upload your SSH key -->
-    <machine name="hal" address="192.168.0.61" user="nvidia" 
-        default="never"/>
+    <arg name="your_machine_ip" default="192.168.0.42"/>
+    <arg name="your_machine_user" default="isthatme"/>
+    <machine name="hal" address="tegra-ubuntu" user="nvidia" 
+        default="never"
+        env-loader="/home/nvidia/station2/station2/env-loader.sh"/>
+    <machine name="your_machine" address="$(arg your_machine_ip)"
+        user="$(arg your_machine_user)" default="true"/>
 
-    <node pkg="joy" name="joystick_input" type="joy_node" >
-        <param name="autorepeat_rate" value="10" />
-        <!-- Maybe set coalesce_interval? -->
-    </node>
+    <!-- add joystick stuff here -->
 
     <!-- Listens to "/joy", outputs to "/drive" -->
     <node pkg="station2" name="joystick_reader"
