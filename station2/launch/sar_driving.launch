@@ -1,9 +1,11 @@
 <launch>
 
     <!-- Hardcoded IP yeah, but we can fix that later -->
-    <machine name="hal" address="192.168.0.61" />
+    <!-- You will need to upload your SSH key -->
+    <machine name="hal" address="192.168.0.61" user="nvidia" 
+        default="never"/>
 
-    <node pkg="joy" name="joystick_input" type="joy_node">
+    <node pkg="joy" name="joystick_input" type="joy_node" >
         <param name="autorepeat_rate" value="10" />
         <!-- Maybe set coalesce_interval? -->
     </node>
@@ -13,7 +15,7 @@
         type="joy_sender.py" output="screen"
         machine="hal"/>
 
-    <!-- Listens to "/drive" and ouputs to "/hw_interface/drive" />
+    <!-- Listens to "/drive" and ouputs to "/hw_interface/drive" -->
     <node pkg="hardware_interface" name="hardware_interface"
         type="hardware_interface_node" 
         machine="hal"/>
@@ -26,6 +28,7 @@
     <!-- Start canros server -->
     <arg name="can_interface" default="vcan0" />
     <arg name="uavcan_id" default="127" />
+    <arg name="config_yaml" default="$(find canros)/launch/default.yaml"/>
     <node ns="canros" name="server" pkg="canros" type="server.py"
         output="screen" required="true" machine="hal">
         <param name="can_interface" value="$(arg can_interface)" />
