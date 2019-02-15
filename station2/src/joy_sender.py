@@ -10,9 +10,10 @@ left_axis = 1
 right_axis = 4
 pub = rospy.Publisher('/drive', drive_cmd, queue_size=10)
 
+
 def joy_callback(data):
     rospy.loginfo("Joystick Input: [L, R] [ %f, %f ]",
-            data.axes[left_axis], data.axes[right_axis])
+                  data.axes[left_axis], data.axes[right_axis])
 
     msg = drive_cmd()
     msg.left = data.axes[left_axis] * 100
@@ -23,7 +24,7 @@ def joy_callback(data):
 # Not sure what I should call this, not too used to python
 def joy_sender():
     rospy.init_node('joy_publisher')
-    rospy.Subscriber('/joy', Joy, joy_callback);
+    rospy.Subscriber('/joy', Joy, joy_callback)
 
     rospy.loginfo("Joystick sender started!")
 
@@ -32,4 +33,3 @@ def joy_sender():
 
 if __name__ == '__main__':
     joy_sender()
-    
