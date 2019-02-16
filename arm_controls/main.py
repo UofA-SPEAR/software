@@ -1,9 +1,7 @@
 import kivy
 import datetime
-from ros_station import SpinROS, ros_init
-
+from ros_station import SpinROS, ros_init, joyData, publish
 from kivy.app import App
-
 from kivy.uix.gridlayout import GridLayout
 from kivy.core.window import Window
 from kivy.uix.label import Widget, Label
@@ -18,30 +16,22 @@ from kivy.properties import (
     ReferenceListProperty)
 from kivy.clock import Clock
 from threading import Thread
-
-
-# We will be using the knob class from kivy garden to add a control knob to our app.
-# Use 'pip install kivy-garden' and then 'garden install knob' to install
-# the knob class
-# See here: https://github.com/kivy-garden/garden.knob
 from kivy.garden.knob import Knob
-
 
 class WidgetContainer(GridLayout):
     
-    def sendValues(self, oldValues):
+    def updateValues(self, oldValues):
         # Send values to rover here. As of now this function only prints values to console
         # This function doesn't do anything unless the values change from the last run
 
         # Populate array of updated values
         newValues = [
-                self.valueX.value,
-                self.valueY.value,
-                self.valueZ.value,
-                self.valueF.value,
-                self.valueG.value,
-                self.valueW.value,
-        ]
+                self.valueX.value - joyData.l_stick_x,
+                self.valueY.value + joyData.l_stick_y,
+                self.valueZ.value + joyData.r_stick_y,
+                self.valueF.value + joyData.dpad[0] - joyData.dpad[1],
+                self.valueG.value + joyData.dpad[3] - joyData.dpad[2],
+                self.valueW.value + abs((joyData.r_bumper - 1)/2) - abs((joyData.l_bumper - 1)/2)]
 
         # Check if any changes have been made to values since last fun. If any changes have been made then update values
         if (newValues != oldValues):    
@@ -56,93 +46,21 @@ class WidgetContainer(GridLayout):
             print ' Grab: ' + str(round(newValues[4], decPrecision))
             print 'Wrist: ' + str(round(newValues[5], decPrecision))
             oldValues = newValues # update array for next run
+            publish(newValues)
 
         PanelApp.valueArray = oldValues
+        [
+            self.valueX.value,
+            self.valueY.value,
+            self.valueZ.value,
+            self.valueF.value,
+            self.valueG.value,
+            self.valueW.value]  = newValues
 
      # Get the joystick events
      # Make sure to have xboxdrv installed
     def __init__(self, **kwargs):
         super(WidgetContainer, self).__init__(**kwargs)
-
-        # get joystick events first
-        Window.bind(on_joy_button_up=self.control_option)
-        Window.bind(on_joy_axis=self.z_control)
-        Window.bind(on_joy_axis=self.x_control)
-        Window.bind(on_joy_axis=self.flick_control)
-
-
-    def control_option(self, win, stickid, release_id):
-        if release_id == 12:
-            Window.unbind(on_joy_axis=self.x_control)
-            Window.bind(on_joy_axis=self.y_control)
-        elif release_id == 11:
-            Window.unbind(on_joy_axis=self.y_control)
-            Window.bind(on_joy_axis=self.x_control)
-
-        if release_id == 1:
-            Window.unbind(on_joy_axis=self.flick_control)
-            Window.unbind(on_joy_axis=self.wrist_control)
-            Window.bind(on_joy_axis=self.grab_control)
-
-        elif release_id == 2:
-            Window.unbind(on_joy_axis=self.flick_control)
-            Window.unbind(on_joy_axis=self.grab_control)
-            Window.bind(on_joy_axis=self.wrist_control)
-
-        elif release_id == 3:
-            Window.unbind(on_joy_axis=self.grab_control)
-            Window.unbind(on_joy_axis=self.wrist_control)
-            Window.bind(on_joy_axis=self.flick_control)
-
-    def x_control(self, win, stickid, axisid, value):
-        if value > 0 and axisid == 0:
-            if self.valueX.value < 100:
-                self.valueX.value += 1
-        elif value < 0 and axisid == 0:
-            if self.valueX.value > -100:
-                self.valueX.value -= 1
-
-
-    def y_control(self, win, stickid, axisid, value):
-        if value < 0 and axisid == 1:
-            if self.valueY.value < 100:
-                self.valueY.value += 1
-        elif value > 0 and axisid == 1:
-            if self.valueY.value > -100:
-                self.valueY.value -= 1
-            
-    def z_control(self, win, stickid, axisid, value):
-        if value < 0 and axisid == 4:
-            if self.valueZ.value < 100:
-                self.valueZ.value += 1
-        elif value > 0 and axisid == 4:
-            if self.valueZ.value > -100:
-                self.valueZ.value -= 1
-             
-    def flick_control(self, win, stickid, axisid, value):
-        if axisid == 5:
-            if self.valueF.value < 100:
-                self.valueF.value += 1
-        elif axisid == 2:
-            if self.valueF.value > -100:
-                self.valueF.value -= 1
-
-    def grab_control(self, win, stickid, axisid, value):
-        if axisid == 5:
-            if self.valueG.value < 100:
-                self.valueG.value += 1
-        elif axisid == 2:
-            if self.valueG.value > -100:
-                self.valueG.value -= 1
-
-    def wrist_control(self, win, stickid, axisid, value):
-        if axisid == 5:
-            if self.valueW.value < 360:
-                self.valueW.value += 1
-        elif axisid == 2:
-            if self.valueW.value > -360:
-                self.valueW.value -= 1
-
 
 # Define our app
 class PanelApp(App):
@@ -159,7 +77,7 @@ class PanelApp(App):
         self.icon = 'window_icon.ico'
         widgetcontainer = WidgetContainer()
         # Update changed values to be sent to the rover. Update 5 times per second
-        Clock.schedule_interval(lambda dt: widgetcontainer.sendValues(self.valueArray), 1.0 / 5.0)
+        Clock.schedule_interval(lambda dt: widgetcontainer.updateValues(self.valueArray), 1.0 / 30.0)
         return widgetcontainer
 
     def displayInput(self, mySlideValue):
@@ -177,9 +95,7 @@ class PanelApp(App):
             newNum = 0
         return newNum
 
-
 ros_thread = SpinROS()
-
 
 # Run app
 if __name__ == '__main__':
