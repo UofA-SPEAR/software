@@ -19,7 +19,7 @@ ros::Publisher coords_pub;
 
 /** @brief Callback function for recieving raw frames from camera
  */
-void imageCallback(const sensor_msgs::ImageConstPtr& msg);
+void imageCallback(const sensor_msgs::Image::ConstPtr& msg);
 
 /** @brief Function to find the yellow circles within an image.
  * Assumes image is in BGR format.
@@ -79,6 +79,7 @@ void imageCallback(const sensor_msgs::ImageConstPtr& msg)
   }
 }
 
+// TODO Fix issue with detection when there is a saturation/value gradient
 std::vector<Vec3f> getCircles(Mat image)
 {
   // Convert to HSV format
@@ -87,7 +88,7 @@ std::vector<Vec3f> getCircles(Mat image)
 
   // Image processing to improve image quality
   Mat imgThresholded;
-  inRange(fullImageHSV, Scalar(29, 86, 6), Scalar(64, 255, 255), imgThresholded);
+  inRange(fullImageHSV, Scalar(29, 86, 100), Scalar(64, 255, 255), imgThresholded);
   erode(imgThresholded, imgThresholded, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
   dilate(imgThresholded, imgThresholded, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
   dilate(imgThresholded, imgThresholded, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));

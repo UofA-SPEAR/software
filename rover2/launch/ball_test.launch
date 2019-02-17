@@ -1,5 +1,7 @@
 <launch>
 
+  <arg name="device_id" default="0" />
+
   <!-- Start the for cam 1 -->
   <node pkg="gscam" type="gscam" name="camera_1">
   <env name="GSCAM_CONFIG" value="v4l2src device=/dev/video1 ! video/x-raw-yuv,framerate=10/1,width=640,height=480 ! ffmpegcolorspace ! x264enc bitrate=256 ! flutsmux " />
