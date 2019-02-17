@@ -1,0 +1,10 @@
+<launch>
+	<!--
+		Just an easier shortcut for using the rover2_can launch file with
+		interface set to "vcan0". Good for development.
+	-->
+
+	<include file="$(find rover2_can)/launch/rover2_can.launch">
+		<arg name="interface" value="vcan0" />
+	</include>
+</launch>

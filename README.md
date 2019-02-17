@@ -2,6 +2,17 @@
 # Rover 2
 This is the rover package. Anything on the rover's computers will be in this package.
 
+## Dependencies
+```bash
+sudo apt update
+sudo apt install python-pip
+```
+
+## Building
+Run `build.bash` from any directory to build everything. This also generates
+a `compile_commands.json` file and symlinks it to this repo's root to allow for
+things like code completion in c++ files.
+
 ## Docker
 
 1. Setup the environment. (you only need to do this once)
