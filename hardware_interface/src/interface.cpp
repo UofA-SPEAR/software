@@ -47,6 +47,10 @@ void driveControlsCallback(const drive_controls::drive_cmd::ConstPtr& msg)
   wheelCommands_part2.wheel_cmds.push_back(wheelCommand);
   ROS_INFO("Right wheel %d: %f", wheelCommand.wheel, wheelCommand.velocity);
 
+  // Currently there is a firmware issue on the drive board
+  // It will ignore/drop/whatever the third command
+  // so we have to split four commands into two arrays
+  // Temporary fix until the firmware is debugged
   wheel_pub.publish(wheelCommands);
   wheel_pub.publish(wheelCommands_part2);
 }
