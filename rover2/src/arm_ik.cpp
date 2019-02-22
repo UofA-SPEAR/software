@@ -123,13 +123,13 @@ void armCoordsCallback(const arm_controls::arm_position::ConstPtr& msg) {
   jointAngle.angle = angles.elbowPitch;
   armAngles.joints.push_back(jointAngle);
 
+  // I think msg->wrist is wrist roll
   jointAngle.id = 3;
-  jointAngle.angle = angles.wristPitch;
+  jointAngle.angle = msg->wrist;
   armAngles.joints.push_back(jointAngle);
 
-  // I think msg->wrist is wrist roll
   jointAngle.id = 4;
-  jointAngle.angle = msg->wrist;
+  jointAngle.angle = angles.wristPitch;
   armAngles.joints.push_back(jointAngle);
 
   jointAngle.id = 5;
