@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   message_generation
   hardware_interface
+  rover2
 )
 
 ## System dependencies are found with CMake's conventions
@@ -74,6 +75,7 @@ add_message_files(
 generate_messages(
   DEPENDENCIES
   hardware_interface
+  rover2
 )
 
 ################################################
@@ -108,7 +110,7 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES rover2_can
-  CATKIN_DEPENDS canros rospy message_runtime hardware_interface
+  CATKIN_DEPENDS canros rospy message_runtime hardware_interface rover2
 #  DEPENDS system_lib
 )
 
