@@ -5,6 +5,7 @@
 from canros import Message as CanrosMessage
 from hardware_interface.msg import WheelCmdArray
 import rospy
+from rover2.msg import ArmAngles
 from rover2_can import map_ros_to_can, map_can_to_ros, test_bit
 from rover2_can.msg import ActuatorStatus, BatteryInfo, NodeStatus, PpmMessage
 
@@ -21,6 +22,24 @@ def wheel_cmd_array_mapper(data):
     return out
 
 
+def arm_angles_mapper(data):
+    out = []
+    for joint_angle in data.joints:
+        uavcan_msg = CanrosMessage('uavcan.equipment.actuator.Command')
+
+        # The IDs of the arm's actuators start at 10 and run up to 15, with
+        # the order defined by the rover2 arm_ik node. The id's in data.joints
+        # start at 0 and run up to 5. So, we just add 10 to each data.joints
+        # id.
+        uavcan_msg.actuator_id = joint_angle.id + 10
+
+        uavcan_msg.command_type = 1  # a.k.a. COMMAND_TYPE_POSITION
+        uavcan_msg.command_value = joint_angle.angle
+        out.append(uavcan_msg)
+
+    return out
+
+
 def main():
     rospy.init_node("rover2_can")
 
@@ -31,6 +50,10 @@ def main():
     map_ros_to_can(WheelCmdArray, '/hw_interface/drive',
                    'uavcan.equipment.actuator.ArrayCommand',
                    {"commands": wheel_cmd_array_mapper})
+
+    map_ros_to_can(ArmAngles, '/arm/angles',
+                   'uavcan.equipment.actuator.ArrayCommand',
+                   {'commands': arm_angles_mapper})
 
     ####################################
     # Set up UAVCAN -> ROS subscribers #
