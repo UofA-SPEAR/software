@@ -1,8 +1,14 @@
+#include <math.h>
+
 #include <ros/ros.h>
 #include <tf/transform_broadcaster.h>
+#include <tf2_ros/static_transform_broadcaster.h>
 
+#include <geometry_msgs/TransformStamped.h>
 #include <visualization_msgs/MarkerArray.h>
 #include <rover2/ArmAngles.h>
+
+#include <tf2/LinearMath/Quaternion.h>
 
 #include "arm_parameters.h"
 
@@ -13,9 +19,75 @@ ros::NodeHandle* node;
 ros::Subscriber arm_angles_sub;
 ros::Publisher arm_visuals_pub;
 
+void setupTransforms(float shoulderYaw, float shoulderPitch, float elbowPitch,
+        float wristPitch){
+    static tf2_ros::StaticTransformBroadcaster st_br;
+    
+    geometry_msgs::TransformStamped message;
+    tf2::Quaternion quat;
+
+    message.header.stamp = ros::Time::now();
+    message.header.frame_id = "map";
+    message.child_frame_id = "shoulder_mount";
+    message.transform.translation.x = 0;
+    message.transform.translation.y = 0;
+    message.transform.translation.z = 0;
+    quat.setRPY(shoulderPitch, 0, shoulderYaw);
+    message.transform.rotation.x = quat.x();
+    message.transform.rotation.y = quat.y();
+    message.transform.rotation.z = quat.z();
+    message.transform.rotation.w = quat.w();
+    
+    st_br.sendTransform(message);
+
+    message.header.stamp = ros::Time::now();
+    message.header.frame_id = "shoulder_mount";
+    message.child_frame_id = "elbow_joint";
+    message.transform.translation.x = 0;
+    message.transform.translation.y = 1;
+    message.transform.translation.z = 0;
+    quat.setRPY(elbowPitch-M_PI, 0, 0);
+    message.transform.rotation.x = quat.x();
+    message.transform.rotation.y = quat.y();
+    message.transform.rotation.z = quat.z();
+    message.transform.rotation.w = quat.w();
+    
+    st_br.sendTransform(message);
+
+    message.header.stamp = ros::Time::now();
+    message.header.frame_id = "elbow_joint";
+    message.child_frame_id = "wrist_joint";
+    message.transform.translation.x = 0;
+    message.transform.translation.y = 1;
+    message.transform.translation.z = 0;
+    quat.setRPY(M_PI-elbowPitch-shoulderPitch+wristPitch, 0, 0);
+    message.transform.rotation.x = quat.x();
+    message.transform.rotation.y = quat.y();
+    message.transform.rotation.z = quat.z();
+    message.transform.rotation.w = quat.w();
+    
+    st_br.sendTransform(message);
+
+    message.header.stamp = ros::Time::now();
+    message.header.frame_id = "wrist_joint";
+    message.child_frame_id = "fingertips";
+    message.transform.translation.x = 0;
+    message.transform.translation.y = 1;
+    message.transform.translation.z = 0;
+    quat.setRPY(0, 0, 0);
+    message.transform.rotation.x = quat.x();
+    message.transform.rotation.y = quat.y();
+    message.transform.rotation.z = quat.z();
+    message.transform.rotation.w = quat.w();
+    
+    st_br.sendTransform(message);
+}
+
 void armAngleUpdateCallback(const rover2::ArmAngles::ConstPtr& msg){
     visualization_msgs::Marker marker;
     //TODO: Add markers for hand, so we can see the open/close state?
+
+    setupTransforms(msg->joints[0].angle, msg->joints[1].angle, msg->joints[2].angle, msg->joints[4].angle);
 
     visualization_msgs::MarkerArray fullArm;
 
@@ -48,7 +120,7 @@ void armAngleUpdateCallback(const rover2::ArmAngles::ConstPtr& msg){
     fullArm.markers.push_back(marker);
 
     //Forearm Marker
-    marker.header.frame_id = "bicep";
+    marker.header.frame_id = "elbow_joint";
     marker.header.stamp = ros::Time();
     marker.ns = "forearm";
     marker.id = 1;
@@ -73,7 +145,7 @@ void armAngleUpdateCallback(const rover2::ArmAngles::ConstPtr& msg){
     fullArm.markers.push_back(marker);
 
     //Wrist Marker
-    marker.header.frame_id = "shoulder_mount";
+    marker.header.frame_id = "wrist_joint";
     marker.header.stamp = ros::Time();
     marker.ns = "wrist";
     marker.id = 2;
@@ -102,22 +174,14 @@ void armAngleUpdateCallback(const rover2::ArmAngles::ConstPtr& msg){
     arm_visuals_pub.publish(fullArm);
 }
 
-void setupTransforms(){
-    static tf::TransformBroadcaster br;
-    tf::Transform transform;
-    transform.setOrigin(tf::Vector3(0.0, 0.0, 1.0));
-    tf::Quaternion q;
-    q.setRPY(0, 0, 0);
-    transform.setRotation(q);
-    br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "map", "shoulder_mount"));
-}
 
 int main(int argc, char** argv){
     ros::init(argc, argv, "arm_visual");
     node = new ros::NodeHandle;
     arm_angles_sub = node->subscribe("/arm/angles", 1000, armAngleUpdateCallback);
     arm_visuals_pub = node->advertise<visualization_msgs::MarkerArray>("visualization_marker_array", 10);
-    //setupTransforms();
+    setupTransforms(0, M_PI/4.0f, M_PI/6, M_PI/16);
     ros::spin();
+
     return 0;
 }
