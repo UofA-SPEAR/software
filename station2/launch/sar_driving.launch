@@ -1,0 +1,40 @@
+<launch>
+
+    <!-- You will need to upload your SSH key -->
+    <arg name="your_machine_ip" default="192.168.0.42"/>
+    <arg name="your_machine_user" default="isthatme"/>
+    <machine name="hal" address="tegra-ubuntu" user="nvidia" 
+        default="never"
+        env-loader="/home/nvidia/station2/station2/env-loader.sh"/>
+    <machine name="your_machine" address="$(arg your_machine_ip)"
+        user="$(arg your_machine_user)" default="true"/>
+
+    <!-- add joystick stuff here -->
+
+    <!-- Listens to "/joy", outputs to "/drive" -->
+    <node pkg="station2" name="joystick_reader"
+        type="joy_sender.py" output="screen"
+        machine="hal"/>
+
+    <!-- Listens to "/drive" and ouputs to "/hw_interface/drive" -->
+    <node pkg="hardware_interface" name="hardware_interface"
+        type="hardware_interface_node" 
+        machine="hal"/>
+
+    <!-- Start up ROS <--> CAN mapper -->
+    <node name="rover2_can_mapper" pkg="rover2_can" 
+        type="mapper.py" output="screen"
+        machine="hal"/>
+
+    <!-- Start canros server -->
+    <arg name="can_interface" default="vcan0" />
+    <arg name="uavcan_id" default="127" />
+    <arg name="config_yaml" default="$(find canros)/launch/default.yaml"/>
+    <node ns="canros" name="server" pkg="canros" type="server.py"
+        output="screen" required="true" machine="hal">
+        <param name="can_interface" value="$(arg can_interface)" />
+        <param name="uavcan_id" value="$(arg uavcan_id)" />
+        <rosparam command="load" file="$(arg config_yaml)" />
+    </node>
+
+</launch>
