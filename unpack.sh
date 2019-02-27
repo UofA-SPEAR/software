@@ -17,8 +17,11 @@ cd ~
 mkdir -p ~/ros/src
 cd ~/ros
 catkin_make
-echo "source ~/ros/devel/setup.bash" >> ~/.bashrc
-source ~/ros/devel/setup.bash
+if ! grep -Fxq "source ~/ros/devel/setup.bash" ~/.bashrc
+then
+    echo "source ~/ros/devel/setup.bash" >> ~/.bashrc
+    source ~/ros/devel/setup.bash
+fi
 
 ###### Install nimbro networks
 cd ~/ros/src
