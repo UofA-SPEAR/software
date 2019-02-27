@@ -10,7 +10,10 @@
   <!-- Example: -->
   <!-- <url type="website">http://wiki.ros.org/arm_controls</url> -->
 
-
+  <build_depend>sensor_msgs</build_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <build_depend>message_generation</build_depend>
+  <exec_depend>message_runtime</exec_depend>
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>nimbro_topic_transport</build_depend>
   <build_depend>rospy</build_depend>

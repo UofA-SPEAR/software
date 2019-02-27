@@ -2,4 +2,20 @@
 	<node name="udp_receiver" pkg="nimbro_topic_transport" type="udp_receiver" output="screen">
 		<param name="port" value="17001" />
 	</node>
+
+	<node
+		name="camera_1_decompressor"
+		pkg="image_transport"
+		type="republish"
+		args="compressed in:=/camera_1/image_raw raw out:=/camera_1/decompressed"
+		output="screen"
+	/>
+
+	<node
+		name="camera_2_decompressor"
+		pkg="image_transport"
+		type="republish"
+		args="compressed in:=/camera_2/image_raw raw out:=/camera_2/decompressed"
+		output="screen"
+	/>
 </launch>
