@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(drive_system)
+project(drive_controls)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -105,7 +105,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES drive_system
+#  LIBRARIES drive_controls
   CATKIN_DEPENDS nimbro_topic_transport roscpp std_msgs message_runtime
 #  DEPENDS system_lib
 )
@@ -123,7 +123,7 @@ include_directories(
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/drive_system.cpp
+#   src/${PROJECT_NAME}/drive_controls.cpp
 # )
 
 ## Add cmake target dependencies of the library
@@ -151,7 +151,7 @@ include_directories(
    ${catkin_LIBRARIES}
  )
 
-add_dependencies(drive_receiver drive_system_generate_messages_cpp)
+add_dependencies(drive_receiver drive_controls_generate_messages_cpp)
 
 
 #############
@@ -194,7 +194,7 @@ add_dependencies(drive_receiver drive_system_generate_messages_cpp)
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_drive_system.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_drive_controls.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
