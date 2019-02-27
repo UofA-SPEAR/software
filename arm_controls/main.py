@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import kivy
 import datetime
 from ros_station import SpinROS, ros_init, joyData, publish

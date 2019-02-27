@@ -5,6 +5,6 @@
 float32 x
 float32 y
 float32 z
-float32 wrist
-float32 grab
 float32 flick
+float32 grab
+float32 wrist
