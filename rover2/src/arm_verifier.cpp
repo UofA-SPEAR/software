@@ -1,6 +1,7 @@
 /**
  * A simple node that does forward kinematics to verify the inverse kinematics
  * Just prints x,y,z coords to ROS_INFO
+ * NOT FINISHED - Ryan
  */
 
 #include <math.h>
