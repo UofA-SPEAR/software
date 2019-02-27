@@ -83,12 +83,7 @@ void setupTransforms(float shoulderYaw, float shoulderPitch, float elbowPitch,
     st_br.sendTransform(message);
 }
 
-void armAngleUpdateCallback(const rover2::ArmAngles::ConstPtr& msg){
-    visualization_msgs::Marker marker;
-    //TODO: Add markers for hand, so we can see the open/close state?
-
-    setupTransforms(msg->joints[0].angle, msg->joints[1].angle, msg->joints[2].angle, msg->joints[4].angle);
-
+void putMarkers(){
     visualization_msgs::MarkerArray fullArm;
 
     //Fill out marker fields
@@ -174,12 +169,20 @@ void armAngleUpdateCallback(const rover2::ArmAngles::ConstPtr& msg){
     arm_visuals_pub.publish(fullArm);
 }
 
+void armAngleUpdateCallback(const rover2::ArmAngles::ConstPtr& msg){
+    visualization_msgs::Marker marker;
+    //TODO: Add markers for hand, so we can see the open/close state?
+
+    setupTransforms(msg->joints[0].angle, msg->joints[1].angle, msg->joints[2].angle, msg->joints[4].angle);
+
+}
+
 
 int main(int argc, char** argv){
     ros::init(argc, argv, "arm_visual");
     node = new ros::NodeHandle;
     arm_angles_sub = node->subscribe("/arm/angles", 1000, armAngleUpdateCallback);
-    arm_visuals_pub = node->advertise<visualization_msgs::MarkerArray>("visualization_marker_array", 10);
+    arm_visuals_pub = node->advertise<visualization_msgs::MarkerArray>("visualization_marker_array", 10, true); //bool at end makes this a Latched Publisher
     setupTransforms(0, M_PI/4.0f, M_PI/6, M_PI/16);
     ros::spin();
 

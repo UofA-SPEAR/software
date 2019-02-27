@@ -12,4 +12,12 @@ const float ELBOW_OFFSET = 1.0;
 
 const float ADJUSTED_SHOULDER_PITCH = atan2(ELBOW_OFFSET, BICEP_LENGTH);
 
+//Constants for arm visualizer
+const float BICEP_WIDTH = 1.0;
+const float BICEP_HEIGHT = 1.0;
+const float FOREARM_WIDTH = 1.0;
+const float FOREARM_HEIGHT = 1.0;
+const float WRIST_WIDTH = 1.0;
+const float WRIST_HEIGHT = 1.0;
+
 #endif
