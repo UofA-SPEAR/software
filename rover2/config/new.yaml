@@ -1,0 +1,8 @@
+publish_interval: 100
+settings:
+  /arm/angles/joints[0]/angle: {is_repeat: true, max: 2.0, min: 1.0}
+  /arm/angles/joints[0]/id: {is_repeat: true, max: 1, min: 1}
+  /arm/angles/joints[1]/angle: {is_repeat: true, max: 4.0, min: 0.0}
+  /arm/angles/joints[1]/id: {is_repeat: true, max: 2, min: 2}
+texts: ['/arm/angles/joints[0]/id', '/arm/angles/joints[0]/angle', '/arm/angles/joints[1]/id',
+  '/arm/angles/joints[1]/angle']
