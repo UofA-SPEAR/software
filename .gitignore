@@ -6,3 +6,4 @@ __pycache__/
 # something like code completion in vim and have it recognize all the ros
 # packages.
 compile_commands.json
+arm_controls/dial.psd

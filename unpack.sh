@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
+
+# NOT VERIFIED, DO NOT USE THIS
+
+echo "don't use this yet"
+exit 1
+
 ###### Get script location
 # https://stackoverflow.com/a/246128
 SOURCE="${BASH_SOURCE[0]}"
@@ -52,3 +58,5 @@ ln -s $DIR/rover2_can/uavcan_dsdl/spear
 ###### Build everything
 cd ~/ros
 catkin_make
+
+printf "Thanks for unpacking!\nNow that your enviroment is setup, you should never have to do this again.\n"
