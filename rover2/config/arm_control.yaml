@@ -1,0 +1,18 @@
+publish_interval: 100
+settings:
+  /arm/angles/joints[0]/angle: {is_repeat: true, max: 1.0, min: -1.0}
+  /arm/angles/joints[0]/id: {is_repeat: true, max: 0, min: 0}
+  /arm/angles/joints[1]/angle: {is_repeat: true, max: 1.0, min: -1.0}
+  /arm/angles/joints[1]/id: {is_repeat: true, max: 1, min: 1}
+  /arm/angles/joints[2]/angle: {is_repeat: true, max: 1.0, min: -1.0}
+  /arm/angles/joints[2]/id: {is_repeat: true, max: 2, min: 2}
+  /arm/angles/joints[3]/angle: {is_repeat: true, max: 1.0, min: -1.0}
+  /arm/angles/joints[3]/id: {is_repeat: true, max: 3, min: 3}
+  /arm/angles/joints[4]/angle: {is_repeat: true, max: 1.0, min: -1.0}
+  /arm/angles/joints[4]/id: {is_repeat: true, max: 4, min: 4}
+  /arm/angles/joints[5]/angle: {is_repeat: true, max: 1.0, min: -1.0}
+  /arm/angles/joints[5]/id: {is_repeat: true, max: 5, min: 5}
+texts: ['/arm/angles/joints[0]/id', '/arm/angles/joints[0]/angle', '/arm/angles/joints[1]/id',
+  '/arm/angles/joints[1]/angle', '/arm/angles/joints[2]/id', '/arm/angles/joints[2]/angle',
+  '/arm/angles/joints[3]/id', '/arm/angles/joints[3]/angle', '/arm/angles/joints[4]/id',
+  '/arm/angles/joints[4]/angle', '/arm/angles/joints[5]/id', '/arm/angles/joints[5]/angle']
