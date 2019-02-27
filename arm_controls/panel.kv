@@ -1,0 +1,233 @@
+#:kivy 1.10.1
+#:import Factory kivy.factory.Factory
+
+# Definition for entire panel
+<WidgetContainer>:
+    # Window is a 2x2 grid with nested layouts per cell
+    valueX: SlideX # X Coordinate
+    valueY: SlideY # Y Coordinate
+    valueZ: SlideZ # Z Coordinate
+    valueF: SlideF # Wrist Flick
+    valueG: SlideG # Hand Grab
+    valueW: KnobWrist # Wrist Rotation
+    cols: 2
+    rows: 2
+    
+
+    # First box layout defines Y and Z sliders
+    BoxLayout:
+        Widget:
+
+        # Y Slider:
+        GridLayout:
+            rows: 3
+            size_hint_x: None
+            column_default_width: app.vSlideWidth
+            width: self.minimum_width
+            Slider:
+                id: SlideY
+                size_hint_x: None
+                width: app.vSlideWidth
+                orientation: 'vertical'
+                max: 100
+                min: -100
+                value: 0
+                on_value: TextY.text = app.displayInput(self.value)
+            Label:
+                text: 'Y'
+                text_size: self.size
+                size_hint_y: None
+                height: app.labelHeight
+                halign: 'center'
+                valign: 'center'
+            TextInput:
+                id: TextY
+                text: '0.0'
+                text_size: self.size
+                size_hint_y: None
+                height: app.tinputHeight
+                halign: 'center'
+                valign: 'center'
+                multiline: False
+                on_text_validate: SlideY.value = app.checkInput(self.text)
+
+        # Z Slider:
+        GridLayout:
+            rows: 3
+            size_hint_x: None
+            column_default_width: app.vSlideWidth
+            width: self.minimum_width
+            Slider:
+                id: SlideZ
+                size_hint_x: None
+                width: app.vSlideWidth
+                orientation: 'vertical'
+                max: 100
+                min: -100
+                value: 0
+                on_value: TextZ.text = app.displayInput(self.value)
+            Label:
+                text: 'Z'
+                text_size: self.size
+                size_hint_y: None
+                height: app.labelHeight
+                halign: 'center'
+                valign: 'center'
+            TextInput:
+                id: TextZ
+                text: '0.0'
+                text_size: self.size
+                size_hint_y: None
+                height: app.tinputHeight
+                halign: 'center'
+                valign: 'center'
+                multiline: False
+                on_text_validate: SlideZ.value = app.checkInput(self.text)
+        Widget:
+
+    # Second box layout holds Flick and Grab sliders
+    BoxLayout:
+        Widget:
+
+        # Flick Slider:
+        GridLayout:
+            rows: 3
+            size_hint_x: None
+            column_default_width: app.vSlideWidth
+            width: self.minimum_width
+            Slider:
+                id: SlideF
+                size_hint_x: None
+                width: app.vSlideWidth
+                orientation: 'vertical'
+                max: 100
+                min: -100
+                value: 0
+                on_value: TextF.text = app.displayInput(self.value)
+            Label:
+                text: 'Flick'
+                text_size: self.size
+                size_hint_y: None
+                height: app.labelHeight
+                halign: 'center'
+                valign: 'center'
+            TextInput:
+                id: TextF
+                text: '0.0'
+                text_size: self.size
+                size_hint_y: None
+                height: app.tinputHeight
+                halign: 'center'
+                valign: 'center'
+                multiline: False
+                on_text_validate: SlideF.value = app.checkInput(self.text)
+
+        # Grab Slider:
+        GridLayout:
+            rows: 3
+            size_hint_x: None
+            column_default_width: app.vSlideWidth
+            width: self.minimum_width
+            Slider:
+                id: SlideG
+                size_hint_x: None
+                width: app.vSlideWidth
+                orientation: 'vertical'
+                max: 100
+                min: -100
+                value: 0
+                on_value: TextG.text = app.displayInput(self.value)
+            Label:
+                text: 'Grab'
+                text_size: self.size
+                size_hint_y: None
+                height: app.labelHeight
+                halign: 'center'
+                valign: 'center'
+            TextInput:
+                id: TextG
+                text: '0.0'
+                text_size: self.size
+                size_hint_y: None
+                height: app.tinputHeight
+                halign: 'center'
+                valign: 'center'
+                multiline: False
+                on_text_validate: SlideG.value = app.checkInput(self.text)
+        Widget:
+    BoxLayout:
+        size_hint_y: None
+        height: app.hGridHeight
+        Slider:
+            id: SlideX
+            orientation: 'horizontal'
+            max: 100
+            min: -100
+            value: 0
+            on_value: TextX.text = app.displayInput(self.value)
+        GridLayout:
+            rows: 4
+            size_hint_x: None
+            width: app.vSlideWidth
+            Widget:
+            Label:
+                text: 'X'
+                text_size: self.size
+                size_hint_y: None
+                height: app.labelHeight
+                halign: 'center'
+                valign: 'center'
+            TextInput:
+                id: TextX
+                text: '0.0'
+                text_size: self.size
+                size_hint_y: None
+                height: app.tinputHeight
+                halign: 'center'
+                valign: 'center'
+                multiline: False
+                on_text_validate: SlideX.value = app.checkInput(self.text)
+            Widget:
+
+    BoxLayout:
+        size_hint_y: None
+        height: app.hGridHeight
+        Widget:
+        GridLayout:
+            rows: 4
+            size_hint_x: None
+            width: app.vSlideWidth
+            Widget:
+            Label:
+                text: 'Wrist'
+                text_size: self.size
+                size_hint_y: None
+                height: app.labelHeight
+                halign: 'center'
+                valign: 'center'
+            TextInput:
+                id: TextWrist
+                text: '0.0'
+                text_size: self.size
+                size_hint_y: None
+                height: app.tinputHeight
+                halign: 'center'
+                valign: 'center'
+                multiline: False
+                on_text_validate: KnobWrist.value = app.checkInput(self.text)
+            Widget:
+        Knob:
+            id: KnobWrist
+            size: app.hGridHeight - 2, app.hGridHeight - 2
+            min: 0
+            max: 360
+            step: 1
+            value: 0
+            show_label: False
+            show_marker: True
+            knob_size: 0.9
+            markeroff_color: 0,0,0,0
+            knobimg_source: "dial.png"
+            on_value: TextWrist.text = app.displayInput(self.value)
+
+    

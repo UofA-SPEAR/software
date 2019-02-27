@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/UofA-SPEAR/station2.svg?branch=master)](https://travis-ci.org/UofA-SPEAR/station2)
+[[Build Status](https://travis-ci.org/UofA-SPEAR/station2.svg?branch=master)](https://travis-ci.org/UofA-SPEAR/station2)
 # Station 2
 This is the ground control package. It contains all the tools nessesary for
 controlling the rover. 
@@ -24,3 +24,28 @@ Then clone the repository, and run the `unpack.sh` command located within.
 
 This will setup your catkin workspace for development.
 
+## Running "remote" launch files ##
+
+Current status is: not working but close.
+
+For now, just ssh into the remote and run the main launch file.
+Then on the local machine, run:
+
+```
+export ROS_MASTER_URI=http://tegra-ubuntu:11311/
+```
+
+And then any nodes you run on your local machine will automatically
+connect to the remote machine.
+
+### How To (not working yet) ###
+
+See [this post](https://answers.ros.org/question/41446/a-is-not-in-your-ssh-known_hosts-file/)
+
+## Code Formatting ##
+
+### Python ###
+
+```
+autopep8 --in-place filename.py
+```
