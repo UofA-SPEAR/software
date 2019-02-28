@@ -45,10 +45,10 @@ git clone https://github.com/MonashUAS/canros.git
 
 ###### Link our packages
 # This needs to be moved all back into rover2 at some point
-ln -s $DIR/drive_controls
-ln -s $DIR/rover2
-ln -s $DIR/rover2_can
-ln -s $DIR/hardware_interface
+ln -s $DIR/spear_rover
+ln -s $DIR/spear_station
+ln -s $DIR/spear_msgs
+ln -s $DIR/spear_simulator
 
 ###### Link UAVCAN DSDL definitions to the home directory.
 mkdir -p ~/uavcan_vendor_specific_types
