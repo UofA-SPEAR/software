@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>simulator</name>
+  <name>spear_simulator</name>
   <version>0.0.0</version>
   <description>Simulator for rover autonomy</description>
 
