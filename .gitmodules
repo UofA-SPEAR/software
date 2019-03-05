@@ -1,3 +1,0 @@
-[submodule "rover2_can/uavcan_dsdl"]
-	path = rover2_can/uavcan_dsdl
-	url = https://github.com/UofA-SPEAR/uavcan_dsdl

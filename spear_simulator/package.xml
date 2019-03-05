@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>spear_simulator</name>
+  <version>0.0.0</version>
+  <description>Simulator for rover autonomy</description>
+
+  <maintainer email="ryan@todo.todo">ryan</maintainer>
+  <license>MIT</license>
+  <buildtool_depend>catkin</buildtool_depend>
+
+</package>
