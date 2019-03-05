@@ -6,7 +6,7 @@ from kivy.core.window import Window
 from kivy.clock import Clock
 from kivy.graphics import Color, Rectangle
 
-from send_ros import Driver
+from spear_station import Driver
 
 ## Key mappings for the drive system
 keys = {"left_up": "i",

@@ -5,9 +5,10 @@
 from canros import Message as CanrosMessage
 from hardware_interface.msg import WheelCmdArray
 import rospy
-from rover2.msg import ArmAngles
-from rover2_can import map_ros_to_can, map_can_to_ros, test_bit
-from rover2_can.msg import ActuatorStatus, BatteryInfo, NodeStatus, PpmMessage
+# How do you make it span multiple lines?
+from spear_msgs.msg import ArmAngles, ActuatorStatus, BatteryInfo
+from spear_msgs.msg import NodeStatus, PpmMessage
+from spear_rover import map_ros_to_can, map_can_to_ros, test_bit
 
 
 def wheel_cmd_array_mapper(data):

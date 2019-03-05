@@ -44,7 +44,7 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-#   include
+  include
   ${catkin_INCLUDE_DIRS}
   ${OpenCV_INCLUDE_DIRS}
 )
@@ -102,6 +102,12 @@ add_dependencies(arm_verifier_node
 )
 ## Specify libraries to link a library or executable target against
 target_link_libraries(arm_verifier_node
+  ${catkin_LIBRARIES}
+)
+
+# Add hardware interface node
+add_executable(hardware_interface_node src/hardware_interface.cpp)
+target_link_libraries(hardware_interface_node
   ${catkin_LIBRARIES}
 )
 
