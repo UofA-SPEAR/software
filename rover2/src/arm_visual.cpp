@@ -2,6 +2,7 @@
 
 #include <ros/ros.h>
 #include <tf/transform_broadcaster.h>
+#include <tf/transform_listener.h>
 #include <tf2_ros/static_transform_broadcaster.h>
 
 #include <geometry_msgs/TransformStamped.h>
@@ -18,6 +19,7 @@
 ros::NodeHandle* node;
 ros::Subscriber arm_angles_sub;
 ros::Publisher arm_visuals_pub;
+tf::TransformListener listener;
 
 void setupTransforms(float shoulderYaw, float shoulderPitch, float elbowPitch,
         float wristPitch){
@@ -44,7 +46,7 @@ void setupTransforms(float shoulderYaw, float shoulderPitch, float elbowPitch,
     message.header.frame_id = "shoulder_mount";
     message.child_frame_id = "elbow_joint";
     message.transform.translation.x = 0;
-    message.transform.translation.y = 1;
+    message.transform.translation.y = BICEP_LENGTH;
     message.transform.translation.z = 0;
     quat.setRPY(elbowPitch-M_PI, 0, 0);
     message.transform.rotation.x = quat.x();
@@ -58,7 +60,7 @@ void setupTransforms(float shoulderYaw, float shoulderPitch, float elbowPitch,
     message.header.frame_id = "elbow_joint";
     message.child_frame_id = "wrist_joint";
     message.transform.translation.x = 0;
-    message.transform.translation.y = 1;
+    message.transform.translation.y = FOREARM_LENGTH;
     message.transform.translation.z = 0;
     quat.setRPY(M_PI-elbowPitch-shoulderPitch+wristPitch, 0, 0);
     message.transform.rotation.x = quat.x();
@@ -72,7 +74,7 @@ void setupTransforms(float shoulderYaw, float shoulderPitch, float elbowPitch,
     message.header.frame_id = "wrist_joint";
     message.child_frame_id = "fingertips";
     message.transform.translation.x = 0;
-    message.transform.translation.y = 1;
+    message.transform.translation.y = WRIST_LENGTH;
     message.transform.translation.z = 0;
     quat.setRPY(0, 0, 0);
     message.transform.rotation.x = quat.x();
@@ -86,9 +88,20 @@ void setupTransforms(float shoulderYaw, float shoulderPitch, float elbowPitch,
 void putMarkers(){
     visualization_msgs::MarkerArray fullArm;
 
+    visualization_msgs::Marker marker;
+
+    geometry_msgs::StampedTransform transform;
+
+
     //Fill out marker fields
     // http://wiki.ros.org/rviz/DisplayTypes/Marker
 
+    try{
+        listener.lookupTransform("shoulder_mount", "map", ros::Time(0), transform);
+    }
+    catch(tf::TransformException& e){
+        ROS_ERROR("%s",e.what());
+    }
     //Bicep Marker
     marker.header.frame_id = "shoulder_mount";
     marker.header.stamp = ros::Time();
@@ -96,16 +109,16 @@ void putMarkers(){
     marker.id = 0;
     marker.type = visualization_msgs::Marker::CUBE;
     marker.action = visualization_msgs::Marker::ADD;
-    marker.pose.position.x = 0;
-    marker.pose.position.y = 0;
-    marker.pose.position.z = 0;
+    marker.scale.x = BICEP_WIDTH;
+    marker.scale.y = BICEP_LENGTH;
+    marker.scale.z = BICEP_HEIGHT;
+    marker.pose.position.x = (marker.scale.x/2.0)+transform.getOrigin().x;/*+ shoulder transform Xpos*/;
+    marker.pose.position.y = (marker.scale.y/2.0)+transform.getOrigin().y;/*+ shoulder transform Ypos*/;
+    marker.pose.position.z = (marker.scale.z/2.0)+transform.getOrigin().z;/*+ shoulder transform Zpos*/;
     marker.pose.orientation.x = 0.0;
     marker.pose.orientation.y = 0.0;
     marker.pose.orientation.z = 0.0;
     marker.pose.orientation.w = 1.0;
-    marker.scale.x = 1.0;
-    marker.scale.y = 1.0;
-    marker.scale.z = 1.0;
     marker.color.a = 1.0;
     marker.color.r = 0.0;
     marker.color.g = 1.0;
@@ -114,6 +127,12 @@ void putMarkers(){
     
     fullArm.markers.push_back(marker);
 
+    try{
+        listener.lookupTransform("elbow_joint", "map", ros::Time(0), transform);
+    }
+    catch(tf::TransformException& e){
+        ROS_ERROR("%s",e.what());
+    }
     //Forearm Marker
     marker.header.frame_id = "elbow_joint";
     marker.header.stamp = ros::Time();
@@ -121,16 +140,16 @@ void putMarkers(){
     marker.id = 1;
     marker.type = visualization_msgs::Marker::CUBE;
     marker.action = visualization_msgs::Marker::ADD;
-    marker.pose.position.x = 0;
-    marker.pose.position.y = 1;
-    marker.pose.position.z = 0;
+    marker.scale.x = FOREARM_WIDTH;
+    marker.scale.y = FOREARM_LENGTH;
+    marker.scale.z = FOREARM_HEIGHT;
+    marker.pose.position.x = (marker.scale.x/2.0)+transform.getOrigin().x;/*+ elbow transform Xpos*/;
+    marker.pose.position.y = (marker.scale.y/2.0)+transform.getOrigin().y;/*+ elbow transform Ypos*/;
+    marker.pose.position.z = (marker.scale.z/2.0)+transform.getOrigin().z;/*+ elbow transform Zpos*/;
     marker.pose.orientation.x = 0.0;
     marker.pose.orientation.y = 0.0;
     marker.pose.orientation.z = 0.0;
     marker.pose.orientation.w = 1.0;
-    marker.scale.x = 1.0;
-    marker.scale.y = 1.0;
-    marker.scale.z = 1.0;
     marker.color.a = 1.0;
     marker.color.r = 1.0;
     marker.color.g = 0.0;
@@ -139,6 +158,12 @@ void putMarkers(){
     
     fullArm.markers.push_back(marker);
 
+    try{
+        listener.lookupTransform("wrist_joint", "map", ros::Time(0), transform);
+    }
+    catch(tf::TransformException& e){
+        ROS_ERROR("%s",e.what());
+    }
     //Wrist Marker
     marker.header.frame_id = "wrist_joint";
     marker.header.stamp = ros::Time();
@@ -146,16 +171,16 @@ void putMarkers(){
     marker.id = 2;
     marker.type = visualization_msgs::Marker::CUBE;
     marker.action = visualization_msgs::Marker::ADD;
-    marker.pose.position.x = 0;
-    marker.pose.position.y = 2;
-    marker.pose.position.z = 0;
+    marker.scale.x = WRIST_WIDTH;
+    marker.scale.y = WRIST_LENGTH;
+    marker.scale.z = WRIST_HEIGHT;
+    marker.pose.position.x = (marker.scale.x/2.0)+transform.getOrigin().x;/*+ wrist transform Xpos*/;
+    marker.pose.position.y = (marker.scale.y/2.0)+transform.getOrigin().y;/*+ wrist transform Ypos*/;
+    marker.pose.position.z = (marker.scale.z/2.0)+transform.getOrigin().z;/*+ wrist transform Zpos*/;
     marker.pose.orientation.x = 0.0;
     marker.pose.orientation.y = 0.0;
     marker.pose.orientation.z = 0.0;
     marker.pose.orientation.w = 1.0;
-    marker.scale.x = 1.0;
-    marker.scale.y = 1.0;
-    marker.scale.z = 1.0;
     marker.color.a = 1.0;
     marker.color.r = 0.0;
     marker.color.g = 0.0;
@@ -170,11 +195,10 @@ void putMarkers(){
 }
 
 void armAngleUpdateCallback(const rover2::ArmAngles::ConstPtr& msg){
-    visualization_msgs::Marker marker;
     //TODO: Add markers for hand, so we can see the open/close state?
 
     setupTransforms(msg->joints[0].angle, msg->joints[1].angle, msg->joints[2].angle, msg->joints[4].angle);
-
+    putMarkers();
 }
 
 
@@ -184,6 +208,7 @@ int main(int argc, char** argv){
     arm_angles_sub = node->subscribe("/arm/angles", 1000, armAngleUpdateCallback);
     arm_visuals_pub = node->advertise<visualization_msgs::MarkerArray>("visualization_marker_array", 10, true); //bool at end makes this a Latched Publisher
     setupTransforms(0, M_PI/4.0f, M_PI/6, M_PI/16);
+    putMarkers();
     ros::spin();
 
     return 0;
