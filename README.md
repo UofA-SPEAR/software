@@ -85,8 +85,12 @@ See [this post](https://answers.ros.org/question/41446/a-is-not-in-your-ssh-know
 
 ## Code Formatting ##
 
-### Python ###
-
+### C++ ###
 ```
-autopep8 --in-place filename.py
+clang-format-3.9 -i -style=Google <filename>
+```
+
+### Python ###
+```
+yapf -i <filename>
 ```
