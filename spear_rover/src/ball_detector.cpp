@@ -1,15 +1,15 @@
 #include <ros/ros.h>
 
-#include <image_transport/image_transport.h>
 #include <cv_bridge/cv_bridge.h>
+#include <image_transport/image_transport.h>
 #include <spear_msgs/BallCoords.h>
 
 #include <stdio.h>
+#include <iostream>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/opencv.hpp>
 #include <opencv2/videoio.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/highgui/highgui.hpp>
-#include <iostream>
 
 using namespace cv;
 
@@ -26,8 +26,7 @@ void imageCallback(const sensor_msgs::Image::ConstPtr& msg);
  */
 std::vector<Vec3f> getCircles(Mat image);
 
-int main(int argc, char** argv)
-{
+int main(int argc, char** argv) {
   ros::init(argc, argv, "ball_detector");
   node = new ros::NodeHandle;
 
@@ -52,18 +51,15 @@ int main(int argc, char** argv)
   return 0;
 }
 
-void imageCallback(const sensor_msgs::ImageConstPtr& msg)
-{
+void imageCallback(const sensor_msgs::ImageConstPtr& msg) {
   // Find x,y coords and radius of all circles in image
   std::vector<Vec3f> circles;
   circles = getCircles(cv_bridge::toCvShare(msg, "bgr8")->image);
 
-  if (circles.size() > 0)
-  {
+  if (circles.size() > 0) {
     // Generate message
     spear_msgs::BallCoords outMsg;
-    for (unsigned int i = 0; i < circles.size(); i++)
-    {
+    for (unsigned int i = 0; i < circles.size(); i++) {
       spear_msgs::BallCoord coord;
       coord.number = i;
       coord.x_pos = circles[i][0];
@@ -72,7 +68,8 @@ void imageCallback(const sensor_msgs::ImageConstPtr& msg)
 
       outMsg.balls.push_back(coord);
 
-      ROS_INFO("Ball found! (X, Y, Radius) -> (%.2f, %.2f, %.2f)", circles[i][0], circles[i][1], circles[i][2]);
+      ROS_INFO("Ball found! (X, Y, Radius) -> (%.2f, %.2f, %.2f)",
+               circles[i][0], circles[i][1], circles[i][2]);
     }
 
     coords_pub.publish(outMsg);
@@ -80,24 +77,29 @@ void imageCallback(const sensor_msgs::ImageConstPtr& msg)
 }
 
 // TODO Fix issue with detection when there is a saturation/value gradient
-std::vector<Vec3f> getCircles(Mat image)
-{
+std::vector<Vec3f> getCircles(Mat image) {
   // Convert to HSV format
   Mat fullImageHSV;
   cvtColor(image, fullImageHSV, CV_BGR2HSV);
 
   // Image processing to improve image quality
   Mat imgThresholded;
-  inRange(fullImageHSV, Scalar(29, 86, 100), Scalar(64, 255, 255), imgThresholded);
-  erode(imgThresholded, imgThresholded, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
-  dilate(imgThresholded, imgThresholded, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
-  dilate(imgThresholded, imgThresholded, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
-  erode(imgThresholded, imgThresholded, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
+  inRange(fullImageHSV, Scalar(29, 86, 100), Scalar(64, 255, 255),
+          imgThresholded);
+  erode(imgThresholded, imgThresholded,
+        getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
+  dilate(imgThresholded, imgThresholded,
+         getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
+  dilate(imgThresholded, imgThresholded,
+         getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
+  erode(imgThresholded, imgThresholded,
+        getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
   GaussianBlur(imgThresholded, imgThresholded, Size(9, 9), 2, 2);
 
   // Circles are held as [ X, Y, radius ]
   std::vector<Vec3f> circles;
-  HoughCircles(imgThresholded, circles, CV_HOUGH_GRADIENT, 1, imgThresholded.rows / 8, 30, 30, 0, 0);
+  HoughCircles(imgThresholded, circles, CV_HOUGH_GRADIENT, 1,
+               imgThresholded.rows / 8, 30, 30, 0, 0);
 
   return circles;
 }

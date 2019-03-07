@@ -1,8 +1,8 @@
 #include "ros/ros.h"
 
+#include "spear_msgs/WheelCmdArray.h"
 #include "spear_msgs/drive_cmd.h"
 #include "spear_msgs/wheel_cmd.h"
-#include "spear_msgs/WheelCmdArray.h"
 
 #include "hardware_interface/mappings.h"
 
@@ -16,8 +16,7 @@ ros::Publisher wheel_pub;
  *
  * As of right now, simply splits left to both wheels and same for right.
  */
-void driveControlsCallback(const spear_msgs::drive_cmd::ConstPtr& msg)
-{
+void driveControlsCallback(const spear_msgs::drive_cmd::ConstPtr& msg) {
   ROS_INFO("Left: %d -- Right: %d", msg->left, msg->right);
 
   spear_msgs::WheelCmdArray wheelCommands;
@@ -55,15 +54,15 @@ void driveControlsCallback(const spear_msgs::drive_cmd::ConstPtr& msg)
   wheel_pub.publish(wheelCommands_part2);
 }
 
-int main(int argc, char** argv)
-{
+int main(int argc, char** argv) {
   // Initialise ROS node
   ros::init(argc, argv, "hardware_interface");
   node = new ros::NodeHandle;
 
   // Initialise publishers and subscribers.
   drive_sub = node->subscribe("/drive", 100, driveControlsCallback);
-  wheel_pub = node->advertise<spear_msgs::WheelCmdArray>("/hw_interface/drive", 100);
+  wheel_pub =
+      node->advertise<spear_msgs::WheelCmdArray>("/hw_interface/drive", 100);
 
   // Infinite Loop
   ros::spin();
