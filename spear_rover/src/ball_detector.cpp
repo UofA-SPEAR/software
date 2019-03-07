@@ -2,7 +2,7 @@
 
 #include <image_transport/image_transport.h>
 #include <cv_bridge/cv_bridge.h>
-#include <rover2/BallCoords.h>
+#include <spear_msgs/BallCoords.h>
 
 #include <stdio.h>
 #include <opencv2/opencv.hpp>
@@ -45,7 +45,7 @@ int main(int argc, char** argv)
 
   // TODO add ability to change subscribed topic
   image_sub = node->subscribe(image_topic, 1, imageCallback);
-  coords_pub = node->advertise<rover2::BallCoords>(output_topic, 10);
+  coords_pub = node->advertise<spear_msgs::BallCoords>(output_topic, 10);
 
   ros::spin();
 
@@ -61,10 +61,10 @@ void imageCallback(const sensor_msgs::ImageConstPtr& msg)
   if (circles.size() > 0)
   {
     // Generate message
-    rover2::BallCoords outMsg;
+    spear_msgs::BallCoords outMsg;
     for (unsigned int i = 0; i < circles.size(); i++)
     {
-      rover2::BallCoord coord;
+      spear_msgs::BallCoord coord;
       coord.number = i;
       coord.x_pos = circles[i][0];
       coord.y_pos = circles[i][1];

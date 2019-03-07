@@ -1,8 +1,8 @@
 #include "ros/ros.h"
 
-#include "drive_controls/drive_cmd.h"
-#include "hardware_interface/wheel_cmd.h"
-#include "hardware_interface/WheelCmdArray.h"
+#include "spear_msgs/drive_cmd.h"
+#include "spear_msgs/wheel_cmd.h"
+#include "spear_msgs/WheelCmdArray.h"
 
 #include "hardware_interface/mappings.h"
 
@@ -16,13 +16,13 @@ ros::Publisher wheel_pub;
  *
  * As of right now, simply splits left to both wheels and same for right.
  */
-void driveControlsCallback(const drive_controls::drive_cmd::ConstPtr& msg)
+void driveControlsCallback(const spear_msgs::drive_cmd::ConstPtr& msg)
 {
   ROS_INFO("Left: %d -- Right: %d", msg->left, msg->right);
 
-  hardware_interface::WheelCmdArray wheelCommands;
-  hardware_interface::WheelCmdArray wheelCommands_part2;
-  hardware_interface::wheel_cmd wheelCommand;
+  spear_msgs::WheelCmdArray wheelCommands;
+  spear_msgs::WheelCmdArray wheelCommands_part2;
+  spear_msgs::wheel_cmd wheelCommand;
 
   // Deal with left side
   wheelCommand.velocity = msg->left;
@@ -63,7 +63,7 @@ int main(int argc, char** argv)
 
   // Initialise publishers and subscribers.
   drive_sub = node->subscribe("/drive", 100, driveControlsCallback);
-  wheel_pub = node->advertise<hardware_interface::WheelCmdArray>("/hw_interface/drive", 100);
+  wheel_pub = node->advertise<spear_msgs::WheelCmdArray>("/hw_interface/drive", 100);
 
   // Infinite Loop
   ros::spin();

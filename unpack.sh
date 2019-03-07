@@ -2,8 +2,20 @@
 
 # NOT VERIFIED, DO NOT USE THIS
 
-echo "don't use this yet"
-exit 1
+# Parse command line options
+# Some dependencies only need to be installed on the rover
+if [ "$1" == "dev" ]; then
+    DEV=true
+    echo dev
+elif [ "$1" == "rover" ]; then
+    ROVER=true
+    echo rover
+else
+    echo "Usage: unpack.sh [dev|rover]"
+    echo "Use dev if you're developing on your own computer"
+    echo "Use rover if you're unpacking on the tx2 (this will install zed-ros-wrapper)"
+    exit 1
+fi
 
 ###### Get script location
 # https://stackoverflow.com/a/246128
@@ -23,6 +35,8 @@ cd ~
 mkdir -p ~/ros/src
 cd ~/ros
 catkin_make
+# Add a line in .bashrc to source ros setup script
+# Uses grep to check if the line already exists
 if ! grep -Fxq "source ~/ros/devel/setup.bash" ~/.bashrc
 then
     echo "source ~/ros/devel/setup.bash" >> ~/.bashrc
@@ -36,8 +50,12 @@ mv nimbro_network/*/ .
 rm -rf nimbro_network
 
 ###### Install ros wrapper package for zed camera
-cd ~/ros/src
-git clone https://github.com/stereolabs/zed-ros-wrapper.git
+# This requires the ZED SDK to be installed
+# ZED SDK requires CUDA
+if [ $ROVER ]; then
+    cd ~/ros/src
+    git clone https://github.com/stereolabs/zed-ros-wrapper.git
+fi
 
 ###### Install canros
 python -m pip install uavcan
@@ -45,9 +63,15 @@ git clone https://github.com/MonashUAS/canros.git
 
 ###### Link our packages
 # This needs to be moved all back into rover2 at some point
+
+# TODO configure build dependencies properly so that spear_msgs doesn't have to be built first
+ln -s $DIR/spear_msgs
+cd ~/ros
+catkin_make
+
+cd ~/ros/src
 ln -s $DIR/spear_rover
 ln -s $DIR/spear_station
-ln -s $DIR/spear_msgs
 ln -s $DIR/spear_simulator
 
 ###### Link UAVCAN DSDL definitions to the home directory.
