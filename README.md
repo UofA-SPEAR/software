@@ -37,3 +37,4 @@ required from other packages.
 
 - [ ] Fix travisCI
 - [ ] find put where the drive_commands send_ros.py file went
+- [ ] Add dependency info to this README
