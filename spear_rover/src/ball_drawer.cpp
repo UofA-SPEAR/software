@@ -2,7 +2,7 @@
 
 #include <image_transport/image_transport.h>
 #include <cv_bridge/cv_bridge.h>
-#include <rover2/BallCoords.h>
+#include <spear_msgs/BallCoords.h>
 
 #include <stdio.h>
 #include <opencv2/opencv.hpp>
@@ -18,9 +18,9 @@ ros::Subscriber image_sub;
 ros::Subscriber coords_sub;
 ros::Publisher image_pub;
 
-rover2::BallCoords current_coords;
+spear_msgs::BallCoords current_coords;
 
-void coords_callback(const rover2::BallCoords::ConstPtr& msg) {
+void coords_callback(const spear_msgs::BallCoords::ConstPtr& msg) {
     // literally just copy the coords to a static set
     current_coords = *msg;
 }

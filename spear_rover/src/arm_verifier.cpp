@@ -7,8 +7,8 @@
 #include <math.h>
 
 #include <ros/ros.h>
-#include <rover2/ArmAngles.h>
-#include <rover2/JointAngle.h>
+#include <spear_msgs/ArmAngles.h>
+#include <spear_msgs/JointAngle.h>
 
 ros::NodeHandle* node;
 ros::Subscriber arm_angles_sub;
@@ -18,7 +18,7 @@ const float BICEP_LENGTH = 1.0;
 const float FOREARM_LENGTH = 1.0;
 const float WRIST_LENGTH = 1.0;
 
-void armAnglesCallback(const rover2::ArmAngles::ConstPtr& msg) {
+void armAnglesCallback(const spear_msgs::ArmAngles::ConstPtr& msg) {
   float shoulderYaw = msg->joints[0].angle;
   float shoulderPitch = msg->joints[1].angle;
   float elbowPitch = msg->joints[2].angle;

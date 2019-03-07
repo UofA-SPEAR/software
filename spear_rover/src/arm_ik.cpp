@@ -1,9 +1,9 @@
 #include <math.h>
 
 #include <ros/ros.h>
-#include <arm_controls/arm_position.h>
-#include <rover2/ArmAngles.h>
-#include <rover2/JointAngle.h>
+#include <spear_msgs/arm_position.h>
+#include <spear_msgs/ArmAngles.h>
+#include <spear_msgs/JointAngle.h>
 
 ros::NodeHandle* node;
 ros::Subscriber arm_coords_sub;
@@ -102,9 +102,9 @@ struct angles toAnglesInPlane(float x, float y){
 /**
  * On receiving arm coordinates, converts to arm angles and publishes
  */
-void armCoordsCallback(const arm_controls::arm_position::ConstPtr& msg) {
-  rover2::ArmAngles armAngles; // A vector of JointAngles
-  rover2::JointAngle jointAngle;
+void armCoordsCallback(const spear_msgs::arm_position::ConstPtr& msg) {
+  spear_msgs::ArmAngles armAngles; // A vector of JointAngles
+  spear_msgs::JointAngle jointAngle;
 
   // Convert coords to angles
   // I think toAnglesWithOrientation takes wrist pitch which is msg->flick
@@ -143,7 +143,7 @@ int main (int argc, char** argv) {
   ros::init(argc, argv, "arm_ik");
   node = new ros::NodeHandle;
   arm_coords_sub = node->subscribe("/user_arm_controls", 1000, armCoordsCallback);
-  arm_angles_pub = node->advertise<rover2::ArmAngles>("/arm/angles", 1000);
+  arm_angles_pub = node->advertise<spear_msgs::ArmAngles>("/arm/angles", 1000);
   ros::spin();
   return 0;
 }
