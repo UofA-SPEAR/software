@@ -30,16 +30,16 @@
     Additionally, knobimg_source could be set to load
     a texture that visually represents the knob.
 """
-__all__     = ('Knob',)
+__all__ = ('Knob',)
 __version__ = '0.2'
 
 import math
 
-from kivy.lang          import  Builder
-from kivy.uix.widget    import  Widget
-from kivy.properties    import  NumericProperty, ObjectProperty, StringProperty,\
-                                BooleanProperty, ReferenceListProperty, BoundedNumericProperty,\
-                                ListProperty
+from kivy.lang import Builder
+from kivy.uix.widget import Widget
+from kivy.properties import NumericProperty, ObjectProperty, StringProperty,\
+    BooleanProperty, ReferenceListProperty, BoundedNumericProperty,\
+    ListProperty
 
 Builder.load_string('''
 <Knob>:
@@ -52,6 +52,7 @@ Builder.load_string('''
     show_label: True  # Show central label
     show_marker: False  # Do not show surrounding marker
 ''', filename=knob.kv)
+
 
 class Knob(Widget):
     """Class for creating a Knob widget."""
@@ -170,16 +171,19 @@ class Knob(Widget):
     and defaults to 0.
     '''
 
-    _angle          = NumericProperty(0)            # Internal angle calculated from value.
-    _angle_step     = NumericProperty(0)            # Internal angle_step calculated from step.
+    # Internal angle calculated from value.
+    _angle = NumericProperty(0)
+    # Internal angle_step calculated from step.
+    _angle_step = NumericProperty(0)
 
     def __init__(self, *args, **kwargs):
         super(Knob, self).__init__(*args, **kwargs)
-        self.bind(show_marker   =   self._show_marker)
-        self.bind(value         =   self._value)
+        self.bind(show_marker=self._show_marker)
+        self.bind(value=self._value)
 
     def _value(self, instance, value):
-        self._angle     =   pow( (value - self.min)/(self.max - self.min), 1./self.curve) * 360.
+        self._angle = pow((value - self.min) / (self.max -
+                                                self.min), 1. / self.curve) * 360.
         self.on_knob(value)
 
     def _show_marker(self, instance, flag):
@@ -193,21 +197,18 @@ class Knob(Widget):
             self.marker_color[3] = 0
             self.markeroff_color[3] = 0
 
-
     def on_touch_down(self, touch):
         if self.collide_point(*touch.pos):
             self.update_angle(touch)
-
 
     def on_touch_move(self, touch):
         if self.collide_point(*touch.pos):
             self.update_angle(touch)
 
-
     def update_angle(self, touch):
-        posx, posy          =   touch.pos
-        cx, cy              =   self.center
-        rx, ry              =   posx - cx, posy - cy
+        posx, posy = touch.pos
+        cx, cy = self.center
+        rx, ry = posx - cx, posy - cy
 
         if ry >= 0:                                 # Quadrants are clockwise.
             quadrant = 1 if rx >= 0 else 4
@@ -215,26 +216,23 @@ class Knob(Widget):
             quadrant = 3 if rx <= 0 else 2
 
         try:
-            angle    = math.atan(rx / ry) * (180./math.pi)
+            angle = math.atan(rx / ry) * (180. / math.pi)
             if quadrant == 2 or quadrant == 3:
                 angle = 180 + angle
             elif quadrant == 4:
                 angle = 360 + angle
 
-        except:                                   # atan not def for angle 90 and 270
+        except BaseException:                                   # atan not def for angle 90 and 270
             angle = 90 if quadrant <= 2 else 270
 
-        self._angle_step    =   (self.step*360)/(self.max - self.min)
-        self._angle         =   self._angle_step
+        self._angle_step = (self.step * 360) / (self.max - self.min)
+        self._angle = self._angle_step
         while self._angle < angle:
-            self._angle     =   self._angle + self._angle_step
+            self._angle = self._angle + self._angle_step
 
-        relativeValue   =   pow((angle/360.), 1./self.curve)
-        self.value      =   (relativeValue * (self.max - self.min)) + self.min
+        relativeValue = pow((angle / 360.), 1. / self.curve)
+        self.value = (relativeValue * (self.max - self.min)) + self.min
 
-
-    #TO OVERRIDE
+    # TO OVERRIDE
     def on_knob(self, value):
-        pass #Knob values listenerr
-
-
+        pass  # Knob values listenerr
