@@ -1,4 +1,6 @@
-# Software #
+[![Build Status](https://travis-ci.com/UofA-SPEAR/software.svg?branch=master)](https://travis-ci.com/UofA-SPEAR/software)
+
+# Software
 
 ## Migration TODO
 
