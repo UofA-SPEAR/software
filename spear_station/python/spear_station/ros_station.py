@@ -17,11 +17,11 @@ def ros_init():
 
     # Extra configuration needed
     joy_publisher = rospy.Publisher(
-        '/user_arm_controls',
-        arm_position,
+        '/user_arm_controls', arm_position,
         queue_size=50)  # initialize the publisher node
     joy_subscriber = rospy.Subscriber(
         '/joy', Joy, callback)  # initialize the Subscriber node
+
 
 # from Rover1 Code
 
@@ -38,17 +38,13 @@ class SpinROS(threading.Thread):
 def callback(data):  # function is called whenever topic is recieved
     # rospy.loginfo('Nice, a topic has been recieved')
     rospy.loginfo(data.axes)
-    [joyData.l_stick_x,
-     joyData.l_stick_y,
-     joyData.l_bumper,
-     joyData.r_stick_x,
-     joyData.r_stick_y,
-     joyData.r_bumper] = data.axes
+    [
+        joyData.l_stick_x, joyData.l_stick_y, joyData.l_bumper,
+        joyData.r_stick_x, joyData.r_stick_y, joyData.r_bumper
+    ] = data.axes
     joyData.dpad = [
-        data.buttons[13],
-        data.buttons[14],
-        data.buttons[15],
-        data.buttons[16]]  # up down left right
+        data.buttons[13], data.buttons[14], data.buttons[15], data.buttons[16]
+    ]  # up down left right
 
 
 class joyData:
