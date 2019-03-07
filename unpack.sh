@@ -63,9 +63,15 @@ git clone https://github.com/MonashUAS/canros.git
 
 ###### Link our packages
 # This needs to be moved all back into rover2 at some point
+
+# TODO configure build dependencies properly so that spear_msgs doesn't have to be built first
+ln -s $DIR/spear_msgs
+cd ~/ros
+catkin_make
+
+cd ~/ros/src
 ln -s $DIR/spear_rover
 ln -s $DIR/spear_station
-ln -s $DIR/spear_msgs
 ln -s $DIR/spear_simulator
 
 ###### Link UAVCAN DSDL definitions to the home directory.
