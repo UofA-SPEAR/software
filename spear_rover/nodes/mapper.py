@@ -49,20 +49,23 @@ def main():
     ####################################
 
     map_ros_to_can(WheelCmdArray, '/hw_interface/drive',
-                   'uavcan.equipment.actuator.ArrayCommand',
-                   {"commands": wheel_cmd_array_mapper})
+                   'uavcan.equipment.actuator.ArrayCommand', {
+                       "commands": wheel_cmd_array_mapper
+                   })
 
     map_ros_to_can(ArmAngles, '/arm/angles',
-                   'uavcan.equipment.actuator.ArrayCommand',
-                   {'commands': arm_angles_mapper})
+                   'uavcan.equipment.actuator.ArrayCommand', {
+                       'commands': arm_angles_mapper
+                   })
 
     ####################################
     # Set up UAVCAN -> ROS subscribers #
     ####################################
 
     map_can_to_ros("spear.general.PpmMessage", PpmMessage,
-                   "/rover2_can/PpmMessage",
-                   {"channel_data": lambda data: data.channel_data})
+                   "/rover2_can/PpmMessage", {
+                       "channel_data": lambda data: data.channel_data
+                   })
 
     map_can_to_ros(
         "uavcan.equipment.actuator.Status", ActuatorStatus,

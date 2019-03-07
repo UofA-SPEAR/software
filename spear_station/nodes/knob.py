@@ -17,7 +17,6 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
-
 """
     Knob
     ====
@@ -30,7 +29,7 @@
     Additionally, knobimg_source could be set to load
     a texture that visually represents the knob.
 """
-__all__ = ('Knob',)
+__all__ = ('Knob', )
 __version__ = '0.2'
 
 import math
@@ -41,7 +40,8 @@ from kivy.properties import NumericProperty, ObjectProperty, StringProperty,\
     BooleanProperty, ReferenceListProperty, BoundedNumericProperty,\
     ListProperty
 
-Builder.load_string('''
+Builder.load_string(
+    '''
 <Knob>:
     size: 100, 100
     min: 0
@@ -51,7 +51,8 @@ Builder.load_string('''
     knobimg_source: "img/knob_metal.png"  # Knob texture
     show_label: True  # Show central label
     show_marker: False  # Do not show surrounding marker
-''', filename=knob.kv)
+''',
+    filename=knob.kv)
 
 
 class Knob(Widget):
@@ -182,8 +183,8 @@ class Knob(Widget):
         self.bind(value=self._value)
 
     def _value(self, instance, value):
-        self._angle = pow((value - self.min) / (self.max -
-                                                self.min), 1. / self.curve) * 360.
+        self._angle = pow(
+            (value - self.min) / (self.max - self.min), 1. / self.curve) * 360.
         self.on_knob(value)
 
     def _show_marker(self, instance, flag):
@@ -210,7 +211,7 @@ class Knob(Widget):
         cx, cy = self.center
         rx, ry = posx - cx, posy - cy
 
-        if ry >= 0:                                 # Quadrants are clockwise.
+        if ry >= 0:  # Quadrants are clockwise.
             quadrant = 1 if rx >= 0 else 4
         else:
             quadrant = 3 if rx <= 0 else 2
@@ -222,7 +223,7 @@ class Knob(Widget):
             elif quadrant == 4:
                 angle = 360 + angle
 
-        except BaseException:                                   # atan not def for angle 90 and 270
+        except BaseException:  # atan not def for angle 90 and 270
             angle = 90 if quadrant <= 2 else 270
 
         self._angle_step = (self.step * 360) / (self.max - self.min)
