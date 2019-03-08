@@ -2,7 +2,7 @@
 
 #include <ros/ros.h>
 #include <tf/transform_broadcaster.h>
-#include <tf/transform_listener.h>
+#include <tf2_ros/transform_listener.h>
 #include <tf2_ros/static_transform_broadcaster.h>
 
 #include <geometry_msgs/TransformStamped.h>
@@ -19,7 +19,9 @@
 ros::NodeHandle* node;
 ros::Subscriber arm_angles_sub;
 ros::Publisher arm_visuals_pub;
-tf::TransformListener listener;
+
+tf2_ros::Buffer tfBuf;
+tf2_ros::TransformListener* listener;
 
 void setupTransforms(float shoulderYaw, float shoulderPitch, float elbowPitch,
         float wristPitch){
@@ -90,18 +92,22 @@ void putMarkers(){
 
     visualization_msgs::Marker marker;
 
-    geometry_msgs::StampedTransform transform;
+    geometry_msgs::TransformStamped transform;
+    
+    ROS_DEBUG("dsfg");
 
 
     //Fill out marker fields
     // http://wiki.ros.org/rviz/DisplayTypes/Marker
 
     try{
-        listener.lookupTransform("shoulder_mount", "map", ros::Time(0), transform);
+        transform = tfBuf.lookupTransform("map", "shoulder_mount", ros::Time(0), ros::Duration(3.0));
+        ROS_INFO("hi there");
     }
     catch(tf::TransformException& e){
         ROS_ERROR("%s",e.what());
     }
+    ROS_INFO("what");
     //Bicep Marker
     marker.header.frame_id = "shoulder_mount";
     marker.header.stamp = ros::Time();
@@ -112,13 +118,14 @@ void putMarkers(){
     marker.scale.x = BICEP_WIDTH;
     marker.scale.y = BICEP_LENGTH;
     marker.scale.z = BICEP_HEIGHT;
-    marker.pose.position.x = (marker.scale.x/2.0)+transform.getOrigin().x;/*+ shoulder transform Xpos*/;
-    marker.pose.position.y = (marker.scale.y/2.0)+transform.getOrigin().y;/*+ shoulder transform Ypos*/;
-    marker.pose.position.z = (marker.scale.z/2.0)+transform.getOrigin().z;/*+ shoulder transform Zpos*/;
+    marker.pose.position.x = 0;//(marker.scale.x/2.0);//+transform.transform.translation.x;/*+ shoulder transform Xpos*/;
+    marker.pose.position.y = (marker.scale.y/2.0);//+transform.transform.translation.y;/*+ shoulder transform Ypos*/;
+    marker.pose.position.z = 0;//(marker.scale.z/2.0);//+transform.transform.translation.z;/*+ shoulder transform Zpos*/;
     marker.pose.orientation.x = 0.0;
     marker.pose.orientation.y = 0.0;
     marker.pose.orientation.z = 0.0;
     marker.pose.orientation.w = 1.0;
+    //marker.pose.orientation = transform.transform.rotation;
     marker.color.a = 1.0;
     marker.color.r = 0.0;
     marker.color.g = 1.0;
@@ -128,7 +135,7 @@ void putMarkers(){
     fullArm.markers.push_back(marker);
 
     try{
-        listener.lookupTransform("elbow_joint", "map", ros::Time(0), transform);
+        transform = tfBuf.lookupTransform("shoulder_mount", "elbow_joint", ros::Time(0));
     }
     catch(tf::TransformException& e){
         ROS_ERROR("%s",e.what());
@@ -143,9 +150,9 @@ void putMarkers(){
     marker.scale.x = FOREARM_WIDTH;
     marker.scale.y = FOREARM_LENGTH;
     marker.scale.z = FOREARM_HEIGHT;
-    marker.pose.position.x = (marker.scale.x/2.0)+transform.getOrigin().x;/*+ elbow transform Xpos*/;
-    marker.pose.position.y = (marker.scale.y/2.0)+transform.getOrigin().y;/*+ elbow transform Ypos*/;
-    marker.pose.position.z = (marker.scale.z/2.0)+transform.getOrigin().z;/*+ elbow transform Zpos*/;
+    marker.pose.position.x = 0;//(marker.scale.x/2.0);//+transform.transform.translation.x;/*+ elbow transform Xpos*/;
+    marker.pose.position.y = (marker.scale.y/2.0);//+transform.transform.translation.y;/*+ elbow transform Ypos*/;
+    marker.pose.position.z = 0;//(marker.scale.z/2.0);//+transform.transform.translation.z;/*+ elbow transform Zpos*/;
     marker.pose.orientation.x = 0.0;
     marker.pose.orientation.y = 0.0;
     marker.pose.orientation.z = 0.0;
@@ -159,7 +166,7 @@ void putMarkers(){
     fullArm.markers.push_back(marker);
 
     try{
-        listener.lookupTransform("wrist_joint", "map", ros::Time(0), transform);
+        transform = tfBuf.lookupTransform("elbow_joint", "wrist_joint", ros::Time(0));
     }
     catch(tf::TransformException& e){
         ROS_ERROR("%s",e.what());
@@ -174,9 +181,9 @@ void putMarkers(){
     marker.scale.x = WRIST_WIDTH;
     marker.scale.y = WRIST_LENGTH;
     marker.scale.z = WRIST_HEIGHT;
-    marker.pose.position.x = (marker.scale.x/2.0)+transform.getOrigin().x;/*+ wrist transform Xpos*/;
-    marker.pose.position.y = (marker.scale.y/2.0)+transform.getOrigin().y;/*+ wrist transform Ypos*/;
-    marker.pose.position.z = (marker.scale.z/2.0)+transform.getOrigin().z;/*+ wrist transform Zpos*/;
+    marker.pose.position.x = 0;//(marker.scale.x/2.0);//+transform.transform.translation.x;/*+ wrist transform Xpos*/;
+    marker.pose.position.y = (marker.scale.y/2.0);//+transform.transform.translation.y;/*+ wrist transform Ypos*/;
+    marker.pose.position.z = 0;//(marker.scale.z/2.0);//+transform.transform.translation.z;/*+ wrist transform Zpos*/;
     marker.pose.orientation.x = 0.0;
     marker.pose.orientation.y = 0.0;
     marker.pose.orientation.z = 0.0;
@@ -205,6 +212,7 @@ void armAngleUpdateCallback(const rover2::ArmAngles::ConstPtr& msg){
 int main(int argc, char** argv){
     ros::init(argc, argv, "arm_visual");
     node = new ros::NodeHandle;
+    listener = new tf2_ros::TransformListener(tfBuf);
     arm_angles_sub = node->subscribe("/arm/angles", 1000, armAngleUpdateCallback);
     arm_visuals_pub = node->advertise<visualization_msgs::MarkerArray>("visualization_marker_array", 10, true); //bool at end makes this a Latched Publisher
     setupTransforms(0, M_PI/4.0f, M_PI/6, M_PI/16);
