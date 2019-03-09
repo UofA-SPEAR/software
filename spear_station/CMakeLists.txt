@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(spear_station)
 
-## Compile as C++11, supported in ROS Kinetic and newer
+## Compile as C++14
 add_compile_options(-std=c++14)
 
 ## Find catkin macros and libraries
