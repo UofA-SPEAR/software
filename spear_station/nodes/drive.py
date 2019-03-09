@@ -9,16 +9,17 @@ from kivy.graphics import Color, Rectangle
 from send_ros import SpinROS, ros_init, joyData, publish, Driver
 
 ## Key mappings for the drive system
-keys = {"left_up": "i",
-        "left_down": "k",
-        "right_up": "o",
-        "right_down": "l",
-        "set_sync": "u",
-        "set_mirror": "j",
-        "set_split": "p",
-        "pause": "a",
-        "kill": "q",
-        }
+keys = {
+    "left_up": "i",
+    "left_down": "k",
+    "right_up": "o",
+    "right_down": "l",
+    "set_sync": "u",
+    "set_mirror": "j",
+    "set_split": "p",
+    "pause": "a",
+    "kill": "q",
+}
 
 
 ## The UI widget for a single stick
@@ -30,12 +31,9 @@ class DriveStick(Widget):
 
     ## Changes the displayed power level
     def update_power(self):
-        self.ids["nub"].pos = (
-            self.pos[0], self.pos[1] +
-            (self.height / 2.0) +
-            (self.power / 100.0 * self.height / 2.0) -
-            (self.ids["nub"].height / 2.0)
-        )
+        self.ids["nub"].pos = (self.pos[0], self.pos[1] + (self.height / 2.0) +
+                               (self.power / 100.0 * self.height / 2.0) -
+                               (self.ids["nub"].height / 2.0))
 
 
 ## The UI for the drive screen
@@ -60,8 +58,12 @@ class DriveScreen(Widget):
         self.p_left = 0
         self.p_right = 0
         self.paused = True
-        self.pressed = {"left_up": False, "left_down": False,
-                        "right_up": False, "right_down": False}
+        self.pressed = {
+            "left_up": False,
+            "left_down": False,
+            "right_up": False,
+            "right_down": False
+        }
         self.frame = 0
 
         # setup ros node
@@ -78,6 +80,7 @@ class DriveScreen(Widget):
 
         # scheduling function calls every n seconds
         Clock.schedule_interval(self._update_presses, 0.01666666667)
+
     ## Sets the power to display, and transmit across ROS
     def power(self, left, right):
         self.p_left = left
@@ -182,8 +185,9 @@ class DriveScreen(Widget):
                     Color(0.7, 0.7, 0.7)
                 else:
                     Color(0.96, 0.26, 0.21)
-                Rectangle(pos=self.ids["background"].pos,
-                          size=self.ids["background"].size)
+                Rectangle(
+                    pos=self.ids["background"].pos,
+                    size=self.ids["background"].size)
         elif keycode[1] == keys["kill"]:
             self.p_left = self.p_right = 0
         else:
@@ -212,9 +216,7 @@ class DriveScreen(Widget):
         self.ids[side[0] + "_stick"].power = power
         self.ids[side[0] + "_stick"].update_power()
         self.ids[side[0] + "_label"].text = (
-            "[color=222222]{}: {}[/color]".format(
-                side.capitalize(), power)
-        )
+            "[color=222222]{}: {}[/color]".format(side.capitalize(), power))
 
 
 ## Kivy application

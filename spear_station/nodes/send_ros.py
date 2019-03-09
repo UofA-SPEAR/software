@@ -7,6 +7,7 @@ from threading import Thread
 # from arm_controls.msg import arm_position # input_axes, input_buttons # Messages need to be compiled
 from sensor_msgs.msg import Joy
 
+
 def ros_init():
     global joy_publisher
     global joy_subscriber
@@ -15,12 +16,15 @@ def ros_init():
 
     rospy.loginfo("Initializing driver node")
     # Extra configuration needed
-    joy_publisher = rospy.Publisher('/drive', drive_cmd, queue_size=50) # initialize the publisher node
+    joy_publisher = rospy.Publisher(
+        '/drive', drive_cmd, queue_size=50)  # initialize the publisher node
     rospy.loginfo("Started driver node")
 
     rospy.loginfo("Initializing joy node")
-    joy_subscriber = rospy.Subscriber('/joy', Joy, callback) # initialize the Subscriber node
+    joy_subscriber = rospy.Subscriber(
+        '/joy', Joy, callback)  # initialize the Subscriber node
     rospy.loginfo("Started joy node")
+
 
 # from Rover1 Code
 class SpinROS(threading.Thread):
@@ -31,12 +35,19 @@ class SpinROS(threading.Thread):
         print('Print thread start')
         rospy.spin()
 
-def callback(data): # function is called whenever topic is recieved
+
+def callback(data):  # function is called whenever topic is recieved
     #rospy.loginfo('Nice, a topic has been recieved')
     rospy.loginfo(data.axes)
     # rospy.loginfo(data.dpad)
-    [joyData.l_stick_x, joyData.l_stick_y, joyData.l_bumper, joyData.r_stick_x, joyData.r_stick_y, joyData.r_bumper] = data.axes
-    joyData.dpad = [data.buttons[13],data.buttons[14],data.buttons[15],data.buttons[16]] # up down left right
+    [
+        joyData.l_stick_x, joyData.l_stick_y, joyData.l_bumper,
+        joyData.r_stick_x, joyData.r_stick_y, joyData.r_bumper
+    ] = data.axes
+    joyData.dpad = [
+        data.buttons[13], data.buttons[14], data.buttons[15], data.buttons[16]
+    ]  # up down left right
+
 
 class joyData:
     l_stick_x = 0
@@ -45,12 +56,14 @@ class joyData:
     r_stick_y = 0
     l_bumper = 0
     r_bumper = 0
-    dpad = [0,0,0,0]
+    dpad = [0, 0, 0, 0]
+
     def __init__(self):
         pass
 
+
 def publish(axes):
-    joy_publisher.publish(axes[0],axes[1],axes[2],axes[3],axes[4],axes[5])
+    joy_publisher.publish(axes[0], axes[1], axes[2], axes[3], axes[4], axes[5])
 
 
 class Driver():
