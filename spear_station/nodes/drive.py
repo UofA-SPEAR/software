@@ -6,8 +6,7 @@ from kivy.core.window import Window
 from kivy.clock import Clock
 from kivy.graphics import Color, Rectangle
 
-from spear_station import Driver
-from send_ros import SpinROS, ros_init, joyData, publish, Driver
+from spear_station import SpinROS, ros_init, joyData, publish, Driver
 
 # Key mappings for the drive system
 keys = {
