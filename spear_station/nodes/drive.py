@@ -8,7 +8,7 @@ from kivy.graphics import Color, Rectangle
 
 from send_ros import SpinROS, ros_init, joyData, publish, Driver
 
-## Key mappings for the drive system
+# Key mappings for the drive system
 keys = {
     "left_up": "i",
     "left_down": "k",
@@ -22,21 +22,21 @@ keys = {
 }
 
 
-## The UI widget for a single stick
+# The UI widget for a single stick
 # this would show either the left or right power
 class DriveStick(Widget):
     def __init__(self, power=0, **kwargs):
         super(DriveStick, self).__init__(**kwargs)
         self.power = power
 
-    ## Changes the displayed power level
+    # Changes the displayed power level
     def update_power(self):
         self.ids["nub"].pos = (self.pos[0], self.pos[1] + (self.height / 2.0) +
                                (self.power / 100.0 * self.height / 2.0) -
                                (self.ids["nub"].height / 2.0))
 
 
-## The UI for the drive screen
+# The UI for the drive screen
 # This displays the drive power level in both text and a visual
 # representation for convinounce
 class DriveScreen(Widget):
@@ -46,7 +46,7 @@ class DriveScreen(Widget):
 
     sensitivity = 50
 
-    ## Constructor
+    # Constructor
     # sets inital values for variables
     # creates listeners for keyboard
     # also sets schedulded function calls
@@ -81,16 +81,16 @@ class DriveScreen(Widget):
         # scheduling function calls every n seconds
         Clock.schedule_interval(self._update_presses, 0.01666666667)
 
-    ## Sets the power to display, and transmit across ROS
+    # Sets the power to display, and transmit across ROS
     def power(self, left, right):
         self.p_left = left
         self.p_right = right
 
-    ## Sends the drive command through ros using our published
+    # Sends the drive command through ros using our published
     def _send_drive(self):
         self.driver.send_cmd(int(self.p_left), int(self.p_right))
 
-    ## checks to see if you should send the drive command
+    # checks to see if you should send the drive command
     # if so, sends the command
     def _should_send_drive(self):
         self.frame += 1
@@ -123,7 +123,7 @@ class DriveScreen(Widget):
         if joyData.dpad[3] != 0:
             self.mode = DriveScreen.SPLIT
 
-    ## updates left and right based on the press map
+    # updates left and right based on the press map
     # also calles the mirroring function
     def _update_presses(self, dt):
         if not self.paused:
@@ -140,13 +140,13 @@ class DriveScreen(Widget):
             # it will only reach here if ros has shutdown
             App.get_running_app().Stop()  # this closes the app
 
-    ## release keyboard listener bindings
+    # release keyboard listener bindings
     def _keyboard_closed(self):
         self._keyboard.unbind(on_key_down=self._on_keyboard_down)
         self._keyboard.unbind(on_key_up=self._on_keyboard_up)
         self._keyboard = None
 
-    ## called when a key is released
+    # called when a key is released
     # used to update press map
     def _on_keyboard_up(self, keyboard, keycode):
         if keycode[1] == keys["left_up"]:
@@ -160,7 +160,7 @@ class DriveScreen(Widget):
         else:
             return False
 
-    ## called when a key is pressed
+    # called when a key is pressed
     # used to update press map
     # also used for press commands
     def _on_keyboard_down(self, keyboard, keycode, text, modifiers):
@@ -194,7 +194,7 @@ class DriveScreen(Widget):
             return False
         return True
 
-    ## manupulates the right power based on the left depending on the mode
+    # manupulates the right power based on the left depending on the mode
     # also updates displayed power
     def _do_mirroring(self):
         # TODO: change so if left is not moving,
@@ -211,7 +211,7 @@ class DriveScreen(Widget):
         self._set_power(int(self.p_left), "left")
         self._set_power(int(self.p_right), "right")
 
-    ## Visually displays the power level of a given side
+    # Visually displays the power level of a given side
     def _set_power(self, power, side):
         self.ids[side[0] + "_stick"].power = power
         self.ids[side[0] + "_stick"].update_power()
@@ -219,7 +219,7 @@ class DriveScreen(Widget):
             "[color=222222]{}: {}[/color]".format(side.capitalize(), power))
 
 
-## Kivy application
+# Kivy application
 # This is the main GUI for driving
 class DriveApp(App):
     def build(self):
