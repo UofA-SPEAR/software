@@ -71,13 +71,9 @@ class DriveScreen(Widget):
         self.driver = Driver()
 
         # keyboard listener setup
-        # self.controlmode = "joy"
-        # if controlmode == "keyboard":
         self._keyboard = Window.request_keyboard(self._keyboard_closed, self)
         self._keyboard.bind(on_key_down=self._on_keyboard_down)
         self._keyboard.bind(on_key_up=self._on_keyboard_up)
-        # elif controlmode == "joy":
-        # Clock.schedule_interval(self._update_joy, 0.01666666667)
 
         # scheduling function calls every n seconds
         Clock.schedule_interval(self._update_presses, 0.01666666667)

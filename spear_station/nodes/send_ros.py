@@ -4,7 +4,6 @@ from drive_controls.msg import drive_cmd
 import rospy
 import threading
 from threading import Thread
-# from arm_controls.msg import arm_position # input_axes, input_buttons # Messages need to be compiled
 from sensor_msgs.msg import Joy
 
 
@@ -37,9 +36,7 @@ class SpinROS(threading.Thread):
 
 
 def callback(data):  # function is called whenever topic is recieved
-    #rospy.loginfo('Nice, a topic has been recieved')
     rospy.loginfo(data.axes)
-    # rospy.loginfo(data.dpad)
     [
         joyData.l_stick_x, joyData.l_stick_y, joyData.l_bumper,
         joyData.r_stick_x, joyData.r_stick_y, joyData.r_bumper
