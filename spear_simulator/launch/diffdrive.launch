@@ -1,10 +1,10 @@
 <!-- Copied from urdf_sim_tutorial package -->
 <launch>
-  <arg name="model" default="$(find simulator)/models/rover/TARS_V2.urdf"/>
+  <arg name="model" default="$(find spear_simulator)/models/rover/TARS_V2.urdf"/>
   <arg name="rvizconfig" default="$(find urdf_tutorial)/rviz/urdf.rviz" />
-  <arg name="world_name" default="$(find simulator)/worlds/ball_find_00.world"/>
+  <arg name="world_name" default="$(find spear_simulator)/worlds/ball_find_00.world"/>
 
-  <include file="$(find simulator)/launch/gazebo.launch">
+  <include file="$(find spear_simulator)/launch/gazebo.launch">
     <arg name="model" value="$(arg model)" />
     <arg name="world_name" value="$(arg world_name)" />
   </include>
@@ -12,7 +12,7 @@
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" />
 
   <rosparam command="load"
-            file="$(find simulator)/config/diffdrive.yaml"
+            file="$(find spear_simulator)/config/diffdrive.yaml"
             ns="rover_diff_drive_controller" />
 
   <node name="rover_controller_spawner" pkg="controller_manager" type="spawner"

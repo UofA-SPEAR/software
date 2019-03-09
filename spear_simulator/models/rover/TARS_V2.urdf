@@ -20,7 +20,7 @@
       <visual name="visual_chassis">
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="package://simulator/models/rover/meshes/stl/TARS.V2.Chassis.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://spear_simulator/models/rover/meshes/stl/TARS.V2.Chassis.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </visual>
       <collision name="collision_chassis">
@@ -40,7 +40,7 @@
       <visual name="visual_suspension_backleft">
         <origin xyz="0 0 0" rpy="0 0 -3.14159"/>
         <geometry>
-          <mesh filename="package://simulator/models/rover/meshes/stl/TARS.V2.Suspension.001.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://spear_simulator/models/rover/meshes/stl/TARS.V2.Suspension.001.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </visual>
       <collision name="collision_suspension_backleft">
@@ -60,7 +60,7 @@
       <visual name="visual_suspension_backright">
         <origin xyz="0 0 0" rpy="0 0 -3.14159"/>
         <geometry>
-          <mesh filename="package://simulator/models/rover/meshes/stl/TARS.V2.Suspension.001.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://spear_simulator/models/rover/meshes/stl/TARS.V2.Suspension.001.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </visual>
       <collision name="collision_suspension_backright">
@@ -80,7 +80,7 @@
       <visual name="visual_suspension_frontleft">
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="package://simulator/models/rover/meshes/stl/TARS.V2.Suspension.001.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://spear_simulator/models/rover/meshes/stl/TARS.V2.Suspension.001.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </visual>
       <collision name="collision_suspension_frontleft">
@@ -100,7 +100,7 @@
       <visual name="visual_suspension_frontright">
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="package://simulator/models/rover/meshes/stl/TARS.V2.Suspension.001.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://spear_simulator/models/rover/meshes/stl/TARS.V2.Suspension.001.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </visual>
       <collision name="collision_suspension_frontright">
@@ -120,7 +120,7 @@
       <visual name="visual_wheel_backleft">
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="package://simulator/models/rover/meshes/stl/TARS.V2.Wheel.001.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://spear_simulator/models/rover/meshes/stl/TARS.V2.Wheel.001.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </visual>
       <collision name="collision_wheel_backleft">
@@ -140,7 +140,7 @@
       <visual name="visual_wheel_backright">
         <origin xyz="0 0 0" rpy="0 0 -3.14159"/>
         <geometry>
-          <mesh filename="package://simulator/models/rover/meshes/stl/TARS.V2.Wheel.001.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://spear_simulator/models/rover/meshes/stl/TARS.V2.Wheel.001.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </visual>
       <collision name="collision_wheel_backright">
@@ -160,7 +160,7 @@
       <visual name="visual_wheel_frontleft">
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="package://simulator/models/rover/meshes/stl/TARS.V2.Wheel.001.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://spear_simulator/models/rover/meshes/stl/TARS.V2.Wheel.001.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </visual>
       <collision name="collision_wheel_frontleft">
@@ -180,7 +180,7 @@
       <visual name="visual_wheel_frontright">
         <origin xyz="0 0 0" rpy="0 0 -3.14159"/>
         <geometry>
-          <mesh filename="package://simulator/models/rover/meshes/stl/TARS.V2.Wheel.001.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://spear_simulator/models/rover/meshes/stl/TARS.V2.Wheel.001.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </visual>
       <collision name="collision_wheel_frontright">
