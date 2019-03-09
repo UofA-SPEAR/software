@@ -33,7 +33,7 @@ catkin_python_setup()
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES rover2
-  CATKIN_DEPENDS message_runtime std_msgs
+  CATKIN_DEPENDS message_runtime std_msgs spear_msgs message_generation
 #  DEPENDS system_lib
 )
 
@@ -107,6 +107,10 @@ target_link_libraries(arm_verifier_node
 
 # Add hardware interface node
 add_executable(hardware_interface_node src/hardware_interface.cpp)
+add_dependencies(hardware_interface_node
+   ${${PROJECT_NAME}_EXPORTED_TARGETS}
+   ${catkin_EXPORTED_TARGETS}
+)
 target_link_libraries(hardware_interface_node
   ${catkin_LIBRARIES}
 )
