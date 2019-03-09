@@ -12,8 +12,8 @@ pub = rospy.Publisher('/drive', drive_cmd, queue_size=10)
 
 
 def joy_callback(data):
-    rospy.loginfo("Joystick Input: [L, R] [ %f, %f ]",
-                  data.axes[left_axis], data.axes[right_axis])
+    rospy.loginfo("Joystick Input: [L, R] [ %f, %f ]", data.axes[left_axis],
+                  data.axes[right_axis])
 
     msg = drive_cmd()
     msg.left = data.axes[left_axis] * 100

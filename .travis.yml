@@ -12,7 +12,7 @@ matrix:
         - sudo apt-get update
         - sudo apt-get install pep8
       script:
-        - pep8 --ignore=E266 .
+        - pep8 --ignore=E501 .
 
     - name: "c++ linting"
       language: c++
@@ -22,7 +22,7 @@ matrix:
         - sudo apt-get install clang-format-3.9
       script:
         - "! find . -iname '*.h' -o -iname '*.cpp' |
-          xargs clang-format -output-replacements-xml -style=file |
+          xargs clang-format -output-replacements-xml -style=Google |
           grep -F \"</replacement>\""
     - name: "build"
       services:

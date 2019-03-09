@@ -2,6 +2,7 @@
 import sys
 from random import uniform, randint
 
+
 def generate_balls(n, x_length, y_length, z_height, f_name):
     # Determine boundaries
     x_upper_bound = x_length / 2
@@ -10,9 +11,12 @@ def generate_balls(n, x_length, y_length, z_height, f_name):
     y_lower_bound = -y_upper_bound
 
     # Define possible ball file names:
-    ball_names = ["tennis_fluorescent_yellow", "tennis_lime", "tennis_green", "tennis_yellow"]
+    ball_names = [
+        "tennis_fluorescent_yellow", "tennis_lime", "tennis_green",
+        "tennis_yellow"
+    ]
 
-    #print to a document following the format in .world files
+    # print to a document following the format in .world files
     for n in range(n):
         x_random = uniform(x_lower_bound, x_upper_bound)
         y_random = uniform(y_lower_bound, y_upper_bound)
@@ -24,18 +28,23 @@ def generate_balls(n, x_length, y_length, z_height, f_name):
             f = open(f_name, "w+")
             f2 = open(f_name + "2", "w+")
             write_first(n, x_random, y_random, z_height, f, randball, ballname)
-            write_second(n, x_random, y_random, z_height, f2, randball, ballname)
+            write_second(n, x_random, y_random, z_height, f2, randball,
+                         ballname)
             f.close()
             f2.close()
         else:
             f = open(f_name, "a+")
             f2 = open(f_name + "2", "a+")
             write_first(n, x_random, y_random, z_height, f, randball, ballname)
-            write_second(n, x_random, y_random, z_height, f2, randball, ballname)
+            write_second(n, x_random, y_random, z_height, f2, randball,
+                         ballname)
             f.close()
             f2.close()
 
-#writes the first section to f
+
+# writes the first section to f
+
+
 def write_first(n, x_random, y_random, z_height, f, randball, ballname):
     f.write("\
 <model name='%s'>\n\
@@ -47,9 +56,13 @@ def write_first(n, x_random, y_random, z_height, f, randball, ballname):
         <acceleration>0 0 0 0 0 0</acceleration>\n\
         <wrench>0 0 0 0 0 0</wrench>\n\
     </link>\n\
-</model>\n" % (ballname, x_random, y_random, z_height, x_random, y_random, z_height))
+</model>\n" % (ballname, x_random, y_random, z_height, x_random, y_random,
+               z_height))
 
-#writes the second section to f2
+
+# writes the second section to f2
+
+
 def write_second(n, x_random, y_random, z_height, f2, randball, ballname):
     f2.write("\
 <model name='%s'>\n\
@@ -105,13 +118,18 @@ def write_second(n, x_random, y_random, z_height, f2, randball, ballname):
     <kinematic>0</kinematic>\n\
   </link>\n\
   <pose frame=''>%d %d %d 0 0 0</pose>\n\
-</model>\n" % (ballname, randball, randball, randball, randball, x_random, y_random, z_height))
+</model>\n" % (ballname, randball, randball, randball, randball, x_random,
+               y_random, z_height))
+
 
 if __name__ == "__main__":
     while True:
-        userin = input("Enter: #ofballs x_length y_length z_height f_name: ").split()
+        userin = input(
+            "Enter: #ofballs x_length y_length z_height f_name: ").split()
         if len(userin) != 5:
             print("Incorrect amount of arguments")
         else:
             break
-    generate_balls(int(userin[0]), float(userin[1]), float(userin[2]), float(userin[3]), userin[4])
+    generate_balls(
+        int(userin[0]), float(userin[1]), float(userin[2]), float(userin[3]),
+        userin[4])

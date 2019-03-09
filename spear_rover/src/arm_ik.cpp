@@ -1,79 +1,80 @@
 #include <math.h>
 
 #include <ros/ros.h>
-#include <spear_msgs/arm_position.h>
 #include <spear_msgs/ArmAngles.h>
 #include <spear_msgs/JointAngle.h>
+#include <spear_msgs/arm_position.h>
 
 ros::NodeHandle* node;
 ros::Subscriber arm_coords_sub;
 ros::Publisher arm_angles_pub;
 
-//Placeholder values, although actual values shouldn't matter as long as the ratios are maintained (currently they are not)
+// Placeholder values, although actual values shouldn't matter as long as the
+// ratios are maintained (currently they are not)
 const float BICEP_LENGTH = 1.0;
 const float FOREARM_LENGTH = 1.0;
 const float WRIST_LENGTH = 1.0;
 
-//float SHOULDER_OFFSET = 1.0;  Should offset doesn't matter; move the coordinate system up by this amount and the result will be the same
+// float SHOULDER_OFFSET = 1.0;  Should offset doesn't matter; move the
+// coordinate system up by this amount and the result will be the same
 const float ELBOW_OFFSET = 1.0;
 
 const float ADJUSTED_SHOULDER_PITCH = atan2(ELBOW_OFFSET, BICEP_LENGTH);
 
-struct angles{
-    float shoulderYaw = 0.0;
-    float shoulderPitch = 0.0;
-    float elbowPitch = 0.0;
-    float wristPitch = 0.0;
-    float wristRoll = 0.0;
+struct angles {
+  float shoulderYaw = 0.0;
+  float shoulderPitch = 0.0;
+  float elbowPitch = 0.0;
+  float wristPitch = 0.0;
+  float wristRoll = 0.0;
 };
 
-struct angles toAnglesInPlane(float x, float y); // Defined at bottom
+struct angles toAnglesInPlane(float x, float y);  // Defined at bottom
 
 /*
  * Calculate angles of the two inner arms using wrist position
  * TODO: Switch int inputs to unsigned char
  */
-struct angles toAnglesFromPosition(int x, int y, int z){
-    struct angles angles;
-    //Normalize x, y, z, coordinates
-    float xNorm = (float)x/100.0;
-    float yNorm = (float)y/100.0;
-    float zNorm = (float)z/100.0;
+struct angles toAnglesFromPosition(int x, int y, int z) {
+  struct angles angles;
+  // Normalize x, y, z, coordinates
+  float xNorm = (float)x / 100.0;
+  float yNorm = (float)y / 100.0;
+  float zNorm = (float)z / 100.0;
 
-    if(pow(xNorm, 2) + pow(yNorm, 2) + pow(zNorm, 2) > 1){
-	   //Project the position along it's radius onto a unit sphere
-    }
+  if (pow(xNorm, 2) + pow(yNorm, 2) + pow(zNorm, 2) > 1) {
+    // Project the position along it's radius onto a unit sphere
+  }
 
-    //Needs C++ 11
-    angles = toAnglesInPlane(hypot(xNorm, yNorm), zNorm);
-    angles.shoulderYaw = atan2(yNorm, xNorm);
+  // Needs C++ 11
+  angles = toAnglesInPlane(hypot(xNorm, yNorm), zNorm);
+  angles.shoulderYaw = atan2(yNorm, xNorm);
 
-    return angles;
+  return angles;
 }
 
 /*
  * Calculate angles of arms using end effector position and wrist orientation
  * TODO: Switch int inputs to unsigned char
  */
-struct angles toAnglesWithOrientation(int x, int y, int z, float alpha){
-    struct angles angles;
-    //Normalize x, y, z coordinates
-    float xNorm = (float)x/100.0;
-    float yNorm = (float)y/100.0;
-    float zNorm = (float)z/100.0;
+struct angles toAnglesWithOrientation(int x, int y, int z, float alpha) {
+  struct angles angles;
+  // Normalize x, y, z coordinates
+  float xNorm = (float)x / 100.0;
+  float yNorm = (float)y / 100.0;
+  float zNorm = (float)z / 100.0;
 
-    if(pow(xNorm, 2) + pow(yNorm, 2) + pow(zNorm, 2) > 1){
-	   //Project the position along it's radius onto a unit sphere
-    }
+  if (pow(xNorm, 2) + pow(yNorm, 2) + pow(zNorm, 2) > 1) {
+    // Project the position along it's radius onto a unit sphere
+  }
 
-    //Needs C++ 11
-    angles = toAnglesInPlane(
-        hypot(xNorm, yNorm) - WRIST_LENGTH*cos(alpha),
-	zNorm - WRIST_LENGTH*sin(alpha));
+  // Needs C++ 11
+  angles = toAnglesInPlane(hypot(xNorm, yNorm) - WRIST_LENGTH * cos(alpha),
+                           zNorm - WRIST_LENGTH * sin(alpha));
 
-    angles.wristPitch = alpha;
-    angles.shoulderYaw = atan2(yNorm, xNorm);
-    return angles;
+  angles.wristPitch = alpha;
+  angles.shoulderYaw = atan2(yNorm, xNorm);
+  return angles;
 }
 
 /*
@@ -82,33 +83,34 @@ struct angles toAnglesWithOrientation(int x, int y, int z, float alpha){
  * Really should only be used by the other methods as it only sets the
  * shoulder and elbow pitch fields of the structure
  */
-struct angles toAnglesInPlane(float x, float y){
-    struct angles angles;
+struct angles toAnglesInPlane(float x, float y) {
+  struct angles angles;
 
-    float xyReachSquared = pow(x, 2) + pow(y, 2);
+  float xyReachSquared = pow(x, 2) + pow(y, 2);
 
-    angles.elbowPitch =
-	acos((pow(BICEP_LENGTH, 2) + pow(FOREARM_LENGTH, 2) - xyReachSquared)
-	    / (2*BICEP_LENGTH*FOREARM_LENGTH));
+  angles.elbowPitch =
+      acos((pow(BICEP_LENGTH, 2) + pow(FOREARM_LENGTH, 2) - xyReachSquared) /
+           (2 * BICEP_LENGTH * FOREARM_LENGTH));
 
-    angles.shoulderPitch =
-        acos((pow(BICEP_LENGTH, 2) + xyReachSquared - pow(FOREARM_LENGTH, 2))
-	    / (2*BICEP_LENGTH*sqrt(xyReachSquared)))
-	- atan2(y, x) + ADJUSTED_SHOULDER_PITCH;
+  angles.shoulderPitch =
+      acos((pow(BICEP_LENGTH, 2) + xyReachSquared - pow(FOREARM_LENGTH, 2)) /
+           (2 * BICEP_LENGTH * sqrt(xyReachSquared))) -
+      atan2(y, x) + ADJUSTED_SHOULDER_PITCH;
 
-    return angles;
+  return angles;
 }
 
 /**
  * On receiving arm coordinates, converts to arm angles and publishes
  */
 void armCoordsCallback(const spear_msgs::arm_position::ConstPtr& msg) {
-  spear_msgs::ArmAngles armAngles; // A vector of JointAngles
+  spear_msgs::ArmAngles armAngles;  // A vector of JointAngles
   spear_msgs::JointAngle jointAngle;
 
   // Convert coords to angles
   // I think toAnglesWithOrientation takes wrist pitch which is msg->flick
-  struct angles angles = toAnglesWithOrientation(msg->x, msg->y, msg->z, msg->flick);
+  struct angles angles =
+      toAnglesWithOrientation(msg->x, msg->y, msg->z, msg->flick);
 
   // Add angles to armAngles
   jointAngle.id = 0;
@@ -139,10 +141,11 @@ void armCoordsCallback(const spear_msgs::arm_position::ConstPtr& msg) {
   arm_angles_pub.publish(armAngles);
 }
 
-int main (int argc, char** argv) {
+int main(int argc, char** argv) {
   ros::init(argc, argv, "arm_ik");
   node = new ros::NodeHandle;
-  arm_coords_sub = node->subscribe("/user_arm_controls", 1000, armCoordsCallback);
+  arm_coords_sub =
+      node->subscribe("/user_arm_controls", 1000, armCoordsCallback);
   arm_angles_pub = node->advertise<spear_msgs::ArmAngles>("/arm/angles", 1000);
   ros::spin();
   return 0;
