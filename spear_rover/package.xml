@@ -28,6 +28,8 @@
   <build_depend>std_msgs</build_depend>
   <exec_depend>std_msgs</exec_depend>
 
+  <depend>spear_msgs</depend>
+
   <build_depend>canros</build_depend>
   <build_export_depend>canros</build_export_depend>
   <exec_depend>canros</exec_depend>
