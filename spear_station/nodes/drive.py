@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#!/usr/bin/env python2
 
 from kivy.app import App
 from kivy.uix.widget import Widget
@@ -6,7 +6,7 @@ from kivy.core.window import Window
 from kivy.clock import Clock
 from kivy.graphics import Color, Rectangle
 
-from spear_station import Driver
+from spear_station import SpinROS, ros_init, joyData, publish, Driver
 
 # Key mappings for the drive system
 keys = {
@@ -93,10 +93,37 @@ class DriveScreen(Widget):
         if self.frame % 6 == 0:
             self._send_drive()
 
+    def _update_joy(self):
+        if joyData.l_stick_y > 0:
+            self.pressed["left_down"] = False
+            self.pressed["left_up"] = True
+        elif joyData.l_stick_y < 0:
+            self.pressed["left_up"] = False
+            self.pressed["left_down"] = True
+        else:
+            self.pressed["left_up"] = False
+            self.pressed["left_down"] = False
+        if joyData.r_stick_y > 0:
+            self.pressed["right_down"] = False
+            self.pressed["right_up"] = True
+        elif joyData.r_stick_y < 0:
+            self.pressed["right_up"] = False
+            self.pressed["right_down"] = True
+        else:
+            self.pressed["right_up"] = False
+            self.pressed["right_down"] = False
+        if joyData.dpad[2] != 0:
+            self.mode = DriveScreen.SYNC
+        if joyData.dpad[0] != 0:
+            self.mode = DriveScreen.MIRROR
+        if joyData.dpad[3] != 0:
+            self.mode = DriveScreen.SPLIT
+
     # updates left and right based on the press map
     # also calles the mirroring function
     def _update_presses(self, dt):
         if not self.paused:
+            self._update_joy()
             if self.pressed["left_up"] != self.pressed["left_down"]:
                 self.p_left += dt * DriveScreen.sensitivity * (
                     1 if self.pressed["left_up"] else -1)
@@ -196,4 +223,5 @@ class DriveApp(App):
 
 
 if __name__ == "__main__":
+    ros_init()
     DriveApp().run()

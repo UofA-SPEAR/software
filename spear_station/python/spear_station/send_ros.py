@@ -1,10 +1,10 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
+
+from spear_msgs.msg import drive_cmd
 
 import rospy
 import threading
 from threading import Thread
-# input_axes, input_buttons # Messages need to be compiled
-from spear_msgs.msg import arm_position
 from sensor_msgs.msg import Joy
 
 
@@ -12,20 +12,21 @@ def ros_init():
     global joy_publisher
     global joy_subscriber
 
-    rospy.init_node('arm_controller')
-    rospy.loginfo("Initializing the arm input node")
+    rospy.init_node('drive_control')
 
+    rospy.loginfo("Initializing driver node")
     # Extra configuration needed
     joy_publisher = rospy.Publisher(
-        '/user_arm_controls', arm_position,
-        queue_size=50)  # initialize the publisher node
+        '/drive', drive_cmd, queue_size=50)  # initialize the publisher node
+    rospy.loginfo("Started driver node")
+
+    rospy.loginfo("Initializing joy node")
     joy_subscriber = rospy.Subscriber(
         '/joy', Joy, callback)  # initialize the Subscriber node
+    rospy.loginfo("Started joy node")
 
 
 # from Rover1 Code
-
-
 class SpinROS(threading.Thread):
     def __init__(self):
         super(SpinROS, self).__init__()
@@ -36,7 +37,6 @@ class SpinROS(threading.Thread):
 
 
 def callback(data):  # function is called whenever topic is recieved
-    # rospy.loginfo('Nice, a topic has been recieved')
     rospy.loginfo(data.axes)
     [
         joyData.l_stick_x, joyData.l_stick_y, joyData.l_bumper,
@@ -62,3 +62,20 @@ class joyData:
 
 def publish(axes):
     joy_publisher.publish(axes[0], axes[1], axes[2], axes[3], axes[4], axes[5])
+
+
+class Driver():
+    def __init__(self):
+        rospy.init_node("drive_control")
+        self.pub = rospy.Publisher("/drive", drive_cmd, queue_size=10)
+        rospy.loginfo("Started driver node")
+
+    def send_cmd(self, left, right):
+        rospy.loginfo("[Drive] command %d %d" % (left, right))
+        msg = drive_cmd()
+        msg.left = left
+        msg.right = right
+        self.pub.publish(msg)
+
+    def is_ros_down(self):
+        return rospy.is_shutdown()
