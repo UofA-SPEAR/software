@@ -42,11 +42,13 @@ required from other packages.
 # Setup and Install Instructions
 
 ## Install Ubuntu 16.04 desktop
+
 We use ROS Kinetic which requires Ubuntu 16.04. A virtual machine will work but a native install will run smoother, especially for the simulator.
 
 You can find a .iso image of Ubuntu 16.04 [here](http://releases.ubuntu.com/16.04/).
 
 ## Install ROS
+
 We use ROS we nearly everying on the rover. To install ROS, follow the instructions
 [here](http://wiki.ros.org/kinetic/Installation/Ubuntu) <br />
 We recommend the "Desktop-Full Install" ROS package for best compatibility.
@@ -68,13 +70,19 @@ qmake (required by Nimbro): `$ apt-get install qt4-qmake`<br>
 Note: ROS Kinetic requires the python 2 versions of all modules.
 
 ## Clone this repository and unpack
+
 After installing dependencies, clone this repo and run the `unpack.sh` command located within.
 
 This will setup your catkin workspace for development.
 
 You must `source ~/.bashrc` for the changes made by `unpack.sh` to take effect.
 
+## Developing and Building
+
+The `unpack.sh` script will symlink all the source files to a catkin workspace located at `~/ros`. You can work in this directory and when you need to build, either run `catkin_make` in the `~/ros` directory or simply run `./build.bash` from this directory which will handle things for you.
+
 ## “Permission Denied” errors when running roslaunch or roscore
+
 Run the following 2 commands:
 `sudo rosdep fix-permissions`
 `rosdep update`
