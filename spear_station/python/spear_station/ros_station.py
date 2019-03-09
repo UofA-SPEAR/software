@@ -4,7 +4,7 @@ import rospy
 import threading
 from threading import Thread
 # input_axes, input_buttons # Messages need to be compiled
-from arm_controls.msg import arm_position
+from spear_msgs.msg import arm_position
 from sensor_msgs.msg import Joy
 
 

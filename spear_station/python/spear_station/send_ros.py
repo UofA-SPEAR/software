@@ -1,6 +1,6 @@
 #!/usr/bin/env python2
 
-from drive_controls.msg import drive_cmd
+from spear_msgs.msg import drive_cmd
 
 import rospy
 import threading
