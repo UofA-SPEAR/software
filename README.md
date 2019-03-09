@@ -39,16 +39,24 @@ required from other packages.
 - [ ] find put where the drive_commands send_ros.py file went
 - [ ] Add dependency info to this README
 
+# Setup and Install Instructions
 
-# Stuff to keep, not sure where to put it #
+## Install Ubuntu 16.04 desktop
 
-## Setup Instructions
-To install first make sure you have the dependecies. The
-First is ROS, which we use for almost everything on the rover. The second is for
-encoding video. The third is Kivy, which is what the UI is written in.
+We use ROS Kinetic which requires Ubuntu 16.04. A virtual machine will work but a native install will run smoother, especially for the simulator.
 
-ROS: follow the instructions
-[here](http://wiki.ros.org/kinetic/Installation/Ubuntu)<br>
+You can find a .iso image of Ubuntu 16.04 [here](http://releases.ubuntu.com/16.04/).
+
+## Install ROS
+
+We use ROS we nearly everying on the rover. To install ROS, follow the instructions
+[here](http://wiki.ros.org/kinetic/Installation/Ubuntu) <br />
+We recommend the "Desktop-Full Install" ROS package for best compatibility.
+
+## Install Other Dependencies
+
+Install the following dependencies. Note: x264 is for encoding video and Kivy is for our user interface.
+
 x264: `$ apt-get install libx264-dev`<br>
 Cython: `$ python -m pip install cython --user`<br>
 Pygame: `$ python -m pip install pygame --user`<br>
@@ -61,9 +69,29 @@ qmake (required by Nimbro): `$ apt-get install qt4-qmake`<br>
 
 Note: ROS Kinetic requires the python 2 versions of all modules.
 
-Then clone the repository, and run the `unpack.sh` command located within.
+## Clone this repository and unpack
+
+After installing dependencies, clone this repo and run the `unpack.sh` command located within.
 
 This will setup your catkin workspace for development.
+
+You must `source ~/.bashrc` for the changes made by `unpack.sh` to take effect.
+
+## Developing and Building
+
+The `unpack.sh` script will symlink all the source files to a catkin workspace located at `~/ros`. You can work in this directory and when you need to build, either run `catkin_make` in the `~/ros` directory or simply run `./build.bash` from this directory which will handle things for you.
+
+## “Permission Denied” errors when running roslaunch or roscore
+
+Run the following 2 commands:
+`sudo rosdep fix-permissions`
+`rosdep update`
+
+See this forum post for more info:
+<https://answers.ros.org/question/60366/problem-with-roscore/>
+
+
+# Stuff to keep, not sure where to put it #
 
 ## Running "remote" launch files ##
 
