@@ -88,7 +88,7 @@ class DriveScreen(Widget):
 
     # Sends the drive command through ros using our published
     def _send_drive(self):
-        self.driver.send_cmd(int(self.p_left), int(self.p_right))
+        self.driver.send_cmd(float(self.p_left), float(self.p_right))
 
     # checks to see if you should send the drive command
     # if so, sends the command
@@ -208,8 +208,8 @@ class DriveScreen(Widget):
         elif self.mode == DriveScreen.SYNC:
             self.p_right = self.p_left
 
-        self._set_power(int(self.p_left), "left")
-        self._set_power(int(self.p_right), "right")
+        self._set_power(float(self.p_left), "left")
+        self._set_power(float(self.p_right), "right")
 
     # Visually displays the power level of a given side
     def _set_power(self, power, side):
