@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#!/usr/bin/env python2
 
 from kivy.app import App
 from kivy.uix.widget import Widget
