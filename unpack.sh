@@ -54,7 +54,11 @@ rm -rf nimbro_network
 # ZED SDK requires CUDA
 if [ $ROVER ]; then
     cd ~/ros/src
-    git clone https://github.com/stereolabs/zed-ros-wrapper.git
+    git clone https://github.com/UofA-SPEAR/zed-ros-wrapper.git
+    cd zed-ros-wrapper
+    # Checkout the latest stable release of zed-ros-wrapper
+    git checkout v2.7.x
+    cd ~/ros/src
 fi
 
 ###### Install canros
