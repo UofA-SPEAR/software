@@ -8,6 +8,43 @@
     <link name="link_camera_depth">
     </link>
 
+    <gazebo reference="link_camera_depth">  
+      <sensor type="depth" name="camera">
+        <always_on>true</always_on>
+        <update_rate>20.0</update_rate>
+        <camera>
+          <horizontal_fov>1.57</horizontal_fov>
+          <image>
+            <format>B8G8R8</format>
+            <width>640</width>
+            <height>480</height>
+          </image>
+          <clip>
+            <near>0.05</near>
+            <far>8.0</far>
+          </clip>
+        </camera>
+        <plugin name="kinect_camera_controller" filename="libgazebo_ros_openni_kinect.so">
+          <cameraName>camera</cameraName>
+          <alwaysOn>true</alwaysOn>
+          <updateRate>10</updateRate>
+          <imageTopicName>rgb/image_raw</imageTopicName>
+          <depthImageTopicName>depth/image_raw</depthImageTopicName>
+          <pointCloudTopicName>depth/points</pointCloudTopicName>
+          <cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>
+          <depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
+          <frameName>camera_depth_optical_frame</frameName>
+          <baseline>0.1</baseline>
+          <distortion_k1>0.0</distortion_k1>
+          <distortion_k2>0.0</distortion_k2>
+          <distortion_k3>0.0</distortion_k3>
+          <distortion_t1>0.0</distortion_t1>
+          <distortion_t2>0.0</distortion_t2>
+          <pointCloudCutoff>0.4</pointCloudCutoff>
+        </plugin>
+      </sensor>
+    </gazebo>
+
     <link name="link_camera_front">
     </link>
 
@@ -202,31 +239,6 @@
       <parent link="link_chassis"/>
       <child link="link_camera_depth"/>
     </joint>
-    <gazebo reference="link_camera_depth">
-      <plugin name="link_camera_depth_controller" filename="libgazebo_ros_openni_kinect.so">
-      <baseline>0.2</baseline>
-      <alwaysOn>true</alwaysOn>
-      <updateRate>1.0</updateRate>
-      <cameraName>camera_depth</cameraName>
-      <imageTopicName>/camera_depth/depth/image_raw</imageTopicName>
-      <cameraInfoTopicName>/camera_depth/depth/camera_info</cameraInfoTopicName>
-      <depthImageTopicName>/camera_depth/depth/image_raw</depthImageTopicName>
-      <depthImageInfoTopicName>/camera_depth/depth/camera_info</depthImageInfoTopicName>
-      <pointCloudTopicName>/camera_depth/depth/points</pointCloudTopicName>
-      <frameName>link_camera_depth</frameName>
-      <pointCloudCutoff>0.5</pointCloudCutoff>
-      <distortionK1>0.00000001</distortionK1>
-      <distortionK2>0.00000001</distortionK2>
-      <distortionK3>0.00000001</distortionK3>
-      <distortionT1>0.00000001</distortionT1>
-      <distortionT2>0.00000001</distortionT2>
-      <CxPrime>0</CxPrime>
-      <Cx>0</Cx>
-      <Cy>0</Cy>
-      <focalLength>0</focalLength>
-      <hackBaseline>0</hackBaseline>
-      </plugin>
-    </gazebo>
 
     <joint name="link_camera_front" type="fixed">
       <origin xyz="0.315 -0.11999 0.3439" rpy="0 1.5708 0"/>
