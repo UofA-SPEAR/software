@@ -61,6 +61,9 @@ fi
 python -m pip install uavcan
 git clone https://github.com/MonashUAS/canros.git
 
+#### Get our DSDL definitions
+git clone https://github.com/UofA-SPEAR/uavcan_dsdl.git
+
 ###### Link our packages
 # This needs to be moved all back into rover2 at some point
 
@@ -72,7 +75,7 @@ ln -s $DIR/spear_simulator
 ###### Link UAVCAN DSDL definitions to the home directory.
 mkdir -p ~/uavcan_vendor_specific_types
 cd ~/uavcan_vendor_specific_types
-ln -s $DIR/rover2_can/uavcan_dsdl/spear
+ln -s $DIR/uavcan_dsdl/spear
 
 ###### Build everything
 cd ~/ros
