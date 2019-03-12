@@ -38,3 +38,7 @@ which publishes over CAN bus. And vice versa.
 Node to take positions for the arm and publish them as angles.
 
 (maybe should be merged into hardware_interface_node?)
+
+### CASE_hardware_interface_node
+
+Does stuff using ros_control that I don't understand fully yet.
