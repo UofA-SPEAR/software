@@ -106,15 +106,6 @@ target_link_libraries(arm_verifier_node
   ${catkin_LIBRARIES}
 )
 
-# Add hardware interface node
-add_executable(hardware_interface_node src/hardware_interface.cpp)
-add_dependencies(hardware_interface_node
-   ${${PROJECT_NAME}_EXPORTED_TARGETS}
-   ${catkin_EXPORTED_TARGETS}
-)
-target_link_libraries(hardware_interface_node
-  ${catkin_LIBRARIES}
-)
 
 # Add ACTUAL hardware interface node
 add_executable(CASE_hardware_interface_node
