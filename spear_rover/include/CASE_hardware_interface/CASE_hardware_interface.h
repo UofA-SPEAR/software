@@ -1,5 +1,6 @@
 // Defines available variables and class members
-//
+// Essentially this file is just the descriptor for what we need to re-implement
+// for the "basic" functionality
 
 #ifndef ROS_CONTROL__CASE_HARDWARE_INTERFACE_H
 #define ROS_CONTROL__CASE_HARDWARE_INTERFACE_H
@@ -32,7 +33,7 @@ namespace CASE_hardware_interface
         public:
             CASEHardwareInterface(ros::NodeHandle& nh);
             ~CASEHardwareInterface();
-            void init();
+            bool init();
             void update(const ros::TimerEvent& e);
             void read();
             void write(ros::Duration elapsed_time);

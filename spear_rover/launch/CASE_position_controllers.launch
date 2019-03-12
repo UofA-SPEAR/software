@@ -7,5 +7,13 @@
         args="
             /CASE/controller/state
             /CASE/controller/velocity/left_front_wheel
+            /CASE/controller/velocity/left_rear_wheel
+            /CASE/controller/velocity/right_front_wheel
+            /CASE/controller/velocity/right_rear_wheel
         " />
+
+    <include file="$(find spear_rover)/launch/rover2_can.launch">
+        <arg name="interface" value="vcan0"/>
+    </include>
+
 </launch>

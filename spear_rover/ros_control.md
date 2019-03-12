@@ -7,6 +7,10 @@ Essentially this replaces the hardware_interface_node with a more standard ROS i
 
 From this tutorial, don't use the ceperate ROBOTcpp format (yet anyways)
 
+Another really good tutorial (very old though):
+
+(https://gitlab.com/nasa-jsc-robotics/valkyrie/wikis/How-To-Write-A-Controller-For-Valkyrie)
+
 ## Controllers
 
 velocity_controllers/JointVelocityController
