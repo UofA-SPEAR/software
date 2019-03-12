@@ -1,0 +1,9 @@
+CASE:
+    controller:
+        state:
+            type: joint_state_controller/JointStateController
+            publish_rate: 50
+        velocity:
+            left_front_wheel:
+                type: velocity_controllers/JointVelocityController
+                joint: left_front_wheel

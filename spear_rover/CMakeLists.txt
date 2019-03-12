@@ -15,6 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
     canros
     std_msgs
     spear_msgs
+    controller_manager
 )
 
 catkin_python_setup()
@@ -113,6 +114,19 @@ add_dependencies(hardware_interface_node
 )
 target_link_libraries(hardware_interface_node
   ${catkin_LIBRARIES}
+)
+
+# Add ACTUAL hardware interface node
+add_executable(CASE_hardware_interface_node
+    src/CASE_hardware_interface_node.cpp
+    src/CASE_hardware_interface.cpp
+)
+add_dependencies(CASE_hardware_interface_node
+    ${${PROJECT_NAME}_EXPORTED_TARGETS}
+    ${catkin_EXPORTED_TARGETS}
+)
+target_link_libraries(CASE_hardware_interface_node
+    ${catkin_LIBRARIES}
 )
 
 install(PROGRAMS

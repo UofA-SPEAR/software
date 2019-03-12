@@ -1,0 +1,5 @@
+joint_limits:
+    left_front_wheel:
+        has_velocity_limits: true
+        max_velocity: 4.0 # no idea what the actual ones are rn
+        min_velocity: -4.0 # this would be the default anyways

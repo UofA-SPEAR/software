@@ -1,0 +1,5 @@
+CASE:
+    hardware_interface:
+        loop_hz: 10 # hz
+        joints:
+            - left_front_wheel
