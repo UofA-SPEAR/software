@@ -33,4 +33,7 @@
   <build_depend>canros</build_depend>
   <build_export_depend>canros</build_export_depend>
   <exec_depend>canros</exec_depend>
+
+  <build_depend>ros_control</build_depend>
+  <build_depend>ros_controllers</build_depend>
 </package>

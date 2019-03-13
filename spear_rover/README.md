@@ -41,4 +41,13 @@ Node to take positions for the arm and publish them as angles.
 
 ### CASE_hardware_interface_node
 
-Does stuff using ros_control that I don't understand fully yet.
+This is a node that runs a ros controller,
+this runs using the ros_control API. It will communicate directly with canros
+in order to push messages onto the CAN bus.
+
+This needs a lot more documentation here.
+
+It requires 3 different config files as well, to pass configuration params.
+config/hardware.yaml, config/controllers.yaml, and config/joint_limits.yaml
+
+
