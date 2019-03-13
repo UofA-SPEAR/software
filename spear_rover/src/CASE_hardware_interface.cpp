@@ -9,7 +9,8 @@
 #include <joint_limits_interface/joint_limits_rosparam.h>
 
 // message includes
-#include <spear_msgs/WheelCmdArray.h>
+#include <canros/uavcan__equipment__actuator__ArrayCommand.h>
+using namespace canros;
 
 using namespace hardware_interface;
 using joint_limits_interface::JointLimits;
@@ -28,7 +29,7 @@ namespace CASE_hardware_interface
 
         // temporary topic to publish wheel stuff on
         // should this actually publish straight to canros?
-        wheel_pub = nh_.advertise<spear_msgs::WheelCmdArray>("/hw_interface/drive", 10);
+        wheel_pub = nh_.advertise<uavcan__equipment__actuator__ArrayCommand>("/canros/msg/uavcan/equipment/actuator/ArrayCommand", 10);
     }
 
     CASEHardwareInterface::~CASEHardwareInterface() {
@@ -87,15 +88,16 @@ namespace CASE_hardware_interface
         velocityJointSoftLimitsInterface.enforceLimits(elapsed_time);
 
         // Write ArrayCommands to wheels
-        spear_msgs::WheelCmdArray out_msg;
+        uavcan__equipment__actuator__ArrayCommand out_msg;
         for (int i = 0; i < num_joints_; i++) {
-            spear_msgs::wheel_cmd out_cmd;
+            uavcan__equipment__actuator__Command out_cmd;
 
-            out_cmd.wheel = i;
+            out_cmd.actuator_id = i;
+            out_cmd.command_type = uavcan__equipment__actuator__Command::COMMAND_TYPE_SPEED;
             // mapping a double to a float here but eh
-            out_cmd.velocity = velocity_joint_interface_.getHandle(joint_names_[i]).getCommand();
+            out_cmd.command_value = velocity_joint_interface_.getHandle(joint_names_[i]).getCommand();
             
-            out_msg.wheel_cmds.push_back(out_cmd);
+            out_msg.commands.push_back(out_cmd);
         }
 
         wheel_pub.publish(out_msg);
