@@ -235,7 +235,7 @@
     </joint>
 
     <joint name="link_camera_depth" type="fixed">
-      <origin xyz="0.315 1e-05 0.3439" rpy="0 1.5708 0"/>
+      <origin xyz="0.315 1e-05 0.3439" rpy="0 0 0"/>
       <parent link="base_link"/>
       <child link="link_camera_depth"/>
     </joint>
