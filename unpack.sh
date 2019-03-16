@@ -43,6 +43,13 @@ then
     source ~/ros/devel/setup.bash
 fi
 
+# Add our models to GAZEBO_MODEL_PATH
+if ! grep -Fxq "export GAZEBO_MODEL_PATH=GAZEBO_MODEL_PATH:${DIR}/spear_simulator/models" ~/.bashrc
+then
+    echo "export GAZEBO_MODEL_PATH=GAZEBO_MODEL_PATH:${DIR}/spear_simulator/models" >> ~/.bashrc
+    export GAZEBO_MODEL_PATH=GAZEBO_MODEL_PATH:$DIR/spear_simulator/models
+fi
+
 ###### Install nimbro networks
 cd ~/ros/src
 git clone https://github.com/AIS-Bonn/nimbro_network.git
