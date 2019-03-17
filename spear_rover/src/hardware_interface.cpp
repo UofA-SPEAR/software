@@ -17,7 +17,7 @@ ros::Publisher wheel_pub;
  * As of right now, simply splits left to both wheels and same for right.
  */
 void driveControlsCallback(const spear_msgs::drive_cmd::ConstPtr& msg) {
-  ROS_INFO("Left: %d -- Right: %d", msg->left, msg->right);
+  ROS_INFO("Left: %f -- Right: %f", msg->left, msg->right);
 
   spear_msgs::WheelCmdArray wheelCommands;
   spear_msgs::WheelCmdArray wheelCommands_part2;
