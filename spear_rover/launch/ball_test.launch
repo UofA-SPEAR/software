@@ -5,10 +5,10 @@
   <!-- Start the for cam 1 -->
   <node pkg="cv_camera" type="cv_camera_node" name="camera_1" />
 
-  <node pkg="rover2" type="ball_detector_node" name="ball_detector_node">
+  <node pkg="spear_rover" type="ball_detector_node" name="ball_detector_node">
     <param name="image_topic" value="/camera_1/image_raw" />
   </node>
 
-  <node pkg="rover2" type="ball_drawer_node" name="ball_drawer_node" />
+  <node pkg="spear_rover" type="ball_drawer_node" name="ball_drawer_node" />
 
 </launch>

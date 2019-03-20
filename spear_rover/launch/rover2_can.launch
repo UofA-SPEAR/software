@@ -4,7 +4,7 @@
 		it listens to the "can0" device. You can change it by passing in an
 		"interface" argument, e.g:
 
-			$ roslaunch rover2_can rover2_can.launch interface:=vcan0
+			$ roslaunch spear_rover rover2_can.launch interface:=vcan0
 
 		...will make the canros server listen to the "vcan0" device. This is
 		good for local testing.

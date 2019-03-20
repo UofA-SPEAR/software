@@ -1,6 +1,16 @@
 # Artificial intelligence simulator
 For training our Mars rover, we have decided to create a simulator that allows us to drive around a 3D model of our rover in a virtual world. This virtual world is designed to be similar to the types of environments we may encounter in competition.
 
+## Dependencies
+
+You may need to install the following packages using apt:
+```
+sudo apt-get install ros-kinetic-controller-manager
+sudo apt-get install ros-kinetic-gazebo-ros-control
+sudo apt-get install ros-kinetic-diff-drive-controller
+```
+If ROS still can't find the above packages, you may need to install them using rosdep.
+
 ## Running with ROS
 The gazebo models and launch files for our rover have been wrapped in a ROS package called "spear_simulator". After cloning this repository, run the "unpack.sh" script. This will set up the ros package. Then, you should be able to launch our rover model in a gazebo simulation using "roslaunch spear_simulator diffdrive.launch".
 
