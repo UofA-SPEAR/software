@@ -20,11 +20,7 @@ sudo apt-get install -y python-rosinstall \
                         python-wstool \
                         build-essential
 
-# Clones the repository.
-cd ~/Desktop
-git clone https://github.com/UofA-SPEAR/software.git
-
-# Installs rover2 dependecies.
+# Installs software repository dependencies.
 sudo apt-get install -y qt4-default \
                         libx264-dev \
                         ros-kinetic-rqt \
@@ -39,7 +35,4 @@ sudo apt-get install -y qt4-default \
                         gstreamer0.10-plugins-good \
                         python-pip
 
-# Finishes setting up rover2.
-cd ~/Desktop/rover2
-./unpack.sh dev
-source ~/.bashrc
+echo "Done installing dependencies! Please restart your terminal for changes to take effect."
