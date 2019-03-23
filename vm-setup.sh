@@ -22,7 +22,7 @@ sudo apt-get install -y python-rosinstall \
 
 # Clones the repository.
 cd ~/Desktop
-git clone https://github.com/UofA-SPEAR/rover2.git
+git clone https://github.com/UofA-SPEAR/software.git
 
 # Installs rover2 dependecies.
 sudo apt-get install -y qt4-default \
@@ -41,5 +41,5 @@ sudo apt-get install -y qt4-default \
 
 # Finishes setting up rover2.
 cd ~/Desktop/rover2
-./unpack.sh
-
+./unpack.sh dev
+source ~/.bashrc
