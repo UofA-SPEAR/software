@@ -22,4 +22,13 @@
   <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
     <param name="default_topic" value="/rover_diff_drive_controller/cmd_vel"/>
   </node>
+
+  <!-- RTAB-map Node-->
+  <include file="$(find rtabmap_ros)/launch/rtabmap.launch">
+    <arg name="rtabmap_args"                value="--delete_db_on_start" />
+    <arg name="rgb_topic"                   value="/camera/rgb/image_raw" />
+    <arg name="depth_topic"                 value="/camera/depth/image_raw" />
+    <arg name="camera_info_topic"           value="/camera/rgb/camera_info" />
+    <arg name="depth_camera_info_topic"     value="/camera/depth/camera_info" />
+  </include>
 </launch>
