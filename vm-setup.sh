@@ -33,6 +33,8 @@ sudo apt-get install -y qt4-default \
                         ros-kinetic-tf \
                         ros-kinetic-opencv3 \
                         ros-kinetic-cv-bridge \
+						ros-kinetic-ros-control \
+						ros-kinetic-ros-controllers \
                         gstreamer-0.1 \
                         libgstreamer0.10-dev \
                         libgstreamer-plugins-base0.10-dev \
