@@ -23,9 +23,17 @@
     <param name="default_topic" value="/rover_diff_drive_controller/cmd_vel"/>
   </node>
 
+  <!-- publish static transform so that RTAB-map knows where camera is -->
+  <!-- this simply sets camera_depth_optical_frame to the same location as link_camera_depth -->
+  <!-- args are: yaw pitch roll frame_id child_frame_id period_in_ms -->
+  <node name="static_transform_publisher" pkg="tf" type="static_transform_publisher"
+    args="0 0 0 0 0 0 link_camera_depth camera_depth_optical_frame 100"/>
+
   <!-- RTAB-map Node-->
   <include file="$(find rtabmap_ros)/launch/rtabmap.launch">
     <arg name="rtabmap_args"                value="--delete_db_on_start" />
+    <!-- Tell RTAB-map to move the base of the robot (not just the camera) -->
+    <arg name="frame_id"                    value="base_link" />
     <arg name="rgb_topic"                   value="/camera/rgb/image_raw" />
     <arg name="depth_topic"                 value="/camera/depth/image_raw" />
     <arg name="camera_info_topic"           value="/camera/rgb/camera_info" />
