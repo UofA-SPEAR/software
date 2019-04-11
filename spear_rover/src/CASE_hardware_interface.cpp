@@ -20,13 +20,9 @@ using joint_limits_interface::PositionJointSoftLimitsInterface;
 
 namespace CASE_hardware_interface {
 CASEHardwareInterface::CASEHardwareInterface(ros::NodeHandle& nh) : nh_(nh) {
-  init();
   controller_manager_.reset(
       new controller_manager::ControllerManager(this, nh_));
-  nh_.param("/CASE/hardware_interface/loop_hz", loop_hz_, 0.1);
   ros::Duration update_freq = ros::Duration(1.0 / loop_hz_);
-  non_realtime_loop_ =
-      nh_.createTimer(update_freq, &CASEHardwareInterface::update, this);
 
   // temporary topic to publish wheel stuff on
   // should this actually publish straight to canros?
@@ -72,7 +68,7 @@ bool CASEHardwareInterface::init() {
   // We also need to do any hardware init here (if we have any)
 }
 
-void CASEHardwareInterface::update(const ros::TimerEvent& e) {
+void CASEHardwareInterface::update() {
   elapsed_time_ = ros::Duration(e.current_real - e.last_real);
   read();
   controller_manager_->update(ros::Time::now(), elapsed_time_);
