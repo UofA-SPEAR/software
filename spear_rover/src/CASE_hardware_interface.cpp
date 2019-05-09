@@ -22,12 +22,13 @@ namespace CASE_hardware_interface {
 CASEHardwareInterface::CASEHardwareInterface(ros::NodeHandle& nh) : nh_(nh) {
   controller_manager_.reset(
       new controller_manager::ControllerManager(this, nh_));
-  ros::Duration update_freq = ros::Duration(1.0 / loop_hz_);
 
   // temporary topic to publish wheel stuff on
   // should this actually publish straight to canros?
   wheel_pub = nh_.advertise<uavcan__equipment__actuator__ArrayCommand>(
       "/canros/msg/uavcan/equipment/actuator/ArrayCommand", 10);
+
+  this->init();
 }
 
 CASEHardwareInterface::~CASEHardwareInterface() {}
@@ -51,6 +52,7 @@ bool CASEHardwareInterface::init() {
   // Initialize Controller
   // Need to
   for (int i = 0; i < num_joints_; ++i) {
+      ROS_INFO("Loading joint %d", i);
     // Create joint state interface
     JointStateHandle jointStateHandle(joint_names_[i], &joint_position_[i],
                                       &joint_velocity_[i], &joint_effort_[i]);
@@ -68,7 +70,8 @@ bool CASEHardwareInterface::init() {
   // We also need to do any hardware init here (if we have any)
 }
 
-void CASEHardwareInterface::update() {
+void CASEHardwareInterface::update(const ros::TimerEvent& e) {
+  ROS_INFO("UPDATING");
   elapsed_time_ = ros::Duration(e.current_real - e.last_real);
   read();
   controller_manager_->update(ros::Time::now(), elapsed_time_);

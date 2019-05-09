@@ -31,15 +31,14 @@ class CASEHardwareInterface : public CASE_hardware_interface::CASEHardware {
   CASEHardwareInterface(ros::NodeHandle &nh);
   ~CASEHardwareInterface();
   bool init();
-  void update(const ros::TimerEvent &e);
+  void update(const ros::TimerEvent& e);
   void read();
   void write(ros::Duration elapsed_time);
 
  protected:
   ros::NodeHandle nh_;
-  ros::Timer non_realtime_loop_;
-  ros::Duration control_period_;
   ros::Duration elapsed_time_;
+  ros::Time last_updated_;
   VelocityJointInterface velocityJointInterface;
   VelocityJointSoftLimitsInterface velocityJointSoftLimitsInterface;
   double loop_hz_;

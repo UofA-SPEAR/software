@@ -1,15 +1,20 @@
 #include <CASE_hardware_interface/CASE_hardware_interface.h>
 
+CASE_hardware_interface::CASEHardwareInterface* CASE;
+
+void timerCallback(const ros::TimerEvent& e) {
+    CASE->update(e);
+}
+
 int main(int argc, char** argv)
 {
     ros::init(argc, argv, "CASE_hardware_interface");
     ros::NodeHandle nh;
-    CASE_hardware_interface::CASEHardwareInterface CASE(nh);
-    controller_manager::ControllerManager cm(&CASE);
+    CASE = new CASE_hardware_interface::CASEHardwareInterface(nh);
 
-    while (true) {
-        CASE.update();
-        ros::Duration sleep(0.1);
-    }
+    ros::Timer timer = nh.createTimer(ros::Duration(0.1), timerCallback);
+
+    ros::spin();
+
     return 0;
 }

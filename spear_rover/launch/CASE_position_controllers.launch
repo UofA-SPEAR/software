@@ -1,6 +1,6 @@
 <launch>
     <!-- default *should* be can0 but I'm lazy -->
-    <arg name="interface" value="vcan0" />
+    <arg name="interface" default="vcan0" />
 
     <rosparam file="$(find spear_rover)/config/hardware.yaml"
         command="load"/>
@@ -18,7 +18,7 @@
 
 
     <node name="CASE_hardware_interface" pkg="spear_rover"
-        type="CASE_hardware_interface_node" launch-prefix="xterm -e gdb --args" output="screen" />
+        type="CASE_hardware_interface_node" output="screen" />
     <node name="controller_spawner" pkg="controller_manager"
         type="spawner" respawn="false" output="screen" ns="/"
         args="
