@@ -7,7 +7,7 @@
 
 #include <geometry_msgs/TransformStamped.h>
 #include <visualization_msgs/MarkerArray.h>
-#include <rover2/ArmAngles.h>
+#include <spear_msgs/ArmAngles.h>
 
 #include <tf2/LinearMath/Quaternion.h>
 
@@ -201,7 +201,7 @@ void putMarkers(){
     arm_visuals_pub.publish(fullArm);
 }
 
-void armAngleUpdateCallback(const rover2::ArmAngles::ConstPtr& msg){
+void armAngleUpdateCallback(const spear_msgs::ArmAngles::ConstPtr& msg){
     //TODO: Add markers for hand, so we can see the open/close state?
 
     setupTransforms(msg->joints[0].angle, msg->joints[1].angle, msg->joints[2].angle, msg->joints[4].angle);
