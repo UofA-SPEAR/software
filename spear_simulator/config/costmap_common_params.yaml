@@ -1,0 +1,12 @@
+# Common configuration between local_costmap and global_costmap
+# see http://wiki.ros.org/navigation/Tutorials/RobotSetup
+
+# TODO tune ranges
+obstacle_range: 2.5
+raytrace_range: 3.0
+# TODO measure actual footprint
+footprint: [[0.6, 0.6], [-0.6, 0.6], [-0.6, -0.6], [0.6, -0.6]]
+#robot_radius: ir_of_robot
+inflation_radius: 0.55
+observation_sources: point_cloud_sensor
+point_cloud_sensor: {sensor_frame: camera_depth_optical_frame, data_type: PointCloud2, topic: /rtabmap/cloud_map, marking: true, clearing: true}
