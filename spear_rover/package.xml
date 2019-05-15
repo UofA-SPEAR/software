@@ -36,4 +36,12 @@
 
   <build_depend>ros_control</build_depend>
   <build_depend>ros_controllers</build_depend>
+
+  <!-- Necessary for pluginlib for ros_control stuff -->
+  <build_depend>hardware_interface</build_depend>
+  <exec_depend>hardware_interface</exec_depend>
+
+  <export>
+	  <hardware_interface plugin="${prefix}/CASE_hardware_plugin.xml"/>
+  </export>
 </package>

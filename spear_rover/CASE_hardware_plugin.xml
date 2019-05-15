@@ -1,0 +1,7 @@
+<library path="lib/libCASE_hardware_interfaces">
+	<class name="CASE_hardware_interface/CASEHardwareInterface" type="CASE_hardware_interface::CASEHardwareInterface" base_class_type="hardware_interface::RobotHW">
+		<description>
+			Interface for CASE
+		</description>
+	</class>
+</class>

@@ -1,11 +1,13 @@
-// Actually implement hardware interface
+// Actually implement hardware nclude <pluginlib/class_list_macros.hpp>
+// interface
 //
 
-#include <CASE_hardware_interface/CASE_hardware_interface.h>
+#include <CASE_hardware_interface/CASE_hardware.h>
 #include <joint_limits_interface/joint_limits.h>
 #include <joint_limits_interface/joint_limits_interface.h>
 #include <joint_limits_interface/joint_limits_rosparam.h>
 #include <joint_limits_interface/joint_limits_urdf.h>
+#include <pluginlib/class_list_macros.hpp>
 #include <sstream>
 
 // message includes
@@ -18,23 +20,16 @@ using joint_limits_interface::SoftJointLimits;
 using joint_limits_interface::PositionJointSoftLimitsHandle;
 using joint_limits_interface::PositionJointSoftLimitsInterface;
 
-namespace CASE_hardware_interface {
-CASEHardwareInterface::CASEHardwareInterface(ros::NodeHandle& nh) : nh_(nh) {
-  controller_manager_.reset(
-      new controller_manager::ControllerManager(this, nh_));
-
-  // temporary topic to publish wheel stuff on
-  // should this actually publish straight to canros?
+CASEHardware::CASEHardware() {
   wheel_pub = nh_.advertise<uavcan__equipment__actuator__ArrayCommand>(
       "/canros/msg/uavcan/equipment/actuator/ArrayCommand", 10);
-
-  this->init();
 }
 
-CASEHardwareInterface::~CASEHardwareInterface() {}
+CASEHardware::~CASEHardware() {}
 
-// Returns 1 if initialization success
-bool CASEHardwareInterface::init() {
+// Returns#include <pluginlib/class_list_macros.hpp>
+// 1 if initialization success
+bool CASEHardware::init() {
   // Get joint names
   nh_.getParam("/CASE/hardware_interface/joints", joint_names_);
   num_joints_ = joint_names_.size();
@@ -70,23 +65,14 @@ bool CASEHardwareInterface::init() {
   // We also need to do any hardware init here (if we have any)
 }
 
-void CASEHardwareInterface::update(const ros::TimerEvent& e) {
-  ROS_INFO("UPDATING");
-  elapsed_time_ = ros::Duration(e.current_real - e.last_real);
-  read();
-  controller_manager_->update(ros::Time::now(), elapsed_time_);
-  write(elapsed_time_);
-}
 
-void CASEHardwareInterface::read() {
+void CASEHardware::read() {
   for (int i = 0; i < num_joints_; i++) {
     // Read in all values from hardware
   }
 }
 
-void CASEHardwareInterface::write(ros::Duration elapsed_time) {
-  // Not entirely sure how this is emplemented
-  velocityJointSoftLimitsInterface.enforceLimits(elapsed_time);
+void CASEHardware::write(ros::Duration elapsed_time) {
 
   // Write ArrayCommands to wheels
   uavcan__equipment__actuator__ArrayCommand out_msg;
@@ -103,6 +89,7 @@ void CASEHardwareInterface::write(ros::Duration elapsed_time) {
     out_msg.commands.push_back(out_cmd);
   }
 
-  wheel_pub.publish(out_msg);
+  //wheel_pub.publish(out_msg);
 }
-}
+
+PLUGINLIB_EXPORT_CLASS(CASEHardware, hardware_interface::RobotHW)

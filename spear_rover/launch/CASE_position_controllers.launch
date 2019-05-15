@@ -23,10 +23,6 @@
         type="spawner" respawn="false" output="screen" ns="/"
         args="
             /CASE/controller/state
-            /CASE/controller/velocity/left_front_wheel
-            /CASE/controller/velocity/left_rear_wheel
-            /CASE/controller/velocity/right_front_wheel
-            /CASE/controller/velocity/right_rear_wheel
             /rover_diff_drive_controller
         " />
 

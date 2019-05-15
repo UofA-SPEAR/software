@@ -15,9 +15,26 @@
 #include <ros/ros.h>
 #include <boost/scoped_ptr.hpp>
 
-namespace CASE_hardware_interface {
+
+using namespace hardware_interface;
+using joint_limits_interface::JointLimits;
+using joint_limits_interface::SoftJointLimits;
+using joint_limits_interface::VelocityJointSoftLimitsHandle;
+using joint_limits_interface::VelocityJointSoftLimitsInterface;
+
 class CASEHardware : public hardware_interface::RobotHW {
+ public:
+  CASEHardware();
+  ~CASEHardware();
+  bool init();
+  void update(const ros::TimerEvent& e);
+  void read();
+  void write(ros::Duration elapsed_time);
+
  protected:
+  ros::NodeHandle nh_;
+  ros::Duration elapsed_time_;
+
   // Interfaces
   hardware_interface::JointStateInterface joint_state_interface_;
   hardware_interface::VelocityJointInterface velocity_joint_interface_;
@@ -51,7 +68,5 @@ class CASEHardware : public hardware_interface::RobotHW {
   // Publisher for sending CAN commands
   ros::Publisher wheel_pub;
 };  // class
-
-};  // namespace
 
 #endif

@@ -16,6 +16,7 @@ find_package(catkin REQUIRED COMPONENTS
     std_msgs
     spear_msgs
     controller_manager
+    hardware_interface
 )
 
 catkin_python_setup()
