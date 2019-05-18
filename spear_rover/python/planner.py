@@ -32,7 +32,7 @@ class TurnRoverClockwise(State):
     def execute(self, userdata):
         twist = Twist(
             linear=Vector3(0, 0, 0),
-            angular=Vector3(0, 0, -3.1415926535897/2),
+            angular=Vector3(0, 0, -3.1415926535897 / 2),
         )
         for _ in range(100):
             self.publisher.publish(twist)
