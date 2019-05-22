@@ -43,3 +43,13 @@ As of now it only maps left/right drive commands to commands to send to the whee
 Node to take positions for the arm and publish them as angles.
 
 (maybe should be merged into hardware_interface_node?)
+
+### arm_visual_node
+
+Node that receives arm joint angles and makes transforms which can be seen in rviz.
+
+Usage:
+    Run arm_ik_node and rviz in addition to this node (order does not matter). After this node is launched, click the "Add" button in the lower left corner of the rviz window. In the dialogue that appears, select "TF" in the "By display type" tab. Clicking "OK" should close the box and the arm transforms should be visible at the origin.
+
+Notes:
+    The markers currently do not have the correct offset to line up with the transforms, so just don't use them for now. Also, changing the wrist pitch maintains the x and y coordinates of the endpoint but does not respect the z-coordinate.
