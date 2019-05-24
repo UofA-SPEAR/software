@@ -17,18 +17,22 @@ int main(int argc, char** argv)
     CASE.init();
 
     controller_manager::ControllerManager cm(&CASE, nh);
+    ROS_INFO("CM started");
 
 
     //ros::Timer timer = nh.createTimer(ros::Duration(0.1), timerCallback);
 
     ros::Duration period (1.0/50); // 50Hz refresh
 
-    while (true) {
+    while (ros::ok()) {
 	CASE.read();
 	cm.update(ros::Time::now(), period);
 	CASE.write(period);
 	period.sleep();
+	ROS_INFO("Looped");
     }
+
+    ROS_INFO("ROS NOT OK");
     spinner.stop();
 
     return 0;
