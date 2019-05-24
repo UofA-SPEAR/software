@@ -18,11 +18,15 @@
 
 
     <node name="CASE_hardware_interface" pkg="spear_rover"
-        type="CASE_hardware_interface_node" output="screen" />
+        type="CASE_hardware_interface_node" output="screen" launch-prefix="gdb -ex run --args" />
     <node name="controller_spawner" pkg="controller_manager"
         type="spawner" respawn="false" output="screen" ns="/"
         args="
             /CASE/controller/state
+	    /CASE/controller/velocity/left_front_wheel
+	    /CASE/controller/velocity/left_rear_wheel
+	    /CASE/controller/velocity/right_front_wheel
+	    /CASE/controller/velocity/right_rear_wheel
             /rover_diff_drive_controller
         " />
 
