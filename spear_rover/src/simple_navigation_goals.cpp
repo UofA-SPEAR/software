@@ -14,6 +14,7 @@ int main(int argc, char** argv){
   while(!ac.waitForServer(ros::Duration(1.0))){
     ROS_INFO("Waiting for the move_base action server to come up");
   }
+  ROS_INFO("move_base action server is up");
 
   move_base_msgs::MoveBaseGoal goal;
 
