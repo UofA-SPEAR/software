@@ -5,8 +5,8 @@ local_costmap:
     publish_frequency: 2.0
     static_map: false
     rolling_window: true
-    width: 4.0
-    height: 4.0
+    width: 10.0
+    height: 10.0
     resolution: 0.025
     origin_x: -2.0
     origin_y: -2.0
@@ -15,11 +15,11 @@ local_costmap:
 
     # assuming receiving a cloud from rtabmap_ros/obstacles_detection node
     point_cloud_sensor: {
-        # TODO set sensor fram to location of stereo camera
+        # TODO set sensor frame to location of stereo camera
         sensor_frame: base_link,
         data_type: PointCloud2, 
-        topic: /rtabmap/cloud_map,
-        expected_update_rate: 0.5, 
+        topic: /planner_cloud,
+        expected_update_rate: 2.0, 
         marking: true, 
         clearing: true,
         min_obstacle_height: -99999.0,

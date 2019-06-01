@@ -1,10 +1,11 @@
 <!-- This file configures the ROS navigation stack -->
 
 <launch>
-  <remap from="openni_points" to="/planner_cloud"/>
-  <remap from="map" to="/rtabmap/proj_map"/>
-  <remap from="move_base_simple/goal" to="/planner_goal"/>
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <!-- local_costmap_params.yaml expects a point cloud published to topic /planner_cloud  -->
+    <remap from="/planner_cloud" to="/rtabmap/cloud_obstacles"/>
+    <remap from="map" to="/rtabmap/proj_map"/>
+    <remap from="move_base_simple/goal" to="/planner_goal"/>
     <rosparam file="$(find spear_simulator)/config/costmap_common_params.yaml" command="load" ns="global_costmap" /> 
     <rosparam file="$(find spear_simulator)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
     <rosparam file="$(find spear_simulator)/config/local_costmap_params.yaml" command="load" />
