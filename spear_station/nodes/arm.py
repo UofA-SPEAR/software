@@ -2,7 +2,7 @@
 
 import kivy
 import datetime
-from spear_station import SpinROS, ros_init, joyData, publish
+from spear_station.ros_station import SpinROS, ros_init, joyData, publish
 from kivy.app import App
 from kivy.uix.gridlayout import GridLayout
 from kivy.core.window import Window
