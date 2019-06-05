@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y qt4-default libx264-dev \
                                          libgstreamer0.10-dev \
                                          libgstreamer-plugins-base0.10-dev \
                                          ros-kinetic-rtabmap-ros \
+                                         ros-kinetic-move-base \
                                          gstreamer0.10-plugins-good \
                                          python-pip
 

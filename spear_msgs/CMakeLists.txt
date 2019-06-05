@@ -18,7 +18,6 @@ add_message_files(
   WheelCmdArray.msg
   ArmAngles.msg
   JointAngle.msg
-  Arm.msg
   arm_position.msg
   BallCoord.msg
   BallCoords.msg
