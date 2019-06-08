@@ -22,7 +22,8 @@ int main(int argc, char** argv){
   goal.target_pose.header.frame_id = "base_link";
   goal.target_pose.header.stamp = ros::Time::now();
 
-  goal.target_pose.pose.position.x = 1.0;
+  goal.target_pose.pose.position.x = 5.0;
+  //goal.target_pose.pose.position.y = 5.0;
   goal.target_pose.pose.orientation.w = 1.0;
 
   ROS_INFO("Sending goal");
@@ -30,7 +31,7 @@ int main(int argc, char** argv){
   
   ac.waitForResult();
   if(ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
-    ROS_INFO("Hooray, the base moved 1 meter forward");
+    ROS_INFO("Hooray, the base reached the goal!");
   else
     ROS_INFO("The base failed to move forward 1 meter for some reason");
 
