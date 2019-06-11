@@ -6,13 +6,17 @@ CASE:
         velocity:
             left_front_wheel:
                 type: velocity_controllers/JointVelocityController
-                joint: left_front_wheel
+                # joint: left_front_wheel
+                joint: link_wheel_frontleft
             left_rear_wheel:
                 type: velocity_controllers/JointVelocityController
-                joint: left_rear_wheel
+                # joint: left_rear_wheel
+                joint: link_wheel_backleft
             right_front_wheel:
                 type: velocity_controllers/JointVelocityController
-                joint: right_front_wheel
+                # joint: right_front_wheel
+                joint: link_wheel_frontright
             right_rear_wheel:
                 type: velocity_controllers/JointVelocityController
-                joint: right_rear_wheel
+                # joint: right_rear_wheel
+                joint: link_wheel_backright
