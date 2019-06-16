@@ -4,19 +4,19 @@ CASE:
             type: joint_state_controller/JointStateController
             publish_rate: 50
         velocity:
-            left_front_wheel:
+            link_wheel_frontleft:
                 type: velocity_controllers/JointVelocityController
                 # joint: left_front_wheel
                 joint: link_wheel_frontleft
-            left_rear_wheel:
+            link_wheel_backleft:
                 type: velocity_controllers/JointVelocityController
                 # joint: left_rear_wheel
                 joint: link_wheel_backleft
-            right_front_wheel:
+            link_wheel_frontright:
                 type: velocity_controllers/JointVelocityController
                 # joint: right_front_wheel
                 joint: link_wheel_frontright
-            right_rear_wheel:
+            link_wheel_backright:
                 type: velocity_controllers/JointVelocityController
                 # joint: right_rear_wheel
                 joint: link_wheel_backright

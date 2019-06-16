@@ -150,7 +150,7 @@
       </collision>
     </link>
 
-    <link name="link_wheel_backleft">
+    <link name="/CASE/controller/velocity/link_wheel_backleft">
       <inertial>
         <origin xyz="0 0.10244 0" rpy="0 0 0"/>
         <mass value="1.5"/>
@@ -170,7 +170,7 @@
       </collision>
     </link>
 
-    <link name="link_wheel_backright">
+    <link name="/CASE/controller/velocity/link_wheel_backright">
       <inertial>
         <origin xyz="0 -0.10254 0" rpy="0 0 0"/>
         <mass value="1.5"/>
@@ -190,7 +190,7 @@
       </collision>
     </link>
 
-    <link name="link_wheel_frontleft">
+    <link name="/CASE/controller/velocity/link_wheel_frontleft">
       <inertial>
         <origin xyz="0 0.10244 0" rpy="0 0 0"/>
         <mass value="1.5"/>
@@ -210,7 +210,7 @@
       </collision>
     </link>
 
-    <link name="link_wheel_frontright">
+    <link name="/CASE/controller/velocity/link_wheel_frontright">
       <inertial>
         <origin xyz="0 -0.10264 0" rpy="0 0 0"/>
         <mass value="1.5"/>
@@ -273,22 +273,22 @@
     </joint>
 
     <!-- Stuff to make the wheels driveable -->
-    <joint name="link_wheel_backleft" type="continuous">
+    <joint name="/CASE/controller/velocity/link_wheel_backleft" type="continuous">
       <axis xyz="0 1 0" rpy="0 0 0"/>
       <origin xyz="-0.21346 0.01924 -0.08012" rpy="0 0 0"/>
       <parent link="link_suspension_backleft"/>
-      <child link="link_wheel_backleft"/>
+      <child link="/CASE/controller/velocity/link_wheel_backleft"/>
     </joint>
     <transmission name="wheel_backleft_trans">
       <type>transmission_interface/SimpleTransmission</type>
       <actuator name="wheel_backleft_motor">
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
-      <joint name="link_wheel_backleft">
+      <joint name="/CASE/controller/velocity/link_wheel_backleft">
         <hardwareInterface>VelocityJointInterface</hardwareInterface>
       </joint>
     </transmission>
-    <gazebo reference="link_wheel_backleft">
+    <gazebo reference="/CASE/controller/velocity/link_wheel_backleft">
       <mu1 value="200.0"/>
       <mu2 value="100.0"/>
       <kp value="10000000.0" />
@@ -296,22 +296,22 @@
       <material>Gazebo/Grey</material>
     </gazebo>
 
-    <joint name="link_wheel_backright" type="continuous">
+    <joint name="/CASE/controller/velocity/link_wheel_backright" type="continuous">
       <axis xyz="0 1 0" rpy="0 0 0"/>
       <origin xyz="-0.21346 -0.01886 -0.08012" rpy="0 0 0"/>
       <parent link="link_suspension_backright"/>
-      <child link="link_wheel_backright"/>
+      <child link="/CASE/controller/velocity/link_wheel_backright"/>
     </joint>
     <transmission name="wheel_backright_trans">
       <type>transmission_interface/SimpleTransmission</type>
       <actuator name="wheel_backright_motor">
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
-      <joint name="link_wheel_backright">
+      <joint name="/CASE/controller/velocity/link_wheel_backright">
         <hardwareInterface>VelocityJointInterface</hardwareInterface>
       </joint>
     </transmission>
-    <gazebo reference="link_wheel_backright">
+    <gazebo reference="/CASE/controller/velocity/link_wheel_backright">
       <mu1 value="200.0"/>
       <mu2 value="100.0"/>
       <kp value="10000000.0" />
@@ -319,22 +319,22 @@
       <material>Gazebo/Grey</material>
     </gazebo>
 
-    <joint name="link_wheel_frontleft" type="continuous">
+    <joint name="/CASE/controller/velocity/link_wheel_frontleft" type="continuous">
       <axis xyz="0 1 0" rpy="0 0 0"/>
       <origin xyz="0.21346 0.01886 -0.08012" rpy="0 0 0"/>
       <parent link="link_suspension_frontleft"/>
-      <child link="link_wheel_frontleft"/>
+      <child link="/CASE/controller/velocity/link_wheel_frontleft"/>
     </joint>
     <transmission name="wheel_frontleft_trans">
       <type>transmission_interface/SimpleTransmission</type>
       <actuator name="wheel_frontleft_motor">
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
-      <joint name="link_wheel_frontleft">
+      <joint name="/CASE/controller/velocity/link_wheel_frontleft">
         <hardwareInterface>VelocityJointInterface</hardwareInterface>
       </joint>
     </transmission>
-    <gazebo reference="link_wheel_frontleft">
+    <gazebo reference="/CASE/controller/velocity/link_wheel_frontleft">
       <mu1 value="200.0"/>
       <mu2 value="100.0"/>
       <kp value="10000000.0" />
@@ -342,22 +342,22 @@
       <material>Gazebo/Grey</material>
     </gazebo>
 
-    <joint name="link_wheel_frontright" type="continuous">
+    <joint name="/CASE/controller/velocity/link_wheel_frontright" type="continuous">
       <axis xyz="0 1 0" rpy="0 0 0"/>
       <origin xyz="0.21345 -0.01924 -0.08014" rpy="0 0 0"/>
       <parent link="link_suspension_frontright"/>
-      <child link="link_wheel_frontright"/>
+      <child link="/CASE/controller/velocity/link_wheel_frontright"/>
     </joint>
     <transmission name="wheel_frontright_trans">
       <type>transmission_interface/SimpleTransmission</type>
       <actuator name="wheel_frontright_motor">
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
-      <joint name="link_wheel_frontright">
+      <joint name="/CASE/controller/velocity/link_wheel_frontright">
         <hardwareInterface>VelocityJointInterface</hardwareInterface>
       </joint>
     </transmission>
-    <gazebo reference="link_wheel_frontright">
+    <gazebo reference="/CASE/controller/velocity/link_wheel_frontright">
       <mu1 value="200.0"/>
       <mu2 value="100.0"/>
       <kp value="10000000.0" />

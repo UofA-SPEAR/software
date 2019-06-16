@@ -1,17 +1,17 @@
 joint_limits:
-    left_front_wheel:
+    link_wheel_frontleft:
         has_velocity_limits: true
         max_velocity: 4.0 # no idea what the actual ones are rn
         min_velocity: -4.0 # this would be the default anyways
-    left_rear_wheel:
+    link_wheel_backleft:
         has_velocity_limits: true
         max_velocity: 4.0 # no idea what the actual ones are rn
         min_velocity: -4.0 # this would be the default anyways
-    right_front_wheel:
+    link_wheel_frontright:
         has_velocity_limits: true
         max_velocity: 4.0 # no idea what the actual ones are rn
         min_velocity: -4.0 # this would be the default anyways
-    right_rear_wheel:
+    link_wheel_backright:
         has_velocity_limits: true
         max_velocity: 4.0 # no idea what the actual ones are rn
         min_velocity: -4.0 # this would be the default anyways
