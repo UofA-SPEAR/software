@@ -3,7 +3,7 @@ CASE:
         loop_hz: 10 # hz
         joints:
             # need to be defined in the order that they run in CAN
-            - left_front_wheel
-            - left_rear_wheel
-            - right_front_wheel
-            - right_rear_wheel
+            - link_wheel_frontleft
+            - link_wheel_backleft
+            - link_wheel_frontright
+            - link_wheel_backright

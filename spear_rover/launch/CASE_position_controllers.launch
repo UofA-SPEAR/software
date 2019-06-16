@@ -18,7 +18,7 @@
 
 
     <node name="CASE_hardware_interface" pkg="spear_rover"
-        type="CASE_hardware_interface_node" output="screen" />
+        type="CASE_hardware_interface_node" output="screen" launch-prefix="gdb -ex run --args"  />
     <node name="controller_spawner" pkg="controller_manager"
         type="spawner" respawn="false" output="screen" ns="/"
         args="
