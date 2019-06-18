@@ -8,6 +8,8 @@
 #include <tf/transform_broadcaster.h>
 #include <tf/transform_listener.h>
 
+#include "skidsteer.hpp"
+
 /**
  * Broadcasts a transform.
  * @param x X-coordinate of transform
