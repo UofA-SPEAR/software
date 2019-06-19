@@ -112,7 +112,7 @@ tf_delta_t odom_to_tf_delta(skidsteer_t odom) {
 
     // Just draw out an arc length with the angle in there and this will make sense.
     out.x = sin(out.yaw) * radius;
-    out.y = r - cos(out.yaw) * radius;
+    out.y = radius - cos(out.yaw) * radius;
 
     return out;
 }

@@ -10,6 +10,10 @@
 
 #include "skidsteer.hpp"
 
+#include <canros/spear__drive__WheelOdom.h>
+
+tf::Transform old_transform;
+
 /**
  * Broadcasts a transform.
  * @param x X-coordinate of transform
@@ -82,20 +86,54 @@ void transformDelta(double x, double y, double z,
   oldTransform = newTransform;
 }
 
+/*
+ * WHeels are:
+ * 0 - left back
+ * 1 - left front
+ * 2 - right back
+ * 3 - right front
+ */
+
+void odom_callback(const canros::spear__drive__WheelOdom::ConstPtr& msg) {
+    static std::vector<canros::spear__drive__WheelOdom> wheels;
+
+    // We are going to assume that there are fewer than 255 wheels.
+    static bool wheel_data[4] = { 0 };
+
+    wheel_data[msg->wheel_id] = true;
+    wheels[msg->wheel_id] = *msg;
+
+    // Return if we aren't done with all the wheels
+    for (int i = 0; i < 4; i++) {
+        if (!wheel_data[i]) {
+            return;
+        }
+    }
+
+    skidsteer_t skid;
+    skid.left.back   = wheels[0].delta;
+    skid.left.front  = wheels[1].delta;
+    skid.right.back  = wheels[2].delta;
+    skid.right.front = wheels[3].delta;
+
+    // If all the data is in
+    tf_delta_t tf_delta = odom_to_tf_delta(skid);
+
+    transformDelta(tf_delta.x, tf_delta.y, 0, tf_delta.yaw, 0, 0,
+            "odom", "base_link", old_transform);
+
+}
+
 
 int main(int argc, char** argv) {
   ros::init(argc, argv, "odom_tf_publisher");
 
   ros::NodeHandle node;
 
-  tf::Transform oldTransform = broadcastTransform(0, 0, 0, 0, 0, 0, "odom", "base_link");
+  old_transform = broadcastTransform(0, 0, 0, 0, 0, 0, "odom", "base_link");
   ros::Duration(1).sleep();
 
-  ros::Rate rate(10); // 10 hz
-  while (ros::ok()) {
-    transformDelta(1, 2, 3, 0, 0, 0.01, "odom", "base_link", oldTransform);
-    rate.sleep();
-  }
+  ros::spin();
 
   return 0;
 }
