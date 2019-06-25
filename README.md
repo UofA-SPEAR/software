@@ -62,6 +62,7 @@ Kivy Knob: `garden install knob`<br>
 ROS Joy: `sudo apt-get install ros-kinetic-joy`<br>
 libqt (required by nimbro_network): `apt-get install libqt4-dev`<br>
 qmake (required by nimbro_network): `apt-get install qt4-qmake`<br>
+ROS move\_base package: `apt-get install ros-kinetic-move-base`
 
 Notes:
 1. x264 is for encoding video and Kivy is for our user interface.
