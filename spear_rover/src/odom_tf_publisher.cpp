@@ -133,6 +133,9 @@ int main(int argc, char** argv) {
   old_transform = broadcastTransform(0, 0, 0, 0, 0, 0, "odom", "base_link");
   ros::Duration(1).sleep();
 
+  ros::Subscriber sub =
+      node.subscribe("/canros/spear/drive/WheelOdom", 1000, odom_callback);
+
   ros::spin();
 
   return 0;
