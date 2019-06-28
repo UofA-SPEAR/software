@@ -125,6 +125,15 @@ target_link_libraries(odom_tf_publisher_node
   ${catkin_LIBRARIES}
 )
 
+add_executable(test_wheel_odom_publisher_node src/test_wheel_odom_publisher.cpp)
+add_dependencies(test_wheel_odom_publisher_node
+   ${${PROJECT_NAME}_EXPORTED_TARGETS}
+   ${catkin_EXPORTED_TARGETS}
+)
+target_link_libraries(test_wheel_odom_publisher_node
+  ${catkin_LIBRARIES}
+)
+
 install(PROGRAMS
     nodes/mapper.py
     DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}

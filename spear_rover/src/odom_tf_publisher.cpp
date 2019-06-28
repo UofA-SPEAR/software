@@ -95,7 +95,7 @@ void transformDelta(double x, double y, double z,
  */
 
 void odom_callback(const canros::spear__drive__WheelOdom::ConstPtr& msg) {
-    static std::vector<canros::spear__drive__WheelOdom> wheels;
+    static canros::spear__drive__WheelOdom wheels[4];
 
     // We are going to assume that there are fewer than 255 wheels.
     static bool wheel_data[4] = { 0 };

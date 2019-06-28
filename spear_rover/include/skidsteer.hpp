@@ -15,7 +15,7 @@
 // Takes the locations of the wheels.
 // TODO: make these happen in compilation
 //#define SKIDSTEER_ANGULAR_RATIO(x, y)       2 * PI * sqrt(x*x + y*y) / cos(atan(y/x))
-#define SKIDSTEER_ANGULAR_RATIO(x, y)       sqrt(x*x + y*y) / cos(atan(y/x))
+#define SKIDSTEER_ANGULAR_RATIO(x, y)       sqrt(x*x + y*y) / cos(atan2(y, x))
 #define SKIDSTEER_RATIO_FRONTRIGHT          SKIDSTEER_ANGULAR_RATIO(0.5, 0.5)
 #define SKIDSTEER_RATIO_FRONTLEFT           SKIDSTEER_ANGULAR_RATIO(-0.5, 0.5)
 #define SKIDSTEER_RATIO_BACKLEFT            SKIDSTEER_ANGULAR_RATIO(-0.5, -0.5)
@@ -81,14 +81,14 @@ tf_delta_t odom_to_tf_delta(skidsteer_t odom) {
      */
     
     tf_delta_t out;
-    float left, right;
+    double left, right;
     
     // Calculate average linear motion.
     left  = (odom.left.back + odom.left.front) / 2;
     right = (odom.right.back + odom.right.front) / 2;
 
     // Forward is x I guess
-    float linear = (left + right) / 2;
+    double linear = (left + right) / 2;
 
     // Remove linear component from each wheel's motion
     odom.left.back   -= linear;
@@ -96,7 +96,7 @@ tf_delta_t odom_to_tf_delta(skidsteer_t odom) {
     odom.right.back  -= linear;
     odom.right.front -= linear;
 
-    float ang_left_back, ang_left_front, ang_right_back, ang_right_front;
+    double ang_left_back, ang_left_front, ang_right_back, ang_right_front;
 
     // Get angular motion according to each wheel
     ang_left_back   = odom.left.back / SKIDSTEER_RATIO_BACKLEFT;
@@ -107,12 +107,17 @@ tf_delta_t odom_to_tf_delta(skidsteer_t odom) {
     // Take yaw value as average angular motion
     out.yaw = (ang_left_back + ang_left_front + ang_right_back + ang_right_front) / 4;
 
-    // Radius of curvature of the path
-    float radius = linear / out.yaw;
+    if (out.yaw == 0) {
+        out.x = linear;
+        out.y = 0;
+    } else {
+        // Radius of curvature of the path
+        double radius = linear / out.yaw;
 
-    // Just draw out an arc length with the angle in there and this will make sense.
-    out.x = sin(out.yaw) * radius;
-    out.y = radius - cos(out.yaw) * radius;
+        // Just draw out an arc length with the angle in there and this will make sense.
+        out.x = sin(out.yaw) * radius;
+        out.y = radius - cos(out.yaw) * radius;
+    }
 
     return out;
 }
