@@ -121,3 +121,5 @@ clang-format-3.9 -i -style=Google <filename>
 ```
 yapf -i <filename>
 ```
+
+Note: we are linting for python 3.5.
