@@ -3,9 +3,9 @@
  * messages to canros.
  */
 
-#include <ros/ros.h>
-#include <geometry_msgs/Twist.h>
 #include <canros/uavcan__equipment__actuator__ArrayCommand.h>
+#include <geometry_msgs/Twist.h>
+#include <ros/ros.h>
 
 #include "skidsteer.hpp"
 

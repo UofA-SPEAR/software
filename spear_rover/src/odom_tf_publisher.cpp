@@ -26,9 +26,9 @@ tf::Transform old_transform;
  * @param to Name of child tf frame
  * @return The transform that was broadcast
  */
-tf::Transform broadcastTransform(double x, double y, double z,
-                  double roll, double pitch, double yaw,
-                  std::string from, std::string to) {
+tf::Transform broadcastTransform(double x, double y, double z, double roll,
+                                 double pitch, double yaw, std::string from,
+                                 std::string to) {
   // This must be static
   static tf::TransformBroadcaster br;
 
@@ -42,9 +42,9 @@ tf::Transform broadcastTransform(double x, double y, double z,
   return transform;
 }
 
-
 /**
- * Adds x, y, z, roll, pitch, yaw onto an old transform and publishes the result.
+ * Adds x, y, z, roll, pitch, yaw onto an old transform and publishes the
+ * result.
  * @param x X-coordinate to add
  * @param y Y-coordinate to add
  * @param z Z-coordinate to add
@@ -55,10 +55,9 @@ tf::Transform broadcastTransform(double x, double y, double z,
  * @param to Name of child tf frame
  * @param oldTransform The old transform. THIS IS MODIFIED.
  */
-void transformDelta(double x, double y, double z,
-                    double roll, double pitch, double yaw,
-                    std::string from, std::string to,
-                    tf::Transform &oldTransform) {
+void transformDelta(double x, double y, double z, double roll, double pitch,
+                    double yaw, std::string from, std::string to,
+                    tf::Transform& oldTransform) {
   // This must be static
   static tf::TransformBroadcaster br;
 
@@ -80,7 +79,8 @@ void transformDelta(double x, double y, double z,
   tf::Transform newTransform;
   newTransform.setOrigin(tf::Vector3(newX, newY, newZ));
   newTransform.setRotation(newRotation);
-  br.sendTransform(tf::StampedTransform(newTransform, ros::Time::now(), from, to));
+  br.sendTransform(
+      tf::StampedTransform(newTransform, ros::Time::now(), from, to));
 
   // Update old transform
   oldTransform = newTransform;
@@ -95,35 +95,33 @@ void transformDelta(double x, double y, double z,
  */
 
 void odom_callback(const canros::spear__drive__WheelOdom::ConstPtr& msg) {
-    static canros::spear__drive__WheelOdom wheels[4];
+  static canros::spear__drive__WheelOdom wheels[4];
 
-    // We are going to assume that there are fewer than 255 wheels.
-    static bool wheel_data[4] = { 0 };
+  // We are going to assume that there are fewer than 255 wheels.
+  static bool wheel_data[4] = {0};
 
-    wheel_data[msg->wheel_id] = true;
-    wheels[msg->wheel_id] = *msg;
+  wheel_data[msg->wheel_id] = true;
+  wheels[msg->wheel_id] = *msg;
 
-    // Return if we aren't done with all the wheels
-    for (int i = 0; i < 4; i++) {
-        if (!wheel_data[i]) {
-            return;
-        }
+  // Return if we aren't done with all the wheels
+  for (int i = 0; i < 4; i++) {
+    if (!wheel_data[i]) {
+      return;
     }
+  }
 
-    skidsteer_t skid;
-    skid.left.back   = wheels[0].delta;
-    skid.left.front  = wheels[1].delta;
-    skid.right.back  = wheels[2].delta;
-    skid.right.front = wheels[3].delta;
+  skidsteer_t skid;
+  skid.left.back = wheels[0].delta;
+  skid.left.front = wheels[1].delta;
+  skid.right.back = wheels[2].delta;
+  skid.right.front = wheels[3].delta;
 
-    // If all the data is in
-    tf_delta_t tf_delta = odom_to_tf_delta(skid);
+  // If all the data is in
+  tf_delta_t tf_delta = odom_to_tf_delta(skid);
 
-    transformDelta(tf_delta.x, tf_delta.y, 0, tf_delta.yaw, 0, 0,
-            "odom", "base_link", old_transform);
-
+  transformDelta(tf_delta.x, tf_delta.y, 0, tf_delta.yaw, 0, 0, "odom",
+                 "base_link", old_transform);
 }
-
 
 int main(int argc, char** argv) {
   ros::init(argc, argv, "odom_tf_publisher");
