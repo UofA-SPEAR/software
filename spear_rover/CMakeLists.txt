@@ -14,6 +14,7 @@ find_package(catkin REQUIRED COMPONENTS
     image_transport
     canros
     std_msgs
+    tf
     spear_msgs
 )
 
@@ -112,6 +113,33 @@ add_dependencies(hardware_interface_node
    ${catkin_EXPORTED_TARGETS}
 )
 target_link_libraries(hardware_interface_node
+  ${catkin_LIBRARIES}
+)
+
+add_executable(odom_tf_publisher_node src/odom_tf_publisher.cpp)
+add_dependencies(odom_tf_publisher_node
+   ${${PROJECT_NAME}_EXPORTED_TARGETS}
+   ${catkin_EXPORTED_TARGETS}
+)
+target_link_libraries(odom_tf_publisher_node
+  ${catkin_LIBRARIES}
+)
+
+add_executable(test_wheel_odom_publisher_node src/test_wheel_odom_publisher.cpp)
+add_dependencies(test_wheel_odom_publisher_node
+   ${${PROJECT_NAME}_EXPORTED_TARGETS}
+   ${catkin_EXPORTED_TARGETS}
+)
+target_link_libraries(test_wheel_odom_publisher_node
+  ${catkin_LIBRARIES}
+)
+
+add_executable(twist_to_skidsteer_node src/twist_to_skidsteer.cpp)
+add_dependencies(twist_to_skidsteer_node
+   ${${PROJECT_NAME}_EXPORTED_TARGETS}
+   ${catkin_EXPORTED_TARGETS}
+)
+target_link_libraries(twist_to_skidsteer_node
   ${catkin_LIBRARIES}
 )
 
