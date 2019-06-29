@@ -3,7 +3,7 @@
 # An interface between ros messages and the uavcan protocol.
 
 from canros import Message as CanrosMessage
-from hardware_interface.msg import WheelCmdArray
+from spear_msgs.msg import WheelCmdArray
 import rospy
 # How do you make it span multiple lines?
 from spear_msgs.msg import ArmAngles, ActuatorStatus, BatteryInfo

@@ -134,6 +134,15 @@ target_link_libraries(test_wheel_odom_publisher_node
   ${catkin_LIBRARIES}
 )
 
+add_executable(twist_to_skidsteer_node src/twist_to_skidsteer.cpp)
+add_dependencies(twist_to_skidsteer_node
+   ${${PROJECT_NAME}_EXPORTED_TARGETS}
+   ${catkin_EXPORTED_TARGETS}
+)
+target_link_libraries(twist_to_skidsteer_node
+  ${catkin_LIBRARIES}
+)
+
 install(PROGRAMS
     nodes/mapper.py
     DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
