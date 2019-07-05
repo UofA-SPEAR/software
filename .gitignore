@@ -1,6 +1,7 @@
 *.pyc
 __pycache__/
 **.swp
+.vscode/
 
 # Generated when using our build.bash script. Useful for when you want to use
 # something like code completion in vim and have it recognize all the ros
