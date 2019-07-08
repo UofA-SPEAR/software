@@ -8,4 +8,7 @@
   <license>MIT</license>
   <buildtool_depend>catkin</buildtool_depend>
 
+  <exec_depend>gazebo</exec_depend>
+  <exec_depend>gazebo-ros-control</exec_depend>
+
 </package>
