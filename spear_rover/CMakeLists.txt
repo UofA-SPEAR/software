@@ -141,6 +141,8 @@ add_dependencies(twist_to_skidsteer_node
    ${catkin_EXPORTED_TARGETS}
 )
 target_link_libraries(twist_to_skidsteer_node
+  ${catkin_LIBRARIES}
+)
 # Add simple_navigation_goals node
 add_executable(simple_navigation_goals_node src/simple_navigation_goals.cpp)
 add_dependencies(simple_navigation_goals_node
