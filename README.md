@@ -53,15 +53,15 @@ We recommend the "Desktop-Full Install" ROS package for best compatibility.
 
 Install the following dependencies:<br>
 
-x264: `apt-get install libx264-dev`<br>
-Cython: `python -m pip install cython --user`<br>
-Pygame: `python -m pip install pygame --user`<br>
-Kivy: `python -m pip install kivy --user`<br>
-Kivy Garden: `python -m pip install kivy-garden --user`<br>
-Kivy Knob: `garden install knob`<br>
-ROS Joy: `sudo apt-get install ros-kinetic-joy`<br>
-libqt (required by nimbro_network): `apt-get install libqt4-dev`<br>
-qmake (required by nimbro_network): `apt-get install qt4-qmake`<br>
+- x264: `apt-get install libx264-dev`
+- Cython: `python -m pip install cython --user`
+- Pygame: `python -m pip install pygame --user`
+- Kivy: `python -m pip install kivy --user`
+- Kivy Garden: `python -m pip install kivy-garden --user`
+- Kivy Knob: `garden install knob`
+- ROS Joy: `sudo apt-get install ros-kinetic-joy`
+- libqt (required by nimbro_network): `apt-get install libqt4-dev`
+- qmake (required by nimbro_network): `apt-get install qt4-qmake`
 
 Notes:
 1. x264 is for encoding video and Kivy is for our user interface.
