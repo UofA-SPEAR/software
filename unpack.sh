@@ -70,14 +70,18 @@ fi
 
 ###### Install canros
 python -m pip install uavcan
+cd ~/ros/src
 git clone https://github.com/MonashUAS/canros.git
 
 #### Get our DSDL definitions
+cd ~
 git clone https://github.com/UofA-SPEAR/uavcan_dsdl.git
+cd uavcan_dsdl
+git submodule update --init
 
 ###### Link our packages
 # This needs to be moved all back into rover2 at some point
-
+cd ~/ros/src
 ln -s $DIR/spear_msgs
 ln -s $DIR/spear_rover
 ln -s $DIR/spear_station
@@ -86,10 +90,10 @@ ln -s $DIR/spear_simulator
 ###### Link UAVCAN DSDL definitions to the home directory.
 mkdir -p ~/uavcan_vendor_specific_types
 cd ~/uavcan_vendor_specific_types
-ln -s $DIR/uavcan_dsdl/spear
+ln -s ~/uavcan_dsdl/spear
 
 ###### Build everything
 cd ~/ros
-catkin_make
+catkin_make --force
 
 printf "Thanks for unpacking!\nNow that your enviroment is setup, you should never have to do this again.\nPlease run the following command to install the correct packages:\nrosdep install --from-paths src --ignore-src -r -y\n"
