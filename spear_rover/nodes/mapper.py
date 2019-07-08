@@ -3,7 +3,9 @@
 # An interface between ros messages and the uavcan protocol.
 
 from canros import Message as CanrosMessage
-from hardware_interface.msg import WheelCmdArray
+# example
+# from canros.msg import uavcan__equipment__actuator__ArrayCommand
+from canros.msg import uavcan__equipment__actuator__ArrayCommand
 import rospy
 # How do you make it span multiple lines?
 from spear_msgs.msg import ArmAngles, ActuatorStatus, BatteryInfo
@@ -13,11 +15,11 @@ from spear_rover import map_ros_to_can, map_can_to_ros, test_bit
 
 def wheel_cmd_array_mapper(data):
     out = []
-    for wheel_command in data.wheel_cmds:
+    for command in data.commands:
         uavcan_msg = CanrosMessage("uavcan.equipment.actuator.Command")
-        uavcan_msg.actuator_id = wheel_command.wheel
-        uavcan_msg.command_type = 3  # a.k.a. COMMAND_TYPE_SPEED
-        uavcan_msg.command_value = wheel_command.velocity
+        uavcan_msg.actuator_id = command.actuator_id
+        uavcan_msg.command_type = command.command_type  # a.k.a. COMMAND_TYPE_SPEED
+        uavcan_msg.command_value = command.command_value
         out.append(uavcan_msg)
 
     return out
@@ -48,7 +50,7 @@ def main():
     # Set up ROS -> UAVCAN subscribers #
     ####################################
 
-    map_ros_to_can(WheelCmdArray, '/hw_interface/drive',
+    map_ros_to_can(uavcan__equipment__actuator__ArrayCommand, '/drive/cmds',
                    'uavcan.equipment.actuator.ArrayCommand', {
                        "commands": wheel_cmd_array_mapper
                    })

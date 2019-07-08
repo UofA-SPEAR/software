@@ -1,0 +1,6 @@
+<!--
+  This configures the ROS navigation stack and launches a move_base server.
+-->
+
+<launch>
+</launch>
