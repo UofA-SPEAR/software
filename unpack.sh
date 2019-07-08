@@ -92,4 +92,4 @@ ln -s $DIR/uavcan_dsdl/spear
 cd ~/ros
 catkin_make
 
-printf "Thanks for unpacking!\nNow that your enviroment is setup, you should never have to do this again.\n"
+printf "Thanks for unpacking!\nNow that your enviroment is setup, you should never have to do this again.\nPlease run the following command to install the correct packages:\nrosdep install --from-paths src --ignore-src -r -y\n"
