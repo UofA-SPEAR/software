@@ -28,12 +28,6 @@ This should ideally be able to run on the TX2, but it is not necessary for it to
 This package contains all of the software that will be run at the base station during competition.
 This includes our command and control interfaces and essentially anything that isn't run on the rover during competition.
 
-# Migration TODO
-
-- [ ] Fix Travis CI
-- [ ] Find where the drive_commands file went (send_ros.py)
-- [ ] Add dependency info to this README
-
 # Setup and install instructions
 
 ## Install Ubuntu 16.04 desktop
@@ -45,7 +39,7 @@ You can find a .iso image of Ubuntu 16.04 [here](http://releases.ubuntu.com/16.0
 
 ## Install ROS
 
-We use ROS we nearly everying on the rover.<br>
+We use ROS for nearly everying on the rover.<br>
 To install ROS, follow the instructions [here](http://wiki.ros.org/kinetic/Installation/Ubuntu).<br>
 We recommend the "Desktop-Full Install" ROS package for best compatibility.
 
@@ -74,6 +68,12 @@ After installing the dependencies, clone this repo and run the `unpack.sh` scrip
 This will setup your catkin workspace for development.
 
 You must `source ~/.bashrc` for the changes made by `unpack.sh` to take effect.
+
+Run rosdep to install the required packages:
+
+```
+rosdep install --from-paths src --ignore-src -r -y
+```
 
 ## Developing and building
 
