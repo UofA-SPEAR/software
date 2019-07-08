@@ -10,19 +10,10 @@ find_package(catkin REQUIRED COMPONENTS
 add_message_files(
   # Probably more messages to add here
   FILES
-  ActuatorStatus.msg
-  BatteryInfo.msg
-  NodeStatus.msg
-  PpmMessage.msg
-  wheel_cmd.msg
-  WheelCmdArray.msg
-  ArmAngles.msg
-  JointAngle.msg
   arm_position.msg
   BallCoord.msg
   BallCoords.msg
   drive_cmd.msg
-  WheelCmdArray.msg
 )
 
 ## Generate services in the 'srv' folder
