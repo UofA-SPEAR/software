@@ -7,7 +7,25 @@
 
     <link name="link_camera_depth">
     </link>
-
+<gazebo reference="imu_link">
+    <gravity>true</gravity>
+    <sensor name="imu_sensor" type="imu">
+      <always_on>true</always_on>
+      <update_rate>20.0</update_rate>
+      <visualize>true</visualize>
+      <topic>imu</topic>
+      <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+        <topicName>imu</topicName>
+        <bodyName>base_link</bodyName>
+        <updateRateHZ>10.0</updateRateHZ>
+        <gaussianNoise>0.0</gaussianNoise>
+        <xyzOffset>0 0 0</xyzOffset>
+        <rpyOffset>0 0 0</rpyOffset>
+        <frameName>base_link</frameName>
+      </plugin>
+      <pose>0 0 0 0 0 0</pose>
+    </sensor>
+  </gazebo>
     <gazebo reference="link_camera_depth">  
       <sensor type="depth" name="camera">
         <always_on>true</always_on>
@@ -44,11 +62,14 @@
           <distortion_t2>0.0</distortion_t2>
           <pointCloudCutoff>0.4</pointCloudCutoff>
         </plugin>
+
       </sensor>
+
     </gazebo>
 
     <link name="link_camera_front">
     </link>
+
 
     <link name="base_link">
       <inertial>
@@ -370,5 +391,23 @@
         <robotNamespace>/</robotNamespace>
       </plugin>
     </gazebo>
-
+<gazebo reference="imu_link">
+    <gravity>true</gravity>
+    <sensor name="imu_sensor" type="imu">
+      <always_on>true</always_on>
+      <update_rate>100</update_rate>
+      <visualize>true</visualize>
+      <topic>imu</topic>
+      <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+        <topicName>imu</topicName>
+        <bodyName>base_link</bodyName>
+        <updateRateHZ>10.0</updateRateHZ>
+        <gaussianNoise>0.0</gaussianNoise>
+        <xyzOffset>0 0 0</xyzOffset>
+        <rpyOffset>0 0 0</rpyOffset>
+        <frameName>imu_link</frameName>
+      </plugin>
+      <pose>0 0 0 0 0 0</pose>
+    </sensor>
+  </gazebo>
   </robot>
