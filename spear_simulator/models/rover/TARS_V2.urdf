@@ -7,25 +7,10 @@
 
     <link name="link_camera_depth">
     </link>
-<gazebo reference="imu_link">
-    <gravity>true</gravity>
-    <sensor name="imu_sensor" type="imu">
-      <always_on>true</always_on>
-      <update_rate>20.0</update_rate>
-      <visualize>true</visualize>
-      <topic>imu</topic>
-      <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
-        <topicName>imu</topicName>
-        <bodyName>base_link</bodyName>
-        <updateRateHZ>10.0</updateRateHZ>
-        <gaussianNoise>0.0</gaussianNoise>
-        <xyzOffset>0 0 0</xyzOffset>
-        <rpyOffset>0 0 0</rpyOffset>
-        <frameName>base_link</frameName>
-      </plugin>
-      <pose>0 0 0 0 0 0</pose>
-    </sensor>
-  </gazebo>
+
+    <link name="imu_link">
+    </link>
+
     <gazebo reference="link_camera_depth">  
       <sensor type="depth" name="camera">
         <always_on>true</always_on>
@@ -263,6 +248,12 @@
       <child link="link_camera_depth"/>
     </joint>
 
+    <joint name="imu_link" type="fixed">
+      <origin xyz="0 0 0.2" rpy="0 0 0"/>
+      <parent link="base_link"/>
+      <child link="imu_link"/>
+    </joint>
+
     <joint name="link_camera_front" type="fixed">
       <origin xyz="0.315 -0.11999 0.3439" rpy="0 1.5708 0"/>
       <parent link="base_link"/>
@@ -391,23 +382,24 @@
         <robotNamespace>/</robotNamespace>
       </plugin>
     </gazebo>
-<gazebo reference="imu_link">
-    <gravity>true</gravity>
-    <sensor name="imu_sensor" type="imu">
-      <always_on>true</always_on>
-      <update_rate>100</update_rate>
-      <visualize>true</visualize>
-      <topic>imu</topic>
-      <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
-        <topicName>imu</topicName>
-        <bodyName>base_link</bodyName>
-        <updateRateHZ>10.0</updateRateHZ>
-        <gaussianNoise>0.0</gaussianNoise>
-        <xyzOffset>0 0 0</xyzOffset>
-        <rpyOffset>0 0 0</rpyOffset>
+
+    <gazebo reference="imu_link">
+      <gravity>true</gravity>
+      <sensor name="imu_sensor" type="imu">
+	<always_on>true</always_on>
+	<update_rate>100</update_rate>
+	<visualize>true</visualize>
+	<topic>imu</topic>
+	<plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+          <topicName>imu</topicName>
+          <bodyName>base_link</bodyName>
+          <updateRateHZ>10.0</updateRateHZ>
+          <gaussianNoise>0.0</gaussianNoise>
+          <xyzOffset>0 0 0</xyzOffset>
+          <rpyOffset>0 0 0</rpyOffset>
         <frameName>imu_link</frameName>
-      </plugin>
-      <pose>0 0 0 0 0 0</pose>
-    </sensor>
-  </gazebo>
+	</plugin>
+	<pose>0 0 0 0 0 0</pose>
+      </sensor>
+    </gazebo>
   </robot>
