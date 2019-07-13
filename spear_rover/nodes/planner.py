@@ -31,7 +31,7 @@ class MoveRoverToCoord(State):
         self.client.send_goal(goal)
         self.client.wait_for_result()
 
-        if self.client.get_result() == actionlib.GoalStatus.SUCCEEDED:
+        if self.client.get_state() == actionlib.GoalStatus.SUCCEEDED:
             return 'ok'
         else:
             return 'err'
