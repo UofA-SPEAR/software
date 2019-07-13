@@ -4,6 +4,7 @@ import rospy
 from geometry_msgs.msg import Point, Pose, PoseStamped, Quaternion, Twist, Vector3
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 from smach import State, StateMachine, Sequence
+import smach_ros
 from spear_msgs.msg import ArmAngles
 from std_msgs.msg import String, Header
 from time import sleep
@@ -15,6 +16,7 @@ class Error(State):
                             output_keys=['next_state'])
     def execute(self, userdata):
         # TO DO
+        userdata.next_state = "GOAL_0"
         return 'done'
 
 class ProcessUserData(State):
@@ -55,22 +57,14 @@ class MoveRoverToCoord(State):
 
 class SmWrapper():
     def __init__(self, state_list):
-        self.top_level_state_machine = smach.StateMachine(outcomes=['done'])
+        self.top_level_state_machine = StateMachine(outcomes=['done'])
 
         with self.top_level_state_machine:
-            self.sequence_state_machine = smach.StateMachine(outcomes=['done', 'err'])
-            smach.StateMachine.add('SEQUENCE', self.sequence_state_machine, {'done':'done','err':'ERROR'})
-            smach.StateMachine.add('ERROR', Error(), transitions={'done':'done', 'seq':'SEQ'})
+            self.sequence_state_machine = StateMachine(outcomes=['done', 'err'])
+            StateMachine.add('SEQUENCE', self.sequence_state_machine, {'done':'done','err':'ERROR'})
+            StateMachine.add('ERROR', Error(), transitions={'done':'done', 'seq':'SEQUENCE'})
 
             with self.sequence_state_machine:
-                # the transitions for 'PROCESS_USER_DATA' state will look like {goal_0:GOAL_0, goal_1:GOAL_1, etc.}
-                transitions = {}
-                for i in range(len(state_list)):
-                    goal_name = 'goal_{}'.format(i)
-                    transitions[goal_name] = goal_name.upper()
-                smach.StateMachine.add('PROCESS_USER_DATA', ProcessUserData(state_list), transitions)
-
-
                 for i in range(len(state_list)):
                     goal_transitions = {}
                     if i == (len(state_list)-1):
@@ -81,10 +75,16 @@ class SmWrapper():
 
 
                     if state_list[i]['type'] == 'move':
-                        smach.StateMachine.add('GOAL_{}'.format(i), MoveRoverToCoord(state_list[i]['coord']), goal_transitions)
+                        StateMachine.add('GOAL_{}'.format(i), MoveRoverToCoord(state_list[i]['coord']), goal_transitions)
 
                     # we need to add if statements for other states such as the one with type 'arm'
 
+                # the transitions for 'PROCESS_USER_DATA' state will look like {goal_0:GOAL_0, goal_1:GOAL_1, etc.}
+                transitions = {}
+                for i in range(len(state_list)):
+                    goal_name = 'goal_{}'.format(i)
+                    transitions[goal_name] = goal_name.upper()
+                StateMachine.add('PROCESS_USER_DATA', ProcessUserData(state_list), transitions)
 
     def execute(self):
         return self.top_level_state_machine.execute()
@@ -97,8 +97,8 @@ def main():
     #     Sequence.add('move-to-coord', MoveRoverToCoord())
     state_list = [{'type': 'move', 'coord':(1.0, 0.0)}, {'type': 'move', 'coord':(1.5, 0.2)}, {'type': 'move', 'coord':(2.0, 0.3)} ]
     planner = SmWrapper(state_list)
-   # Create and start the introspection server
-    sis = smach_ros.IntrospectionServer('my_smach_introspection_server', sm, '/SM_ROOT')
+    # Create and start the introspection server
+    sis = smach_ros.IntrospectionServer('my_smach_introspection_server', planner.top_level_state_machine, '/SM_ROOT')
     sis.start()
     
     # Execute SMACH plan
