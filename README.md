@@ -28,12 +28,6 @@ This should ideally be able to run on the TX2, but it is not necessary for it to
 This package contains all of the software that will be run at the base station during competition.
 This includes our command and control interfaces and essentially anything that isn't run on the rover during competition.
 
-# Migration TODO
-
-- [ ] Fix Travis CI
-- [ ] Find where the drive_commands file went (send_ros.py)
-- [ ] Add dependency info to this README
-
 # Setup and install instructions
 
 ## Install Ubuntu 16.04 desktop
@@ -45,7 +39,7 @@ You can find a .iso image of Ubuntu 16.04 [here](http://releases.ubuntu.com/16.0
 
 ## Install ROS
 
-We use ROS we nearly everying on the rover.<br>
+We use ROS for nearly everying on the rover.<br>
 To install ROS, follow the instructions [here](http://wiki.ros.org/kinetic/Installation/Ubuntu).<br>
 We recommend the "Desktop-Full Install" ROS package for best compatibility.
 
@@ -53,16 +47,16 @@ We recommend the "Desktop-Full Install" ROS package for best compatibility.
 
 Install the following dependencies:<br>
 
-x264: `apt-get install libx264-dev`<br>
-Cython: `python -m pip install cython --user`<br>
-Pygame: `python -m pip install pygame --user`<br>
-Kivy: `python -m pip install kivy --user`<br>
-Kivy Garden: `python -m pip install kivy-garden --user`<br>
-Kivy Knob: `garden install knob`<br>
-ROS Joy: `sudo apt-get install ros-kinetic-joy`<br>
-libqt (required by nimbro_network): `apt-get install libqt4-dev`<br>
-qmake (required by nimbro_network): `apt-get install qt4-qmake`<br>
-ROS move\_base package: `apt-get install ros-kinetic-move-base`
+- x264: `apt-get install libx264-dev`
+- Cython: `python -m pip install cython --user`
+- Pygame: `python -m pip install pygame --user`
+- Kivy: `python -m pip install kivy --user`
+- Kivy Garden: `python -m pip install kivy-garden --user`
+- Kivy Knob: `garden install knob`
+- ROS Joy: `sudo apt-get install ros-kinetic-joy`
+- libqt (required by nimbro_network): `apt-get install libqt4-dev`
+- qmake (required by nimbro_network): `apt-get install qt4-qmake`
+- ROS move\_base package: `apt-get install ros-kinetic-move-base`
 
 Notes:
 1. x264 is for encoding video and Kivy is for our user interface.
@@ -75,6 +69,12 @@ After installing the dependencies, clone this repo and run the `unpack.sh` scrip
 This will setup your catkin workspace for development.
 
 You must `source ~/.bashrc` for the changes made by `unpack.sh` to take effect.
+
+Run rosdep to install the required packages:
+
+```
+rosdep install --from-paths src --ignore-src -r -y
+```
 
 ## Developing and building
 
