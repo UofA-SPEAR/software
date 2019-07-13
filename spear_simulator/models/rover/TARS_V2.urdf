@@ -371,4 +371,16 @@
       </plugin>
     </gazebo>
 
+    <gazebo>
+      <plugin name="gps_controller" filename="libhector_gazebo_ros_gps.so">
+        <alwaysOn>true</alwaysOn>
+        <updateRate>1.0</updateRate>
+        <bodyName>base_link</bodyName>
+        <topicName>/fix</topicName>
+        <velocityTopicName>/fix_velocity</velocityTopicName>
+        <referenceLatitude>51.47</referenceLatitude>
+        <referenceLongitude>-112.71</referenceLongitude>
+      </plugin>
+    </gazebo>
+
   </robot>
