@@ -21,7 +21,7 @@ function make_relative_coord_state(ros, params) {
     };
     const description = `Move to relative coordinate (${x}, ${y})`;
 
-    return new State({
+    return new ActionState({
         ros: ros,
         actionServerName: 'move_base',
         actionName: 'move_base_msgs/MoveBaseAction',
@@ -31,16 +31,73 @@ function make_relative_coord_state(ros, params) {
     });
 }
 
+function make_manual_control_state(ros, params) {
+    return new TakeManualControlState();
+}
+
 export function make_state(ros, action_class, params) {
     const function_map = {
         'MoveToRelativeCoord': make_relative_coord_state,
+        'TakeManualControl': make_manual_control_state,
     }
-    return function_map[action_class](ros, params);
+    if (action_class in function_map) {
+        return function_map[action_class](ros, params);
+    } else {
+        console.warn(`Unrecognized action class "${action_class}". Making a dummy state instead.`);
+        return new DummyState(action_class, params);
+    }
+}
+
+class AbstractState {
+    constructor() {
+        if (new.target === AbstractState) {
+            throw new TypeError('Please do not construct AbstractState directly.');
+        }
+    }
+    setNextStateCallback(callback) {
+        throw new TypeError('nextStateCallback() was not defined and so was called for AbstractState.');
+    }
+    enter() {
+        throw new TypeError('enter() was not defined and so was called for AbstractState.');
+    }
+    cancel() {
+        throw new TypeError('cancel() was not defined and so was called for AbstractState.');
+    }
+    getDescription() {
+        throw new TypeError('getDescription() was not defined and so was called for AbstractState.');
+    }
+}
+
+class DummyState extends AbstractState {
+    constructor(action_class, params) {
+        super();
+        this.nextStateCallback = null;
+        this.timeout = null;
+        this.description = `${action_class} ${params}`;
+    }
+
+    setNextStateCallback(callback) {
+        this.nextStateCallback = callback;
+    }
+
+    enter() {
+        this.timeout = window.setTimeout(() => this.nextStateCallback(GoalStatus.Succeeded), 1000);
+    }
+
+    cancel() {
+        window.clearTimeout(this.timeout);
+        window.setTimeout(() => this.nextStateCallback(GoalStatus.Preempted) , 0);
+    }
+
+    getDescription() {
+        return `Dummy state: ${this.description}`;
+    }
 }
 
 
-class State {
+class ActionState extends AbstractState {
     constructor({ros, actionServerName, actionName, actionResultMessageType, goalMessage, description}) {
+        super();
         this.ros = ros;
         this.actionServerName = actionServerName;
         this.actionName = actionName;
@@ -95,5 +152,23 @@ class State {
 
     getDescription() {
         return this.description;
+    }
+}
+
+class TakeManualControlState extends AbstractState {
+    setNextStateCallback(callback) {
+        this.nextStateCallback = callback;
+    }
+
+    enter() {
+        this.nextStateCallback(GoalStatus.Aborted);
+    }
+
+    cancel() {
+        this.nextStateCallback(GoalStatus.Preempted);
+    }
+
+    getDescription() {
+        return 'Take manual control';
     }
 }
