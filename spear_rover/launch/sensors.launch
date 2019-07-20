@@ -1,0 +1,7 @@
+<!-- Use this file to launch any sensors onboard the rover. -->
+
+<launch>
+  <node pkg="razor_imu_9dof" type="imu_node.py" name="imu_node" output="screen">
+    <rosparam file="$(find spear_rover)/config/razor_calibration.yaml" command="load" />
+  </node>
+</launch>
