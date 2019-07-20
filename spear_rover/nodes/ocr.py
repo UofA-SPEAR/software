@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 
+import os
+import pytesseract
 import rospy
+from PIL import Image as PIL_Image
 from cv_bridge import CvBridge, CvBridgeError
 #import image_transport
 from sensor_msgs.msg import Image
@@ -8,8 +11,6 @@ from std_msgs.msg import String
 import cv2
 
 pub = None
-
-
 
 # Extract text fromm the image sent through ROS
 def image_to_text(image, preprocess):
@@ -29,21 +30,21 @@ def image_to_text(image, preprocess):
 
 	# write the grayscale image to disk as a temporary file so we can
 	# apply OCR to it
-	filename = "{}.png".format(os.getpid())
+	filename = "/tmp/{}.png".format(os.getpid())
 	cv2.imwrite(filename, gray)
 
-	text = pytesseract.image_to_string(Image.open(filename))
+	text = pytesseract.image_to_string(PIL_Image.open(filename))
 
 	return text
+
 
 def callback(msg):
 	# convert ros image to opencv image
 	bridge = CvBridge()
 	image = bridge.imgmsg_to_cv2(msg, desired_encoding="passthrough")
 
-	text = image_to_text(image, "thresh")
-	pub.publish(text)
-
+	text = image_to_text(image, "blur")
+	pub.publish(str(text))
 
 
 def main():
