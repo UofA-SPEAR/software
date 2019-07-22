@@ -8,14 +8,17 @@ You can add support for new actions by editing `src/make_state.js`. In particula
 
 ## Building and running the code
 
-The code uses NPM for package management.
+The code uses NPM for package management. This needs to be installed using [NVM](https://github.com/nvm-sh/nvm) (the version from apt throws errors if used).
 
 To install dependencies, run the following from the directory containing this Readme:
 
     sudo apt install ros-kinetic-rosbridge-server
-    sudo apt install npm
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+    nvm install node
     npm install
     npm install -g serve
+
+After running the second command you may have to close and re-open the shell.
 
 
 The mission planner needs rosbridge to be running in order to interface with ROS. To run rosbridge, use,
