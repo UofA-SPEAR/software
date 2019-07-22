@@ -35,4 +35,6 @@
   <exec_depend>canros</exec_depend>
 
   <exec_depend>joy</exec_depend>
+
+  <exec_depend>razor_imu_9dof</exec_depend>
 </package>
