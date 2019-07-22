@@ -8,6 +8,7 @@ You may need to install the following packages using apt:
 sudo apt-get install ros-kinetic-controller-manager
 sudo apt-get install ros-kinetic-gazebo-ros-control
 sudo apt-get install ros-kinetic-diff-drive-controller
+sudo apt-get install ros-kinetic-hector-gazebo-plugins
 ```
 If ROS still can't find the above packages, you may need to install them using rosdep.
 
