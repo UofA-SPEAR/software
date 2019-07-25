@@ -11,7 +11,7 @@
 	-->
 	<arg name="interface" default="can0" />
 
-	<node name="rover2_can_mapper" pkg="spear_rover" type="mapper.py" output="screen" />
+	<node name="can_mapper" pkg="spear_rover" type="mapper.py" output="screen" />
 
 	<!--
 		canros's server uses a launch file to run, so instead of using the
