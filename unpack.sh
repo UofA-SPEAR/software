@@ -50,6 +50,9 @@ then
     export GAZEBO_MODEL_PATH=GAZEBO_MODEL_PATH:$DIR/spear_simulator/models
 fi
 
+# Add rosdep alias to make things nicer
+echo "alias update_rosdeps='cd ~/ros && rosdep install --from-paths src --ignore-src -r -y'" >> ~/.bashrc
+
 ###### Install nimbro networks
 cd ~/ros/src
 git clone https://github.com/AIS-Bonn/nimbro_network.git
