@@ -17,7 +17,7 @@ void cmd_vel_callback(const geometry_msgs::Twist::ConstPtr& twistMsg) {
 
   canros::uavcan__equipment__actuator__ArrayCommand outMsg;
   canros::uavcan__equipment__actuator__Command cmd;
-  cmd.command_type=3;
+  cmd.command_type = 3;
 
   // left back
   cmd.actuator_id = 2;
