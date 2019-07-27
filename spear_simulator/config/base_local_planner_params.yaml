@@ -10,7 +10,7 @@ TrajectoryPlannerROS:
     min_in_place_rotational_vel: 0.15
     escape_vel: -0.10
     holonomic_robot: false
-    
+
     xy_goal_tolerance:  0.50
     yaw_goal_tolerance: 0.80
     
