@@ -1,0 +1,47 @@
+<!-- 
+  This launches the nodes necessary to drive the rover manually.
+-->
+
+<launch>
+  <!--
+    This launch file will, by default, launch the canros server such that
+    it listens to the "can0" device. You can change it by passing in an
+    "interface" argument, e.g:
+    
+    $ roslaunch spear_rover rover2_can.launch interface:=vcan0
+    
+    ...will make the canros server listen to the "vcan0" device. This is
+    good for local testing.
+  -->
+  <arg name="interface" default="can0" />
+
+  <!-- Our node which maps ros messages to can messages -->
+  <node name="can_mapper" pkg="spear_rover" type="mapper.py" output="screen" />
+
+  <!--
+    canros's server uses a launch file to run, so instead of using the
+    <node> tag like we do everywhere else we have to use the <include>
+    tag and pass in arguments.
+  -->
+
+  <include file="$(find canros)/launch/server.launch">
+    <arg name="can_interface" value="$(arg interface)" />
+  </include>
+
+  <node name="odom_tf_publisher_node" pkg="spear_rover" type="odom_tf_publisher_node" />
+  <node name="twist_to_skidsteer_node" pkg="spear_rover" type="twist_to_skidsteer_node" />
+
+  <!--
+    Converts joy messages to geometry_msgs/Twist messages.
+    Requires teleop_twist_joy ros package.
+  -->
+  <node name="teleop_node" pkg="teleop_twist_joy" type="teleop_node">
+    <remap from="cmd_vel" to="/rover_diff_drive_controller/cmd_vel" />
+    <param name="axis_angular" value="1" />
+    <param name="axis_linear" value="3" />
+    <!-- Press R1 on playstation controller to enable -->
+    <param name="enable_button" value="5" />
+    <param name="scale_linear" value="0.5" />
+    <param name="scale_angular" value="1.5" />
+  </node>
+</launch>

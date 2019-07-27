@@ -6,6 +6,7 @@
     <remap from="/planner_cloud" to="/rtabmap/cloud_obstacles"/>
     <remap from="map" to="/rtabmap/proj_map"/>
     <remap from="move_base_simple/goal" to="/planner_goal"/>
+    <remap from="/cmd_vel" to="/rover_diff_drive_controller/cmd_vel" />
     <rosparam file="$(find spear_simulator)/config/costmap_common_params.yaml" command="load" ns="global_costmap" /> 
     <rosparam file="$(find spear_simulator)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
     <rosparam file="$(find spear_simulator)/config/local_costmap_params.yaml" command="load" />

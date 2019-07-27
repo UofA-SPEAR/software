@@ -1,25 +1,5 @@
 <launch>
 
-  <!-- Start the for cam 1 -->
-  <node pkg="gscam" type="gscam" name="camera_1">
-  <env name="GSCAM_CONFIG" value="v4l2src device=/dev/video1 ! video/x-raw-yuv,framerate=30/1,width=640,height=480 ! ffmpegcolorspace " />
-    <param name="camera_name" value="camera_1" />
-    <remap from="camera/image_raw" to="/camera_1/image_raw" />
-  </node>
-
-  <!-- Start the for cam 2 -->
-  <node pkg="gscam" type="gscam" name="camera_2">
-  <env name="GSCAM_CONFIG" value="v4l2src device=/dev/video2 ! video/x-raw-yuv,framerate=30/1,width=640,height=480 ! ffmpegcolorspace " />
-    <param name="camera_name" value="camera_2" />
-    <remap from="camera/image_raw" to="/camera_2/image_raw" />
-  </node>
-
-  <node name="udp_sender" pkg="nimbro_topic_transport" type="udp_sender" output="screen">
-    <param name="destination_addr" value="jacob" />
-    <param name="destination_port" value="17001" />
-    <rosparam command="load" file="$(find spear_rover)/launch/topics.yaml" />
-  </node>
-
   <!-- Start zed ros wrapper and rtabmap -->
   <!-- see: https://github.com/stereolabs/zed-ros-wrapper/tree/master/examples/zed_rtabmap_example -->
   <arg name="zed_namespace"		    	default="zed" />
@@ -29,8 +9,8 @@
   <arg name="camera_model"         	default="1" /> <!-- 0=ZED, 1=ZEDM-->
   <arg name="serial_number"        	default="0" />
   <arg name="verbose"              	default="true" />
-  <arg name="resolution"           	default="2" /> <!--0=RESOLUTION_HD2K, 1=RESOLUTION_HD1080, 2=RESOLUTION_HD720, 3=RESOLUTION_VGA -->
-  <arg name="frame_rate"           	default="30" />
+  <arg name="resolution"           	default="3" /> <!--0=RESOLUTION_HD2K, 1=RESOLUTION_HD1080, 2=RESOLUTION_HD720, 3=RESOLUTION_VGA -->
+  <arg name="frame_rate"           	default="60" />
   <!-- RESOLUTION_HD2K   -> 2208*1242, available framerates: 15 fps.
        RESOLUTION_HD1080 -> 1920*1080, available framerates: 15, 30 fps.
        RESOLUTION_HD720  -> 1280*720,  available framerates: 15, 30, 60 fps.
@@ -58,17 +38,24 @@
 	  <arg name="depth_cam_info_topic" 	value="$(arg depth_camera_info_topic)" />
 	  <arg name="base_frame"            value="$(arg camera_frame)" />
 	</include>
-  
-	<!-- RTAB-map Node-->
-	<include file="$(find rtabmap_ros)/launch/rtabmap.launch">
-	  <arg name="rtabmap_args"		        value="--delete_db_on_start" />
-	  <arg name="rgb_topic"               	value="$(arg rgb_topic)" />
-	  <arg name="depth_topic"             	value="$(arg depth_topic)" />
-	  <arg name="camera_info_topic"       	value="$(arg camera_info_topic)" />
-	  <arg name="depth_camera_info_topic" 	value="$(arg depth_camera_info_topic)" />
-	  <arg name="frame_id"                  value="$(arg camera_frame)" />
-	</include>
   </group>
 
+  <!-- Publish a transform so rtabmap knows where the camera is -->
+  <node name="static_transform_publisher" pkg="tf" type="static_transform_publisher"
+	      args="0.3 0 0.2 0 0 0 zed_camera_center base_link 100"/>
 
+  <!-- RTAB-map Node-->
+  <include file="$(find rtabmap_ros)/launch/rtabmap.launch">
+    <!-- RTAB-map tuning parameters -->
+    <arg name="rtabmap_args" value="--delete_db_on_start 
+  	  --Odom/ResetCountdown 1
+  	  --Odom/Strategy 1
+  	  --Vis/CorType 0" />
+  
+    <arg name="rgb_topic"               	value="$(arg rgb_topic)" />
+    <arg name="depth_topic"             	value="$(arg depth_topic)" />
+    <arg name="camera_info_topic"       	value="$(arg camera_info_topic)" />
+    <arg name="depth_camera_info_topic" 	value="$(arg depth_camera_info_topic)" />
+    <arg name="frame_id"                  value="$(arg camera_frame)" />
+  </include>
 </launch>

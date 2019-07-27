@@ -17,24 +17,25 @@ void cmd_vel_callback(const geometry_msgs::Twist::ConstPtr& twistMsg) {
 
   canros::uavcan__equipment__actuator__ArrayCommand outMsg;
   canros::uavcan__equipment__actuator__Command cmd;
+  cmd.command_type = 3;
 
   // left back
-  cmd.actuator_id = 0;
+  cmd.actuator_id = 2;
   cmd.command_value = skidsteer.left.back;
   outMsg.commands.push_back(cmd);
 
   // left front
-  cmd.actuator_id = 1;
+  cmd.actuator_id = 3;
   cmd.command_value = skidsteer.left.front;
   outMsg.commands.push_back(cmd);
 
   // right back
-  cmd.actuator_id = 2;
+  cmd.actuator_id = 0;
   cmd.command_value = skidsteer.right.back;
   outMsg.commands.push_back(cmd);
 
   // right front
-  cmd.actuator_id = 3;
+  cmd.actuator_id = 1;
   cmd.command_value = skidsteer.right.front;
   outMsg.commands.push_back(cmd);
 
@@ -49,7 +50,7 @@ int main(int argc, char** argv) {
   sub = node.subscribe("/rover_diff_drive_controller/cmd_vel", 1000,
                        cmd_vel_callback);
   pub = node.advertise<canros::uavcan__equipment__actuator__ArrayCommand>(
-      "/canros/uavcan/equipment/actuator/ArrayCommand", 1000);
+      "/drive/cmds", 1000);
 
   ros::spin();
 

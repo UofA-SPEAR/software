@@ -117,6 +117,16 @@ target_link_libraries(hardware_interface_node
   ${catkin_LIBRARIES}
 )
 
+# Add simple_navigation_goals node
+add_executable(simple_navigation_goals_node src/simple_navigation_goals.cpp)
+add_dependencies(simple_navigation_goals_node
+   ${${PROJECT_NAME}_EXPORTED_TARGETS}
+   ${catkin_EXPORTED_TARGETS}
+)
+target_link_libraries(simple_navigation_goals_node
+  ${catkin_LIBRARIES}
+)
+
 add_executable(odom_tf_publisher_node src/odom_tf_publisher.cpp)
 add_dependencies(odom_tf_publisher_node
    ${${PROJECT_NAME}_EXPORTED_TARGETS}

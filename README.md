@@ -57,6 +57,7 @@ Install the following dependencies:<br>
 - ROS Joy: `sudo apt-get install ros-kinetic-joy`
 - libqt (required by nimbro_network): `apt-get install libqt4-dev`
 - qmake (required by nimbro_network): `apt-get install qt4-qmake`
+- ROS move\_base package: `apt-get install ros-kinetic-move-base`
 
 
 Notes:
