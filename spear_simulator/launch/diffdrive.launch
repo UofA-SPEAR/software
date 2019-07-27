@@ -1,5 +1,6 @@
 <!-- Copied from urdf_sim_tutorial package -->
 <launch>
+  <param name="/use_sim_time" value="true" />
   <arg name="model" default="$(find spear_simulator)/models/rover/TARS_V2.urdf"/>
   <arg name="rvizconfig" default="$(find urdf_tutorial)/rviz/urdf.rviz" />
   <arg name="world_name" default="$(find spear_simulator)/worlds/ball_find_00.world"/>
@@ -24,14 +25,18 @@
   </node>
 
   <!-- publish static transform so that RTAB-map knows where camera is -->
-  <!-- this simply sets camera_depth_optical_frame to the same location as link_camera_depth -->
+  <!-- this simply sets camera_depth_optical_frame to the same location as link_camera_depth but with the correct orientation -->
   <!-- args are: yaw pitch roll frame_id child_frame_id period_in_ms -->
   <node name="static_transform_publisher" pkg="tf" type="static_transform_publisher"
-    args="0 0 0 0 0 0 link_camera_depth camera_depth_optical_frame 100"/>
+    args="0 0 0 -1.57 0 -1.57 link_camera_depth camera_depth_optical_frame 100"/>
 
   <!-- RTAB-map Node-->
   <include file="$(find rtabmap_ros)/launch/rtabmap.launch">
-    <arg name="rtabmap_args"                value="--delete_db_on_start" />
+    <!-- RTAB-map tuning parameters -->
+      <arg name="rtabmap_args" value="--delete_db_on_start 
+          --Odom/ResetCountdown 1
+          --Odom/Strategy 1
+          --Vis/CorType 0" />
     <!-- Tell RTAB-map to move the base of the robot (not just the camera) -->
     <arg name="frame_id"                    value="base_link" />
     <arg name="rgb_topic"                   value="/camera/rgb/image_raw" />
