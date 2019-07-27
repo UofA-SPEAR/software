@@ -153,15 +153,6 @@ add_dependencies(twist_to_skidsteer_node
 target_link_libraries(twist_to_skidsteer_node
   ${catkin_LIBRARIES}
 )
-# Add simple_navigation_goals node
-add_executable(simple_navigation_goals_node src/simple_navigation_goals.cpp)
-add_dependencies(simple_navigation_goals_node
-   ${${PROJECT_NAME}_EXPORTED_TARGETS}
-   ${catkin_EXPORTED_TARGETS}
-)
-target_link_libraries(simple_navigation_goals_node
-  ${catkin_LIBRARIES}
-)
 
 install(PROGRAMS
     nodes/mapper.py
