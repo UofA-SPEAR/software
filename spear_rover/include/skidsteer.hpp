@@ -37,7 +37,7 @@ typedef struct {
     double x;
     double y;
     double yaw;
-} tf_delta_t;
+} odom_delta_t;
 
 
 skidsteer_t twist_to_skidsteer(geometry_msgs::Twist twist) {
@@ -74,13 +74,13 @@ skidsteer_t twist_to_skidsteer(geometry_msgs::Twist twist) {
     return out;
 }
 
-tf_delta_t odom_to_tf_delta(skidsteer_t odom) {
+odom_delta_t wheel_increments_to_odom_delta(skidsteer_t odom) {
     /* Assumptions:
      * - taken in small enough increments that it can be approximated as arc of circle.
      * - We have good data
      */
     
-    tf_delta_t out;
+    odom_delta_t out;
     double left, right;
     
     // Calculate average linear motion.
