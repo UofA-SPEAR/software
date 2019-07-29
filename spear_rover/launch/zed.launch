@@ -52,6 +52,7 @@
   	  --Odom/Strategy 1
   	  --Vis/CorType 0" />
   
+    <remap from="odom" to="/rover_diff_drive_controller/odom" />
     <arg name="rgb_topic"               	value="$(arg rgb_topic)" />
     <arg name="depth_topic"             	value="$(arg depth_topic)" />
     <arg name="camera_info_topic"       	value="$(arg camera_info_topic)" />
