@@ -47,10 +47,10 @@
 		<param name = 'imu0' value = '/imu'/> <!--Can be set tot he map or odom frame-->
 
 		<rosparam param='odom0_config'>[true, true, false,
+                                                false, false, true,
                                                 false, false, false,
-                                                true, true, true,
-                                                false, false, false,
-                                                true, true, true]</rosparam>
+                                                false, false, true,
+                                                false, false, false]</rosparam>
 
 
 		<rosparam param='imu0_config'>[false, false, false,
