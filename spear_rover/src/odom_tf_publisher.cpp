@@ -4,9 +4,9 @@
 
 #include <string>
 
+#include <nav_msgs/Odometry.h>
 #include <ros/ros.h>
 #include <tf/transform_broadcaster.h>
-#include <nav_msgs/Odometry.h>
 
 #include "skidsteer.hpp"
 
@@ -28,8 +28,8 @@ nav_msgs::Odometry oldOdom;
  * @return The transform that was broadcast
  */
 nav_msgs::Odometry broadcastOdom(double x, double y, double z, double roll,
-                            double pitch, double yaw, std::string from,
-                            std::string to) {
+                                 double pitch, double yaw, std::string from,
+                                 std::string to) {
   nav_msgs::Odometry msg;
 
   msg.header.stamp = ros::Time::now();
@@ -66,7 +66,6 @@ nav_msgs::Odometry broadcastOdom(double x, double y, double z, double roll,
  */
 void odomDelta(double x, double y, double z, double roll, double pitch,
                double yaw, std::string from, std::string to) {
-
   // Calculate new origin by adding x, y, z coordinates
   double oldX = oldOdom.pose.pose.position.x;
   double oldY = oldOdom.pose.pose.position.y;
