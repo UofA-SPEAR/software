@@ -1,3 +1,5 @@
+<!-- Starts visual odometry and then includes main rtabmap launch file from
+     spear_rover package -->
 <launch>
   <!-- publish static transform so that RTAB-map knows where camera is -->
   <!-- this simply sets camera_depth_optical_frame to the same location as link_camera_depth but with the correct orientation -->
@@ -5,16 +7,19 @@
   <node name="static_transform_publisher" pkg="tf" type="static_transform_publisher"
     args="0 0 0 -1.57 0 -1.57 link_camera_depth camera_depth_optical_frame 100"/>
 
-  <!-- RTAB-map Node-->
-  <include file="$(find rtabmap_ros)/launch/rtabmap.launch">
-    <!-- RTAB-map tuning parameters -->
-      <arg name="rtabmap_args" value="--delete_db_on_start
-          --Odom/ResetCountdown 1
-          --Odom/Strategy 1
-          --Vis/CorType 0" />
+  <!-- Visual odom node -->
+  <node name="rgbd_odometry" pkg="tf" type="rgbd_odometry">
+    <param name="publish_tf" value="false"/>
+    <remap from="rgb/image" to="/camera/rgb/image_raw"/>
+    <remap from="rgb/camera_info" to="/camera/rgb/camera_info"/>
+    <remap from="depth/image" to="/camera/depth/image_raw"/>
+  </node>
+
+  <!-- Include main rtabmap launch file from spear_rover package -->
+  <include file="$(find spear_rover)/launch/rtabmap.launch">
     <!-- Tell RTAB-map to move the base of the robot (not just the camera) -->
-    <arg name="odom_frame_id"               value="odom" />
-    <arg name="frame_id"                    value="base_link" />
+    <arg name="odom_topic"                  value="/rtabmap/odom" />
+    <arg name="camera_frame"                value="camera_depth_optical_frame" />
     <arg name="rgb_topic"                   value="/camera/rgb/image_raw" />
     <arg name="depth_topic"                 value="/camera/depth/image_raw" />
     <arg name="camera_info_topic"           value="/camera/rgb/camera_info" />
