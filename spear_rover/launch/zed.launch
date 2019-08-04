@@ -51,6 +51,10 @@
 	</include>
   </group>
 
+  <!-- Publish a transform so rtabmap knows where the camera is -->
+  <node name="static_transform_publisher" pkg="tf" type="static_transform_publisher"
+	      args="0.3 0 0.2 0 0 0 base_link $(arg camera_frame) 100"/>
+
   <!-- RTAB-map Node-->
   <include file="$(find spear_rover)/launch/rtabmap.launch">
     <arg name="rgb_topic"               	value="$(arg rgb_topic)" />
