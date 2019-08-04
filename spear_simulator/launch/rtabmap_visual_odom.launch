@@ -29,6 +29,12 @@
       <param name="frame_id"       type="string" value="base_link"/>
       <!-- Don't publish tf since this is done by robot_localization -->
       <param name="publish_tf"     type="bool"   value="false"/>
+
+      <!-- tuning params -->
+      <param name="Odom/ResetCountdown" type="string" value="1"/>
+      <param name="Odom/Strategy"       type="string" value="1"/>
+      <param name="Vis/CorType"         type="string" value="0"/>
+
       <remap from="rgbd_image" to="rgbd_image"/>
     </node>
 
@@ -45,9 +51,9 @@
       <param name="approx_sync" type="bool" value="false"/>
 
       <!-- RTAB-Map's parameters -->
-      <param name="Odom/ResetCountdown" type="string" value="1"/>
-      <param name="Odom/Strategy"       type="string" value="1"/>
-      <param name="Vis/CorType"         type="string" value="0"/>
+      <param name="RGBD/AngularUpdate"        type="string" value="0.01"/>
+      <param name="RGBD/LinearUpdate"         type="string" value="0.01"/>
+      <param name="RGBD/OptimizeFromGraphEnd" type="string" value="false"/>
     </node>
 
     <node name="rtabmapviz" pkg="rtabmap_ros" type="rtabmapviz" output="screen"/>
