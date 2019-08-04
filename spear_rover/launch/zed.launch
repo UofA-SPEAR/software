@@ -41,21 +41,19 @@
   </group>
 
   <!-- Publish a transform so rtabmap knows where the camera is -->
+  <!--
   <node name="static_transform_publisher" pkg="tf" type="static_transform_publisher"
 	      args="0.3 0 0.2 0 0 0 camera_depth_optical_frame base_link 100"/>
+  -->
 
   <!-- RTAB-map Node-->
-  <include file="$(find rtabmap_ros)/launch/rtabmap.launch">
-    <!-- RTAB-map tuning parameters -->
-    <arg name="rtabmap_args" value="--delete_db_on_start 
-  	  --Odom/ResetCountdown 1
-  	  --Odom/Strategy 1
-  	  --Vis/CorType 0" />
-  
+  <include file="$(find spear_simulator)/launch/rtabmap_visual_odom.launch">
     <arg name="rgb_topic"               	value="$(arg rgb_topic)" />
     <arg name="depth_topic"             	value="$(arg depth_topic)" />
     <arg name="camera_info_topic"       	value="$(arg camera_info_topic)" />
+    <!--
     <arg name="depth_camera_info_topic" 	value="$(arg depth_camera_info_topic)" />
+    -->
     <arg name="frame_id"                  value="$(arg camera_frame)" />
   </include>
 </launch>
