@@ -1,4 +1,5 @@
 <!-- Start rtabmap. Doesn't publish a tf. Doesn't do visual odom. -->
+<!-- This is our main rtabmap launch file which can be used in simulator and with zed cam -->
 <launch>
 
   <arg name="rgb_topic"               	default="/camera_depth/rgb" />
