@@ -34,13 +34,6 @@
                                                false,false,false,
                                                true,true,true]</rosparam>
 
-<<<<<<< HEAD
-		<!--???--><rosparam param='rtab0_config'>[false, false, false,
-                                                false, false, false,
-                                                true, true, false,
-                                                false, false, false,
-                                                true, true, false]</rosparam>-->
-
 					   <!--[x, y, z
 						roll, pitch, yaw,
 						x vel, y vel, z vel,
@@ -48,13 +41,12 @@
 						x accel, y accel, z accel] -->
 
 
-=======
 		<rosparam param='odom1_config'>[true, true, true,
                                                 true, true, true,
                                                 false, false, false,
                                                 false, false, false,
                                                 false, false, false]</rosparam>
->>>>>>> bfbcceb0c1319445faf3b16ae64612dab400984b
+
 		<param name='odom0_differential' value='true'/>
 		<param name='imu0_differential' value='false'/>
 		<param name='odom1_differential' value='false'/>
@@ -62,16 +54,11 @@
 
 		<param name='odom0_queue_size' value='10'/>
 		<param name='imu0_queue_size' value='10'/>
-<<<<<<< HEAD
-		<param name='rtab0_queue_size' value='10'/>
+
+
 
 		<param name='frequency' value='15'/>
-	</node>
 
-	<!--<node pkg="tf" type="static_transform_publisher" name="base_link" args="0 0 0 x y z base base_link 100" />
-
-	<node pkg="tf" type="static_transform_publisher" name="odom" args="0 0 0 x y z base odom 100" />-->
-=======
 		<param name='odom1_queue_size' value='10'/>
 	</node>
 
