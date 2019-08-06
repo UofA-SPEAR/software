@@ -17,11 +17,17 @@ find_package(catkin REQUIRED COMPONENTS
     tf
     spear_msgs
     actionlib
+    message_generation
 )
 
 catkin_python_setup()
 
 
+add_service_files(FILES GpsToUtm.srv)
+generate_messages(DEPENDENCIES
+  sensor_msgs
+  geometry_msgs
+)
 
 ###################################
 ## catkin specific configuration ##
@@ -158,3 +164,7 @@ install(PROGRAMS
     nodes/mapper.py
     DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
+
+add_executable(gps_to_utm_server src/gps_to_utm_server.cpp)
+target_link_libraries(gps_to_utm_server ${catkin_LIBRARIES})
+add_dependencies(gps_to_utm_server spear_rover_gencpp)
