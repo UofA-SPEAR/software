@@ -11,10 +11,13 @@ bool gps_to_utm(spear_rover::GpsToUtm::Request &req,
                 spear_rover::GpsToUtm::Response &res) {
     double utm_x, utm_y;
     std::string utm_zone;
-    RobotLocalization::NavsatConversions::LLtoUTM(req.gps_fix.latitude, req.gps_fix.longitude, utm_y, utm_x, utm_zone);
+    const double lat = req.gps_coord.x;
+    const double lon = req.gps_coord.y;
+    const double alt = req.gps_coord.z;
+    RobotLocalization::NavsatConversions::LLtoUTM(lat, lon, utm_y, utm_x, utm_zone);
     res.utm_coord.x = utm_x;
     res.utm_coord.y = utm_y;
-    res.utm_coord.z = req.gps_fix.altitude;
+    res.utm_coord.z = alt;
     return true;
 }
 

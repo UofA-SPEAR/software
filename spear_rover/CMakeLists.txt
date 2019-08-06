@@ -25,7 +25,6 @@ catkin_python_setup()
 
 add_service_files(FILES GpsToUtm.srv)
 generate_messages(DEPENDENCIES
-  sensor_msgs
   geometry_msgs
 )
 
