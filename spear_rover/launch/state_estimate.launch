@@ -81,6 +81,7 @@
 		<param name='zero_altitude' value='true' />
 		<param name='publish_filtered_gps' value='true' />
 		<param name='use_odometry_yaw' value='false' /> <!-- Consider setting this if IMU orientation is unreliable and we have yaw from another source -->
+		<param name='broadcast_utm_transform' value='true' />
 		<!-- Outputs to odometry/gps (in world frame, to fuse with sensor data) and gps/filtered (estimate in gps coords) -->
 	</node>
 
