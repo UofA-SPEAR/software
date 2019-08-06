@@ -1,6 +1,15 @@
 import RosLib from 'roslib';
 import { GoalStatus } from './goal_status';
 
+function make_gps_coordinate_state(ros, params) {
+    let [lat, lon] = params.split(' ');
+    lat = parseFloat(lat);
+    lon = parseFloat(lon);
+    return new NavigateToGpsState({
+        ros, lat, lon
+    });
+}
+
 function make_relative_coord_state(ros, params) {
     let position = new RosLib.Vector3();
     const orientation = new RosLib.Quaternion({x: 0, y: 0, z: 0, w: 1.0});
@@ -38,6 +47,7 @@ function make_manual_control_state(ros, params) {
 export function make_state(ros, action_class, params) {
     const function_map = {
         'MoveToRelativeCoord': make_relative_coord_state,
+        'MoveToGpsCoord': make_gps_coordinate_state,
         'TakeManualControl': make_manual_control_state,
     }
     if (action_class in function_map) {
@@ -170,5 +180,86 @@ class TakeManualControlState extends AbstractState {
 
     getDescription() {
         return 'Take manual control';
+    }
+}
+
+class NavigateToGpsState extends AbstractState {
+    constructor({ros, lat, lon}) {
+        super();
+        this.ros = ros;
+        this.lat = lat;
+        this.lon = lon;
+        
+        this.actionClient = new RosLib.ActionClient({
+            ros: this.ros,
+            serverName: 'move_base',
+            actionName: 'move_base_msgs/MoveBaseAction',
+        });
+        this.resultListener = new RosLib.Topic({
+            ros: this.ros,
+            name: 'move_base/result',
+            messageType: 'move_base_msgs/MoveBaseActionResult',
+        });
+        this.nextStateCallback = null;
+        this.goal = null;
+
+        this.gpsToUtmClient = new RosLib.Service({
+            ros: ros,
+            name: 'gps_to_utm',
+            serviceType: 'spear_rover/GpsToUtm',
+        });
+    }
+
+    setNextStateCallback(callback) {
+        this.nextStateCallback = callback;
+        this.resultListener.subscribe(message => {
+            if (this.goal === null) {
+                return;
+            }
+            if (message.status.goal_id.id !== this.goal.goalID) {
+                return;
+            }
+            this.nextStateCallback(message.status.status);
+            this.goal = null;
+        });
+    }
+
+    enter() {
+        console.log(`Entering state (${this.getDescription()})`);
+
+        console.log(`Translating (${this.lat}, ${this.lon}) from gps to utm coords...`);
+        const request = new RosLib.ServiceRequest({
+            gps_coord: {x: this.lat, y: this.lon, z: 0},
+        });
+        this.gpsToUtmClient.callService(request, result => {
+            console.log(`Finished: (${result.utm_coord.x}, ${result.utm_coord.y})`)
+            let position = new RosLib.Vector3();
+            const orientation = new RosLib.Quaternion({x: 0, y: 0, z: 0, w: 1.0});
+            position.x = result.utm_coord.x;
+            position.y = result.utm_coord.y;
+
+            this.goal = new RosLib.Goal({
+                actionClient: this.actionClient,
+                goalMessage: {
+                    target_pose: {
+                        header: {frame_id: 'utm'},
+                        pose: new RosLib.Pose({position, orientation}),
+                    },
+                },
+            });
+            this.goal.on('timeout', (event) => {
+                this.nextStateCallback(GoalStatus.Aborted);
+            });
+            this.goal.send();
+        });
+    }
+
+    ancel() {
+        console.log(`Cancelling state (${this.getDescription()})`);
+        this.actionClient.cancel();
+    }
+
+    getDescription() {
+        return `Move to gps coordinate (${this.lat}, ${this.lon})`;
     }
 }
