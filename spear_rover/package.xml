@@ -37,4 +37,5 @@
   <exec_depend>joy</exec_depend>
 
   <exec_depend>razor_imu_9dof</exec_depend>
+  <exec_depend>nmea_navsat_driver</exec_depend>
 </package>
