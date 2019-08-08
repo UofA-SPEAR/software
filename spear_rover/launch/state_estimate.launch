@@ -54,7 +54,8 @@
 		<param name='imu0_queue_size' value='10'/>
 		<param name='odom1_queue_size' value='10'/>
 
-        <!-- Outputs to odometry/filtered -->
+        <!-- Remap output to odometry/filtered/odom. This makes inspecting the filtered geometry using rostopic a lot easier -->
+		<remap from="odometry/filtered" to="odometry/filtered/odom" />
 	</node>
 
 	<!-- A second ekf as suggested by http://docs.ros.org/melodic/api/robot_localization/html/integrating_gps.html#notes-on-fusing-gps-data -->
