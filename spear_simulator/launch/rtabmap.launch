@@ -32,6 +32,7 @@
   </node>
 
   <param name="/rtabmap/rtabmap/approx_sync" type="bool" value="true"/>
+  <param name="/rtabmap/rtabmap/publish_tf" type="bool" value="false"/>
   <!-- Include main rtabmap launch file from spear_rover package -->
   <include file="$(find spear_rover)/launch/rtabmap.launch">
     <arg name="odom_topic"                  value="/camera_depth/odom" />
