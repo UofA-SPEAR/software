@@ -254,7 +254,7 @@ class NavigateToGpsState extends AbstractState {
         });
     }
 
-    ancel() {
+    cancel() {
         console.log(`Cancelling state (${this.getDescription()})`);
         this.actionClient.cancel();
     }
