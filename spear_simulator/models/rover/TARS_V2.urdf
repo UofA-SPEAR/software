@@ -286,7 +286,7 @@
 
     <!-- Stuff to make the wheels driveable -->
     <joint name="link_wheel_backleft" type="continuous">
-      <axis xyz="0 -1 0" rpy="0 0 0"/>
+      <axis xyz="0 1 0" rpy="0 0 0"/>
       <origin xyz="-0.21346 0.01924 -0.08012" rpy="0 0 0"/>
       <parent link="link_suspension_backleft"/>
       <child link="link_wheel_backleft"/>
@@ -309,7 +309,7 @@
     </gazebo>
 
     <joint name="link_wheel_backright" type="continuous">
-      <axis xyz="0 -1 0" rpy="0 0 0"/>
+      <axis xyz="0 1 0" rpy="0 0 0"/>
       <origin xyz="-0.21346 -0.01886 -0.08012" rpy="0 0 0"/>
       <parent link="link_suspension_backright"/>
       <child link="link_wheel_backright"/>
@@ -332,7 +332,7 @@
     </gazebo>
 
     <joint name="link_wheel_frontleft" type="continuous">
-      <axis xyz="0 -1 0" rpy="0 0 0"/>
+      <axis xyz="0 1 0" rpy="0 0 0"/>
       <origin xyz="0.21346 0.01886 -0.08012" rpy="0 0 0"/>
       <parent link="link_suspension_frontleft"/>
       <child link="link_wheel_frontleft"/>
@@ -355,7 +355,7 @@
     </gazebo>
 
     <joint name="link_wheel_frontright" type="continuous">
-      <axis xyz="0 -1 0" rpy="0 0 0"/>
+      <axis xyz="0 1 0" rpy="0 0 0"/>
       <origin xyz="0.21345 -0.01924 -0.08014" rpy="0 0 0"/>
       <parent link="link_suspension_frontright"/>
       <child link="link_wheel_frontright"/>
