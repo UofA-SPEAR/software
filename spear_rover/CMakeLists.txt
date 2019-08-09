@@ -23,7 +23,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_python_setup()
 
 
-add_service_files(FILES GpsToUtm.srv)
+add_service_files(FILES GpsToFrame.srv)
 generate_messages(DEPENDENCIES
   geometry_msgs
 )
@@ -164,6 +164,6 @@ install(PROGRAMS
     DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
-add_executable(gps_to_utm_server src/gps_to_utm_server.cpp)
-target_link_libraries(gps_to_utm_server ${catkin_LIBRARIES})
-add_dependencies(gps_to_utm_server spear_rover_gencpp)
+add_executable(gps_to_frame_server src/gps_to_frame_server.cpp)
+target_link_libraries(gps_to_frame_server ${catkin_LIBRARIES})
+add_dependencies(gps_to_frame_server spear_rover_gencpp)

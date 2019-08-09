@@ -203,10 +203,10 @@ class NavigateToGpsState extends AbstractState {
         this.nextStateCallback = null;
         this.goal = null;
 
-        this.gpsToUtmClient = new RosLib.Service({
+        this.gpsToFrameClient = new RosLib.Service({
             ros: ros,
-            name: 'gps_to_utm',
-            serviceType: 'spear_rover/GpsToUtm',
+            name: 'gps_to_frame',
+            serviceType: 'spear_rover/GpsToFrame',
         });
     }
 
@@ -227,22 +227,24 @@ class NavigateToGpsState extends AbstractState {
     enter() {
         console.log(`Entering state (${this.getDescription()})`);
 
-        console.log(`Translating (${this.lat}, ${this.lon}) from gps to utm coords...`);
+        const target_frame = 'map';
+        console.log(`Translating (${this.lat}, ${this.lon}) from gps to ${target_frame} coords...`);
         const request = new RosLib.ServiceRequest({
+            frame: {data: target_frame},
             gps_coord: {x: this.lat, y: this.lon, z: 0},
         });
-        this.gpsToUtmClient.callService(request, result => {
-            console.log(`Finished: (${result.utm_coord.x}, ${result.utm_coord.y})`)
+        this.gpsToFrameClient.callService(request, result => {
+            console.log(`Finished: (${result.coord.x}, ${result.coord.y})`)
             let position = new RosLib.Vector3();
             const orientation = new RosLib.Quaternion({x: 0, y: 0, z: 0, w: 1.0});
-            position.x = result.utm_coord.x;
-            position.y = result.utm_coord.y;
+            position.x = result.coord.x;
+            position.y = result.coord.y;
 
             this.goal = new RosLib.Goal({
                 actionClient: this.actionClient,
                 goalMessage: {
                     target_pose: {
-                        header: {frame_id: 'utm'},
+                        header: {frame_id: target_frame},
                         pose: new RosLib.Pose({position, orientation}),
                     },
                 },

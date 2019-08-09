@@ -1,3 +1,0 @@
-geometry_msgs/Point gps_coord
----
-geometry_msgs/Point utm_coord
