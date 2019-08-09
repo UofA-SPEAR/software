@@ -67,8 +67,8 @@
                                                 false, false, false]</rosparam>-->
 
 		<param name='odom0_differential' value='true'/>
-		<param name='imu0_differential' value='false'/>
-		<param name='odom1_differential' value='false'/>
+		<param name='imu0_differential' value='true'/>
+		<param name='odom1_differential' value='true'/>
 		<param name='print_diagnostics' value='true'/>
 
 		<param name='odom0_queue_size' value='10'/>
