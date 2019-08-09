@@ -1,0 +1,4 @@
+geometry_msgs/Point gps_coord
+std_msgs/String frame
+---
+geometry_msgs/Point coord

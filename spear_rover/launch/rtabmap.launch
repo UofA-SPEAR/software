@@ -6,8 +6,9 @@
   <arg name="depth_topic"               default="/camera_depth/depth" />
   <arg name="depth_camera_info_topic" 	default="/camera_depth/camera/info" />
   <arg name="camera_info_topic" 	default="/camera_depth/camera/info" />
-  <arg name="odom_topic"                default="odom" />
+  <!-- <arg name="odom_topic"                default="odom" /> -->
   <arg name="camera_frame"              default="camera_depth_optical_frame" />
+  <arg name="odom_frame_id"             default="odom"/>
 
   <include file="$(find rtabmap_ros)/launch/rtabmap.launch">
     <!-- RTAB-map tuning parameters -->
@@ -21,11 +22,11 @@
     <arg name="camera_info_topic"       	value="$(arg camera_info_topic)" />
     <arg name="depth_camera_info_topic" 	value="$(arg depth_camera_info_topic)" />
     <arg name="frame_id"                        value="$(arg camera_frame)" />
+    <arg name="odom_frame_id"             value="$(arg odom_frame_id)" />
 
     <!-- The zed camera does its own visual odometry so rtabmap doesn't have to -->
     <arg name="approx_sync"                   value="false" />
     <arg name="visual_odometry"               value="false" />
-    <arg name="odom_topic"                    value="$(arg odom_topic)" />
   </include>
 
 </launch>

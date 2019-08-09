@@ -17,11 +17,16 @@ find_package(catkin REQUIRED COMPONENTS
     tf
     spear_msgs
     actionlib
+    message_generation
 )
 
 catkin_python_setup()
 
 
+add_service_files(FILES GpsToFrame.srv)
+generate_messages(DEPENDENCIES
+  geometry_msgs
+)
 
 ###################################
 ## catkin specific configuration ##
@@ -158,3 +163,7 @@ install(PROGRAMS
     nodes/mapper.py
     DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
+
+add_executable(gps_to_frame_server src/gps_to_frame_server.cpp)
+target_link_libraries(gps_to_frame_server ${catkin_LIBRARIES})
+add_dependencies(gps_to_frame_server spear_rover_gencpp)
