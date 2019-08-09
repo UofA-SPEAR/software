@@ -3,6 +3,7 @@
 # An interface between ros messages and the uavcan protocol.
 
 from canros import Message as CanrosMessage
+
 from spear_msgs.msg import WheelCmdArray
 from canros.msg import uavcan__equipment__actuator__ArrayCommand as ArrayCommand
 from canros.msg import uavcan__equipment__actuator__Status as ActuatorStatus

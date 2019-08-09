@@ -59,7 +59,6 @@ Install the following dependencies:<br>
 - qmake (required by nimbro_network): `apt-get install qt4-qmake`
 - ROS move\_base package: `apt-get install ros-kinetic-move-base`
 
-
 Notes:
 1. x264 is for encoding video and Kivy is for our user interface.
 2. ROS Kinetic requires the Python 2 versions of all modules.

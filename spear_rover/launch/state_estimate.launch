@@ -9,68 +9,157 @@
 	pose_data from odom msg and such gets sent to map or odom framework; fropm the framework, through ekf_loicalization_nide, send to baselink
 	IMU goes straight into base_link ()but there is a static transform of displcement from base_link to the IMU to account for adjusting measurements-->
 	<!--Frames: equies a base_link to imu_link transform-->
-
-	<!--Configuring the *kf_localization_node-->
-	
-	<!--Frames-->
-
-	<param name='map_frame' value='map'/>
-	<param name = 'odom_frame' value = 'odom'/>
-	<param name = 'world_frame' value = 'odom'/> <!--Can be set tot he map or odom frame-->
-	<param name = 'base_link_frame' value = 'base_link'/>
-
-
-	<!--Sensor input specifications-->
-	<!--what goes in the value? topic?-->
-	
-
-	<param name = 'odom0' value = 'map'/>
-	<param name = 'rtab0' value = '/rtabmap/odom'/>
-	<param name = 'imu0' value = 'odom'/>
-
-	<!--use odom_diff == true if not want to alter covariance mat-->
-
-
-
-	<!--navsat_transform_node
-	Convert GPS coord to UTM
-	publish filtered gps useful for traceing on map-->
+  
 	<node name='ekf_odom' pkg='robot_localization' type='ekf_localization_node' clear_params='true'>
+		
+		<param name = 'two_d_mode' value = 'true'/>
 
+		<!-- Define coordinate frames -->
 		<param name = 'map_frame' value = 'map'/>
 		<param name = 'odom_frame' value = 'odom'/>
 		<param name = 'world_frame' value = 'odom'/> <!--Can be set tot he map or odom frame-->
 		<param name = 'base_link_frame' value = 'base_link'/>
 
 		<param name = 'odom0' value = '/rover_diff_drive_controller/odom'/>
-		<param name = 'rtab0' value = '/rtabmap/odom'/>
-		<param name = 'imu0' value = '/imu'/> <!--Can be set tot he map or odom frame-->
+		<param name = 'odom1' value = '/camera_depth/odom'/> <!-- visual odometry from stereo camera -->
+		<param name = 'imu0' value = '/imu/data'/> <!-- IMU raw input -->
 
-		<rosparam param='odom0_config'>[false, false, false,
-						false, false, false,
-						true, true, true,
-						false,false,false
-						false,false,false]<rosparam/>
-
+		<rosparam param='odom0_config'>[true, true, false,
+                                                false, false, false,
+                                                false, false, false,
+                                                false, false, false,
+                                                false, false, false]</rosparam>
 
 		<rosparam param='imu0_config'>[false, false, false,
-						true, true, true,
-						false, false, false,
-						true,true,false
-						true,true,true]<rosparam/>
+                                               true, true, true,
+                                               false, false, false,
+                                               false,false,false,
+                                               true,true,false]</rosparam> <!--T T F works-->
 
-		<rosparam param='rtab0_config'>[false, false, false,
-						false, false, false,
-						true, true, true,
-						false,false,false
-						false,false,false]<rosparam/>
+					   <!--[x, y, z
+						roll, pitch, yaw,
+						x vel, y vel, z vel,
+						roll vel, pitch vel, yaw vel,
+						x accel, y accel, z accel] -->
+
+
+		<rosparam param='odom1_config'>[true, true, true,
+                                                true, true, true,
+                                                false, false, false,
+                                                false, false, false,
+                                                false, false, false]</rosparam>
+
+<!--		<rosparam param='odom0_config'>[true, true, false,
+                                                false, false, true,
+                                                false, false, false,
+                                                false, false, false,
+                                                false, false, false]</rosparam>
+
+		<rosparam param='imu0_config'>[false, false, false,
+                                               true, true, true,
+                                               false, false, false,
+                                               false,false,false,
+                                               true,true,true]</rosparam>
+
+
+		<rosparam param='odom1_config'>[true, true, true,
+                                                true, true, true,
+                                                false, false, false,
+                                                false, false, false,
+                                                false, false, false]</rosparam>-->
+
 		<param name='odom0_differential' value='true'/>
-		<param name='imu0_differential' value='false'/>
-		<param name='rtab0_differential' value='false'/>
+		<param name='imu0_differential' value='true'/>
+		<param name='odom1_differential' value='true'/>
 		<param name='print_diagnostics' value='true'/>
 
 		<param name='odom0_queue_size' value='10'/>
 		<param name='imu0_queue_size' value='10'/>
-		<param name='rtab0_queue_size' value='10'/>
-	<node/>
-<launch/>
+		<param name='odom1_queue_size' value='10'/>
+
+		<param name='frequency' value='10'/>
+
+        <!-- Remap output to odometry/filtered/odom. This makes inspecting the filtered geometry using rostopic a lot easier -->
+		<remap from="odometry/filtered" to="odometry/filtered/odom" />
+	</node>
+
+	<!-- A second ekf as suggested by http://docs.ros.org/melodic/api/robot_localization/html/integrating_gps.html#notes-on-fusing-gps-data -->
+	<node name='ekf_all' pkg='robot_localization' type='ekf_localization_node' clear_params='true'>
+		
+		<param name='two_d_mode' value='true'/>
+
+		<!-- Define coordinate frames -->
+		<param name = 'map_frame' value = 'map'/>
+		<param name = 'odom_frame' value = 'odom'/>
+		<param name = 'world_frame' value = 'map'/> <!--Can be set tot he map or odom frame-->
+		<param name = 'base_link_frame' value = 'base_link'/>
+
+		<param name = 'odom0' value = '/rover_diff_drive_controller/odom'/>
+		<param name = 'odom1' value = '/camera_depth/odom'/> <!-- visual odometry from stereo camera -->
+		<param name = 'imu0' value = '/imu/data'/> <!-- IMU raw input -->
+        <param name = 'odom2' value = '/odometry/gps'/> <!-- GPS odometry from navsat_transform -->
+
+		<rosparam param='odom0_config'>[true, true, false,
+                                                false, false, false,
+                                                false, false, false,
+                                                false, false, false,
+                                                false, false, false]</rosparam>
+
+
+		<rosparam param='imu0_config'>[false, false, false,
+                                               true, true, true,
+                                               false, false, false,
+                                               false,false,false,
+                                               true,true,false]</rosparam>
+
+		<rosparam param='odom1_config'>[true, true, true,
+                                                true, true, true,
+                                                false, false, false,
+                                                false, false, false,
+                                                false, false, false]</rosparam>
+        <rosparam param='odom2_config'>
+            [true,  true,  true,
+             false, false, false,
+             false, false, false,
+             false, false, false,
+             false, false, false]
+        </rosparam>
+
+		<param name='odom0_differential' value='true'/>
+		<param name='imu0_differential' value='true'/>
+		<param name='odom1_differential' value='true'/>
+    <param name='odom2_diferential' value='false'/>
+		<param name='print_diagnostics' value='true'/>
+
+		<param name='odom0_queue_size' value='10'/>
+		<param name='imu0_queue_size' value='10'/>
+		<param name='odom1_queue_size' value='10'/>
+		<param name='odom2_queue_size' value='10'/>
+
+		<param name='frequency' value='10'/>
+
+        <!-- Outputs to odometry/filtered -->
+	</node>
+
+	<node name='navsat_transform' pkg='robot_localization' type='navsat_transform_node'>
+		<!-- Subscribed topics -->
+		<remap from='imu/data' to='imu/data' />
+		<remap from='odometry/filtered' to='odometry/filtered' />
+		<remap from='gps/fix' to='gps/fix' />
+		<!-- Parameters -->
+		<param name='frequency' value='1.0' />
+		<param name='magnetic_declination_radians' value='0.6241' />
+		<param name='yaw_offset' value='0.0' /> <!-- This should probably not be 0 -->
+		<param name='zero_altitude' value='true' />
+		<param name='publish_filtered_gps' value='true' />
+		<param name='use_odometry_yaw' value='false' /> <!-- Consider setting this if IMU orientation is unreliable and we have yaw from another source -->
+		<param name='broadcast_utm_transform' value='true' />
+		<!-- Outputs to odometry/gps (in world frame, to fuse with sensor data) and gps/filtered (estimate in gps coords) -->
+	</node>
+
+	<!-- <node pkg="tf" type="static_transform_publisher" name="base_link" args="0 0 0 x y z base base_link 100" />
+
+	<node pkg="tf" type="static_transform_publisher" name="odom" args="0 0 0 x y z base odom 100" /> -->
+
+	<node name='gps_to_frame_server' pkg='spear_rover' type='gps_to_frame_server' output='screen'></node>
+</launch>
