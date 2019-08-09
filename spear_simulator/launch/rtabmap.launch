@@ -37,7 +37,6 @@
   <param name="/rtabmap/rtabmap/publish_tf" type="bool" value="false"/>
   <!-- Include main rtabmap launch file from spear_rover package -->
   <include file="$(find spear_rover)/launch/rtabmap.launch">
-    <arg name="odom_topic"                  value="/camera_depth/odom" />
     <arg name="camera_frame"                value="camera_depth_optical_frame" />
     <arg name="rgb_topic"                   value="/camera/rgb/image_raw" />
     <arg name="depth_topic"                 value="/camera/depth/image_raw" />
