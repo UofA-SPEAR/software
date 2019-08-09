@@ -1,18 +1,19 @@
 /**
- * Outline for a node that updates the odometry transform based on incoming data
+ * Broadcasts odom based on incoming data
  */
 
 #include <string>
 
+#include <nav_msgs/Odometry.h>
 #include <ros/ros.h>
 #include <tf/transform_broadcaster.h>
-#include <tf/transform_listener.h>
 
 #include "skidsteer.hpp"
 
 #include <canros/spear__drive__WheelOdom.h>
 
-tf::Transform old_transform;
+ros::Publisher pub;
+nav_msgs::Odometry oldOdom;
 
 /**
  * Broadcasts a transform.
@@ -26,25 +27,34 @@ tf::Transform old_transform;
  * @param to Name of child tf frame
  * @return The transform that was broadcast
  */
-tf::Transform broadcastTransform(double x, double y, double z, double roll,
+nav_msgs::Odometry broadcastOdom(double x, double y, double z, double roll,
                                  double pitch, double yaw, std::string from,
                                  std::string to) {
-  // This must be static
-  static tf::TransformBroadcaster br;
+  nav_msgs::Odometry msg;
 
-  tf::Transform transform;
-  tf::Quaternion rotation;
-  transform.setOrigin(tf::Vector3(x, y, z));
-  rotation.setRPY(roll, pitch, yaw);
-  transform.setRotation(rotation);
-  // Broadcast transform
-  br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), from, to));
-  return transform;
+  msg.header.stamp = ros::Time::now();
+  msg.header.frame_id = "odom";
+  msg.child_frame_id = "base_link";
+
+  msg.pose.pose.position.x = x;
+  msg.pose.pose.position.y = y;
+  msg.pose.pose.position.z = z;
+
+  msg.pose.pose.orientation =
+      tf::createQuaternionMsgFromRollPitchYaw(roll, pitch, yaw);
+
+  // Broadcast msg
+  pub.publish(msg);
+
+  return msg;
 }
 
 /**
- * Adds x, y, z, roll, pitch, yaw onto an old transform and publishes the
+ * Adds x, y, z, roll, pitch, yaw onto an old odom message and publishes the
  * result.
+ *
+ * Note: modifies global variable "oldOdom"
+ *
  * @param x X-coordinate to add
  * @param y Y-coordinate to add
  * @param z Z-coordinate to add
@@ -53,37 +63,46 @@ tf::Transform broadcastTransform(double x, double y, double z, double roll,
  * @param yaw Yaw to add
  * @param from Name of parent tf frame
  * @param to Name of child tf frame
- * @param oldTransform The old transform. THIS IS MODIFIED.
  */
-void transformDelta(double x, double y, double z, double roll, double pitch,
-                    double yaw, std::string from, std::string to,
-                    tf::Transform& oldTransform) {
-  // This must be static
-  static tf::TransformBroadcaster br;
-
+void odomDelta(double x, double y, double z, double roll, double pitch,
+               double yaw, std::string from, std::string to) {
   // Calculate new origin by adding x, y, z coordinates
-  double oldX = oldTransform.getOrigin().x();
-  double oldY = oldTransform.getOrigin().y();
-  double oldZ = oldTransform.getOrigin().z();
+  double oldX = oldOdom.pose.pose.position.x;
+  double oldY = oldOdom.pose.pose.position.y;
+  double oldZ = oldOdom.pose.pose.position.z;
   double newX = oldX + x;
   double newY = oldY + y;
   double newZ = oldZ + z;
 
   // Calculate new rotation by multiplying quaternions
-  tf::Quaternion oldRotation = oldTransform.getRotation();
-  tf::Quaternion rotationDelta;
-  rotationDelta.setRPY(roll, pitch, yaw);
+  // We must convert to a tf::Quaternion temporarily since a
+  // geometry_msgs::Quaternion doesn not have the "*" operator.
+  tf::Quaternion oldRotation;
+  tf::quaternionMsgToTF(oldOdom.pose.pose.orientation, oldRotation);
+  tf::Quaternion rotationDelta = tf::createQuaternionFromRPY(roll, pitch, yaw);
   tf::Quaternion newRotation = oldRotation * rotationDelta;
+  // Convert back to a geometry_msgs/Quaternion
+  geometry_msgs::Quaternion newRotationMsg;
+  tf::quaternionTFToMsg(newRotation, newRotationMsg);
 
-  // Broadcast new transform
-  tf::Transform newTransform;
-  newTransform.setOrigin(tf::Vector3(newX, newY, newZ));
-  newTransform.setRotation(newRotation);
-  br.sendTransform(
-      tf::StampedTransform(newTransform, ros::Time::now(), from, to));
+  // Broadcast new odom msg
+  nav_msgs::Odometry msg;
 
-  // Update old transform
-  oldTransform = newTransform;
+  msg.header.stamp = ros::Time::now();
+  msg.header.frame_id = "odom";
+  msg.child_frame_id = "base_link";
+
+  msg.pose.pose.position.x = newX;
+  msg.pose.pose.position.y = newY;
+  msg.pose.pose.position.z = newZ;
+
+  msg.pose.pose.orientation = newRotationMsg;
+
+  // Broadcast msg
+  pub.publish(msg);
+
+  // Update old odom message
+  oldOdom = msg;
 }
 
 /*
@@ -117,18 +136,21 @@ void odom_callback(const canros::spear__drive__WheelOdom::ConstPtr& msg) {
   skid.right.front = wheels[3].delta;
 
   // If all the data is in
-  tf_delta_t tf_delta = odom_to_tf_delta(skid);
+  odom_delta_t odom_delta = wheel_increments_to_odom_delta(skid);
 
-  transformDelta(tf_delta.x, tf_delta.y, 0, tf_delta.yaw, 0, 0, "odom",
-                 "base_link", old_transform);
+  odomDelta(odom_delta.x, odom_delta.y, 0, 0, 0, odom_delta.yaw, "odom",
+            "base_link");
 }
 
 int main(int argc, char** argv) {
   ros::init(argc, argv, "odom_tf_publisher");
 
   ros::NodeHandle node;
+  pub = node.advertise<nav_msgs::Odometry>("/rover_diff_drive_controller/odom",
+                                           1000);
 
-  old_transform = broadcastTransform(0, 0, 0, 0, 0, 0, "odom", "base_link");
+  // Publish an initial odom message
+  oldOdom = broadcastOdom(0, 0, 0, 0, 0, 0, "odom", "base_link");
   ros::Duration(1).sleep();
 
   ros::Subscriber sub =

@@ -9,7 +9,7 @@
 	pose_data from odom msg and such gets sent to map or odom framework; fropm the framework, through ekf_loicalization_nide, send to baselink
 	IMU goes straight into base_link ()but there is a static transform of displcement from base_link to the IMU to account for adjusting measurements-->
 	<!--Frames: equies a base_link to imu_link transform-->
-
+  
 	<node name='ekf_odom' pkg='robot_localization' type='ekf_localization_node' clear_params='true'>
 		
 		<param name = 'two_d_mode' value = 'true'/>
@@ -128,7 +128,7 @@
 		<param name='odom0_differential' value='true'/>
 		<param name='imu0_differential' value='true'/>
 		<param name='odom1_differential' value='true'/>
-        <param name='odom2_diferential' value='false'/>
+    <param name='odom2_diferential' value='false'/>
 		<param name='print_diagnostics' value='true'/>
 
 		<param name='odom0_queue_size' value='10'/>
@@ -163,5 +163,3 @@
 
 	<node name='gps_to_frame_server' pkg='spear_rover' type='gps_to_frame_server' output='screen'></node>
 </launch>
-
-

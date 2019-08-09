@@ -47,6 +47,7 @@ We recommend the "Desktop-Full Install" ROS package for best compatibility.
 
 Install the following dependencies:<br>
 
+
 - x264: `apt-get install libx264-dev`
 - Cython: `python -m pip install cython --user`
 - Pygame: `python -m pip install pygame --user`
