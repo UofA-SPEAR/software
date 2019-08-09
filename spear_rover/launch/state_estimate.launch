@@ -77,7 +77,7 @@
 		<param name='imu0_queue_size' value='10'/>
 		<param name='odom1_queue_size' value='10'/>
 
-		<param name='frequency' value='15'/>
+		<param name='frequency' value='10'/>
 
         <!-- Remap output to odometry/filtered/odom. This makes inspecting the filtered geometry using rostopic a lot easier -->
 		<remap from="odometry/filtered" to="odometry/filtered/odom" />
@@ -136,7 +136,7 @@
 		<param name='odom1_queue_size' value='10'/>
 		<param name='odom2_queue_size' value='10'/>
 
-		<param name='frequency' value='15'/>
+		<param name='frequency' value='10'/>
 
         <!-- Outputs to odometry/filtered -->
 	</node>
