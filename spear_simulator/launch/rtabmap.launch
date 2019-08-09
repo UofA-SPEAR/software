@@ -23,6 +23,8 @@
   <node name="rgbd_odometry" pkg="rtabmap_ros" type="rgbd_odometry">
     <param name="publish_tf" value="false"/>
     <param name="subscribe_rgbd" type="bool" value="true"/>
+    <!-- Reset odometry when lost -->
+    <param name="Odom/ResetCountdown" value="1"/>
     <remap from="rgbd_image" to="/rtabmap/rgbd_image"/>
     <remap from="rgb/image" to="/camera/rgb/image_raw"/>
     <remap from="rgb/camera_info" to="/camera/rgb/camera_info"/>
