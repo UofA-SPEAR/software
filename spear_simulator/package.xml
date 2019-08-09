@@ -13,5 +13,6 @@
   <exec_depend>rtabmap_ros</exec_depend>
   <exec_depend>controller_manager</exec_depend>
   <exec_depend>diff_drive_controller</exec_depend>
+  <exec_depend>move_base</exec_depend>
 
 </package>
