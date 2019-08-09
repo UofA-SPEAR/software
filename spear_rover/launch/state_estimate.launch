@@ -25,7 +25,7 @@
 		<param name = 'imu0' value = '/imu/data'/> <!-- IMU raw input -->
 
 		<rosparam param='odom0_config'>[true, true, false,
-                                                false, false, true,
+                                                false, false, false,
                                                 false, false, false,
                                                 false, false, false,
                                                 false, false, false]</rosparam>
@@ -44,7 +44,7 @@
 
 
 		<rosparam param='odom1_config'>[true, true, true,
-                                                true, false, true, <!---maybe TFT. not TTT-->
+                                                true, true, true,
                                                 false, false, false,
                                                 false, false, false,
                                                 false, false, false]</rosparam>
@@ -100,7 +100,7 @@
         <param name = 'odom2' value = '/odometry/gps'/> <!-- GPS odometry from navsat_transform -->
 
 		<rosparam param='odom0_config'>[true, true, false,
-                                                false, false, true,
+                                                false, false, false,
                                                 false, false, false,
                                                 false, false, false,
                                                 false, false, false]</rosparam>
