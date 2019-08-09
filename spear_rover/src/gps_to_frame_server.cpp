@@ -42,7 +42,7 @@ bool gps_to_frame(spear_rover::GpsToFrame::Request &req,
             break;
         }
         catch(tf::TransformException& err) {
-            auto message = std::string("Could not transform utm -> map: ") + err.what();
+            auto message = std::string("Could not transform utm -> ") + req.frame.data + std::string(": ") + err.what();
             ROS_ERROR(message.c_str());
             std::this_thread::sleep_for(3s);
         }
@@ -58,7 +58,7 @@ int main(int argc, char* argv[]) {
     ros::NodeHandle n;
     listener = std::make_unique<tf::TransformListener>(n);
     ros::ServiceServer service = n.advertiseService("gps_to_frame", gps_to_frame);
-    ROS_INFO("GPS to UTM conversion service ready.");
+    ROS_INFO("GPS to TF frame conversion service ready.");
     ros::spin();
     return 0;
 }
