@@ -16,6 +16,8 @@
   	  --Odom/ResetCountdown 1
   	  --Odom/Strategy 1
   	  --Vis/CorType 0" />
+    <arg name="rtabmapviz" value="false"/>
+    <arg name="rviz" value="false"/>
   
     <arg name="rgb_topic"               	value="$(arg rgb_topic)" />
     <arg name="depth_topic"             	value="$(arg depth_topic)" />
