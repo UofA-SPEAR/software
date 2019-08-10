@@ -18,9 +18,9 @@ def main():
 
     message = Twist()
     if action == 'forward':
-        message.linear.x = 2
+        message.linear.x = 1
     elif action == 'reverse':
-        message.linear.x = -2
+        message.linear.x = -1
     elif action == 'left':
         message.angular.z = 0.5
     elif action == 'right':
@@ -33,6 +33,10 @@ def main():
         if (time() - initial_time) > duration:
             break
         sleep(1/frequency)
+    
+    initial_time = time()
+    while (time() - initial_time) < 1:
+        publisher.publish(Twist())
 
     rospy.loginfo('Movement finished.')
 
