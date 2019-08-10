@@ -20,7 +20,7 @@
         <param name = 'world_frame' value = 'odom'/> <!--Can be set tot he map or odom frame-->
         <param name = 'base_link_frame' value = 'base_link'/>
 
-        <param name = 'odom0' value = '/donotuse>
+        <param name = 'odom0' value = '/donotuse'/>
         <param name = 'odom1' value = '/camera_depth/odom'/> <!-- visual odometry from stereo camera -->
         <param name = 'imu0' value = '/imu/data'/> <!-- IMU raw input -->
 
@@ -94,7 +94,7 @@
         <param name = 'world_frame' value = 'map'/> <!--Can be set tot he map or odom frame-->
         <param name = 'base_link_frame' value = 'base_link'/>
 
-        <param name = 'odom0' value = '/donotuse>
+        <param name = 'odom0' value = '/donotuse'/>
         <param name = 'odom1' value = '/camera_depth/odom'/> <!-- visual odometry from stereo camera -->
         <param name = 'imu0' value = '/imu/data'/> <!-- IMU raw input -->
         <param name = 'odom2' value = '/odometry/gps'/> <!-- GPS odometry from navsat_transform -->
