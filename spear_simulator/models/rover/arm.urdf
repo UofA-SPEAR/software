@@ -37,7 +37,7 @@
     <child link="bicep"/>
     <axis xyz="0 1 0"/>
     <origin xyz="0 0 ${shoulder_height}" rpy= "0 0 0"/>
-    <limit lower="-0.41" upper="2.15" effort="1" velocity="0.5"/>
+    <limit lower="0.78" upper="2.15" effort="1" velocity="0.5"/>
   </joint>
 
   <link name="forearm">
