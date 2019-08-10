@@ -66,8 +66,8 @@ struct angles toAnglesWithOrientation(int x, int y, int z, double alpha) {
   ROS_INFO("%f", sqrt(xNorm*xNorm + yNorm*yNorm + zNorm*zNorm));
 
   // Needs C++ 11
-  angles = toAnglesInPlane(hypot(xNorm*ARM_LENGTH, yNorm*ARM_LENGTH) - WRIST_LENGTH * cos(alpha),
-                           (zNorm*ARM_LENGTH) - WRIST_LENGTH * sin(alpha));
+  angles = toAnglesInPlane(hypot(xNorm, yNorm) - WRIST_LENGTH * cos(alpha),
+                           (zNorm) - WRIST_LENGTH * sin(alpha));
 
   angles.wristPitch = alpha;
   angles.shoulderYaw = atan2(yNorm, xNorm);
