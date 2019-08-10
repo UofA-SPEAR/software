@@ -161,6 +161,7 @@ target_link_libraries(twist_to_skidsteer_node
 
 install(PROGRAMS
     nodes/mapper.py
+    nodes/move_with_twist.py
     DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
