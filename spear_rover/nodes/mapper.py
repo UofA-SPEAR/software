@@ -52,7 +52,7 @@ def main():
     # Set up ROS -> UAVCAN subscribers #
     ####################################
 
-    map_ros_to_can(ArrayCommand, '/hw_interface/drive',
+    map_ros_to_can(ArrayCommand, '/drive/cmds',
                    'uavcan.equipment.actuator.ArrayCommand',
                    {"commands": wheel_cmd_array_mapper})
 
@@ -121,7 +121,6 @@ def main():
             "uptime_sec": lambda data: data.uptime_sec,
             "mode": lambda data: data.mode,
             "health": lambda data: data.health,
-            "node_id": lambda data: data.canros_uavcan_id
         })
 
     rospy.spin()
