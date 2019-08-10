@@ -18,6 +18,7 @@ find_package(catkin REQUIRED COMPONENTS
     spear_msgs
     actionlib
     message_generation
+    visualization_msgs
 )
 
 catkin_python_setup()
@@ -109,6 +110,16 @@ add_dependencies(arm_verifier_node
 )
 ## Specify libraries to link a library or executable target against
 target_link_libraries(arm_verifier_node
+  ${catkin_LIBRARIES}
+)
+
+add_executable(arm_visual_node src/arm_visual.cpp)
+add_dependencies(arm_visual_node
+   ${${PROJECT_NAME}_EXPORTED_TARGETS}
+   ${catkin_EXPORTED_TARGETS}
+)
+## Specify libraries to link a library or executable target against
+target_link_libraries(arm_visual_node
   ${catkin_LIBRARIES}
 )
 
