@@ -21,9 +21,6 @@
   <arg name="camera_info_topic"       	default="/rgb/camera_info" />
   <arg name="depth_camera_info_topic" 	default="/depth/camera_info" />
   <arg name="camera_frame"              default="zed_camera_center" />
-  <arg name="odom_topic"                default="/camera_depth/odom" />
-
-  <remap from="/zed/odom" to="$(arg odom_topic)"/>
 
   <group ns="$(arg zed_namespace)">
 	<!-- ZED Wrapper Node-->
@@ -61,7 +58,6 @@
     <arg name="depth_topic"             	value="$(arg depth_topic)" />
     <arg name="camera_info_topic"       	value="$(arg camera_info_topic)" />
     <arg name="depth_camera_info_topic" 	value="$(arg depth_camera_info_topic)" />
-    <arg name="odom_topic"                      value="$(arg odom_topic)" />
     <arg name="camera_frame"                    value="$(arg camera_frame)" />
   </include>
 </launch>
