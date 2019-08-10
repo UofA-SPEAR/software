@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<robot name="arm">
+  <link name="base_link">
+  </link>
+
+  <property name="shoulder_height" value="0.09" />
+  <property name="bicep_length" value="0.355" />
+  <property name="forearm_length" value="0.185" />
+  <property name="hand_length" value="0.59" />
+
+  <link name="rotate">
+  </link>
+
+  <joint name="rotate" type="revolute">
+    <parent link="base_link"/>
+    <child link="rotate"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="0 0 0" rpy= "0 0 0"/>
+    <limit lower="-1.58" upper="1.58" effort="1" velocity="0.5"/>
+  </joint>
+
+  <link name="shoulder">
+  </link>
+
+  <joint name="shoulder_lift" type="fixed">
+    <parent link="rotate"/>
+    <child link="shoulder"/>
+
+    <origin xyz="0 0 0" rpy= "0 0 0"/>
+  </joint>
+
+  <link name="bicep">
+  </link>
+
+  <joint name="shoulder" type="revolute">
+    <parent link="shoulder"/>
+    <child link="bicep"/>
+    <axis xyz="0 1 0"/>
+    <origin xyz="0 0 ${shoulder_height}" rpy= "0 0 0"/>
+    <limit lower="-0.41" upper="2.15" effort="1" velocity="0.5"/>
+  </joint>
+
+  <link name="forearm">
+  </link>
+
+  <joint name="elbow" type="revolute">
+    <parent link="bicep"/>
+    <child link="forearm"/>
+    <axis xyz="0 1 0"/>
+    <origin xyz="0 0 ${bicep_length}" rpy= "0 0 0"/>
+    <limit lower="-2.7" upper="1.54" effort="1" velocity="0.5"/>
+  </joint>
+
+  <link name="hand">
+  </link>
+
+  <joint name="wrist" type="revolute">
+    <parent link="forearm"/>
+    <child link="hand"/>
+    <axis xyz="0 1 0"/>
+    <origin xyz="0 0 ${forearm_length}" rpy="0 0 0"/>
+    <limit lower="-2.09" upper="2.09" effort="1" velocity="0.5"/>
+  </joint>
+
+  <link name="finger">
+  </link>
+
+  <joint name="knuckle" type="fixed">
+    <parent link="hand"/>
+    <child link="finger"/>
+    <axis xyz="0 1 0"/>
+    <origin xyz="0 0 ${hand_length}"/>
+  </joint>
+
+</robot>
