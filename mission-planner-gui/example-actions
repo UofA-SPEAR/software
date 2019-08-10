@@ -4,4 +4,9 @@ TakeManualControl
 MoveToRelativeCoord 1.0 0.0
 MoveToRelativeCoord 1.5 0.2
 MoveToRelativeCoord 2.0 0.3
+MoveToRelativeCoord 0.0 0.0
+MoveToRelativeCoordWithAngle 0.0 0.0 3.14159
+MoveForward 1.0
+TurnLeft 1.57
+TurnRight 1.57 
 MoveToGpsCoord 51.4699836418 -112.710311616

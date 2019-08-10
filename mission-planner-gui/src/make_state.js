@@ -10,12 +10,21 @@ function make_gps_coordinate_state(ros, params) {
     });
 }
 
-function make_relative_coord_state(ros, params) {
+function quaternion_from_yaw(yaw) {
+    const s = Math.sin(yaw * 0.5);
+    return new RosLib.Quaternion({x: 0.0, y: 0.0, z: s, w: Math.cos(yaw * 0.5)});
+}
+
+function make_relative_coord_with_angle_state(ros, params, description) {
     let position = new RosLib.Vector3();
-    const orientation = new RosLib.Quaternion({x: 0, y: 0, z: 0, w: 1.0});
-    const [x, y] = params.split(' ');
-    position.x = parseFloat(x);
-    position.y = parseFloat(y);
+    let orientation = new RosLib.Quaternion({x: 0, y: 0, z: 0, w: 1.0});
+    let [x, y, yaw] = params.split(' ');
+    x = parseFloat(x);
+    y = parseFloat(y);
+    yaw = parseFloat(yaw);
+    position.x = x;
+    position.y = y;
+    orientation = quaternion_from_yaw(yaw);
     const pose = new RosLib.Pose({
         position,
         orientation,
@@ -28,7 +37,9 @@ function make_relative_coord_state(ros, params) {
             pose: pose,
         },
     };
-    const description = `Move to relative coordinate (${x}, ${y})`;
+    if (description === undefined) {
+        description = `Move to relative coordinate (${x}, ${y}) with yaw angle (${yaw} = ${Math.round(yaw*180.0/Math.PI)}°)`;
+    }
 
     return new ActionState({
         ros: ros,
@@ -40,13 +51,37 @@ function make_relative_coord_state(ros, params) {
     });
 }
 
+function make_relative_coord_state(ros, params) {
+    const [x, y] = params.split(' ');
+    return make_relative_coord_with_angle_state(ros, `${x} ${y} 0`);
+}
+
+function make_move_forward_state(ros, params) {
+    const x = parseFloat(params);
+    return make_relative_coord_with_angle_state(ros, `${x} 0 0`, `Move forward ${x} meters`);
+}
+
+function make_turn_left_state(ros, params) {
+    const angle = parseFloat(params);
+    return make_relative_coord_with_angle_state(ros, `0 0 ${angle}`, `Turn left ${angle} radians = ${Math.round(angle*180.0/Math.PI)}°`);
+}
+
+function make_turn_right_state(ros, params) {
+    const angle = parseFloat(params);
+    return make_relative_coord_with_angle_state(ros, `0 0 ${-angle}`, `Turn right ${angle} radians = ${Math.round(angle*180.0/Math.PI)}°`);
+}
+
 function make_manual_control_state(ros, params) {
     return new TakeManualControlState();
 }
 
 export function make_state(ros, action_class, params) {
     const function_map = {
+        'MoveToRelativeCoordWithAngle': make_relative_coord_with_angle_state,
         'MoveToRelativeCoord': make_relative_coord_state,
+        'MoveForward': make_move_forward_state,
+        'TurnLeft': make_turn_left_state,
+        'TurnRight': make_turn_right_state,
         'MoveToGpsCoord': make_gps_coordinate_state,
         'TakeManualControl': make_manual_control_state,
     }
