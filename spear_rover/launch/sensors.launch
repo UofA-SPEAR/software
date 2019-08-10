@@ -3,10 +3,12 @@
 <launch>
   <node pkg="razor_imu_9dof" type="imu_node.py" name="imu_node" output="screen">
     <rosparam file="$(find spear_rover)/config/razor_calibration.yaml" command="load" />
+    <remap from="/imu" to="/imu/data"/>
   </node>
 
   <node pkg="nmea_navsat_driver" type="nmea_serial_driver" name="gps_node" output="screen">
     <param name="port" value="/dev/ttyTHS2" />
     <param name="baud" value="4800" />
+    <remap from="/fix" to="/gps/fix"/>
   </node>
 </launch>
