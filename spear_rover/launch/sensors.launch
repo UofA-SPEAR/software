@@ -11,4 +11,6 @@
     <param name="baud" value="4800" />
     <remap from="/fix" to="/gps/fix"/>
   </node>
+
+  <node pkg="rosbag" type="record" name="gps_recorder" output="screen" args="-o gps-recording /gps/fix"></node>
 </launch>
