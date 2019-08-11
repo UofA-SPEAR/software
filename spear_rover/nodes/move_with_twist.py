@@ -7,7 +7,7 @@ from geometry_msgs.msg import Twist
 def main():
     rospy.init_node('move_with_twist')
     action = rospy.get_param('~action', 'forward')
-    duration = rospy.get_param('~duration', '3')
+    duration = rospy.get_param('~duration', '5')
     duration = float(duration)
     frequency = 10
 
@@ -28,10 +28,8 @@ def main():
     
     rospy.loginfo('Movement started: %s.' % str(message))
     initial_time = time()
-    while time() < initial_time + 5:
+    while time()-initial_time < duration:
         publisher.publish(message)
-        print(time() - initial_time,duration )
- 
         sleep(1)
 
     message = Twist()
@@ -42,8 +40,6 @@ def main():
     initial_time = time()
     while time() < initial_time + 1:
         publisher.publish(message)
-        print(time() - initial_time,duration )
- 
         sleep(1)
 
     return True
