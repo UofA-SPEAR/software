@@ -28,15 +28,21 @@ def main():
     
     rospy.loginfo('Movement started: %s.' % str(message))
     initial_time = time()
-    while True:
+    while time()-initial_time < duration:
         publisher.publish(message)
-        if (time() - initial_time) > duration:
-            break
-        sleep(1/frequency)
-    
+        sleep(1)
+
+    message = Twist()
+
+    message.linear.x = 0
+
+    rospy.loginfo('Movement started: %s.' % str(message))
     initial_time = time()
-    while (time() - initial_time) < 1:
-        publisher.publish(Twist())
+    while time() < initial_time + 1:
+        publisher.publish(message)
+        sleep(1)
+
+    return True
 
     rospy.loginfo('Movement finished.')
 
