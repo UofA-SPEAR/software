@@ -1,0 +1,12 @@
+<launch>
+  <arg name="device" default="/dev/video2"/>
+  <arg name="width" default="1344"/>
+  <arg name="height" default="376"/>
+
+  <node name="zed" pkg="usb_cam" type="usb_cam_node">
+    <param name="pixel_format" value="yuyv"/>
+    <param name="video_device" value="$(arg device)"/>
+    <param name="image_width" value="$(arg width)"/>
+    <param name="image_height" value="$(arg height)"/>
+  </node>
+</launch>
