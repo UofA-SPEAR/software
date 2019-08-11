@@ -47,10 +47,10 @@ int main(int argc, char** argv) {
 
   ros::NodeHandle node;
 
-  sub = node.subscribe("/rover_diff_drive_controller/cmd_vel", 1000,
+  sub = node.subscribe("/rover_diff_drive_controller/cmd_vel", 1,
                        cmd_vel_callback);
   pub = node.advertise<canros::uavcan__equipment__actuator__ArrayCommand>(
-      "/drive/cmds", 1000);
+      "/drive/cmds", 1);
 
   ros::spin();
 
