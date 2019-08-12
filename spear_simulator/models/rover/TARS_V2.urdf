@@ -390,8 +390,8 @@
         <bodyName>base_link</bodyName>
         <topicName>/gps/fix</topicName>
         <velocityTopicName>/gps/fix_velocity</velocityTopicName>
-        <referenceLatitude>51.47</referenceLatitude>
-        <referenceLongitude>-112.71</referenceLongitude>
+        <referenceLatitude>51.45304</referenceLatitude>
+        <referenceLongitude>-112.71593</referenceLongitude>
         <frameId>base_link</frameId>
       </plugin>
     </gazebo>
