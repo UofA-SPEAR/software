@@ -2,6 +2,7 @@
 
 import uavcan
 
+
 def response_callback(event):
     # do nothing
     print("Received Callback!")
