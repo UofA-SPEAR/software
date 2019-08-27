@@ -4,6 +4,7 @@ import rospy
 from time import sleep, time
 from geometry_msgs.msg import Twist
 
+
 def main():
     rospy.init_node('move_with_twist')
     action = rospy.get_param('~action', 'forward')
@@ -25,10 +26,10 @@ def main():
         message.angular.z = 0.5
     elif action == 'right':
         message.angular.z = -0.5
-    
+
     rospy.loginfo('Movement started: %s.' % str(message))
     initial_time = time()
-    while time()-initial_time < duration:
+    while time() - initial_time < duration:
         publisher.publish(message)
         sleep(1)
 
