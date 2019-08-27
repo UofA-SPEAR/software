@@ -5,7 +5,6 @@ import pytesseract
 import rospy
 from PIL import Image as PIL_Image
 from cv_bridge import CvBridge, CvBridgeError
-#import image_transport
 from sensor_msgs.msg import Image
 from std_msgs.msg import String
 import cv2
