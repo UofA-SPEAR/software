@@ -97,6 +97,6 @@ ln -s ~/uavcan_dsdl/spear
 
 ###### Build everything
 cd ~/ros
-catkin_make --force
+catkin_make --force && \
 
 printf "Thanks for unpacking!\nNow that your enviroment is setup, you should never have to do this again.\nPlease run the following command to install the correct packages:\nrosdep install --from-paths src --ignore-src -r -y\n"
