@@ -28,7 +28,98 @@ This should ideally be able to run on the TX2, but it is not necessary for it to
 This package contains all of the software that will be run at the base station during competition.
 This includes our command and control interfaces and essentially anything that isn't run on the rover during competition.
 
-# Setup and install instructions
+# Docker setup and install instructions
+
+## Requirements
+
+- Any linux distro
+- Docker
+
+You can install docker on most linux distros using that distro's package manager.
+For Ubuntu, run:
+
+``` bash
+apt-get install docker
+```
+
+## Docker setup
+
+If you've never used docker, you'll have to do a little bit of setup.
+
+Create a new group called "docker":
+
+``` bash
+sudo groupadd docker
+```
+
+Add yourself to that group:
+
+``` bash
+sudo usermod -aG docker $USER
+```
+
+Log out and log back in for the change to take effect.
+
+Once you have been added to the docker group you should be able to run docker containers as your user (but you will probably still need to run the docker daemon with sudo).
+
+To test your setup, start the docker daemon in its own terminal:
+
+``` bash
+sudo dockerd
+```
+
+Now install and run the test docker image:
+
+``` bash
+docker pull hello-world
+```
+
+``` bash
+docker run hello-world
+```
+
+You should see a welcome message from docker. If this works, your docker installation is ready to go!
+
+More information about linux configuration of docker can be found here:
+https://docs.docker.com/install/linux/linux-postinstall/
+
+## Build Docker Image
+
+First pull the base ROS docker image:
+
+``` bash
+docker pull ros:kinetic-robot
+```
+
+To build our specific docker image, run these commands in the same directory as `Dockerfile`.
+
+Note: these 2 commands may take several minutes.
+
+``` bash
+docker build -t spear-env - < spear-env.Dockerfile
+```
+
+That one will take a few minutes so maybe go grab a coffee.
+
+Once that is finished, run:
+
+``` bash
+docker build -t spear .
+```
+
+This will build a docker image from our `Dockerfile` and tag it as "spear".
+
+## Run Docker container interactively
+
+To run a container based on the spear image:
+
+``` bash
+docker run -it spear
+```
+
+The `-it` flag will drop you in an interactive shell inside the docker image.
+
+# Manual setup and install instructions
 
 ## Install Ubuntu 16.04 desktop
 
