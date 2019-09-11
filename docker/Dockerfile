@@ -12,6 +12,8 @@ RUN bash -c '/build/git-deps'
 # SPEAR packages
 COPY spear_msgs /root/ros/src/spear_msgs
 COPY spear_rover /root/ros/src/spear_rover
+COPY spear_simulator /root/ros/src/spear_simulator
+COPY spear_station /root/ros/src/spear_station
 
 RUN ./ros_entrypoint.sh bash -c '(cd ~/ros; /opt/ros/kinetic/bin/catkin_make --force)'
 RUN rosdep install --from-paths ~/ros/src --ignore-src -r -y
