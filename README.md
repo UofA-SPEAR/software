@@ -35,11 +35,13 @@ This includes our command and control interfaces and essentially anything that i
 - Any linux distro
 - Docker
 
-You can install docker on most linux distros using that distro's package manager.
-For Ubuntu, run:
+Some distributions have old versions of docker. The recommended way to install
+is by using the convenience script, provided by docker.
+
+To do so, run:
 
 ``` bash
-apt-get install docker
+sudo curl -sSL https://get.docker.com/ | sh
 ```
 
 ## Docker setup
