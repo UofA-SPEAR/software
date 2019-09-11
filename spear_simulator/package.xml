@@ -14,5 +14,6 @@
   <exec_depend>controller_manager</exec_depend>
   <exec_depend>diff_drive_controller</exec_depend>
   <exec_depend>move_base</exec_depend>
+  <exec_depend>urdf_tutorial</exec_depend>
 
 </package>
