@@ -1,5 +1,5 @@
 from spear-env
 
-COPY . /rover2
+COPY . /software
 
-RUN ( cd rover2 && bash ./unpack.sh dev )
+RUN ( cd software && bash ./unpack.sh dev )
