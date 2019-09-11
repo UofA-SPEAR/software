@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+(
+    cd ~/ros/src
+    git clone https://github.com/AIS-Bonn/nimbro_network.git
+    mv nimbro_network/*/ .
+    rm -rf nimbro_network
+)
+
+(
+    python -m pip install uavcan
+    cd ~/ros/src
+    git clone https://github.com/MonashUAS/canros.git
+)
+
+(
+    cd ~
+    git clone https://github.com/UofA-SPEAR/uavcan_dsdl.git
+    cd uavcan_dsdl
+    git submodule update --init
+
+    mkdir -p ~/uavcan_vendor_specific_types
+    cd ~/uavcan_vendor_specific_types
+    ln -s ~/uavcan_dsdl/spear
+)
