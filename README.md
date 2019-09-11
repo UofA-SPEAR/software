@@ -117,6 +117,17 @@ Use the run script to start the docker container.
 ./run-docker.bash
 ```
 
+## Working in Docker
+
+You should be able to edit files in your host machine and build and run the code in the docker container.
+
+To build in the docker container:
+
+``` bash
+cd ~/ros
+catkin_make
+```
+
 # Manual setup and install instructions
 
 ## Install Ubuntu 16.04 desktop
