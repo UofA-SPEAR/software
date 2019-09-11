@@ -6,6 +6,7 @@ docker run \
     -e QT_X11_NO_MITSHM=1 \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     -v $XAUTHORITY:/root/.Xauthority  \
+    -v $(pwd):/software  \
     --device=/dev/dri:/dev/dri \
     --net=host \
     spear
