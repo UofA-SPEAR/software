@@ -68,7 +68,7 @@ To test your setup, start the docker daemon in its own terminal:
 sudo dockerd
 ```
 
-Now install and run the test docker image:
+Now install and run the test docker image in a new terminal:
 
 ``` bash
 docker pull hello-world
@@ -116,8 +116,6 @@ Use the run script to start the docker container.
 ``` bash
 ./run-docker.bash
 ```
-
-The `-it` flag will drop you in an interactive shell inside the docker image.
 
 # Manual setup and install instructions
 
