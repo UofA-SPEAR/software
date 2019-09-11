@@ -111,10 +111,10 @@ This will build a docker image from our `Dockerfile` and tag it as "spear".
 
 ## Run Docker container interactively
 
-To run a container based on the spear image:
+Use the run script to start the docker container.
 
 ``` bash
-docker run -it spear
+./run-docker.bash
 ```
 
 The `-it` flag will drop you in an interactive shell inside the docker image.
