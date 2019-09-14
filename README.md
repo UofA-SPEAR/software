@@ -51,6 +51,10 @@ To do so, run:
 sudo curl -sSL https://get.docker.com/ | sh
 ```
 
+Note: you may need to install curl if you don't have it already.
+
+On Ubuntu: `sudo apt-get install curl`
+
 ## Docker setup
 
 If you've never used docker, you'll have to do a little bit of setup.
