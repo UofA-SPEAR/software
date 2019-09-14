@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/UofA-SPEAR/software.svg?branch=master)](https://travis-ci.com/UofA-SPEAR/software)
+﻿[![Build Status](https://travis-ci.com/UofA-SPEAR/software.svg?branch=master)](https://travis-ci.com/UofA-SPEAR/software)
 
 # Software
 
@@ -64,7 +64,7 @@ Log out and log back in for the change to take effect.
 
 Once you have been added to the docker group you should be able to run docker containers as your user (but you will probably still need to run the docker daemon with sudo).
 
-To test your setup, start the docker daemon in its own terminal:
+To test your setup, start the docker daemon in its own terminal (if it has not already been started):
 
 ``` bash
 sudo dockerd
@@ -73,7 +73,7 @@ sudo dockerd
 Now install and run the test docker image in a new terminal:
 
 ``` bash
-docker pull hello-world
+sudo docker pull hello-world
 ```
 
 ``` bash
@@ -90,7 +90,7 @@ https://docs.docker.com/install/linux/linux-postinstall/
 First pull the base ROS docker image:
 
 ``` bash
-docker pull ros:kinetic-robot
+sudo docker pull ros:kinetic-robot
 ```
 
 To build our specific docker image, run these commands in the same directory as `Dockerfile`.
