@@ -30,10 +30,17 @@ This includes our command and control interfaces and essentially anything that i
 
 # Docker setup and install instructions
 
+The recommended way to run the software in this repo is with Docker.
+
 ## Requirements
 
 - Any linux distro
 - Docker
+
+For instructions on how to set up Docker inside a linux virtual machine on Mac or Windows, see these pages:
+
+- [Install Instructions for Mac](https://github.com/UofA-SPEAR/software/wiki/Install-Instructions-Mac)
+- [Install Instructions for Windows](https://github.com/UofA-SPEAR/software/wiki/Install-Instructions-Windows)
 
 Some distributions have old versions of docker. The recommended way to install
 is by using the convenience script, provided by docker.
