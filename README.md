@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/UofA-SPEAR/software.svg?branch=master)](https://travis-ci.com/UofA-SPEAR/software)
+﻿[![Build Status](https://travis-ci.com/UofA-SPEAR/software.svg?branch=master)](https://travis-ci.com/UofA-SPEAR/software)
 
 # Software
 
@@ -28,7 +28,116 @@ This should ideally be able to run on the TX2, but it is not necessary for it to
 This package contains all of the software that will be run at the base station during competition.
 This includes our command and control interfaces and essentially anything that isn't run on the rover during competition.
 
-# Setup and install instructions
+# Docker setup and install instructions
+
+The recommended way to run the software in this repo is with Docker.
+
+## Requirements
+
+- Any linux distro
+- Docker
+
+For instructions on how to set up Docker inside a linux virtual machine on Mac or Windows, see these pages:
+
+- [Install Instructions for Mac](https://github.com/UofA-SPEAR/software/wiki/Install-Instructions-Mac)
+- [Install Instructions for Windows](https://github.com/UofA-SPEAR/software/wiki/Install-Instructions-Windows)
+
+Some distributions have old versions of docker. The recommended way to install
+is by using the convenience script, provided by docker.
+
+To do so, run:
+
+``` bash
+sudo curl -sSL https://get.docker.com/ | sh
+```
+
+## Docker setup
+
+If you've never used docker, you'll have to do a little bit of setup.
+
+Create a new group called "docker":
+
+``` bash
+sudo groupadd docker
+```
+
+Add yourself to that group:
+
+``` bash
+sudo usermod -aG docker $USER
+```
+
+Log out and log back in for the change to take effect.
+
+Once you have been added to the docker group you should be able to run docker containers as your user (but you will probably still need to run the docker daemon with sudo).
+
+To test your setup, start the docker daemon in its own terminal (if it has not already been started):
+
+``` bash
+sudo dockerd
+```
+
+Now install and run the test docker image in a new terminal:
+
+``` bash
+sudo docker pull hello-world
+```
+
+``` bash
+docker run hello-world
+```
+
+You should see a welcome message from docker. If this works, your docker installation is ready to go!
+
+More information about linux configuration of docker can be found here:
+https://docs.docker.com/install/linux/linux-postinstall/
+
+## Build Docker Image
+
+First pull the base ROS docker image:
+
+``` bash
+sudo docker pull ros:kinetic-robot
+```
+
+To build our specific docker image, run these commands in the same directory as `Dockerfile`.
+
+Note: these 2 commands may take several minutes.
+
+``` bash
+docker build -t spear-env - < spear-env.Dockerfile
+```
+
+That one will take a few minutes so maybe go grab a coffee.
+
+Once that is finished, run:
+
+``` bash
+docker build -t spear .
+```
+
+This will build a docker image from our `Dockerfile` and tag it as "spear".
+
+## Run Docker container interactively
+
+Use the run script to start the docker container.
+
+``` bash
+./run-docker.bash
+```
+
+## Working in Docker
+
+You should be able to edit files in your host machine and build and run the code in the docker container.
+
+To build in the docker container:
+
+``` bash
+cd ~/ros
+catkin_make
+```
+
+# Manual setup and install instructions
 
 ## Install Ubuntu 16.04 desktop
 
