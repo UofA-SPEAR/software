@@ -2,7 +2,7 @@
 <launch>
   <param name="/use_sim_time" value="true" />
   <arg name="model" default="$(find spear_simulator)/models/rover/TARS_V2.urdf"/>
-  <arg name="rvizconfig" default="$(find urdf_tutorial)/rviz/urdf.rviz" />
+  <arg name="rvizconfig" default="$(find spear_simulator)/rviz/diffdrive.rviz" />
   <arg name="world_name" default="$(find spear_simulator)/worlds/ball_find_00.world"/>
 
   <include file="$(find spear_simulator)/launch/gazebo.launch">
