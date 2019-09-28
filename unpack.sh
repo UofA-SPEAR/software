@@ -76,6 +76,10 @@ python -m pip install uavcan
 cd ~/ros/src
 git clone https://github.com/MonashUAS/canros.git
 
+###### Install rviz_satellite
+cd ~/ros/src
+git clone https://github.com/gareth-cross/rviz_satellite.git
+
 #### Get our DSDL definitions
 cd ~
 git clone https://github.com/UofA-SPEAR/uavcan_dsdl.git
