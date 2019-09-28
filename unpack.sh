@@ -103,6 +103,7 @@ ln -s ~/uavcan_dsdl/spear
 cd ~/ros
 # update rosdeps first
 rosdep install --from-paths src --ignore-src -r -y && \
-catkin_make --force && \
+cd $DIR && \
+./build.bash --force && \
 
 printf "Thanks for unpacking!\nNow that your enviroment is setup, you should never have to do this again.\nPlease run the following command to install the correct packages:\nrosdep install --from-paths src --ignore-src -r -y\n"
