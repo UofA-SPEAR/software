@@ -152,6 +152,13 @@ cd ~/ros
 catkin_make
 ```
 
+Or, if you also want to generate things like `compile-commands.json` (which gives us autocomplete within vim, emacs, etc...):
+
+```bash
+cd /software
+./build.bash
+```
+
 # Manual setup and install instructions
 
 ## Install Ubuntu 16.04 desktop
