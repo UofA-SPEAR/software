@@ -1,0 +1,46 @@
+<?xml version="1.0" ?>
+<!--This does not replace URDF, and is not an extension of URDF.
+    This is a format for representing semantic information about the robot structure.
+    A URDF file must exist for this robot as well, where the joints and the links that are referenced are defined
+-->
+<robot name="CASE_ARM">
+    <!--GROUPS: Representation of a set of joints and links. This can be useful for specifying DOF to plan for, defining arms, end effectors, etc-->
+    <!--LINKS: When a link is specified, the parent joint of that link (if it exists) is automatically included-->
+    <!--JOINTS: When a joint is specified, the child link of that joint (which will always exist) is automatically included-->
+    <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
+    <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
+    <group name="arm">
+        <joint name="link_shoulder" />
+        <joint name="link_forearm" />
+        <joint name="link_wrist" />
+        <joint name="link_hand" />
+        <joint name="link_finger1" />
+        <joint name="link_finger2" />
+    </group>
+    <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
+    <end_effector name="end_effector" parent_link="link_hand" group="arm" />
+    <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->
+    <virtual_joint name="arm_base_joint" type="fixed" parent_frame="arm_base" child_link="link_shoulder_yaw" />
+    <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
+    <disable_collisions link1="link_finger1" link2="link_finger2" reason="Never" />
+    <disable_collisions link1="link_finger1" link2="link_forearm" reason="Never" />
+    <disable_collisions link1="link_finger1" link2="link_hand" reason="Adjacent" />
+    <disable_collisions link1="link_finger1" link2="link_shoulder" reason="Never" />
+    <disable_collisions link1="link_finger1" link2="link_shoulder_yaw" reason="Never" />
+    <disable_collisions link1="link_finger1" link2="link_wrist" reason="Never" />
+    <disable_collisions link1="link_finger2" link2="link_forearm" reason="Never" />
+    <disable_collisions link1="link_finger2" link2="link_hand" reason="Adjacent" />
+    <disable_collisions link1="link_finger2" link2="link_shoulder" reason="Never" />
+    <disable_collisions link1="link_finger2" link2="link_shoulder_yaw" reason="Never" />
+    <disable_collisions link1="link_finger2" link2="link_wrist" reason="Never" />
+    <disable_collisions link1="link_forearm" link2="link_hand" reason="Never" />
+    <disable_collisions link1="link_forearm" link2="link_shoulder" reason="Adjacent" />
+    <disable_collisions link1="link_forearm" link2="link_shoulder_yaw" reason="Never" />
+    <disable_collisions link1="link_forearm" link2="link_wrist" reason="Adjacent" />
+    <disable_collisions link1="link_hand" link2="link_shoulder" reason="Never" />
+    <disable_collisions link1="link_hand" link2="link_shoulder_yaw" reason="Never" />
+    <disable_collisions link1="link_hand" link2="link_wrist" reason="Adjacent" />
+    <disable_collisions link1="link_shoulder" link2="link_shoulder_yaw" reason="Adjacent" />
+    <disable_collisions link1="link_shoulder" link2="link_wrist" reason="Never" />
+    <disable_collisions link1="link_shoulder_yaw" link2="link_wrist" reason="Never" />
+</robot>

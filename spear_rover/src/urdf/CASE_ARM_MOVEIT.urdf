@@ -1,0 +1,234 @@
+<?xml version="1.0" ?>
+<!-- created with Phobos 0.7 -->
+<robot name="CASE_ARM">
+    <link name="link_finger1">
+        <visual name="visual_finger1">
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="file:///home/ros/ros/src/spear_rover/src/meshes/stl/visual_finger1.stl" scale="0.01 0.01 0.01" />
+            </geometry>
+        </visual>
+        <collision name="collision_finger1">
+            <origin xyz="0.44321 -0.11 0.12382" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="file:///home/ros/ros/src/spear_rover/src/meshes/stl/collision_fnger1.stl" scale="1.0 1.0 1.0" />
+            </geometry>
+        </collision>
+        
+<inertial>
+            <mass value="0.1" />
+            <inertia ixx="0.03" iyy="0.03" izz="0.03" ixy="0.0" ixz="0.0" iyz="0.0" />
+        </inertial>
+
+    </link>
+    <link name="link_finger2">
+        <visual name="visual_finger2">
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="file:///home/ros/ros/src/spear_rover/src/meshes/stl/visual_finger2.stl" scale="0.01 0.01 0.01" />
+            </geometry>
+        </visual>
+        <collision name="collision_finger2">
+            <origin xyz="0.3818 -0.11 -0.04507" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="file:///home/ros/ros/src/spear_rover/src/meshes/stl/collision_finger2.stl" scale="1.0 1.0 1.0" />
+            </geometry>
+        </collision>
+        
+<inertial>
+            <mass value="0.1" />
+            <inertia ixx="0.03" iyy="0.03" izz="0.03" ixy="0.0" ixz="0.0" iyz="0.0" />
+        </inertial>
+
+    </link>
+    <link name="link_forearm">
+        <visual name="visual_forearm">
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="file:///home/ros/ros/src/spear_rover/src/meshes/stl/visual_forearm.stl" scale="0.01 0.01 0.01" />
+            </geometry>
+        </visual>
+        <collision name="collision_forearm">
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="file:///home/ros/ros/src/spear_rover/src/meshes/stl/collision_forearm.stl" scale="1.0 1.0 1.0" />
+            </geometry>
+        </collision>
+        
+<inertial>
+            <mass value="0.1" />
+            <inertia ixx="0.03" iyy="0.03" izz="0.03" ixy="0.0" ixz="0.0" iyz="0.0" />
+        </inertial>
+
+    </link>
+    <link name="link_hand">
+        <visual name="visual_hand">
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="file:///home/ros/ros/src/spear_rover/src/meshes/stl/visual_hand.stl" scale="0.01 0.01 0.01" />
+            </geometry>
+        </visual>
+    </link>
+    <link name="link_shoulder">
+        <visual name="visual_shoulder">
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="file:///home/ros/ros/src/spear_rover/src/meshes/stl/visual_shoulder.stl" scale="0.01 0.01 0.01" />
+            </geometry>
+        </visual>
+        <collision name="collision_shoulder">
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="file:///home/ros/ros/src/spear_rover/src/meshes/stl/collision_shoulder.stl" scale="1.0 1.0 1.0" />
+            </geometry>
+        </collision>
+        
+<inertial>
+            <mass value="0.1" />
+            <inertia ixx="0.03" iyy="0.03" izz="0.03" ixy="0.0" ixz="0.0" iyz="0.0" />
+        </inertial>
+
+    </link>
+    <link name="link_shoulder_yaw">
+        <visual name="visual_shoulder_yaw">
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="file:///home/ros/ros/src/spear_rover/src/meshes/stl/visual_shoulder_yaw.stl" scale="0.01 0.01 0.01" />
+            </geometry>
+        </visual>
+        <collision name="collision_shoulder_yaw">
+            <origin xyz="0 1.90794 0" rpy="1.5708 0 0" />
+            <geometry>
+                <cylinder radius="0.09677" length="2.34474" />
+            </geometry>
+        </collision>
+        
+<inertial>
+            <mass value="0.1" />
+            <inertia ixx="0.03" iyy="0.03" izz="0.03" ixy="0.0" ixz="0.0" iyz="0.0" />
+        </inertial>
+
+    </link>
+    <link name="link_wrist">
+        <visual name="visual_wrist">
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="file:///home/ros/ros/src/spear_rover/src/meshes/stl/visual_wrist.stl" scale="0.01 0.01 0.01" />
+            </geometry>
+        </visual>
+        <collision name="collision_wrist">
+            <origin xyz="0 0 -0.00201" rpy="0 0 0" />
+            <geometry>
+                <box size="0.86621 0.508 0.89922" />
+            </geometry>
+        </collision>
+        
+<inertial>
+            <mass value="0.1" />
+            <inertia ixx="0.03" iyy="0.03" izz="0.03" ixy="0.0" ixz="0.0" iyz="0.0" />
+        </inertial>
+
+    </link>
+    <joint name="link_finger1" type="revolute">
+        <origin xyz="0.72166 0.08279 -0.35507" rpy="0 0 0" />
+        <parent link="link_hand" />
+        <child link="link_finger1" />
+        <limit effort="0" velocity="0" />
+    </joint>
+    <joint name="link_finger2" type="revolute">
+        <origin xyz="0.72166 0.08279 0.35507" rpy="0 0 0" />
+        <parent link="link_hand" />
+        <child link="link_finger2" />
+        <limit effort="0" velocity="0" />
+    </joint>
+    <joint name="link_forearm" type="revolute">
+        <origin xyz="3.7775 -0.50799 0.00074" rpy="0 0 0" />
+        <parent link="link_shoulder" />
+        <child link="link_forearm" />
+        <limit effort="0" velocity="0" />
+    </joint>
+    <joint name="link_hand" type="revolute">
+        <origin xyz="0.4331 0 -0.00137" rpy="0 0 0" />
+        <parent link="link_wrist" />
+        <child link="link_hand" />
+        <limit effort="0" velocity="0" />
+    </joint>
+    <joint name="link_shoulder" type="revolute">
+        <origin xyz="0 1.83674 0" rpy="0 0 0" />
+        <parent link="link_shoulder_yaw" />
+        <child link="link_shoulder" />
+        <limit effort="0" velocity="0" />
+    </joint>
+    <joint name="link_wrist" type="revolute">
+        <origin xyz="1.79705 0.03302 0" rpy="0 0 0" />
+        <parent link="link_forearm" />
+        <child link="link_wrist" />
+        <limit effort="0" velocity="0" />
+    </joint>
+    
+<transmission name="trans_link_finger1">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="link_finger1">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="link_finger1_motor">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_link_finger2">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="link_finger2">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="link_finger2_motor">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_link_forearm">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="link_forearm">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="link_forearm_motor">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_link_hand">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="link_hand">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="link_hand_motor">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_link_shoulder">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="link_shoulder">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="link_shoulder_motor">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_link_wrist">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="link_wrist">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="link_wrist_motor">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace>/</robotNamespace>
+        </plugin>
+    </gazebo>
+</robot>

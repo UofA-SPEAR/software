@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: spear_rover
+    relative_path: src/urdf/CASE_ARM.urdf
+    xacro_args: "--inorder "
+  SRDF:
+    relative_path: config/CASE_ARM.srdf
+  CONFIG:
+    author_name: Radomir Wasowski
+    author_email: wasowski@ualberta.ca
+    generated_timestamp: 1566932663

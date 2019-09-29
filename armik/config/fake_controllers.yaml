@@ -1,0 +1,9 @@
+controller_list:
+  - name: fake_arm_controller
+    joints:
+      - link_shoulder
+      - link_forearm
+      - link_wrist
+      - link_hand
+      - link_finger1
+      - link_finger2
