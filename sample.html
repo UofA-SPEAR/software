@@ -3,15 +3,19 @@
 <head>
 <meta charset="utf-8" />
 
-<script type="text/javascript" src="http://static.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
-<script type="text/javascript" src="http://static.robotwebtools.org/roslibjs/current/roslib.min.js"></script>
+<script type="text/javascript" src="https://static.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
+<script type="text/javascript" src="https://static.robotwebtools.org/roslibjs/current/roslib.min.js"></script>
 
 <script type="text/javascript" type="text/javascript">
+  //var URL = 'ws://localhost:9090'
+  var URL = 'ws://spear.northcentralus.cloudapp.azure.com:9090'
+
+
   // Connecting to ROS
   // -----------------
 
   var ros = new ROSLIB.Ros({
-    url : 'ws://localhost:9090'
+    url : URL
   });
 
   ros.on('connection', function() {
@@ -54,13 +58,14 @@
 
   var listener = new ROSLIB.Topic({
     ros : ros,
-    name : '/listener',
+    name : 'my_topic',
     messageType : 'std_msgs/String'
   });
 
   listener.subscribe(function(message) {
-    console.log('Received message on ' + listener.name + ': ' + message.data);
-    listener.unsubscribe();
+    //console.log('Received message on ' + listener.name + ': ' + message.data);
+    //listener.unsubscribe();
+    document.getElementById('nero').innerHTML = message.data;
   });
 
   // Calling a service
@@ -105,6 +110,6 @@
 
 <body>
   <h1>Simple roslib Example</h1>
-  <p>Check your Web Console for output.</p>
+  <p id='nero'>Check your Web Console for output.</p>
 </body>
 </html>
