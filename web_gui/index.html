@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SPEAR Web GUI</title>
+
+    <script>
+
+    </script>
+
+    <style>
+        body {
+            background-color: #2a2a2e;
+        }
+
+        #container-modules {
+            position: absolute;
+            width: 50%;
+            height: 100%
+        }
+
+
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            transition: 0.3s;
+            width: 40%;
+            display: inline-block;
+            margin: 1em;
+            background-color: steelblue;
+        }
+
+        .module-container {
+            padding: 2px 16px;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="container-modules">
+    <div class="card">
+        <div class="module-container">
+            <h2 class="module-title">Battery</h2>
+            <p>{NUMBER RANGE} <br> {NUMBER RANGE}</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="module-container">
+            <h2 class="module-title">Soil Centrifuge</h2>
+            <p>{BOOLEAN} <!--Active or not--></p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="module-container">
+            <h2 class="module-title">Test</h2>
+            <p>Architect & Engineer</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="module-container">
+            <h2 class="module-title">John Doe</h2>
+            <p>Architect & Engineer</p>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
