@@ -81,6 +81,17 @@ To test your setup, start the docker daemon in its own terminal (if it has not a
 sudo dockerd
 ```
 
+Note: if you get a message like the following:
+
+```
+INFO[2019-10-09T18:07:23.627014728-06:00] Starting up
+failed to start daemon: pid file found, ensure docker is not running or delete /var/run/docker.pid
+```
+
+This means that the docker daemon has already been started in the background.
+You do not have to run `sudo dockerd` yourself.
+Simply proceed to the next step.
+
 Now install and run the test docker image in a new terminal:
 
 ``` bash
