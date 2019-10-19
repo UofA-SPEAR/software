@@ -12,6 +12,7 @@
     <style>
         body {
             background-color: #2a2a2e;
+            overflow-y: hidden;
         }
 
         #container-modules {
@@ -20,6 +21,13 @@
             height: 100%
         }
 
+        #container-expanded-modules {
+            position: absolute;
+            width: 50%;
+            height: 100%;
+            right: 0px;
+            overflow-y: scroll;
+        }
 
         .card {
             box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
@@ -40,34 +48,12 @@
 <body>
 
 <div id="container-modules">
-    <div class="card">
-        <div class="module-container">
-            <h2 class="module-title">Battery</h2>
-            <p>{NUMBER RANGE} <br> {NUMBER RANGE}</p>
-        </div>
-    </div>
 
-    <div class="card">
-        <div class="module-container">
-            <h2 class="module-title">Soil Centrifuge</h2>
-            <p>{BOOLEAN} <!--Active or not--></p>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="module-container">
-            <h2 class="module-title">Test</h2>
-            <p>Architect & Engineer</p>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="module-container">
-            <h2 class="module-title">John Doe</h2>
-            <p>Architect & Engineer</p>
-        </div>
-    </div>
-
+</div>
+<div id="container-expanded-modules">
+<p>
+    a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>
+</p>
 </div>
 
 <script type="text/javascript" src="modules.js"></script>

@@ -1,5 +1,8 @@
 //var all = {};
 //all['test'] = '3';
+// This Big Brain: http://docs.ros.org/melodic/api/sensor_msgs/html/msg/BatteryState.html
+//localizaion status = https://developers.google.com/maps/documentation/javascript/geolocation
+// language=JSON
 let modulesJSON = `
 [
     {
@@ -9,6 +12,49 @@ let modulesJSON = `
         "red-range": [0.0,2.0],
         "topic": "web-test-battery",
         "message-type": "std_msgs/Float64"
+    },
+    {
+        "title": "CAN Node Status",
+        "type": "fraction",
+        "topic": "web-can-status",
+        "message-type": "std_msgs/String"
+    },
+    {
+        "title": "Localization Status",
+        "type": "gps",
+        "topic": "web-local-status",
+        "message-type": "std_msgs/String"
+    },
+    {
+        "title": "Arm Joint Angles",
+        "type": "number",
+        "topic": "web-angles",
+        "message-type": "std_msgs/Float64"
+    },
+    {
+        "title": "Fuse Status",
+        "type": "true false",
+        "topic": "web-fuse-status",
+        "message-type": "std_msgs/Bool"
+    },
+    {
+        "title": "Motor Voltages",
+        "type": "number",
+        "topic": "web-motor",
+        "message-type": "std_msgs/Float64"
+    },
+    {
+        "title": "Power Usage",
+        "type": "number",
+        "topic": "web-power",
+        "message-type": "std_msgs/Float64"
+    },
+    {
+      "title": "Camera",
+      "type": "video feed",
+      "fps-topic": "web-fps-video1",
+      "topic": "web-video1",
+      "message-type": "sensor_msgs/Image"
     }
 ]
 `;
