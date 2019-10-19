@@ -11,7 +11,6 @@
   </include>
 
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" />
-  <node name="rivz" pkg="spear_simulator" type="rviz.sh" />
 
   <rosparam command="load"
             file="$(find spear_simulator)/config/diffdrive.yaml"
