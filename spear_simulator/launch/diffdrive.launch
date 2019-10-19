@@ -24,8 +24,4 @@
   <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
     <param name="default_topic" value="/rover_diff_drive_controller/cmd_vel"/>
   </node>
-
-  <include file="$(find spear_rover)/launch/state_estimate.launch" />
-  <include file="$(find spear_simulator)/launch/rtabmap.launch" />
-  <include file="$(find spear_simulator)/launch/nav.launch" />
 </launch>
