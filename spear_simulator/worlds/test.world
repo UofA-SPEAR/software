@@ -1,0 +1,921 @@
+<sdf version='1.6'>
+  <world name='default'>
+    <scene>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.25 0.25 0.25 1</background>
+      <shadows>0</shadows>
+    </scene>
+    <light name='some_light' type='directional'>
+      <diffuse>0.7 0.7 0.7 0</diffuse>
+      <specular>1 1 1 0</specular>
+      <direction>-1 -1 -1</direction>
+    </light>
+    <gravity>0 0 -9.8</gravity>
+    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+    <atmosphere type='adiabatic'/>
+    <physics name='default_physics' default='0' type='ode'>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+    <wind/>
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <latitude_deg>0</latitude_deg>
+      <longitude_deg>0</longitude_deg>
+      <elevation>0</elevation>
+      <heading_deg>0</heading_deg>
+    </spherical_coordinates>
+    <model name='ground_plane'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <surface>
+            <contact>
+              <collide_bitmask>65535</collide_bitmask>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>100</mu>
+                <mu2>50</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <cast_shadows>0</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Grey</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <pose frame=''>0.00724 -0.006209 0 0 -0 0</pose>
+    </model>
+    <state world_name='default'>
+      <sim_time>146 495000000</sim_time>
+      <real_time>45 547776197</real_time>
+      <wall_time>1569112980 335303154</wall_time>
+      <iterations>20759</iterations>
+      <model name='golf_ball'>
+        <pose frame=''>-95.5126 203.465 0.936226 0.505658 -0.068978 -0.848725</pose>
+        <scale>1 1 1</scale>
+        <link name='ball'>
+          <pose frame=''>-95.5529 203.438 1.0235 0.505658 -0.068978 -0.848725</pose>
+          <velocity>2.95168 9.28197 0.14756 0.318663 -0.176833 0.791165</velocity>
+          <acceleration>0 0 -9.8 -0.842874 -0.69275 0.622646</acceleration>
+          <wrench>0 0 -0.539 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='golf_ball_0'>
+        <pose frame=''>28.9685 -71.4875 0.954893 -0.433872 0.958436 -0.146384</pose>
+        <scale>1 1 1</scale>
+        <link name='ball'>
+          <pose frame=''>29.048 -71.4568 1.00705 -0.433872 0.958436 -0.146384</pose>
+          <velocity>7.38974 -1.30861 0.304477 1.23635 1.12303 2.16706</velocity>
+          <acceleration>0 0 -9.8 -0.147835 0.056702 -0.109434</acceleration>
+          <wrench>0 0 -0.539 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='grey_wall'>
+        <pose frame=''>-2.19668 -0.073112 0 0 0 -1.49736</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>-2.19668 -0.073112 1.4 0 0 -1.49736</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='grey_wall_0'>
+        <pose frame=''>4.45829 -0.385503 0 0 -0 1.57909</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>4.45829 -0.385503 1.4 0 -0 1.57909</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='ground_plane'>
+        <pose frame=''>0.00724 -0.006209 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>0.00724 -0.006209 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='pylon'>
+        <pose frame=''>-31.6054 9.69205 0.093145 -1.88535 0.145174 2.23827</pose>
+        <scale>1 1 1</scale>
+        <link name='ball'>
+          <pose frame=''>-31.6773 9.62968 0.062531 -0.314552 0.145174 2.23827</pose>
+          <velocity>0.047785 -0.064887 0.007941 1.03761 0.764055 -0.000334</velocity>
+          <acceleration>0 0 -9.8 0 -0 0</acceleration>
+          <wrench>0 0 -44.1 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='pylon_0'>
+        <pose frame=''>-6.09905 -6.778 0.093482 -1.91441 0.426302 -2.41209</pose>
+        <scale>1 1 1</scale>
+        <link name='ball'>
+          <pose frame=''>-6.02591 -6.83891 0.062808 -0.343607 0.426302 -2.41209</pose>
+          <velocity>-0.035437 -0.043046 0.010528 0.685265 -0.564137 7.8e-05</velocity>
+          <acceleration>-0.639147 0.539845 15.1383 0.749919 0.688849 3.1382</acceleration>
+          <wrench>-2.87616 2.4293 68.1225 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='road_barricade'>
+        <pose frame=''>-0.099282 2.68149 -0.100006 8.4e-05 3.9e-05 3.08778</pose>
+        <scale>1 1 1</scale>
+        <link name='ball'>
+          <pose frame=''>-0.099286 2.6815 -6e-06 8.4e-05 3.9e-05 3.08778</pose>
+          <velocity>-1e-06 -3e-06 -0.000855 -0.17033 -0.064378 2e-06</velocity>
+          <acceleration>-0.001077 -0.000462 -1.71015 2.87969 -0.159932 -1.21418</acceleration>
+          <wrench>-0.215313 -0.092327 -342.03 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='road_barricade_0'>
+        <pose frame=''>1.9207 -3.00636 -0.100006 8.4e-05 3.9e-05 0.438687</pose>
+        <scale>1 1 1</scale>
+        <link name='ball'>
+          <pose frame=''>1.92071 -3.00636 -6e-06 8.4e-05 3.9e-05 0.438687</pose>
+          <velocity>-2e-06 1e-06 -0.000855 0.119647 0.137265 -0</velocity>
+          <acceleration>-0.000621 0.00047 -1.71015 -0.270023 1.37339 2.86065</acceleration>
+          <wrench>-0.124162 0.094059 -342.03 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='road_barricade_1'>
+        <pose frame=''>-0.835158 -3.47822 -0.100013 0.00027 -6.3e-05 -2.24541</pose>
+        <scale>1 1 1</scale>
+        <link name='ball'>
+          <pose frame=''>-0.835175 -3.4782 -1.3e-05 0.00027 -6.3e-05 -2.24541</pose>
+          <velocity>-2e-06 2e-06 0.000753 -0.3656 -0.295193 1e-06</velocity>
+          <acceleration>-3.4e-05 -0.000293 1.50687 0.774857 -0.428792 -2.02681</acceleration>
+          <wrench>-0.006884 -0.058635 301.374 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='road_barricade_2'>
+        <pose frame=''>27.1668 24.1436 -0.100006 8.4e-05 3.9e-05 2.31542</pose>
+        <scale>1 1 1</scale>
+        <link name='ball'>
+          <pose frame=''>27.1669 24.1436 -6e-06 8.4e-05 3.9e-05 2.31542</pose>
+          <velocity>-1e-06 -3e-06 -0.000855 -0.166927 0.072749 0</velocity>
+          <acceleration>-0.00022 -0.000491 -1.71015 -2.8783 1.26319 1.47492</acceleration>
+          <wrench>-0.04407 -0.098277 -342.03 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='tennis_green'>
+        <pose frame=''>-13.4777 -13.123 0.561473 -3.09829 1.03201 -2.99384</pose>
+        <scale>1 1 1</scale>
+        <link name='ball'>
+          <pose frame=''>-12.6232 -13.0395 0.048858 -3.09829 1.03201 -2.99384</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 -9.8 -4e-06 -0 2e-06</acceleration>
+          <wrench>0 0 -0.539 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='tennis_lime'>
+        <pose frame=''>2.64312 0.834294 -1.00135 0 -0.002741 0</pose>
+        <scale>1 1 1</scale>
+        <link name='ball'>
+          <pose frame=''>2.64038 0.834294 -0.001356 0 -0.002741 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0.000221 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='tennis_yellow'>
+        <pose frame=''>2.53938 -1.22256 -1.00135 0 -0.002753 0</pose>
+        <scale>1 1 1</scale>
+        <link name='ball'>
+          <pose frame=''>2.53663 -1.22256 -0.001356 0 -0.002753 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0.000221 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <light name='some_light'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+      </light>
+    </state>
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose frame=''>10.2669 -20.5428 3.37056 0 0.01964 2.1402</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
+    <model name='grey_wall'>
+      <static>1</static>
+      <link name='link'>
+        <pose frame=''>0 0 1.4 0 -0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>7.5 0.2 2.8</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <cast_shadows>0</cast_shadows>
+          <geometry>
+            <box>
+              <size>7.5 0.2 2.8</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://grey_wall/materials/scripts</uri>
+              <uri>model://grey_wall/materials/textures</uri>
+              <name>vrc/grey_wall</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <pose frame=''>0.378579 -2.18792 0 0 -0 0</pose>
+    </model>
+    <model name='grey_wall_0'>
+      <static>1</static>
+      <link name='link'>
+        <pose frame=''>0 0 1.4 0 -0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>7.5 0.2 2.8</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <cast_shadows>0</cast_shadows>
+          <geometry>
+            <box>
+              <size>7.5 0.2 2.8</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://grey_wall/materials/scripts</uri>
+              <uri>model://grey_wall/materials/textures</uri>
+              <name>vrc/grey_wall</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <pose frame=''>4.45829 -0.385503 0 0 -0 0</pose>
+    </model>
+    <model name='road_barricade'>
+      <static>0</static>
+      <link name='ball'>
+        <pose frame=''>0 0 0.1 0 -0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://road_barricade/road_barricade.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+          <surface>
+            <bounce>
+              <restitution_coefficient>0.2</restitution_coefficient>
+              <threshold>100</threshold>
+            </bounce>
+            <contact>
+              <ode>
+                <max_vel>10</max_vel>
+              </ode>
+            </contact>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://road_barricade/road_barricade.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <inertial>
+          <mass>200</mass>
+          <inertia>
+            <ixx>0.075021</ixx>
+            <ixy>3e-06</ixy>
+            <ixz>-2.9e-05</ixz>
+            <iyy>0.89513</iyy>
+            <iyz>-0.00631</iyz>
+            <izz>0.847779</izz>
+          </inertia>
+        </inertial>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <pose frame=''>-0.623478 -4.06556 0 0 -0 0</pose>
+    </model>
+    <model name='road_barricade_0'>
+      <static>0</static>
+      <link name='ball'>
+        <pose frame=''>0 0 0.1 0 -0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://road_barricade/road_barricade.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+          <surface>
+            <bounce>
+              <restitution_coefficient>0.2</restitution_coefficient>
+              <threshold>100</threshold>
+            </bounce>
+            <contact>
+              <ode>
+                <max_vel>10</max_vel>
+              </ode>
+            </contact>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://road_barricade/road_barricade.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <inertial>
+          <mass>200</mass>
+          <inertia>
+            <ixx>0.075021</ixx>
+            <ixy>3e-06</ixy>
+            <ixz>-2.9e-05</ixz>
+            <iyy>0.89513</iyy>
+            <iyz>-0.00631</iyz>
+            <izz>0.847779</izz>
+          </inertia>
+        </inertial>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <pose frame=''>3.03851 -4.56195 0 0 -0 0</pose>
+    </model>
+    <model name='road_barricade_1'>
+      <static>0</static>
+      <link name='ball'>
+        <pose frame=''>0 0 0.1 0 -0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://road_barricade/road_barricade.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+          <surface>
+            <bounce>
+              <restitution_coefficient>0.2</restitution_coefficient>
+              <threshold>100</threshold>
+            </bounce>
+            <contact>
+              <ode>
+                <max_vel>10</max_vel>
+              </ode>
+            </contact>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://road_barricade/road_barricade.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <inertial>
+          <mass>200</mass>
+          <inertia>
+            <ixx>0.075021</ixx>
+            <ixy>3e-06</ixy>
+            <ixz>-2.9e-05</ixz>
+            <iyy>0.89513</iyy>
+            <iyz>-0.00631</iyz>
+            <izz>0.847779</izz>
+          </inertia>
+        </inertial>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <pose frame=''>-0.235083 2.80989 0 0 -0 0</pose>
+    </model>
+    <model name='road_barricade_2'>
+      <static>0</static>
+      <link name='ball'>
+        <pose frame=''>0 0 0.1 0 -0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://road_barricade/road_barricade.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+          <surface>
+            <bounce>
+              <restitution_coefficient>0.2</restitution_coefficient>
+              <threshold>100</threshold>
+            </bounce>
+            <contact>
+              <ode>
+                <max_vel>10</max_vel>
+              </ode>
+            </contact>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://road_barricade/road_barricade.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <inertial>
+          <mass>200</mass>
+          <inertia>
+            <ixx>0.075021</ixx>
+            <ixy>3e-06</ixy>
+            <ixz>-2.9e-05</ixz>
+            <iyy>0.89513</iyy>
+            <iyz>-0.00631</iyz>
+            <izz>0.847779</izz>
+          </inertia>
+        </inertial>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <pose frame=''>2.15352 3.77155 0 0 -0 0</pose>
+    </model>
+    <model name='tennis_green'>
+      <static>0</static>
+      <link name='ball'>
+        <pose frame=''>0 0 1 0 -0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://tennis_green/tennis_green.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+          <surface>
+            <bounce>
+              <restitution_coefficient>0.725</restitution_coefficient>
+              <threshold>0</threshold>
+            </bounce>
+            <contact>
+              <ode>
+                <max_vel>10</max_vel>
+              </ode>
+            </contact>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://tennis_green/tennis_green.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <inertial>
+          <mass>0.055</mass>
+          <inertia>
+            <ixx>5.19527</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>5.15681</iyy>
+            <iyz>0</iyz>
+            <izz>5.15681</izz>
+          </inertia>
+        </inertial>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <pose frame=''>0.982296 -2.35842 0 0 -0 0</pose>
+    </model>
+    <model name='tennis_lime'>
+      <static>0</static>
+      <link name='ball'>
+        <pose frame=''>0 0 1 0 -0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://tennis_lime/tennis_lime.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+          <surface>
+            <bounce>
+              <restitution_coefficient>0.725</restitution_coefficient>
+              <threshold>0</threshold>
+            </bounce>
+            <contact>
+              <ode>
+                <max_vel>10</max_vel>
+              </ode>
+            </contact>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://tennis_lime/tennis_lime.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <inertial>
+          <mass>0.055</mass>
+          <inertia>
+            <ixx>5.19527</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>5.15681</iyy>
+            <iyz>0</iyz>
+            <izz>5.15681</izz>
+          </inertia>
+        </inertial>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <pose frame=''>2.64038 0.834294 0 0 -0 0</pose>
+    </model>
+    <model name='tennis_yellow'>
+      <static>0</static>
+      <link name='ball'>
+        <pose frame=''>0 0 1 0 -0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://tennis_yellow/tennis_yellow.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+          <surface>
+            <bounce>
+              <restitution_coefficient>0.725</restitution_coefficient>
+              <threshold>0</threshold>
+            </bounce>
+            <contact>
+              <ode>
+                <max_vel>10</max_vel>
+              </ode>
+            </contact>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://tennis_yellow/tennis_yellow.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <inertial>
+          <mass>0.055</mass>
+          <inertia>
+            <ixx>5.19527</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>5.15681</iyy>
+            <iyz>0</iyz>
+            <izz>5.15681</izz>
+          </inertia>
+        </inertial>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <pose frame=''>2.53663 -1.22256 0 0 -0 0</pose>
+    </model>
+    <model name='pylon'>
+      <static>0</static>
+      <link name='ball'>
+        <pose frame=''>0 0 0.1 1.5708 -0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://pylon/pylon.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://pylon/pylon.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <inertial>
+          <mass>4.5</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <pose frame=''>-0.533934 -2.30928 0 0 -0 0</pose>
+    </model>
+    <model name='pylon_0'>
+      <static>0</static>
+      <link name='ball'>
+        <pose frame=''>0 0 0.1 1.5708 -0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://pylon/pylon.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://pylon/pylon.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <inertial>
+          <mass>4.5</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <pose frame=''>-0.734132 -0.333152 0 0 -0 0</pose>
+    </model>
+    <model name='golf_ball'>
+      <static>0</static>
+      <link name='ball'>
+        <pose frame=''>0 0 0.1 0 -0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://golf_ball/golf_ball.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+          <surface>
+            <bounce>
+              <restitution_coefficient>0.725</restitution_coefficient>
+              <threshold>0</threshold>
+            </bounce>
+            <contact>
+              <ode>
+                <max_vel>10</max_vel>
+              </ode>
+            </contact>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://golf_ball/golf_ball.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <inertial>
+          <mass>0.055</mass>
+          <inertia>
+            <ixx>5.19527</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>5.15681</iyy>
+            <iyz>0</iyz>
+            <izz>5.15681</izz>
+          </inertia>
+        </inertial>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <pose frame=''>1.14114 0.634946 0 0 -0 0</pose>
+    </model>
+    <model name='golf_ball_0'>
+      <static>0</static>
+      <link name='ball'>
+        <pose frame=''>0 0 0.1 0 -0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://golf_ball/golf_ball.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+          <surface>
+            <bounce>
+              <restitution_coefficient>0.725</restitution_coefficient>
+              <threshold>0</threshold>
+            </bounce>
+            <contact>
+              <ode>
+                <max_vel>10</max_vel>
+              </ode>
+            </contact>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://golf_ball/golf_ball.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <inertial>
+          <mass>0.055</mass>
+          <inertia>
+            <ixx>5.19527</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>5.15681</iyy>
+            <iyz>0</iyz>
+            <izz>5.15681</izz>
+          </inertia>
+        </inertial>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+      </link>
+      <pose frame=''>2.12161 -0.174035 0 0 -0 0</pose>
+    </model>
+  </world>
+</sdf>
