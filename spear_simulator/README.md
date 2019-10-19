@@ -1,4 +1,4 @@
-# Artificial intelligence simulator
+# Autonomy Simulator
 For training our Mars rover, we have decided to create a simulator that allows us to drive around a 3D model of our rover in a virtual world. This virtual world is designed to be similar to the types of environments we may encounter in competition.
 
 ## Dependencies
@@ -15,18 +15,12 @@ If ROS still can't find the above packages, you may need to install them using r
 ## Running with ROS
 The gazebo models and launch files for our rover have been wrapped in a ROS package called "spear_simulator". After cloning this repository, run the "unpack.sh" script. This will set up the ros package. Then, you should be able to launch our rover model in a gazebo simulation using "roslaunch spear_simulator diffdrive.launch".
 
-## Getting started
-To run our simulator, several dependencies will need to be installed, mainly ROS and Gazebo. We recommend additionally setting up a virtual machine to run our simulator, as it is quite invasive to install on your system and requires that you use Ubuntu Xenial (16.04 LTS). Feel free to use either VirtualBox or VMWare.
-
-Currently our team uses ROS Kinetic Kame, which can be found at http://wiki.ros.org/kinetic/Installation. We recommend the “Desktop-Full Install” ROS package for best compatibility.
-
-Install Gazebo 7, which we use as our physics engine and 3D simulator: http://gazebosim.org/download. Feel free to experiment with creating 3D models and environments to get a feel for the program.
-
-For the most part, the files stored in this repository will be 3D models used by Gazebo. Copying them to `~/.gazebo/models` will allow you to add them to a simulation using Gazebo's insert menu.
-
-Completed worlds are also stored in this repository. To run a world in gazebo use: `gazebo <relative_path_to_file>`.
-
 ## 3D models
+
+NOTE: Out models are located in the `spear_simulator/models` directory.
+We use the `unpack.sh` script to add this to the `GAZEBO_MODEL_PATH` environment variable.
+This needs to be done since by default, Gazebo only looks in `~/.gazebo` directory for models.
+
 NOTE: ROS kinetic uses Gazebo 7. This version of Gazebo only supports .dae, .stl, and .svg model formats. If you are adding a new model to this repo, it must be in one of the formats specified above. If your 3D model is not in one of the formats above, consider using Blender to convert your file to a .dae (the easiest format to convert to).
 
 This repo contains many object that will help the rover learn. From obstacles to waypoints, objects contained in this repo will provide data for the rover to improve the way it drives. Right now we use tennis balls as waypoints, as they are easy for us to acquire in real life and simplify our image recognition code. There are multiple variation of tennis balls located in this repo to test the accuracy of the rover's ability to recognize tennis balls.
