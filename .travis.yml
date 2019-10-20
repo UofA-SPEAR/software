@@ -38,9 +38,10 @@ matrix:
       - stage: "catkin lint"
         script: skip
       - name: "catkin lint"
+        language: python
+        python: 2.7
         before_script:
-          - sudo apt-get update
-          - sudo apt-get install python-catkin-lint
+          - pip install catkin-lint
         script:
           - catkin_lint ~/ros/src
 
