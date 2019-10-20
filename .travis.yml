@@ -5,7 +5,7 @@ git:
 
 matrix:
   include:
-    - stage: "build"
+      - stage: "lint and build"
       - name: "python linting"
         language: python
         python: 3.5
@@ -34,12 +34,12 @@ matrix:
           - docker build --rm -t spear-env - < spear-env.Dockerfile
         script:
           - docker build --rm -t spear-rover2 .
-    - stage: "catkin lint"
+      - stage: "catkin lint"
       - name: "catkin lint"
         before_script:
           - sudo apt-get update
           - sudo apt-get install python-catkin-lint
-      - script:
+        script:
           - catkin_lint ~/ros/src
 
 
