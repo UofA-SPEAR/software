@@ -6,6 +6,7 @@ git:
 matrix:
   include:
       - stage: "lint and build"
+        script: skip
       - name: "python linting"
         language: python
         python: 3.5
@@ -35,6 +36,7 @@ matrix:
         script:
           - docker build --rm -t spear-rover2 .
       - stage: "catkin lint"
+        script: skip
       - name: "catkin lint"
         before_script:
           - sudo apt-get update
