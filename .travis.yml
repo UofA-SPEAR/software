@@ -43,7 +43,7 @@ matrix:
         before_script:
           - pip install catkin-lint
         script:
-          - catkin_lint ~/ros/src
+          - catkin_lint /root/ros/src
 
 
 notifications:
