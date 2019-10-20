@@ -5,33 +5,43 @@ git:
 
 matrix:
   include:
-    - name: "python linting"
-      language: python
-      python: 3.5
-      before_script:
-        - sudo apt-get update
-        - sudo apt-get install pep8
-      script:
-        - pep8 --ignore=E501 .
+    - stage: "build"
+      - name: "python linting"
+        language: python
+        python: 3.5
+        before_script:
+          - sudo apt-get update
+          - sudo apt-get install pep8
+        script:
+          - pep8 --ignore=E501 .
 
-    - name: "c++ linting"
-      language: c++
-      compiler: gcc
-      before_script:
-        - sudo apt-get update
-        - sudo apt-get install clang-format-3.9
-      script:
-        - "! find . -iname '*.h' -o -iname '*.cpp' |
-          xargs clang-format-3.9 -output-replacements-xml -style=Google |
-          grep -F \"</replacement>\""
-    - name: "build"
-      services:
-        - docker
-      before_script:
-        - docker pull ros:kinetic-robot
-        - docker build --rm -t spear-env - < spear-env.Dockerfile
-      script:
-        - docker build --rm -t spear-rover2 .
+      - name: "c++ linting"
+        language: c++
+        compiler: gcc
+        before_script:
+          - sudo apt-get update
+          - sudo apt-get install clang-format-3.9
+        script:
+          - "! find . -iname '*.h' -o -iname '*.cpp' |
+            xargs clang-format-3.9 -output-replacements-xml -style=Google |
+            grep -F \"</replacement>\""
+
+      - name: "build"
+        services:
+          - docker
+        before_script:
+          - docker pull ros:kinetic-robot
+          - docker build --rm -t spear-env - < spear-env.Dockerfile
+        script:
+          - docker build --rm -t spear-rover2 .
+    - stage: "catkin lint"
+      - name: "catkin lint"
+        before_script:
+          - sudo apt-get update
+          - sudo apt-get install python-catkin-lint
+      - script:
+          - catkin_lint ~/ros/src
+
 
 notifications:
   email: false
