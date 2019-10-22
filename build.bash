@@ -20,3 +20,6 @@ if [ ! -e "${SCRIPT_DIR}/compile_commands.json" ]; then
 	echo "Symlinking compile_commands.json (for code completion coolness)."
 	ln -s ~/ros/build/compile_commands.json ${SCRIPT_DIR}/compile_commands.json
 fi
+
+# Run catkin_lint
+catkin_lint ~/ros/src
