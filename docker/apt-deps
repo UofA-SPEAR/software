@@ -13,3 +13,6 @@ ros-kinetic-rtabmap-ros
 ros-kinetic-move-base
 gstreamer0.10-plugins-good
 python-pip
+vim
+tmux
+nano

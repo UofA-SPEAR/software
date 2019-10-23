@@ -1,0 +1,26 @@
+version: 3
+
+services:
+    hal:
+        image: spear/spear
+        environment:
+            - ROS_IP=127.0.0.1
+        volumes:
+            - spear_msgs:/root/src/spear_msgs
+            - spear_rover:/root/src/spear_rover
+            - spear_simulator:/root/src/spear_simulator
+            - spear_station:/root/src/spear_station
+
+    dave:
+        image: spear/spear
+        environment:
+            - DISPLAY
+            - ROS_IP=127.0.0.1
+            - QT_X11_NO_MITSHM=1
+        volumes:
+            - /tmp/.X11-unix:/tmp/.X11-unix
+            - $XAUTHORITY:/root/.Xauthority
+            - spear_msgs:/root/src/spear_msgs
+            - spear_rover:/root/src/spear_rover
+            - spear_simulator:/root/src/spear_simulator
+            - spear_station:/root/src/spear_station
