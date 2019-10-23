@@ -41,4 +41,6 @@
 
   <exec_depend>razor_imu_9dof</exec_depend>
   <exec_depend>nmea_navsat_driver</exec_depend>
+
+  <exec_depend>rqt_graph</exec_depend>
 </package>
