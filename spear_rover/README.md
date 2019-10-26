@@ -4,7 +4,38 @@ This is the rover package. Anything on the rover's computers will be in this pac
 If it depends on the hardware configuration of the rover (and isn't part of the simulator),
 it should be here.
 
-## Nodes ##
+## Launch Files
+
+### drive.launch
+
+This launches all the nodes necessary to drive the rover manually.
+This will launch a canros server.
+
+### udp_rover.launch
+
+This launches nodes to send and receive messages using the udp protocol.
+We use udp to send commands from the base station to the rover and camera feeds from the rover to the base station.
+
+### zed.launch
+
+This launches the ZED stereoscopic camera on the rover.
+It launches the ZED camera's own rgbd odometry node.
+It also includes the main `rtabmap.launch` file.
+
+### rtabmap.launch
+
+This is our main file for launching and configuring rtabmap.
+It launches an rtabmap mapping node to perform SLAM based on messages from the ZED camera.
+
+### state_estimate.launch
+
+This launches ekf nodes which are used to fuse odometry from various sources on the rover including visual odometry, IMU, GPS, and wheel encoders.
+
+### sensors.launch
+
+Launches sensors including the IMU and GPS.
+
+## Nodes
 
 ### ball_detector_node
 
