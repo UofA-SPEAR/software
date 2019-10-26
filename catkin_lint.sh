@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 python -m catkin_lint ~/ros/src \
   --skip-pkg canros \
