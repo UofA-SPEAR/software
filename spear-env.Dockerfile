@@ -18,4 +18,6 @@ RUN apt-get update && apt-get install -y qt4-default libx264-dev \
                                          vim \
                                          nano
 
+RUN python -m pip install catkin_lint
+
 SHELL ["/ros_entrypoint.sh", "bash", "-c"]
