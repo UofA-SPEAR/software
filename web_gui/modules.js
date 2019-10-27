@@ -2,6 +2,7 @@
 //all['test'] = '3';
 // This Big Brain: http://docs.ros.org/melodic/api/sensor_msgs/html/msg/BatteryState.html
 //localizaion status = https://developers.google.com/maps/documentation/javascript/geolocation
+// TODO: change battery message type to the big brain
 // language=JSON
 let modulesJSON = `
 [
@@ -91,15 +92,25 @@ for (let x=0; x < modules.length; x++) {
     }
     */
     let htmlCard = `
-        <div class="card" id="module-` + x + `-card">
+        <div class="card" id="module-` + x + `-card" onclick="ScrollElement('module-extended-` + x + `-card')">
             <div class="module-container">
                 <h2 class="module-title">`+ modules[x].title + `</h2>
-                <p id="module-` + x + `-value">{NUMBER RANGE}</p>
+                <p id="module-` + x + `-value">` + modules[x].type.toUpperCase() + `</p>
+            </div>
+        </div>
+    `;
+    let ExtCard = `
+        <div class="card extended-card" id="module-extended-` + x + `-card" onclick="ScrollElement('module-` + x + `-value')">
+            <div class="module-container">
+                <h2 class="module-title">`+ modules[x].title + `</h2>
+                <p id="module-extended-` + x + `-value">` + modules[x].type.toUpperCase() + `</p>
             </div>
         </div>
     `;
 
     document.getElementById('container-modules').innerHTML += htmlCard;
+    document.getElementById('container-expanded-modules').innerHTML += ExtCard;
+
 
 
 
@@ -126,11 +137,12 @@ for (let x=0; x < modules.length; x++) {
         }
     );
 
+
     //Subscribe to it here
     //Push topic to list
-
     modulesLi.push(tempTopic);
 
 
     console.log(modules[x].type);
 }
+//console.log(document.getElementById('container-modules').innerHTML)

@@ -43,7 +43,19 @@
             text-align: center;
         }
 
+        .extended-card {
+            width: 95%;
+        }
+
     </style>
+    <script>
+        function ScrollElement(id) {
+            let elmnt = document.getElementById(id);
+            elmnt.scrollIntoView({
+                behavior: "smooth"
+            });
+        }
+    </script>
 </head>
 <body>
 
@@ -51,12 +63,13 @@
 
 </div>
 <div id="container-expanded-modules">
-<p>
-    a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>
-</p>
 </div>
 
+
+
 <script type="text/javascript" src="modules.js"></script>
+
+
 
 </body>
 </html>
