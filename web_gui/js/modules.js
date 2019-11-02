@@ -1,3 +1,5 @@
+function load() {
+
 //var all = {};
 //all['test'] = '3';
 // This Big Brain: http://docs.ros.org/melodic/api/sensor_msgs/html/msg/BatteryState.html
@@ -145,3 +147,10 @@ for (let x=0; x < modules.length; x++) {
     console.log(modules[x].type);
 }
 //console.log(document.getElementById('container-modules').innerHTML)
+
+
+
+
+
+
+}
