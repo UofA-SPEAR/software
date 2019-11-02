@@ -2,7 +2,6 @@
 //all['test'] = '3';
 // This Big Brain: http://docs.ros.org/melodic/api/sensor_msgs/html/msg/BatteryState.html
 //localizaion status = https://developers.google.com/maps/documentation/javascript/geolocation
-// TODO: change battery message type to the big brain
 // language=JSON
 let modulesJSON = `
 [
@@ -12,7 +11,7 @@ let modulesJSON = `
         "yellow-range": [2.0,5.0],
         "red-range": [0.0,2.0],
         "topic": "web-test-battery",
-        "message-type": "std_msgs/Float64"
+        "message-type": "sensor_msgs/BatteryState"
     },
     {
         "title": "CAN Node Status",
