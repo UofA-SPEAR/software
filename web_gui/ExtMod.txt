@@ -1,0 +1,34 @@
+Battery:
+sensor_msgs/BatteryState
+- float32 percentage
+- float32 voltage (Mandatory)
+- int64 time remaining(perhaps)
+
+CAN Node Status:
+- string fraction (how many nodes are running over total number of nodes)
+- string node(s) (two categories, one for running & one for stopped)
+
+Localization Status: 
+sensor_msgs/NavSatFix
+- float64 latitude
+- float64 longitude
+- float64 altitude (not sure if we need this)
+- Google maps API thing
+- 3D map thing maybe perhaps(https://cesium.com/cesiumjs/)
+
+Arm Joint Angles:
+- float64 angles (not sure how many. Atleast 3)
+
+Fuse Status:
+- bool fuse status (0 if blown)(multiple fuses)
+
+Motor:
+- float32 voltage
+- int64 encoder(s)
+- int64 encoder distance (calc'ed in website)
+
+Power Usage:
+- ?????
+
+Camera:
+sensor_msgs/Image
