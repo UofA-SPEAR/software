@@ -70,11 +70,23 @@
 
 <script type="text/javascript">
 	if (location.protocol === 'https:') {
-		var URL = 'https://cors-anywhere.herokuapp.com/ws://spear.northcentralus.cloudapp.azure.com:9090';
+		let httpsConfirm = confirm("As you are using HTTPS, we are unable to natively connect you to the server.\nWould you like to connect to the server? (Press cancel if you just want to see the UI layout)\nPressing OK will only work in Google Chrome.");
+		if (httpsConfirm) {
+		
+			var URL = 'ws://spear.northcentralus.cloudapp.azure.com:9090';
+			load()
+			confirm('In the top part of your url bar, there should be a little red symbol.\nIf you click this symbol, it will ask you if you want to load an unsecure script. Press yes.\nThis will only show up on a Google Chrome browser.')
+
+		} else {
+			var URL = 'wss://spear.northcentralus.cloudapp.azure.com:9090';
+			load()
+		}
+		
 	} else {
 		var URL = 'ws://spear.northcentralus.cloudapp.azure.com:9090';
+		load()
 	}
-	load()
+	
 </script>
 
 
