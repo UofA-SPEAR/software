@@ -74,8 +74,9 @@
 		if (httpsConfirm) {
 		
 			var URL = 'ws://spear.northcentralus.cloudapp.azure.com:9090';
+			confirm('After pressing OK, there will be a shield with a little red x in the top right corner of your URL bar.\nIf you click this symbol, it will tell you that it blocked insecure content.\nClick on the text that says "Load Unsafe Scripts" (probably in light blue).\nThis will only show up on a Google Chrome browser.')
 			load()
-			confirm('In the top part of your url bar, there should be a little red symbol.\nIf you click this symbol, it will ask you if you want to load an unsecure script. Press yes.\nThis will only show up on a Google Chrome browser.')
+			
 
 		} else {
 			var URL = 'wss://spear.northcentralus.cloudapp.azure.com:9090';
