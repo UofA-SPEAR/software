@@ -8,3 +8,6 @@ __pycache__/
 # packages.
 compile_commands.json
 arm_controls/dial.psd
+
+# Intellij Idea (or similar editors) config files
+.idea/
