@@ -69,7 +69,12 @@
 
 
 <script type="text/javascript">
-    load()
+	if (location.protocol === 'https:') {
+		var URL = 'https://cors-anywhere.herokuapp.com/ws://spear.northcentralus.cloudapp.azure.com:9090';
+	} else {
+		var URL = 'ws://spear.northcentralus.cloudapp.azure.com:9090';
+	}
+	load()
 </script>
 
 

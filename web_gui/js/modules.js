@@ -67,7 +67,6 @@ let modulesJSON = `
 //         "rangeType": "line"
 //     }
 
-let URL = 'ws://spear.northcentralus.cloudapp.azure.com:9090';
 var modules = JSON.parse(modulesJSON);
 var modulesLi = [];
 
