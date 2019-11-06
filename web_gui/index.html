@@ -7,6 +7,14 @@
     <script type="text/javascript" src="https://static.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
     <script type="text/javascript" src="https://static.robotwebtools.org/roslibjs/current/roslib.min.js"></script>
     <script type="text/javascript" src="js/modules.js"></script>
+    <script type="application/javascript">
+		function loadJS(file) {
+			let jsElement = document.createElement("script");
+			jsElement.type = "application/javascript";
+			jsElement.src = file;
+			document.body.appendChild(jsElement);
+		}
+	</script>
 
 
 
@@ -70,12 +78,13 @@
 
 
 <script type="text/javascript">
+	var modulesLi = [];
 	if (location.protocol === 'https:') {
 		try {
 			var URL = 'ws://spear.northcentralus.cloudapp.azure.com:9090';
 			load()
 		} catch(e) {
-			
+
 
 			let httpsConfirm = confirm("As you are using HTTPS, we are unable to natively connect you to the server.\nWould you like to connect to the server? (Press cancel if you just want to see the UI layout)\nPressing OK will only work in Google Chrome.");
 			if (httpsConfirm) {
@@ -89,15 +98,18 @@
 				var URL = 'wss://spear.northcentralus.cloudapp.azure.com:9090';
 				load()
 			}
+
 			
 		}
 		
 	} else {
 		var URL = 'ws://spear.northcentralus.cloudapp.azure.com:9090';
+		//loadJS('js/modules.js')
 		load()
 	}
 	
 </script>
+
 
 
 
