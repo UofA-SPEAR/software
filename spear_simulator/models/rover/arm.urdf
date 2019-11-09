@@ -8,12 +8,10 @@
   <property name="forearm_length" value="0.185" />
   <property name="hand_length" value="0.59" />
 
-  <link name="rotate">
-  </link>
 
-  <joint name="rotate" type="revolute">
+  <joint name="shoulder_yaw" type="revolute">
     <parent link="base_link"/>
-    <child link="rotate"/>
+    <child link="shoulder"/>
     <axis xyz="0 0 1"/>
     <origin xyz="0 0 0" rpy= "0 0 0"/>
     <limit lower="-1.58" upper="1.58" effort="1" velocity="0.5"/>
@@ -22,17 +20,11 @@
   <link name="shoulder">
   </link>
 
-  <joint name="shoulder_lift" type="fixed">
-    <parent link="rotate"/>
-    <child link="shoulder"/>
-
-    <origin xyz="0 0 0" rpy= "0 0 0"/>
-  </joint>
 
   <link name="bicep">
   </link>
 
-  <joint name="shoulder" type="revolute">
+  <joint name="shoulder_pitch" type="revolute">
     <parent link="shoulder"/>
     <child link="bicep"/>
     <axis xyz="0 1 0"/>
@@ -43,7 +35,7 @@
   <link name="forearm">
   </link>
 
-  <joint name="elbow" type="revolute">
+  <joint name="elbow_pitch" type="revolute">
     <parent link="bicep"/>
     <child link="forearm"/>
     <axis xyz="0 1 0"/>
@@ -51,25 +43,37 @@
     <limit lower="-2.7" upper="1.54" effort="1" velocity="0.5"/>
   </joint>
 
-  <link name="hand">
+  <link name="wrist">
   </link>
 
-  <joint name="wrist" type="revolute">
+  <joint name="wrist_pitch" type="revolute">
     <parent link="forearm"/>
-    <child link="hand"/>
+    <child link="wrist"/>
     <axis xyz="0 1 0"/>
-    <origin xyz="0 0 ${forearm_length}" rpy="0 0 0"/>
+    <origin xyz="0 0 ${forearm_length/5}" rpy="0 0 0"/>
     <limit lower="-2.09" upper="2.09" effort="1" velocity="0.5"/>
+  </joint>
+
+  <link name="palm">
+
+  </link>
+
+  <joint name="wrist_roll" type="revolute">
+    <parent link="wrist"/>
+    <child link="palm"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="0 0 ${forearm_length/4}" rpy="0 0 0"/>
+    <limit lower="-3" upper="3" effort="1" velocity="0.5"/>
   </joint>
 
   <link name="finger">
   </link>
 
-  <joint name="knuckle" type="fixed">
-    <parent link="hand"/>
+  <joint name="grab" type="revolute">
+    <parent link="palm"/>
     <child link="finger"/>
-    <axis xyz="0 1 0"/>
-    <origin xyz="0 0 ${hand_length}"/>
+    <axis xyz="1 0 0"/>
+    <origin xyz="0 0 ${hand_length/3}"/>
+    <limit lower="-1" upper="1" effort="1" velocity="0.5"/>
   </joint>
-
 </robot>

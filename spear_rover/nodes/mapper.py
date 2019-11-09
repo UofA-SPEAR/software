@@ -14,20 +14,7 @@ import rospy
 # How do you make it span multiple lines?
 from spear_rover import map_ros_to_can, map_can_to_ros, test_bit
 
-
-def wheel_cmd_array_mapper(data):
-    out = []
-    for command in data.commands:
-        uavcan_msg = CanrosMessage("uavcan.equipment.actuator.Command")
-        uavcan_msg.actuator_id = command.actuator_id
-        uavcan_msg.command_type = command.command_type  # a.k.a. COMMAND_TYPE_SPEED
-        uavcan_msg.command_value = command.command_value
-        out.append(uavcan_msg)
-
-    return out
-
-
-def arm_angles_mapper(data):
+def arm_joint_mapper(data):
     out = []
     for command in data.commands:
         uavcan_msg = CanrosMessage('uavcan.equipment.actuator.Command')
@@ -44,6 +31,39 @@ def arm_angles_mapper(data):
 
     return out
 
+def wheel_cmd_array_mapper(data):
+    out = []
+    for command in data.commands:
+        uavcan_msg = CanrosMessage("uavcan.equipment.actuator.Command")
+        uavcan_msg.actuator_id = command.actuator_id
+        uavcan_msg.command_type = command.command_type  # a.k.a. COMMAND_TYPE_SPEED
+        uavcan_msg.command_value = command.command_value
+        out.append(uavcan_msg)
+
+
+
+    return out
+
+
+def arm_angles_mapper(data):
+    out = []
+    i = 0
+    for command in data.commands:
+        uavcan_msg = CanrosMessage('uavcan.equipment.actuator.Command')
+
+        # The IDs of the arm's actuators start at 10 and run up to 15, with
+        # the order defined by the rover2 arm_ik node. The id's in data.joints
+        # start at 0 and run up to 5. So, we just add 10 to each data.joints
+        # id.
+        uavcan_msg.actuator_id = command.actuator_id + 10
+
+        uavcan_msg.command_type = 1  # a.k.a. COMMAND_TYPE_POSITION
+        uavcan_msg.command_value = data.position[i]
+        out.append(uavcan_msg)
+        i += 1
+
+    return out
+
 
 def main():
     rospy.init_node("can_mapper")
@@ -56,9 +76,20 @@ def main():
                    'uavcan.equipment.actuator.ArrayCommand',
                    {"commands": wheel_cmd_array_mapper})
 
-    map_ros_to_can(ArrayCommand, '/arm/angles',
-                   'uavcan.equipment.actuator.ArrayCommand',
-                   {'commands': arm_angles_mapper})
+    #map_ros_to_can(ArrayCommand, '/arm/angles',
+    #               'uavcan.equipment.actuator.ArrayCommand',
+    #               {'commands': arm_angles_mapper})
+
+
+    # Get radians per joint from topic
+    # Append to ArmArrayCommand
+
+    ArmArrayCommand = []
+
+    # Iterate through /joint_state
+    map_ros_to_can(ArmArrayCommand, '/joint_state',
+		           'uavcan.equipment.actuator.ArrayCommand',
+		           {'commands': arm_joint_mapper})
 
     ####################################
     # Set up UAVCAN -> ROS subscribers #
