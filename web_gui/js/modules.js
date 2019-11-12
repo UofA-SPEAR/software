@@ -10,55 +10,72 @@ function load() {
     let modulesJSON = `
     [
         {
-            "title": "Battery Voltage",
+            "title": "Battery",
             "type": "number range",
             "yellow-range": [2.0,5.0],
             "red-range": [0.0,2.0],
             "topic": "web-test-battery",
-            "message-type": "std_msgs/Float64"
+            "message-type": "std_msgs/Float64",
+            "extended-modules": [
+                {
+                    "title": "Battery Voltage",
+                    "type": "number range",
+                    "yellow-range": [2.0,5.0],
+                    "red-range": [0.0,2.0],
+                    "topic": "web-test-battery",
+                    "message-type": "std_msgs/Float64"
+                }
+            ]
         },
         {
             "title": "CAN Node Status",
             "type": "fraction",
             "topic": "web-can-status",
-            "message-type": "std_msgs/String"
+            "message-type": "std_msgs/Int64MultiArray",
+            "extended-modules": []
         },
         {
             "title": "Localization Status",
             "type": "gps",
             "topic": "web-local-status",
-            "message-type": "std_msgs/String"
+            "message-type": "std_msgs/String",
+            "extended-modules": []
         },
         {
             "title": "Arm Joint Angles",
-            "type": "number",
-            "topic": "web-angles",
-            "message-type": "std_msgs/Float64"
+            "type": "list of numbers",
+            "topic": "web-test-angles",
+            "message-type": "std_msgs/Float64MultiArray",
+            "extended-modules": []
         },
         {
             "title": "Fuse Status",
             "type": "true false",
             "topic": "web-fuse-status",
-            "message-type": "std_msgs/Bool"
+            "message-type": "std_msgs/Bool",
+            "extended-modules": []
         },
         {
             "title": "Motor Voltages",
             "type": "number",
             "topic": "web-motor",
-            "message-type": "std_msgs/Float64"
+            "message-type": "std_msgs/Float64",
+            "extended-modules": []
         },
         {
             "title": "Power Usage",
             "type": "number",
             "topic": "web-power",
-            "message-type": "std_msgs/Float64"
+            "message-type": "std_msgs/Float64",
+            "extended-modules": []
         },
         {
-          "title": "Camera",
-          "type": "video feed",
-          "fps-topic": "web-fps-video1",
-          "topic": "web-video1",
-          "message-type": "sensor_msgs/Image"
+            "title": "Camera",
+            "type": "video feed",
+            "fps-topic": "web-fps-video1",
+            "topic": "web-video1",
+            "message-type": "sensor_msgs/Image",
+            "extended-modules": []
         }
     ]
     `;
@@ -101,7 +118,7 @@ function load() {
             </div>
         `;
         let ExtCard = `
-            <div class="card extended-card" id="module-extended-` + x + `-card" onclick="ScrollElement('module-` + x + `-value')">
+            <div class="card extended-card" id="module-extended-${x}-card" onclick="ScrollElement('module-` + x + `-value')">
                 <div class="module-container">
                     <h2 class="module-title">`+ modules[x].title + `</h2>
                     <p id="module-extended-` + x + `-value">` + modules[x].type.toUpperCase() + `</p>
@@ -117,24 +134,42 @@ function load() {
 
         tempTopic.subscribe(
             function(message) {
-                document.getElementById('module-'+x+'-value').innerHTML = message.data;
-                if (modules[x]['type'] === 'number range') {
+                //console.log(message.data)
 
-                    if (modules[x]['red-range'][1] >= message.data && modules[x]['red-range'][0] < message.data) {
-                        document.getElementById('module-'+x+'-card').style.backgroundColor = 'red'
-                    } else if (modules[x]['yellow-range'][1] >= message.data && modules[x]['yellow-range'][0] < message.data) {
-                        document.getElementById('module-'+x+'-card').style.backgroundColor = 'yellow'
-                    } else {
-                        document.getElementById('module-'+x+'-card').style.backgroundColor = 'green'
-                    }
-                    /*
-                    if (modules[x]['red-range'][0] < message.data < modules[x]['red-range'][1]) {
-                        //console.log("I DID A THING! " + message.data)
-                    }
-                    */
+                switch (modules[x]['type']) {
+                    case 'number range':
+                        document.getElementById('module-' + x + '-value').innerHTML = message.data;
 
+                        if (modules[x]['red-range'][1] >= message.data && modules[x]['red-range'][0] < message.data) {
+                            document.getElementById('module-' + x + '-card').style.backgroundColor = 'red'
+                        } else if (modules[x]['yellow-range'][1] >= message.data && modules[x]['yellow-range'][0] < message.data) {
+                            document.getElementById('module-' + x + '-card').style.backgroundColor = 'yellow'
+                        } else {
+                            document.getElementById('module-' + x + '-card').style.backgroundColor = 'green'
+                        }
+
+                        break;
+
+                    case 'list of numbers':
+                        document.getElementById('module-'+x+'-value').innerHTML = message.data;
+                        break;
+
+                    case 'gps':
+                        console.log(message.data);
+                        document.getElementById('module-'+x+'-value').innerHTML = message.data;
+                        break;
+
+                    case 'fraction':
+                        let outData = `${message.data[0]} / ${message.data[1]}`;
+                        document.getElementById('module-'+x+'-value').innerHTML = outData;
+                        break;
+                    default:
+                        document.getElementById('module-'+x+'-value').innerHTML = message.data;
+                        break;
 
                 }
+
+
             }
         );
 

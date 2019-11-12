@@ -82,15 +82,17 @@
 	if (location.protocol === 'https:') {
 		try {
 			var URL = 'ws://spear.northcentralus.cloudapp.azure.com:9090';
+			//throw new Error('Testing Error')
 			load()
 		} catch(e) {
+			//console.log(e)
 
 
-			let httpsConfirm = confirm("As you are using HTTPS, we are unable to natively connect you to the server.\nWould you like to connect to the server? (Press cancel if you just want to see the UI layout)\nPressing OK will only work in Google Chrome.");
+			let httpsConfirm = confirm("As you are using HTTPS, we are unable to natively connect you to the server.\nWould you like to connect to the server? (Press cancel if you just want to see the UI layout)\nPressing OK will only work in Google Chrome or the new Chromium based Microsoft Edge browser.");
 			if (httpsConfirm) {
 			
 				var URL = 'ws://spear.northcentralus.cloudapp.azure.com:9090';
-				confirm('After pressing OK, there will be a shield with a little red x in the top right corner of your URL bar.\nIf you click this symbol, it will tell you that it blocked insecure content.\nClick on the text that says "Load Unsafe Scripts" (probably in light blue).\nThis will only show up on a Google Chrome browser.')
+				confirm('There should be a shield with a little red x in the top right corner of your URL bar.\nIf you click this symbol, it will tell you that it blocked insecure content.\nClick on the text that says "Load Unsafe Scripts" (probably in light blue).\nThis will only show up on a Chrome based browser (Google Chrome and the beta Microsoft Edge).')
 				load()
 				
 
@@ -98,7 +100,6 @@
 				var URL = 'wss://spear.northcentralus.cloudapp.azure.com:9090';
 				load()
 			}
-
 			
 		}
 		
@@ -109,7 +110,6 @@
 	}
 	
 </script>
-
 
 
 
