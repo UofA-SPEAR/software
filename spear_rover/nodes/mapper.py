@@ -84,10 +84,10 @@ def main():
     # Get radians per joint from topic
     # Append to ArmArrayCommand
 
-    ArmArrayCommand = []
+
 
     # Iterate through /joint_state
-    map_ros_to_can(ArmArrayCommand, '/joint_state',
+    map_ros_to_can(ArrayCommand, '/joint_state',
 		           'uavcan.equipment.actuator.ArrayCommand',
 		           {'commands': arm_angles_mapper})
 
