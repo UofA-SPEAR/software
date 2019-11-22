@@ -89,7 +89,7 @@ def main():
     # Iterate through /joint_state
     map_ros_to_can(ArmArrayCommand, '/joint_state',
 		           'uavcan.equipment.actuator.ArrayCommand',
-		           {'commands': arm_joint_mapper})
+		           {'commands': arm_angles_mapper})
 
     ####################################
     # Set up UAVCAN -> ROS subscribers #
