@@ -8,16 +8,19 @@ add_compile_options(-std=c++14)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+    actionlib
+    canros
+    cv_bridge
+    geometry_msgs
+    image_transport
+    message_generation
+    message_runtime
+    robot_localization
     roscpp
     rospy
-    cv_bridge
-    image_transport
-    canros
+    spear_msgs
     std_msgs
     tf
-    spear_msgs
-    actionlib
-    message_generation
 )
 
 catkin_python_setup()
@@ -40,7 +43,7 @@ generate_messages(DEPENDENCIES
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES rover2
-  CATKIN_DEPENDS message_runtime std_msgs spear_msgs message_generation
+  CATKIN_DEPENDS geometry_msgs message_generation message_runtime spear_msgs std_msgs
 #  DEPENDS system_lib
 )
 
@@ -157,7 +160,7 @@ install(PROGRAMS
 
 add_executable(gps_to_frame_server src/gps_to_frame_server.cpp)
 target_link_libraries(gps_to_frame_server ${catkin_LIBRARIES})
-add_dependencies(gps_to_frame_server spear_rover_gencpp
+add_dependencies(gps_to_frame_server ${PROJECT_NAME}_gencpp
    ${${PROJECT_NAME}_EXPORTED_TARGETS}
    ${catkin_EXPORTED_TARGETS}
 )

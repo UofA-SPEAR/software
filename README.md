@@ -149,7 +149,7 @@ To build in the docker container:
 
 ``` bash
 cd ~/ros
-catkin_make
+catkin build
 ```
 
 Or, if you also want to generate things like `compile-commands.json` (which gives us autocomplete within vim, emacs, etc...):
@@ -211,7 +211,7 @@ rosdep install --from-paths src --ignore-src -r -y
 ## Developing and building
 
 The `unpack.sh` script will symlink all the source files to a catkin workspace located at `~/ros`.
-You can work in this directory and when you need to build, either run `catkin_make` in the `~/ros` directory or simply run `./build.bash` from this directory which will handle things for you.
+You can work in this directory and when you need to build, either run `catkin build` in the `~/ros` directory or simply run `./build.bash` from this directory which will handle things for you.
 
 ## “Permission Denied” errors when running roslaunch or roscore
 
