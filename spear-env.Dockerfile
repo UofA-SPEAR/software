@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install -y qt4-default libx264-dev \
                                          tmux \
                                          vim \
                                          nano
-
+RUN sudo apt-get install -y python-catkin-tools
 RUN python -m pip install catkin_lint
 
 SHELL ["/ros_entrypoint.sh", "bash", "-c"]

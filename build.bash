@@ -9,7 +9,7 @@ echo 'Changing directory to ros workspace.'
 cd ~/ros
 
 echo 'Building everything...'
-catkin_make -DCMAKE_EXPORT_COMPILE_COMMANDS=1
+catkin build --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=1
 
 echo "Returning to ${ORIGINAL_DIR}."
 cd "${ORIGINAL_DIR}"
