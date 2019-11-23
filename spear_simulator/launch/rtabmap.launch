@@ -4,19 +4,19 @@
   <!-- publish static transform so that RTAB-map knows where camera is -->
   <!-- this simply sets camera_depth_optical_frame to the same location as link_camera_depth but with the correct orientation -->
   <!-- args are: yaw pitch roll frame_id child_frame_id period_in_ms -->
-  <node name="static_transform_publisher" pkg="tf" type="static_transform_publisher"
-    args="0 0 0 -1.57 0 -1.57 link_camera_depth camera_depth_optical_frame 100"/>
+  <node name="static_transform_publisher" pkg="tf" type="static_transform_publisher" args="0 0 0 -1.57 0 -1.57 link_camera_depth camera_depth_optical_frame 100"/>
 
   <!-- Syncs up rgb, depth, and camera_info topics -->
   <node pkg="nodelet" type="nodelet" name="rgbd_sync" args="standalone rtabmap_ros/rgbd_sync" output="screen">
-    <remap from="rgb/image"        to="/camera/rgb/image_raw"/>
-    <remap from="depth/image"      to="/camera/depth/image_raw"/>
-    <remap from="rgb/camera_info"  to="/camera/rgb/camera_info"/>
-    <remap from="rgbd_image"       to="/rtabmap/rgbd_image"/> <!-- output -->
+    <remap from="rgb/image" to="/camera/rgb/image_raw"/>
+    <remap from="depth/image" to="/camera/depth/image_raw"/>
+    <remap from="rgb/camera_info" to="/camera/rgb/camera_info"/>
+    <!-- output -->
+    <remap from="rgbd_image" to="/rtabmap/rgbd_image"/>
 
     <!-- Should be true for not synchronized camera topics
          (e.g., false for kinectv2, zed, realsense, true for xtion, kinect360)-->
-    <param name="approx_sync"       value="true"/>
+    <param name="approx_sync" value="true"/>
   </node>
 
   <!-- Visual odom node -->
@@ -37,10 +37,10 @@
   <param name="/rtabmap/rtabmap/publish_tf" type="bool" value="false"/>
   <!-- Include main rtabmap launch file from spear_rover package -->
   <include file="$(find spear_rover)/launch/rtabmap.launch">
-    <arg name="camera_frame"                value="camera_depth_optical_frame" />
-    <arg name="rgb_topic"                   value="/camera/rgb/image_raw" />
-    <arg name="depth_topic"                 value="/camera/depth/image_raw" />
-    <arg name="camera_info_topic"           value="/camera/rgb/camera_info" />
-    <arg name="depth_camera_info_topic"     value="/camera/depth/camera_info" />
+    <arg name="camera_frame" value="camera_depth_optical_frame"/>
+    <arg name="rgb_topic" value="/camera/rgb/image_raw"/>
+    <arg name="depth_topic" value="/camera/depth/image_raw"/>
+    <arg name="camera_info_topic" value="/camera/rgb/camera_info"/>
+    <arg name="depth_camera_info_topic" value="/camera/depth/camera_info"/>
   </include>
 </launch>

@@ -1,24 +1,20 @@
 <!-- Copied from urdf_sim_tutorial package -->
 <launch>
-  <param name="/use_sim_time" value="true" />
+  <param name="/use_sim_time" value="true"/>
   <arg name="model" default="$(find spear_simulator)/models/rover/TARS_V2.urdf"/>
-  <arg name="rvizconfig" default="$(find spear_simulator)/rviz/diffdrive.rviz" />
+  <arg name="rvizconfig" default="$(find spear_simulator)/rviz/diffdrive.rviz"/>
   <arg name="world_name" default="$(find spear_simulator)/worlds/test.world"/>
 
   <include file="$(find spear_simulator)/launch/gazebo.launch">
-    <arg name="model" value="$(arg model)" />
-    <arg name="world_name" value="$(arg world_name)" />
+    <arg name="model" value="$(arg model)"/>
+    <arg name="world_name" value="$(arg world_name)"/>
   </include>
 
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" />
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)"/>
 
-  <rosparam command="load"
-            file="$(find spear_simulator)/config/diffdrive.yaml"
-            ns="rover_diff_drive_controller" />
+  <rosparam command="load" file="$(find spear_simulator)/config/diffdrive.yaml" ns="rover_diff_drive_controller"/>
 
-  <node name="rover_controller_spawner" pkg="controller_manager" type="spawner"
-    args="rover_diff_drive_controller
-          --shutdown-timeout 3"/>
+  <node name="rover_controller_spawner" pkg="controller_manager" type="spawner" args="rover_diff_drive_controller --shutdown-timeout 3"/>
 
   <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
     <param name="default_topic" value="/rover_diff_drive_controller/cmd_vel"/>

@@ -13,10 +13,10 @@
     ...will make the canros server listen to the "vcan0" device. This is
     good for local testing.
   -->
-  <arg name="interface" default="can0" />
+  <arg name="interface" default="can0"/>
 
   <!-- Our node which maps ros messages to can messages -->
-  <node name="can_mapper" pkg="spear_rover" type="mapper.py" output="screen" />
+  <node name="can_mapper" pkg="spear_rover" type="mapper.py" output="screen"/>
 
   <!--
     canros's server uses a launch file to run, so instead of using the
@@ -25,23 +25,23 @@
   -->
 
   <include file="$(find canros)/launch/server.launch">
-    <arg name="can_interface" value="$(arg interface)" />
+    <arg name="can_interface" value="$(arg interface)"/>
   </include>
 
-  <node name="odom_tf_publisher_node" pkg="spear_rover" type="odom_tf_publisher_node" />
-  <node name="twist_to_skidsteer_node" pkg="spear_rover" type="twist_to_skidsteer_node" />
+  <node name="odom_tf_publisher_node" pkg="spear_rover" type="odom_tf_publisher_node"/>
+  <node name="twist_to_skidsteer_node" pkg="spear_rover" type="twist_to_skidsteer_node"/>
 
   <!--
     Converts joy messages to geometry_msgs/Twist messages.
     Requires teleop_twist_joy ros package.
   -->
   <node name="teleop_node" pkg="teleop_twist_joy" type="teleop_node">
-    <remap from="cmd_vel" to="/rover_diff_drive_controller/cmd_vel" />
-    <param name="axis_angular" value="3" />
-    <param name="axis_linear" value="1" />
+    <remap from="cmd_vel" to="/rover_diff_drive_controller/cmd_vel"/>
+    <param name="axis_angular" value="3"/>
+    <param name="axis_linear" value="1"/>
     <!-- Press R1 on playstation controller to enable -->
-    <param name="enable_button" value="5" />
-    <param name="scale_linear" value="1.0" />
-    <param name="scale_angular" value="1.5" />
+    <param name="enable_button" value="5"/>
+    <param name="scale_linear" value="1.0"/>
+    <param name="scale_angular" value="1.5"/>
   </node>
 </launch>
