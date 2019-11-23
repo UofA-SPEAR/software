@@ -7,4 +7,5 @@ python -m catkin_lint ~/ros/src \
   --skip-pkg nimbro_log_transport \
   --skip-pkg rviz_satellite \
   --skip-pkg nimbro_cam_transport \
-  --skip-pkg tf_throttle
+  --skip-pkg tf_throttle \
+  "$@"
