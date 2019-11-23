@@ -10,9 +10,9 @@ find_package(catkin REQUIRED COMPONENTS
 add_message_files(
   # Probably more messages to add here
   FILES
-  arm_position.msg
   BallCoord.msg
   BallCoords.msg
+  arm_position.msg
   drive_cmd.msg
 )
 
@@ -37,6 +37,6 @@ generate_messages(
 )
 
 catkin_package(
- CATKIN_DEPENDS message_generation std_msgs message_runtime
+ CATKIN_DEPENDS message_generation message_runtime std_msgs
 )
 
