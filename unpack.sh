@@ -34,7 +34,7 @@ git submodule update --init --recursive
 cd ~
 mkdir -p ~/ros/src
 cd ~/ros
-catkin_make
+catkin build
 # Add a line in .bashrc to source ros setup script
 # Uses grep to check if the line already exists
 if ! grep -Fxq "source ~/ros/devel/setup.bash" ~/.bashrc
@@ -76,6 +76,10 @@ python -m pip install uavcan
 cd ~/ros/src
 git clone https://github.com/MonashUAS/canros.git
 
+###### Install rviz_satellite
+cd ~/ros/src
+git clone https://github.com/gareth-cross/rviz_satellite.git
+
 #### Get our DSDL definitions
 cd ~
 git clone https://github.com/UofA-SPEAR/uavcan_dsdl.git
@@ -99,6 +103,6 @@ ln -s ~/uavcan_dsdl/spear
 cd ~/ros
 # update rosdeps first
 rosdep install --from-paths src --ignore-src -r -y && \
-catkin_make --force && \
+catkin build --force-cmake && \
 
 printf "Thanks for unpacking!\nNow that your enviroment is setup, you should never have to do this again.\nPlease run the following command to install the correct packages:\nrosdep install --from-paths src --ignore-src -r -y\n"

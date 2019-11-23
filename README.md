@@ -81,6 +81,17 @@ To test your setup, start the docker daemon in its own terminal (if it has not a
 sudo dockerd
 ```
 
+Note: if you get a message like the following:
+
+```
+INFO[2019-10-09T18:07:23.627014728-06:00] Starting up
+failed to start daemon: pid file found, ensure docker is not running or delete /var/run/docker.pid
+```
+
+This means that the docker daemon has already been started in the background.
+You do not have to run `sudo dockerd` yourself.
+Simply proceed to the next step.
+
 Now install and run the test docker image in a new terminal:
 
 ``` bash
@@ -138,7 +149,14 @@ To build in the docker container:
 
 ``` bash
 cd ~/ros
-catkin_make
+catkin build
+```
+
+Or, if you also want to generate things like `compile-commands.json` (which gives us autocomplete within vim, emacs, etc...):
+
+```bash
+cd /software
+./build.bash
 ```
 
 # Manual setup and install instructions
@@ -193,7 +211,7 @@ rosdep install --from-paths src --ignore-src -r -y
 ## Developing and building
 
 The `unpack.sh` script will symlink all the source files to a catkin workspace located at `~/ros`.
-You can work in this directory and when you need to build, either run `catkin_make` in the `~/ros` directory or simply run `./build.bash` from this directory which will handle things for you.
+You can work in this directory and when you need to build, either run `catkin build` in the `~/ros` directory or simply run `./build.bash` from this directory which will handle things for you.
 
 ## “Permission Denied” errors when running roslaunch or roscore
 

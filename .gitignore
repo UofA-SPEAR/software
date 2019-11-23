@@ -2,9 +2,14 @@
 __pycache__/
 **.swp
 .vscode/
+.clangd/
 
 # Generated when using our build.bash script. Useful for when you want to use
 # something like code completion in vim and have it recognize all the ros
 # packages.
 compile_commands.json
+compile_commands.original.json
+.docker-opt-ros-mount/
+.docker-root-ros-include-mount/
+
 arm_controls/dial.psd
