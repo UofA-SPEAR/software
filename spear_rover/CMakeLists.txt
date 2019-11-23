@@ -18,6 +18,9 @@ find_package(catkin REQUIRED COMPONENTS
     spear_msgs
     actionlib
     message_generation
+    robot_localization
+    message_runtime
+    geometry_msgs
 )
 
 catkin_python_setup()
@@ -40,7 +43,7 @@ generate_messages(DEPENDENCIES
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES rover2
-  CATKIN_DEPENDS message_runtime std_msgs spear_msgs message_generation
+  CATKIN_DEPENDS message_runtime std_msgs spear_msgs message_generation geometry_msgs
 #  DEPENDS system_lib
 )
 
