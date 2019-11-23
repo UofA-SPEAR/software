@@ -163,7 +163,7 @@ This is the recommended approach if you use Windows and don't want to dual-boot 
 
 We use [Vagrant](https://www.vagrantup.com/) for creating and managing the VM.
 Vagrant can be used with various VM providers; in our case, we use [VirtualBox](https://www.virtualbox.org/).
-Both programs must have compatible versions (and at the time of writing, the latest version of Vagrant is incompatible with the latest version of VirtualBox).
+Both programs must have compatible versions (and at the time of writing, the latest version of Vagrant is incompatible with the latest version of VirtualBox). 
 The easiest (though not simplest) way of dealing with all this is to install both programs using [Chocolatey](https://chocolatey.org/). So,
 
 1. Install Chocolatey from [its website](https://chocolatey.org/).
@@ -171,13 +171,24 @@ The easiest (though not simplest) way of dealing with all this is to install bot
 3. Type
     
         choco install virtualbox --version 6.0 -y
-        choco install vagrant --version 2.2.6 -y
+        choco install vagrant --version 2.6.2 -y
+        choco install git -y
     
-    to install VirtualBox and Vagrant.
+    to install VirtualBox and Vagrant (and also [git](https://git-scm.com/), which we'll use in the next step)
+4. Install the [vagrant-vbguest](https://github.com/dotless-de/vagrant-vbguest) plugin
+
+        vagrant plugin install vagrant-vbguest
 
 ## Creating the virtual machine
 
-To create the virtual machine, navigate to the directory containing this README and type
+As mentioned above, we use Vagrant to create the virtual machine.
+Vagrant looks for a file named `Vagrantfile` which contains instructions for how to set up the machine and install the necessary software on it.
+To get this file, download this repository (for the sake of this example, we'll put it in the `Documents` folder):
+
+    cd $home\Documents
+    git clone https://github.com/UofA-SPEAR/software.git
+
+Now create the virtual machine from the `Vagrantfile`:
 
     vagrant up
 
@@ -185,19 +196,22 @@ This will create a new virtual machine and install all required packages on it.
 It will also re-clone this repository within the virtual machine.
 
 When you first create the machine, you will also have to reboot it to enable the GUI.
-This can be done like so:
+The easiest way to do this is to just close the window with the VM and select the option to power off the machine, then restart the VM in virtualbox or with another `vagrant up`.
 
-    vagrant ssh
-    sudo reboot
+The VirtualBox GUI will then show an Ubuntu 18 login screen.
+Log in as the user *vagrant* using the password *vagrant*.
 
-The VirtualBox GUI will then show an Ubuntu 16 login screen.
-Log in as the user *vagrant* using the password *vagrant* (if you are prompted to upgrade to Ubuntu 18, decline the upgrade).
-
-Various virtual machine settings can be configured by editing the file `Vagrantfile`.
+Various virtual machine settings can be configured using the VirtualBox GUI.
 For example, you can change the number of CPUs or amount of RAM to allocate to the virtual machine.
-By default, this is 8 CPUs and 4 GB of RAM, but you may wish to change this to fit the capeabilities of your development machine.
+By default, this is 8 CPUs and 4 GB of RAM, but you may wish to change this to fit the capabilities of your development machine.
 
 ## Developing on the virtual machine
+
+All development takes place within the virtual machine, so you should edit the code there and not in Windows.
+The code can be found in the `/software` directory.
+The virtual machine comes with [VS Code](https://code.visualstudio.com/) pre-installed, but you can install another code editor if you want.
+
+Once created with `vagrant up`, the virtual machine can be started again either with another `vagrant up` in the same directory or through the VirtualBox GUI.
 
 If you wish to re-create the virtual machine (for example to re-run the configuration scripts), you can destroy it first using `vagrant destroy`.
 Keep in mind that any edits to the code you make within the virtual machine will not be reflected outside of it, so make sure you commit your changes if necessary before destroying the virtual machine.
