@@ -17,5 +17,6 @@ RUN apt-get update && apt-get install -y qt4-default libx264-dev \
                                          tmux \
                                          vim \
                                          nano
+RUN apt-get install -y libxml2-utils
 
 SHELL ["/ros_entrypoint.sh", "bash", "-c"]
