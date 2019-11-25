@@ -16,4 +16,5 @@ docker run \
     -v $(pwd)/.docker-root-ros-include-mount:/tmp/docker-root-ros-include-mount \
     --device=/dev/dri:/dev/dri \
     --net=host \
+    --name spear-container \
     spear bash -c 'echo "Copying ros headers from container /opt/ros to host-accessible location (for autocompletion)..." && mkdir -p /tmp/docker-opt-ros-mount && cp -r /opt/ros/* /tmp/docker-opt-ros-mount/ && echo "Doing the same with /root/ros/devel/include..." && mkdir -p /tmp/docker-root-ros-include-mount && cp -r /root/ros/devel/include/* /tmp/docker-root-ros-include-mount/ && echo -e "Success!\nRun the build.bash script to re-copy headers."; /ros_entrypoint.sh bash -l'
