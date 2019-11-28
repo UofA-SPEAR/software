@@ -65,6 +65,7 @@ RUN ./src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release -
 # Add our own version of the stock "ros_entrypoint.sh" script to the root directory.
 # TODO: Needs to be moved into it's own file and COPY'ed in at some point.
 RUN printf '#!/bin/bash\nset -e\n\n# setup ros environment\nsource "/ros_catkin_ws/install_isolated/setup.bash"\nexec "$@"\n' > /ros_entrypoint.sh
+RUN chmod a+x /ros_entrypoint.sh
 
 ENTRYPOINT ["/ros_entrypoint.sh"]
 CMD ["bash"]
