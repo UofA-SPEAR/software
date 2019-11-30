@@ -35,10 +35,9 @@ matrix:
         - docker
       before_script:
         - docker pull ros:kinetic-robot
-        - docker build --rm -t spear-env - < spear-env.Dockerfile
       script:
-        - docker build --rm -t spear-rover2 .
-        - docker run spear-rover2 bash /software/catkin_lint.bash
+        - docker-compose build
+        - docker run spear bash /software/catkin_lint.bash
 
 notifications:
   email: false

@@ -55,6 +55,11 @@ Note: you may need to install curl if you don't have it already.
 
 On Ubuntu: `sudo apt-get install curl`
 
+Now install docker-compose. Following the instructions [here](https://github.com/docker/compose/releases), run
+
+    curl -L https://github.com/docker/compose/releases/download/1.25.1-rc1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+    chmod +x /usr/local/bin/docker-compose
+
 ## Docker setup
 
 If you've never used docker, you'll have to do a little bit of setup.
@@ -109,37 +114,19 @@ https://docs.docker.com/install/linux/linux-postinstall/
 
 ## Build Docker Image
 
-First pull the base ROS docker image:
+Navigate to the directory containing this readme, and run
 
-``` bash
-sudo docker pull ros:kinetic-robot
-```
+    docker-compose build
 
-To build our specific docker image, run these commands in the same directory as `Dockerfile`.
-
-Note: these 2 commands may take several minutes.
-
-``` bash
-docker build -t spear-env - < spear-env.Dockerfile
-```
-
-That one will take a few minutes so maybe go grab a coffee.
-
-Once that is finished, run:
-
-``` bash
-docker build -t spear .
-```
-
-This will build a docker image from our `Dockerfile` and tag it as "spear".
+This will build a docker image from our `Dockerfile` and tag it as `spear`.
 
 ## Run Docker container interactively
 
-Use the run script to start the docker container.
+Navigate to the directory containing this readme, and run
 
-``` bash
-./run-docker.bash
-```
+    docker-compose run spear
+
+which runs the `spear` image as a container named `spear-container` (it also runs the `spear-env` image as a container, but that container exits immediately).
 
 ## Working in Docker
 
