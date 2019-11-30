@@ -55,7 +55,11 @@ Note: you may need to install curl if you don't have it already.
 
 On Ubuntu: `sudo apt-get install curl`
 
-Now install docker-compose. Following the instructions [here](https://github.com/docker/compose/releases), run
+Now install docker-compose. The easiest way to do this is to run
+
+    sudo apt install docker-compose
+
+Alternatively, following the instructions [here](https://github.com/docker/compose/releases), run
 
     curl -L https://github.com/docker/compose/releases/download/1.25.1-rc1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
     chmod +x /usr/local/bin/docker-compose
