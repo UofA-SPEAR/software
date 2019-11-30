@@ -29,4 +29,4 @@ services:
     build:
       context: .
       dockerfile: spear-env.Dockerfile
-    image: spear_env
+    image: spear-env

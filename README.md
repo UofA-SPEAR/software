@@ -126,7 +126,7 @@ Navigate to the directory containing this readme, and run
 
     docker-compose run spear
 
-which runs the `spear` image as a container named `spear-container` (it also runs the `spear_env` image as a container, but that container exits immediately).
+which runs the `spear` image as a container named `spear-container` (it also runs the `spear-env` image as a container, but that container exits immediately).
 
 ## Working in Docker
 
