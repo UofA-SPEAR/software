@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import ROSLib from 'roslib';
-import {StateMachine} from './state_machine';
+import {StateMachine} from './state-machine';
 import './index.css';
 
 class Action extends Component {

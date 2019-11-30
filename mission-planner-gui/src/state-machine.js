@@ -1,5 +1,5 @@
-import {makeState} from './make_state';
-import {GoalStatus, getGoalStatusName} from './goal_status';
+import {makeState} from './make-state';
+import {GoalStatus, getGoalStatusName} from './goal-status';
 
 export class DisplayState {
   constructor(id, text) {

@@ -1,5 +1,5 @@
 import RosLib from 'roslib';
-import {GoalStatus} from './goal_status';
+import {GoalStatus} from './goal-status';
 
 function makeGpsCoordinateState(ros, params) {
   let [lat, lon] = params.split(' ');
