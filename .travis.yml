@@ -34,10 +34,9 @@ matrix:
       services:
         - docker
       before_script:
-        - docker pull ros:kinetic-robot
+        - docker pull spaceualberta/ros-kinetic
       script:
-        - docker-compose build
-        - docker run spear bash /software/catkin_lint.bash
+        - docker-compose run spear bash /software/catkin_lint.bash
 
 notifications:
   email: false
