@@ -112,7 +112,18 @@ You should see a welcome message from docker. If this works, your docker install
 More information about linux configuration of docker can be found here:
 https://docs.docker.com/install/linux/linux-postinstall/
 
-## Build Docker Image
+## Pull Docker Image
+
+We have a pre-build docker image on docker hub which you can pull using the following command:
+
+    docker pull spaceualberta/ros-kinetic
+
+This will download our docker image to your system so you don't have to build it yourself.
+
+## (Optional) Build Docker Image
+
+If you want to build the docker image yourself, do the following.
+Otherwise, skip to the next step.
 
 Navigate to the directory containing this readme, and run
 
