@@ -116,7 +116,7 @@ https://docs.docker.com/install/linux/linux-postinstall/
 
 We have a pre-build docker image on docker hub which you can pull using the following command:
 
-    docker pull spaceualberta/ros-kinetic
+    sudo docker pull spaceualberta/ros-kinetic
 
 This will download our docker image to your system so you don't have to build it yourself.
 
