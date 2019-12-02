@@ -16,7 +16,7 @@ services:
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - $XAUTHORITY:/root/.Xauthority
-      - .:/software
+      - ./:/software
       - .docker-opt-ros-mount:/tmp/docker-opt-ros-mount
       - .docker-root-ros-include-mount:/tmp/docker-root-ros-include-mount
     devices:
