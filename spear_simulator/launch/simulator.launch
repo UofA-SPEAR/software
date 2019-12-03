@@ -1,7 +1,0 @@
-<!-- Launches simulator and all of the navigation stack. -->
-<launch>
-  <include file="$(find spear_simulator)/launch/diffdrive.launch"/>
-  <include file="$(find spear_rover)/launch/state_estimate.launch"/>
-  <include file="$(find spear_simulator)/launch/rtabmap.launch"/>
-  <include file="$(find spear_simulator)/launch/nav.launch"/>
-</launch>
