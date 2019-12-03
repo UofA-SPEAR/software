@@ -1,11 +1,15 @@
 <?xml version="1.0"?>
 <!-- created with Phobos 0.8 -->
-  <robot name="TARS_V2">
+  <robot name="TARS_V2" xmlns:xacro="http://ros.org/wiki/xacro">
+    <xacro:property name="M_PI" value="3.1415926535897" />
 
     <link name="link_camera_back">
     </link>
 
     <link name="link_camera_depth">
+    </link>
+
+    <link name="camera_depth_optical_frame">
     </link>
 
     <link name="imu_link">
@@ -246,6 +250,12 @@
       <origin xyz="0.3 0 0.2" rpy="0 0 0"/>
       <parent link="base_link"/>
       <child link="link_camera_depth"/>
+    </joint>
+
+    <joint name="camera_depth_optical_frame" type="fixed">
+      <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}"/>
+      <parent link="base_link"/>
+      <child link="camera_depth_optical_frame"/>
     </joint>
 
     <joint name="imu_link" type="fixed">
