@@ -31,7 +31,8 @@ matrix:
         - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
         - nvm install 12.13
       script:
-        - bash linting/javascript.sh
+        - cd linting
+        - bash javascript.sh
 
     - name: "xml linting"
       before_script:
