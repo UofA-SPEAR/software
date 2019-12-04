@@ -24,12 +24,22 @@ matrix:
         - "! find . -iname '*.h' -o -iname '*.cpp' |
           xargs clang-format-3.9 -output-replacements-xml -style=Google |
           grep -F \"</replacement>\""
+
+    - name: "javascript linting"
+      before_script:
+        - sudo apt-get update
+        - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
+        - nvm install 12.13
+      script:
+        - bash linting/javascript.sh
+
     - name: "xml linting"
       before_script:
         - sudo apt-get update
         - sudo apt-get install libxml2-utils
       script:
         - bash xml_lint.bash
+
     - name: "build"
       services:
         - docker
