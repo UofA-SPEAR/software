@@ -1,0 +1,7 @@
+<!-- Launch rqt robot steering to move the robot around in the simulator.
+     This is a rough equivalent of spear_rover's udp.launch -->
+<launch>
+  <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
+    <param name="default_topic" value="/rover_diff_drive_controller/cmd_vel"/>
+  </node>
+</launch>

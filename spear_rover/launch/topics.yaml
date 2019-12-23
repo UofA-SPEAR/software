@@ -1,8 +1,0 @@
-
-topics:
- - name: "/camera_1/image_raw/compressed"
-   compress: true # enable bz2 compression
-   rate: 60.0 # rate limit at 60Hz
- - name: "/camera_2/image_raw/compressed"
-   compress: true # enable bz2 compression
-   rate: 60.0 # rate limit at 60Hz
