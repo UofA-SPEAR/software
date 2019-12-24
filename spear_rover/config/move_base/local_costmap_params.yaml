@@ -1,7 +1,7 @@
 local_costmap:
     global_frame: odom
     robot_base_frame: base_link
-    update_frequency: 2.0
+    update_frequency: 10.0
     publish_frequency: 2.0
     static_map: false
     rolling_window: true
@@ -19,7 +19,7 @@ local_costmap:
         sensor_frame: base_link,
         data_type: PointCloud2, 
         topic: planner_cloud,
-        expected_update_rate: 2.0, 
+        expected_update_rate: 20.0,
         marking: true, 
         clearing: true,
         min_obstacle_height: -99999.0,
