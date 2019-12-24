@@ -1,0 +1,28 @@
+<!-- Use RTAB-Map to segment the camera point cloud into ground and obstacles -->
+<launch>
+  <group ns="obstacles_detection">
+    <arg name="point_cloud_topic" default="/camera/depth/points"/>
+
+    <node pkg="nodelet" type="nodelet" name="obstacles_nodelet_manager" args="manager"/>
+    <node pkg="nodelet" type="nodelet" name="obstacles_detection" args="load rtabmap_ros/obstacles_detection obstacles_nodelet_manager">
+       <!-- Input -->
+      <remap from="cloud" to="downsampled_cloud"/>
+      <!-- Output -->
+      <remap from="ground" to="ground"/>
+      <remap from="obstacles" to="obstacles"/>
+      <!-- Parameters -->
+      <param name="frame_id" value="base_link"/>
+    </node>
+
+    <node pkg="nodelet" type="nodelet" name="point_cloud_xyz" args="load rtabmap_ros/point_cloud_xyz obstacles_nodelet_manager">
+      <!-- Input -->
+      <remap from="depth/image" to="/camera/depth/image_raw"/>
+      <remap from="depth/camera_info" to="/camera/depth/camera_info"/>
+      <!-- Output -->
+      <remap from="cloud" to="downsampled_cloud"/>
+      <!-- Parameters -->
+      <param name="decimation" value="10"/>
+      <param name="voxel_size" value="0.0"/>
+    </node>
+  </group>
+</launch>
