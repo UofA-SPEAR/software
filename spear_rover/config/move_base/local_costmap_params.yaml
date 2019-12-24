@@ -18,7 +18,7 @@ local_costmap:
         # TODO set sensor frame to location of stereo camera
         sensor_frame: base_link,
         data_type: PointCloud2, 
-        topic: /planner_cloud,
+        topic: planner_cloud,
         expected_update_rate: 2.0, 
         marking: true, 
         clearing: true,

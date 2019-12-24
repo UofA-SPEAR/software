@@ -2,10 +2,10 @@
 <!-- This is our main rtabmap launch file which can be used in simulator and with zed cam -->
 <launch>
 
-  <arg name="rgb_topic" default="/camera_depth/rgb"/>
-  <arg name="depth_topic" default="/camera_depth/depth"/>
-  <arg name="depth_camera_info_topic" default="/camera_depth/camera/info"/>
-  <arg name="camera_info_topic" default="/camera_depth/camera/info"/>
+  <arg name="rgb_topic" default="/camera/rgb/image_raw"/>
+  <arg name="depth_topic" default="/camera/depth/image_raw"/>
+  <arg name="camera_info_topic" default="/camera/rgb/camera_info"/>
+  <arg name="depth_camera_info_topic" default="/camera/depth/camera_info"/>
   <!-- <arg name="odom_topic"                default="odom"/> -->
   <arg name="camera_frame" default="camera_depth_optical_frame"/>
   <arg name="odom_frame_id" default="odom"/>

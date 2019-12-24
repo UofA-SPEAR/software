@@ -1,12 +1,13 @@
 <!-- Launch RTAB-Map for visual odometry and SLAM -->
 <launch>
   <!-- Syncs up rgb, depth, and camera_info topics -->
-  <node pkg="nodelet" type="nodelet" name="rgbd_sync" args="standalone rtabmap_ros/rgbd_sync" output="screen">
+  <node pkg="nodelet" type="nodelet" name="rgbd_sync" args="standalone rtabmap_ros/rgbd_sync" output="screen" ns="rgbd_sync">
+    <!-- input -->
     <remap from="rgb/image" to="/camera/rgb/image_raw"/>
     <remap from="depth/image" to="/camera/depth/image_raw"/>
     <remap from="rgb/camera_info" to="/camera/rgb/camera_info"/>
     <!-- output -->
-    <remap from="rgbd_image" to="/rtabmap/rgbd_image"/>
+    <remap from="rgbd_image" to="rgbd_image"/>
 
     <!-- Should be true for not synchronized camera topics
          (e.g., false for kinectv2, zed, realsense, true for xtion, kinect360)-->
@@ -19,22 +20,20 @@
     <param name="subscribe_rgbd" type="bool" value="true"/>
     <!-- Reset odometry when lost -->
     <param name="Odom/ResetCountdown" value="1"/>
-    <remap from="rgbd_image" to="/rtabmap/rgbd_image"/>
-    <remap from="rgb/image" to="/camera/rgb/image_raw"/>
+
+    <!-- input -->
+    <remap from="rgbd_image" to="/rgbd_sync/rgbd_image"/>
+<!--    <remap from="rgb/image" to="/camera/rgb/image_raw"/>-->
+<!--    <remap from="depth/image" to="/camera/depth/image_raw"/>-->
     <remap from="rgb/camera_info" to="/camera/rgb/camera_info"/>
-    <remap from="depth/image" to="/camera/depth/image_raw"/>
+
+    <!-- output -->
     <!-- this is the topic that the ekf node expect for visual odom -->
-    <remap from="odom" to="/camera_depth/odom"/>
+    <remap from="odom" to="/camera/odom"/>
   </node>
 
   <param name="/rtabmap/rtabmap/approx_sync" type="bool" value="true"/>
   <param name="/rtabmap/rtabmap/publish_tf" type="bool" value="false"/>
   <!-- Include main rtabmap launch file from spear_rover package -->
-  <include file="$(find spear_rover)/launch/rtabmap_slam.launch">
-    <arg name="camera_frame" value="camera_depth_optical_frame"/>
-    <arg name="rgb_topic" value="/camera/rgb/image_raw"/>
-    <arg name="depth_topic" value="/camera/depth/image_raw"/>
-    <arg name="camera_info_topic" value="/camera/rgb/camera_info"/>
-    <arg name="depth_camera_info_topic" value="/camera/depth/camera_info"/>
-  </include>
+  <include file="$(find spear_rover)/launch/rtabmap_slam.launch"/>
 </launch>
