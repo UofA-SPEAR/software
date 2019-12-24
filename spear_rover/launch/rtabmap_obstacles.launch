@@ -5,7 +5,7 @@
 
     <node pkg="nodelet" type="nodelet" name="obstacles_nodelet_manager" args="manager"/>
     <node pkg="nodelet" type="nodelet" name="obstacles_detection" args="load rtabmap_ros/obstacles_detection obstacles_nodelet_manager">
-       <!-- Input -->
+      <!-- Input -->
       <remap from="cloud" to="downsampled_cloud"/>
       <!-- Output -->
       <remap from="ground" to="ground"/>
