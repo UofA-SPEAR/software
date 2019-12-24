@@ -1,6 +1,6 @@
 <!-- Launches everything needed to drive the rover by sending Twist messages -->
 <launch>
-  <arg name="world_name" default="$(find spear_simulator)/worlds/ball_find_00.world"/>
+  <arg name="world_name" default="$(find spear_simulator)/worlds/test.world"/>
 
   <!-- Launch gazebo to the specified world -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
