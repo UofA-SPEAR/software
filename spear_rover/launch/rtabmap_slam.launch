@@ -23,8 +23,9 @@
     <arg name="frame_id" value="$(arg camera_frame)"/>
     <arg name="odom_frame_id" value="$(arg odom_frame_id)"/>
 
+    <!-- The zed camera has synchronized rgbd -->
+    <arg name="approx_sync" value="false"/>
     <!-- The zed camera does its own visual odometry so rtabmap doesn't have to -->
-    <arg name="approx_sync" value="true"/>
     <arg name="visual_odometry" value="false"/>
   </include>
 
