@@ -198,10 +198,10 @@ Visualization Manager:
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
-        Max Value: 3.26940227
-        Min Value: 2.6147306
+        Max Value: 1.95529461
+        Min Value: -0.363129228
         Value: true
-      Axis: X
+      Axis: Z
       Channel Name: intensity
       Class: rviz/PointCloud2
       Color: 255; 255; 255
@@ -218,9 +218,9 @@ Visualization Manager:
       Queue Size: 10
       Selectable: true
       Size (Pixels): 3
-      Size (m): 0.00999999978
+      Size (m): 0.0500000007
       Style: Flat Squares
-      Topic: /rtabmap/cloud_obstacles
+      Topic: /obstacles_detection/obstacles
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
@@ -265,10 +265,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.355397642
+      Pitch: 0.0453976579
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.11539865
+      Yaw: 2.09039879
     Saved: ~
 Window Geometry:
   Displays:
