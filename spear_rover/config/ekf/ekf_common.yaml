@@ -10,7 +10,7 @@ frequency: 10
 #  roll vel, pitch vel, yaw vel,
 #  x accel, y accel, z accel]
 
-odom0: '/rover_diff_drive_controller/odom'
+odom0: '/rover_diff_drive_controller/odom/'
 odom0_config: [
   true,  true,  true,
   false, false, false,
@@ -18,15 +18,15 @@ odom0_config: [
   false, false, false,
   false, false, false
 ]
-odom0_differential: false
+odom0_differential: true
 odom0_queue_size: 10
 
-odom1: '/camera/odom'
+odom1: '/camera/odom/dontuse'
 odom1_config: [
   true,  true,  true,
   true,  true,  true,
-  false, false, false,
-  false, false, false,
+  true,  true,  true,
+  true,  true,  true,
   false, false, false
 ]
 odom1_differential: false
@@ -38,7 +38,7 @@ imu0_config: [
   true,  true,  true,
   false, false, false,
   false, false, false,
-  true,  true,  true
+  false,  false,  false
 ]
 imu0_differential: false
 imu0_queue_size: 10

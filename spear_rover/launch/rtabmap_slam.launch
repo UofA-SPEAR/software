@@ -12,7 +12,7 @@
 
   <include file="$(find rtabmap_ros)/launch/rtabmap.launch">
     <!-- RTAB-map tuning parameters -->
-    <arg name="rtabmap_args" value="--delete_db_on_start --Odom/ResetCountdown 1 --Odom/Strategy 1 --Vis/CorType 0"/>
+    <arg name="rtabmap_args" value="--delete_db_on_start --Odom/ResetCountdown 0 --Odom/Strategy 1 --Vis/CorType 1"/>
     <arg name="rtabmapviz" value="false"/>
     <arg name="rviz" value="false"/>
 
@@ -27,6 +27,9 @@
     <arg name="approx_sync" value="false"/>
     <!-- The zed camera does its own visual odometry so rtabmap doesn't have to -->
     <arg name="visual_odometry" value="false"/>
+
+    <arg name="publish_tf_odom" value="false"/>
+    <arg name="publish_tf_map" value="true"/>
   </include>
 
 </launch>

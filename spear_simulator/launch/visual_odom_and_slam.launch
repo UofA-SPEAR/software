@@ -1,37 +1,36 @@
 <!-- Launch RTAB-Map for visual odometry and SLAM -->
 <launch>
-  <!-- Syncs up rgb, depth, and camera_info topics -->
-  <node pkg="nodelet" type="nodelet" name="rgbd_sync" args="standalone rtabmap_ros/rgbd_sync" output="screen" ns="rgbd_sync">
-    <!-- input -->
-    <remap from="rgb/image" to="/camera/rgb/image_raw"/>
-    <remap from="depth/image" to="/camera/depth/image_raw"/>
-    <remap from="rgb/camera_info" to="/camera/rgb/camera_info"/>
-    <!-- output -->
-    <remap from="rgbd_image" to="rgbd_image"/>
+<!--  &lt;!&ndash; Syncs up rgb, depth, and camera_info topics &ndash;&gt;-->
+<!--  <node pkg="nodelet" type="nodelet" name="rgbd_sync" args="standalone rtabmap_ros/rgbd_sync" output="screen" ns="rgbd_sync">-->
+<!--    &lt;!&ndash; input &ndash;&gt;-->
+<!--    <remap from="rgb/image" to="/camera/rgb/image_raw"/>-->
+<!--    <remap from="depth/image" to="/camera/depth/image_raw"/>-->
+<!--    <remap from="rgb/camera_info" to="/camera/rgb/camera_info"/>-->
+<!--    &lt;!&ndash; output &ndash;&gt;-->
+<!--    <remap from="rgbd_image" to="rgbd_image"/>-->
 
-    <!-- Should be true for not synchronized camera topics
-         (e.g., false for kinectv2, zed, realsense, true for xtion, kinect360)-->
-    <param name="approx_sync" value="true"/>
-  </node>
+<!--    &lt;!&ndash; Should be true for not synchronized camera topics-->
+<!--         (e.g., false for kinectv2, zed, realsense, true for xtion, kinect360)&ndash;&gt;-->
+<!--    <param name="approx_sync" value="true"/>-->
+<!--  </node>-->
 
-  <!-- Visual odom node -->
-  <node name="rgbd_odometry" pkg="rtabmap_ros" type="rgbd_odometry">
-    <param name="publish_tf" value="false"/>
-    <param name="subscribe_rgbd" type="bool" value="true"/>
-    <!-- Reset odometry when lost -->
-    <param name="Odom/ResetCountdown" value="1"/>
+<!--  &lt;!&ndash; Visual odom node &ndash;&gt;-->
+<!--  <node name="rgbd_odometry" pkg="rtabmap_ros" type="rgbd_odometry">-->
+<!--    <param name="publish_tf" value="false"/>-->
+<!--    <param name="subscribe_rgbd" type="bool" value="true"/>-->
+<!--    &lt;!&ndash; Reset odometry when lost &ndash;&gt;-->
+<!--    <param name="Odom/ResetCountdown" value="1"/>-->
 
-    <!-- input -->
-    <remap from="rgbd_image" to="/rgbd_sync/rgbd_image"/>
-    <remap from="rgb/camera_info" to="/camera/rgb/camera_info"/>
+<!--    &lt;!&ndash; input &ndash;&gt;-->
+<!--    <remap from="rgbd_image" to="/rgbd_sync/rgbd_image"/>-->
+<!--    <remap from="rgb/camera_info" to="/camera/rgb/camera_info"/>-->
 
-    <!-- output -->
-    <!-- this is the topic that the ekf node expect for visual odom -->
-    <remap from="odom" to="/camera/odom"/>
-  </node>
+<!--    &lt;!&ndash; output &ndash;&gt;-->
+<!--    &lt;!&ndash; this is the topic that the ekf node expect for visual odom &ndash;&gt;-->
+<!--    <remap from="odom" to="/camera/odom"/>-->
+<!--  </node>-->
 
   <param name="/rtabmap/rtabmap/approx_sync" type="bool" value="true"/>
-  <param name="/rtabmap/rtabmap/publish_tf" type="bool" value="false"/>
   <!-- Include main rtabmap launch file from spear_rover package -->
   <include file="$(find spear_rover)/launch/rtabmap_slam.launch"/>
 </launch>

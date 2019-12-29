@@ -10,17 +10,3 @@ local_costmap:
     resolution: 0.025
     origin_x: -2.0
     origin_y: -2.0
-
-    observation_sources: point_cloud_sensor
-
-    # assuming receiving a cloud from rtabmap_ros/obstacles_detection node
-    point_cloud_sensor: {
-        # TODO set sensor frame to location of stereo camera
-        sensor_frame: base_link,
-        data_type: PointCloud2, 
-        topic: planner_cloud,
-        expected_update_rate: 20.0,
-        marking: true, 
-        clearing: true,
-        min_obstacle_height: -99999.0,
-        max_obstacle_height: 99999.0}
