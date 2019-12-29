@@ -21,4 +21,6 @@ RUN apt-get install -y libxml2-utils
 RUN apt-get install -y python-catkin-tools
 RUN python -m pip install catkin_lint
 
+RUN hg clone https://bitbucket.org/osrf/gazebo_models ~/.gazebo/models
+
 SHELL ["/ros_entrypoint.sh", "bash", "-c"]
