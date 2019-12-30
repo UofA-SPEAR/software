@@ -35,9 +35,9 @@
     <remap from="odometry/gps" to="odometry/gps"/>
     <!-- Parameters -->
     <param name="frequency" value="1.0"/>
-    <param name="magnetic_declination_radians" value="0.6241"/>
+    <param name="magnetic_declination_radians" value="0.23562"/>
     <!-- This should probably not be 0 -->
-    <param name="yaw_offset" value="0.0"/>
+    <param name="yaw_offset" value="1.570796326794896619231321691639751442098584699687552910487"/> <!-- Possibly + 0.019887657 -->
     <param name="zero_altitude" value="true"/>
     <param name="publish_filtered_gps" value="true"/>
     <!-- Consider setting this if IMU orientation is unreliable and we have yaw from another source -->
