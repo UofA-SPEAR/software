@@ -1,4 +1,4 @@
-<!-- Start rtabmap. Doesn't publish a tf. Doesn't do visual odom. -->
+<!-- Start rtabmap for SLAM. Doesn't publish a tf. Doesn't do visual odom. -->
 <!-- This is our main rtabmap launch file which can be used in simulator and with zed cam -->
 <launch>
 

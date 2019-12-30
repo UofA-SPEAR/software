@@ -1,0 +1,17 @@
+<!-- Top-level launch file which starts everything for autonomous navigation -->
+<launch>
+  <arg name="simulation" default="false"/>
+
+  <include file="$(find spear_rover)/launch/rover.launch" unless="$(arg simulation)"/>
+  <include file="$(find spear_simulator)/launch/rover.launch" if="$(arg simulation)"/>
+
+  <include file="$(find spear_rover)/launch/udp.launch" unless="$(arg simulation)"/>
+  <include file="$(find spear_simulator)/launch/steering.launch" if="$(arg simulation)"/>
+
+  <include file="$(find spear_rover)/launch/move_base.launch"/>
+  <include file="$(find spear_rover)/launch/state_estimate.launch"/>
+  <include file="$(find spear_rover)/launch/visual_odom_and_slam.launch" unless="$(arg simulation)"/>
+  <include file="$(find spear_simulator)/launch/visual_odom_and_slam.launch" if="$(arg simulation)"/>
+
+  <node type="rviz" name="rviz" pkg="rviz" args="-d $(find spear_rover)/rviz/navigate.rviz"/>
+</launch>

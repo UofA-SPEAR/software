@@ -1,11 +1,5 @@
-<!-- Starts visual odometry and then includes main rtabmap launch file from
-     spear_rover package -->
+<!-- Launch RTAB-Map for visual odometry and SLAM -->
 <launch>
-  <!-- publish static transform so that RTAB-map knows where camera is -->
-  <!-- this simply sets camera_depth_optical_frame to the same location as link_camera_depth but with the correct orientation -->
-  <!-- args are: yaw pitch roll frame_id child_frame_id period_in_ms -->
-  <node name="static_transform_publisher" pkg="tf" type="static_transform_publisher" args="0 0 0 -1.57 0 -1.57 link_camera_depth camera_depth_optical_frame 100"/>
-
   <!-- Syncs up rgb, depth, and camera_info topics -->
   <node pkg="nodelet" type="nodelet" name="rgbd_sync" args="standalone rtabmap_ros/rgbd_sync" output="screen">
     <remap from="rgb/image" to="/camera/rgb/image_raw"/>
@@ -36,7 +30,7 @@
   <param name="/rtabmap/rtabmap/approx_sync" type="bool" value="true"/>
   <param name="/rtabmap/rtabmap/publish_tf" type="bool" value="false"/>
   <!-- Include main rtabmap launch file from spear_rover package -->
-  <include file="$(find spear_rover)/launch/rtabmap.launch">
+  <include file="$(find spear_rover)/launch/rtabmap_slam.launch">
     <arg name="camera_frame" value="camera_depth_optical_frame"/>
     <arg name="rgb_topic" value="/camera/rgb/image_raw"/>
     <arg name="depth_topic" value="/camera/depth/image_raw"/>

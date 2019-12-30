@@ -1,3 +1,4 @@
+<!-- Estimate robot pose by fusing odometry from multiple sources -->
 <launch>
   <!-- state estimation nodes: ekf_localization_node and ukf_localization node (can be used interchangably); send odometries to this node-->
   <!--navsat_transform_node: translating GPS data into csomething compatible with the robot's local map/frame of reference; fusing gps data with state estimate-->
