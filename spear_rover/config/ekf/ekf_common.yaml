@@ -10,7 +10,7 @@ frequency: 10
 #  roll vel, pitch vel, yaw vel,
 #  x accel, y accel, z accel]
 
-odom0: '/rover_diff_drive_controller/odom/'
+odom0: '/rover_diff_drive_controller/odom'
 odom0_config: [
   true,  true,  true,
   false, false, false,
