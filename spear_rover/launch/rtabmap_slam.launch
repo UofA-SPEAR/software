@@ -10,26 +10,26 @@
   <arg name="camera_frame" default="camera_depth_optical_frame"/>
   <arg name="odom_frame_id" default="odom"/>
 
-  <include file="$(find rtabmap_ros)/launch/rtabmap.launch">
-    <!-- RTAB-map tuning parameters -->
-    <arg name="rtabmap_args" value="--delete_db_on_start --Odom/ResetCountdown 0 --Odom/Strategy 1 --Vis/CorType 1"/>
-    <arg name="rtabmapviz" value="false"/>
-    <arg name="rviz" value="false"/>
+<!--  <include file="$(find rtabmap_ros)/launch/rtabmap.launch">-->
+<!--    &lt;!&ndash; RTAB-map tuning parameters &ndash;&gt;-->
+<!--    <arg name="rtabmap_args" value="&#45;&#45;delete_db_on_start &#45;&#45;Odom/ResetCountdown 0 &#45;&#45;Odom/Strategy 1 &#45;&#45;Vis/CorType 1"/>-->
+<!--    <arg name="rtabmapviz" value="false"/>-->
+<!--    <arg name="rviz" value="false"/>-->
 
-    <arg name="rgb_topic" value="$(arg rgb_topic)"/>
-    <arg name="depth_topic" value="$(arg depth_topic)"/>
-    <arg name="camera_info_topic" value="$(arg camera_info_topic)"/>
-    <arg name="depth_camera_info_topic" value="$(arg depth_camera_info_topic)"/>
-    <arg name="frame_id" value="$(arg camera_frame)"/>
-    <arg name="odom_frame_id" value="$(arg odom_frame_id)"/>
+<!--    <arg name="rgb_topic" value="$(arg rgb_topic)"/>-->
+<!--    <arg name="depth_topic" value="$(arg depth_topic)"/>-->
+<!--    <arg name="camera_info_topic" value="$(arg camera_info_topic)"/>-->
+<!--    <arg name="depth_camera_info_topic" value="$(arg depth_camera_info_topic)"/>-->
+<!--    <arg name="frame_id" value="$(arg camera_frame)"/>-->
+<!--    <arg name="odom_frame_id" value="$(arg odom_frame_id)"/>-->
 
-    <!-- The zed camera has synchronized rgbd -->
-    <arg name="approx_sync" value="false"/>
-    <!-- The zed camera does its own visual odometry so rtabmap doesn't have to -->
-    <arg name="visual_odometry" value="false"/>
+<!--    &lt;!&ndash; The zed camera has synchronized rgbd &ndash;&gt;-->
+<!--    <arg name="approx_sync" value="false"/>-->
+<!--    &lt;!&ndash; The zed camera does its own visual odometry so rtabmap doesn't have to &ndash;&gt;-->
+<!--    <arg name="visual_odometry" value="false"/>-->
 
-    <arg name="publish_tf_odom" value="false"/>
-    <arg name="publish_tf_map" value="true"/>
-  </include>
+<!--    <arg name="publish_tf_odom" value="false"/>-->
+<!--    <arg name="publish_tf_map" value="true"/>-->
+<!--  </include>-->
 
 </launch>
