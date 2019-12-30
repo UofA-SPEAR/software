@@ -17,11 +17,12 @@ This is a seperate package so that a node or package can depend on it without ne
 
 This package is for all of the code that runs the rover.
 Essentially, any software that is supposed to run on the rover or is hardware-dependant (i.e. drive management or arm kinematics) should be placed in this package.
+This includes things which can run on the simulated rover, unless they are meant to exclusively run in simulation.
 
 ## spear_simulator
 
-This package contains the code and configuration for the simulator.
-This should ideally be able to run on the TX2, but it is not necessary for it to, as simulations can be run on more powerful computers.
+This package contains the code and configuration for anything that runs exclusively on the simulator.
+However, the simulator is still generally run by launching something from `spear_rover` (see [the Wiki](https://github.com/UofA-SPEAR/software/wiki/Launch-file-structure)).
 
 ## spear_station
 
