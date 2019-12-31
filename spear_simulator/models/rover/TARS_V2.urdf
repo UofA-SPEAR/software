@@ -307,7 +307,7 @@
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
       <joint name="link_wheel_backleft">
-        <hardwareInterface>VelocityJointInterface</hardwareInterface>
+        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
       </joint>
     </transmission>
     <gazebo reference="link_wheel_backleft">
@@ -330,7 +330,7 @@
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
       <joint name="link_wheel_backright">
-        <hardwareInterface>VelocityJointInterface</hardwareInterface>
+        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
       </joint>
     </transmission>
     <gazebo reference="link_wheel_backright">
@@ -353,7 +353,7 @@
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
       <joint name="link_wheel_frontleft">
-        <hardwareInterface>VelocityJointInterface</hardwareInterface>
+        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
       </joint>
     </transmission>
     <gazebo reference="link_wheel_frontleft">
@@ -376,7 +376,7 @@
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
       <joint name="link_wheel_frontright">
-        <hardwareInterface>VelocityJointInterface</hardwareInterface>
+        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
       </joint>
     </transmission>
     <gazebo reference="link_wheel_frontright">
@@ -389,7 +389,7 @@
 
     <gazebo>
       <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-        <robotNamespace>/</robotNamespace>
+        <legacyModeNS>true</legacyModeNS>
       </plugin>
     </gazebo>
 
