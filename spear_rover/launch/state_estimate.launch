@@ -23,6 +23,7 @@
     <param name="world_frame" value="map"/>
     <rosparam file="$(find spear_rover)/config/ekf/ekf_common.yaml"/>
     <rosparam file="$(find spear_rover)/config/ekf/ekf_map.yaml"/>
+
     <remap from="odometry/filtered" to="map/odometry/filtered"/>
   </node>
 
