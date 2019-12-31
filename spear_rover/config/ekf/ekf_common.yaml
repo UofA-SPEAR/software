@@ -3,6 +3,7 @@ map_frame: 'map'
 odom_frame: 'odom'
 base_link_frame: 'base_link'
 frequency: 10
+publish_tf: true
 
 # [x, y, z
 #  roll, pitch, yaw,

@@ -1,5 +1,3 @@
-publish_tf: true
-
 odom2: 'odometry/gps'
 odom2_config: [
   true,  true,  true,
