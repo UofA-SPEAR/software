@@ -51,13 +51,4 @@
       <arg name="base_frame" value="$(arg camera_frame)"/>
     </include>
   </group>
-
-  <!-- RTAB-map Node-->
-  <include file="$(find spear_rover)/launch/rtabmap_slam.launch">
-    <arg name="rgb_topic" value="$(arg rgb_topic)"/>
-    <arg name="depth_topic" value="$(arg depth_topic)"/>
-    <arg name="camera_info_topic" value="$(arg camera_info_topic)"/>
-    <arg name="depth_camera_info_topic" value="$(arg depth_camera_info_topic)"/>
-    <arg name="camera_frame" value="$(arg camera_frame)"/>
-  </include>
 </launch>

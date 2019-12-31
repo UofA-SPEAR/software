@@ -29,8 +29,4 @@
     <!-- this is the topic that the ekf node expect for visual odom -->
     <remap from="odom" to="/camera/odom"/>
   </node>
-
-  <param name="/rtabmap/rtabmap/approx_sync" type="bool" value="true"/>
-  <!-- Include main rtabmap launch file from spear_rover package -->
-  <include file="$(find spear_rover)/launch/rtabmap_slam.launch"/>
 </launch>

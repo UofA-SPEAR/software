@@ -10,8 +10,8 @@
 
   <include file="$(find spear_rover)/launch/move_base.launch"/>
   <include file="$(find spear_rover)/launch/state_estimate.launch"/>
-  <include file="$(find spear_rover)/launch/visual_odom_and_slam.launch" unless="$(arg simulation)"/>
-  <include file="$(find spear_simulator)/launch/visual_odom_and_slam.launch" if="$(arg simulation)"/>
+  <include file="$(find spear_rover)/launch/visual_odom.launch" unless="$(arg simulation)"/>
+  <include file="$(find spear_simulator)/launch/visual_odom.launch" if="$(arg simulation)"/>
   <include file="$(find spear_rover)/launch/rtabmap_obstacles.launch"/>
 
   <node type="rviz" name="rviz" pkg="rviz" args="-d $(find spear_rover)/rviz/navigate.rviz"/>

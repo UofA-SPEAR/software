@@ -16,11 +16,10 @@ Here's a list of what each launch file does (for an overview of the principles o
 - `robot_description.launch` reads the robot model file and publishes the appropriate tf transforms. This allows us to know e.g. where the camera is in and out of simulation.
 - `rover.launch` launches everything needed to drive around the rover by directly sending twist messages to the correct topic. These messages might come from `move_base`, `rqt_robot_steering`, or from the base station.
 - `rtabmap_obstacles.launch` downsamples the point cloud from the camera and performs obstacle segmentation using RTAB-Map. Technically RTAB-Map should be doing this internally anyway, but for whatever reason this approach is needed to ensure the obstacle cloud is published fast enough.
-- `rtabmap_slam.launch` performs mapping using RTAB-Map.
 - `sensors.launch` launches everything needed for all sensors, such as the camera or IMU. Basically it corresponds to anything started via plugins in the simulator.
 - `state_estimate.launch` performs localization using EKF's.
 - `udp.launch` uses the `nimbro_topic_transport` package to send and receive topics to and from the base station. 
-- `visual_odom_and_slam.launch` launches visual odometry using the ZED camera and SLAM using rtabmap.
+- `visual_odom.launch` launches visual odometry using the ZED camera.
 
 ## Nodes
 
