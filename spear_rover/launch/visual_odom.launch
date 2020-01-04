@@ -3,7 +3,6 @@
 
   <!-- Start zed ros wrapper and rtabmap -->
   <!-- see: https://github.com/stereolabs/zed-ros-wrapper/tree/master/examples/zed_rtabmap_example -->
-  <arg name="zed_namespace" default="zed"/>
 
   <!-- <arg name="svo_file" default="path/to/svo/file.svo"> -->
   <arg name="svo_file" default=""/>
@@ -20,13 +19,13 @@
        RESOLUTION_VGA    -> 672*376,   available framerates: 15, 30, 60, 100 fps. -->
   <arg name="frame_rate" default="60"/>
 
-  <arg name="rgb_topic" default="/rgb/image_rect_color"/>
-  <arg name="depth_topic" default="/depth/depth_registered"/>
-  <arg name="camera_info_topic" default="/rgb/camera_info"/>
-  <arg name="depth_camera_info_topic" default="/depth/camera_info"/>
+  <arg name="rgb_topic" default="rgb/image_raw"/>
+  <arg name="depth_topic" default="depth/image_raw"/>
+  <arg name="camera_info_topic" default="rgb/camera_info"/>
+  <arg name="depth_camera_info_topic" default="depth/camera_info"/>
   <arg name="camera_frame" default="link_camera_depth"/>
 
-  <group ns="$(arg zed_namespace)">
+  <group ns="camera">
     <!-- ZED Wrapper Node-->
     <include file="$(find zed_wrapper)/launch/zed_camera.launch">
       <arg name="svo_file" value="$(arg svo_file)"/>
