@@ -14,11 +14,11 @@
   <arg name="verbose" default="true"/>
   <!--0=RESOLUTION_HD2K, 1=RESOLUTION_HD1080, 2=RESOLUTION_HD720, 3=RESOLUTION_VGA -->
   <arg name="resolution" default="3"/>
-  <arg name="frame_rate" default="60"/>
   <!-- RESOLUTION_HD2K   -> 2208*1242, available framerates: 15 fps.
        RESOLUTION_HD1080 -> 1920*1080, available framerates: 15, 30 fps.
        RESOLUTION_HD720  -> 1280*720,  available framerates: 15, 30, 60 fps.
        RESOLUTION_VGA    -> 672*376,   available framerates: 15, 30, 60, 100 fps. -->
+  <arg name="frame_rate" default="60"/>
 
   <arg name="rgb_topic" default="/rgb/image_rect_color"/>
   <arg name="depth_topic" default="/depth/depth_registered"/>
