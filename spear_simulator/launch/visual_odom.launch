@@ -3,9 +3,9 @@
   <!-- Syncs up rgb, depth, and camera_info topics -->
   <node pkg="nodelet" type="nodelet" name="rgbd_sync" args="standalone rtabmap_ros/rgbd_sync" output="screen" ns="rgbd_sync">
     <!-- input -->
-    <remap from="rgb/image" to="/camera/rgb/image_raw"/>
-    <remap from="depth/image" to="/camera/depth/image_raw"/>
-    <remap from="rgb/camera_info" to="/camera/rgb/camera_info"/>
+    <remap from="rgb/image" to="/camera_depth/rgb/image_raw"/>
+    <remap from="depth/image" to="/camera_depth/depth/image_raw"/>
+    <remap from="rgb/camera_info" to="/camera_depth/rgb/camera_info"/>
     <!-- output -->
     <remap from="rgbd_image" to="rgbd_image"/>
 
@@ -23,10 +23,10 @@
 
     <!-- input -->
     <remap from="rgbd_image" to="/rgbd_sync/rgbd_image"/>
-    <remap from="rgb/camera_info" to="/camera/rgb/camera_info"/>
+    <remap from="rgb/camera_info" to="/camera_depth/rgb/camera_info"/>
 
     <!-- output -->
     <!-- this is the topic that the ekf node expect for visual odom -->
-    <remap from="odom" to="/camera/odom"/>
+    <remap from="odom" to="/camera_depth/odom"/>
   </node>
 </launch>

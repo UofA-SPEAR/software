@@ -25,7 +25,7 @@
   <arg name="depth_camera_info_topic" default="depth/camera_info"/>
   <arg name="camera_frame" default="link_camera_depth"/>
 
-  <group ns="camera">
+  <group ns="camera_depth">
     <!-- ZED Wrapper Node-->
     <include file="$(find zed_wrapper)/launch/zed_camera.launch">
       <arg name="svo_file" value="$(arg svo_file)"/>
