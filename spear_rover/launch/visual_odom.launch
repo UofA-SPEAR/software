@@ -3,7 +3,6 @@
 
   <!-- Start zed ros wrapper and rtabmap -->
   <!-- see: https://github.com/stereolabs/zed-ros-wrapper/tree/master/examples/zed_rtabmap_example -->
-  <arg name="zed_namespace" default="zed"/>
 
   <!-- <arg name="svo_file" default="path/to/svo/file.svo"> -->
   <arg name="svo_file" default=""/>
@@ -14,19 +13,19 @@
   <arg name="verbose" default="true"/>
   <!--0=RESOLUTION_HD2K, 1=RESOLUTION_HD1080, 2=RESOLUTION_HD720, 3=RESOLUTION_VGA -->
   <arg name="resolution" default="3"/>
-  <arg name="frame_rate" default="60"/>
   <!-- RESOLUTION_HD2K   -> 2208*1242, available framerates: 15 fps.
        RESOLUTION_HD1080 -> 1920*1080, available framerates: 15, 30 fps.
        RESOLUTION_HD720  -> 1280*720,  available framerates: 15, 30, 60 fps.
        RESOLUTION_VGA    -> 672*376,   available framerates: 15, 30, 60, 100 fps. -->
+  <arg name="frame_rate" default="60"/>
 
-  <arg name="rgb_topic" default="/rgb/image_rect_color"/>
-  <arg name="depth_topic" default="/depth/depth_registered"/>
-  <arg name="camera_info_topic" default="/rgb/camera_info"/>
-  <arg name="depth_camera_info_topic" default="/depth/camera_info"/>
+  <arg name="rgb_topic" default="rgb/image_raw"/>
+  <arg name="depth_topic" default="depth/image_raw"/>
+  <arg name="camera_info_topic" default="rgb/camera_info"/>
+  <arg name="depth_camera_info_topic" default="depth/camera_info"/>
   <arg name="camera_frame" default="link_camera_depth"/>
 
-  <group ns="$(arg zed_namespace)">
+  <group ns="camera_depth">
     <!-- ZED Wrapper Node-->
     <include file="$(find zed_wrapper)/launch/zed_camera.launch">
       <arg name="svo_file" value="$(arg svo_file)"/>
@@ -51,13 +50,4 @@
       <arg name="base_frame" value="$(arg camera_frame)"/>
     </include>
   </group>
-
-  <!-- RTAB-map Node-->
-  <include file="$(find spear_rover)/launch/rtabmap_slam.launch">
-    <arg name="rgb_topic" value="$(arg rgb_topic)"/>
-    <arg name="depth_topic" value="$(arg depth_topic)"/>
-    <arg name="camera_info_topic" value="$(arg camera_info_topic)"/>
-    <arg name="depth_camera_info_topic" value="$(arg depth_camera_info_topic)"/>
-    <arg name="camera_frame" value="$(arg camera_frame)"/>
-  </include>
 </launch>

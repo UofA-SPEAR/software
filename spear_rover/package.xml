@@ -55,4 +55,5 @@
   <exec_depend>nmea_navsat_driver</exec_depend>
 
   <exec_depend>rqt_graph</exec_depend>
+  <exec_depend>rqt_reconfigure</exec_depend>
 </package>

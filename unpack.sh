@@ -43,6 +43,11 @@ then
     source ~/ros/devel/setup.bash
 fi
 
+# Download gazebo model database
+if [ $DEV ]; then
+  hg clone https://bitbucket.org/osrf/gazebo_models ~/.gazebo/models
+fi
+
 # Add our models to GAZEBO_MODEL_PATH
 if ! grep -Fxq "export GAZEBO_MODEL_PATH=GAZEBO_MODEL_PATH:${DIR}/spear_simulator/models" ~/.bashrc
 then

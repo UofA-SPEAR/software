@@ -15,7 +15,7 @@ The launch files in this package are generally called by others within `spear_ro
 
 - `steering.launch` launches the rqt steering GUI which sends Twist messages to move the robot around.
 
-- `visual_odom_and_slam.launch` launches everything needed for SLAM in the simulator.
+- `visual_odom.launch` launch visual odometry using RTAB-Map.
 
 ## 3D models
 

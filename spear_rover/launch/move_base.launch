@@ -2,10 +2,9 @@
 <launch>
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
     <!-- local_costmap_params.yaml expects a point cloud published to topic /planner_cloud  -->
-    <remap from="/planner_cloud" to="/rtabmap/cloud_obstacles"/>
+    <remap from="planner_cloud" to="/obstacles_detection/obstacles"/>
     <remap from="map" to="/rtabmap/grid_map"/>
-    <remap from="move_base_simple/goal" to="/planner_goal"/>
-    <remap from="/cmd_vel" to="/rover_diff_drive_controller/cmd_vel"/>
+    <remap from="cmd_vel" to="/rover_diff_drive_controller/cmd_vel"/>
     <!-- Subscribe to the filtered odometry from the ekf node -->
     <remap from="odom" to="/ekf/map/odometry/filtered"/>
     <rosparam file="$(find spear_rover)/config/move_base/costmap_common_params.yaml" command="load" ns="global_costmap"/>
