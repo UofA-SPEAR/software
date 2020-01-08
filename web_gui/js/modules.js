@@ -95,12 +95,14 @@ function load() {
     //console.log(modules);
     for (let x=0; x < modules.length; x++) {
 
+        let cModule = modules[x];
+
         //Create topic here
 
         let tempTopic = new ROSLIB.Topic({
             ros : ros,
-            name : modules[x].topic,
-            messageType: modules[x]['message-type']
+            name : cModule.topic,
+            messageType: cModule['message-type']
 
         });
         //console.log(modules[x]['message-type']);
@@ -110,21 +112,48 @@ function load() {
         }
         */
         let htmlCard = `
-            <div class="card" id="module-` + x + `-card" onclick="ScrollElement('module-extended-` + x + `-card')">
+            <div class="card" id="module-${x}-card" onclick="ScrollElement('module-extended-${x}-card')">
                 <div class="module-container">
-                    <h2 class="module-title">`+ modules[x].title + `</h2>
-                    <p id="module-` + x + `-value">` + modules[x].type.toUpperCase() + `</p>
+                    <h2 class="module-title">${modules[x].title}</h2>
+                    <p id="module-${x}-value">${modules[x].type.toUpperCase()}</p>
                 </div>
             </div>
         `;
         let ExtCard = `
-            <div class="card extended-card" id="module-extended-${x}-card" onclick="ScrollElement('module-` + x + `-value')">
+            <div class="card extended-card" id="module-extended-${x}-card" onclick="ScrollElement('module-${x}-value')">
                 <div class="module-container">
                     <h2 class="module-title">`+ modules[x].title + `</h2>
-                    <p id="module-extended-` + x + `-value">` + modules[x].type.toUpperCase() + `</p>
+        `;
+        let ExtCardEnd = `
                 </div>
             </div>
         `;
+
+
+        for (let y=0; y < cModule["extended-modules"].length; y++) {
+            let ceModule = cModule["extended-modules"][y];
+            let tempExtTopic = new ROSLIB.Topic({
+                ros : ros,
+                name : ceModule.topic,
+                messageType: ceModule['message-type']
+
+            });
+
+            ExtCard += `
+                    <h3 class="module-title">${ceModule.title}</h3>
+                    <p id="module-${x}-${y}-value">${ceModule.type.toUpperCase()}</p>
+            `
+
+        }
+
+
+
+
+
+
+        ExtCard += ExtCardEnd;
+
+
 
         document.getElementById('container-modules').innerHTML += htmlCard;
         document.getElementById('container-expanded-modules').innerHTML += ExtCard;
