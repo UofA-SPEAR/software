@@ -28,6 +28,9 @@
   <exec_depend>message_runtime</exec_depend>
 
 
+  <exec_depend>rosbridge_suite</exec_depend>
+
+
   <buildtool_depend>catkin</buildtool_depend>
 
 
