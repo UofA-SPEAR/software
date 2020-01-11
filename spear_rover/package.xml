@@ -51,7 +51,6 @@
   <build_depend>robot_localization</build_depend>
   <exec_depend>robot_localization</exec_depend>
 
-  <build_depend>flexbe_behavior_engine</build_depend>
   <exec_depend>flexbe_behavior_engine</exec_depend>
 
   <exec_depend>razor_imu_9dof</exec_depend>
