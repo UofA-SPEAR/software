@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<behavior name="Waypoint navigation">
+
+	<executable package_path="spear_flexbe_behaviors.waypoint_navigation_sm" class="WaypointnavigationSM" />
+	<tagstring></tagstring>
+	<author>Mitchell</author>
+	<date>Wed Jan 08 2020</date>
+	<description>
+		Autonomously navigate to various waypoints.
+	</description>
+
+
+	<!-- Contained Behaviors -->
+
+	<!-- Available Parameters -->
+
+</behavior>
