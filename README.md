@@ -38,10 +38,9 @@ The recommended way to run the software in this repo is with Docker.
 - Any linux distro
 - Docker
 
-For instructions on how to set up Docker inside a linux virtual machine on Mac or Windows, see these pages:
+For instructions on how to set up Docker inside a linux virtual machine on Mac, see these pages:
 
 - [Install Instructions for Mac](https://github.com/UofA-SPEAR/software/wiki/Install-Instructions-Mac)
-- [Install Instructions for Windows](https://github.com/UofA-SPEAR/software/wiki/Install-Instructions-Windows)
 
 Some distributions have old versions of docker. The recommended way to install
 is by using the convenience script, provided by docker.
@@ -151,71 +150,44 @@ cd /software
 ./build.bash
 ```
 
-# Manual setup and install instructions
+# Virtual machine setup and install instructions
 
-## Install Ubuntu 16.04 desktop
+You can also develop from a virtual machine.
+This is the recommended approach if you use Windows and don't want to dual-boot Linux (due to space constraints, for example).
 
-We use ROS Kinetic which requires Ubuntu 16.04.
-A virtual machine will work but a native install will run smoother, especially for the simulator.
+## Requirements
 
-You can find a .iso image of Ubuntu 16.04 [here](http://releases.ubuntu.com/16.04/).
+  - Windows 10 (older versions of windows, or even Linux, probably would work with some modification of the setup instructions)
 
-## Install ROS
+## Installing
 
-We use ROS for nearly everying on the rover.<br>
-To install ROS, follow the instructions [here](http://wiki.ros.org/kinetic/Installation/Ubuntu).<br>
-We recommend the "Desktop-Full Install" ROS package for best compatibility.
+We use [Vagrant](https://www.vagrantup.com/) for creating and managing the VM.
+Vagrant can be used with various VM providers; in our case, we use [VirtualBox](https://www.virtualbox.org/).
+Both programs must have compatible versions (and at the time of writing, the latest version of Vagrant is incompatible with the latest version of VirtualBox).
+The easiest (though not simplest) way of dealing with all this is to install both programs using [Chocolatey](https://chocolatey.org/). So,
 
-## Install other dependencies
+1. Install Chocolatey from [its website](https://chocolatey.org/).
+2. Open up an administrator PowerShell (e.g. by using the keyboard shortcut `Win+X` and selecting *Windows PowerShell (Admin)* from the menu).
+3. Type
+    
+        choco install virtualbox --version 6.0 -y
+        choco install vagrant --version 2.6.2 -y
+    
+    to install VirtualBox and Vagrant.
 
-Install the following dependencies:<br>
+## Creating the virtual machine
 
+To create the virtual machine, navigate to the directory containing this README and type
 
-- x264: `apt-get install libx264-dev`
-- Cython: `python -m pip install cython --user`
-- Pygame: `python -m pip install pygame --user`
-- Kivy: `python -m pip install kivy --user`
-- Kivy Garden: `python -m pip install kivy-garden --user`
-- Kivy Knob: `garden install knob`
-- ROS Joy: `sudo apt-get install ros-kinetic-joy`
-- libqt (required by nimbro_network): `apt-get install libqt4-dev`
-- qmake (required by nimbro_network): `apt-get install qt4-qmake`
-- ROS move\_base package: `apt-get install ros-kinetic-move-base`
+    vagrant up
 
-Notes:
-1. x264 is for encoding video and Kivy is for our user interface.
-2. ROS Kinetic requires the Python 2 versions of all modules.
+This will create a new virtual machine and install all required packages on it.
+It will also re-clone this repository within the virtual machine.
 
-## Clone this repository and unpack
+## Developing on the virtual machine
 
-After installing the dependencies, clone this repo and run the `unpack.sh` script located within.
-
-This will setup your catkin workspace for development.
-
-You must `source ~/.bashrc` for the changes made by `unpack.sh` to take effect.
-
-Run rosdep to install the required packages:
-
-```
-rosdep install --from-paths src --ignore-src -r -y
-```
-
-## Developing and building
-
-The `unpack.sh` script will symlink all the source files to a catkin workspace located at `~/ros`.
-You can work in this directory and when you need to build, either run `catkin build` in the `~/ros` directory or simply run `./build.bash` from this directory which will handle things for you.
-
-## “Permission Denied” errors when running roslaunch or roscore
-
-Run the following 2 commands:
-```
-sudo rosdep fix-permissions
-rosdep update
-```
-
-See this forum post for more info:
-<https://answers.ros.org/question/60366/problem-with-roscore/>.
-
+If you wish to re-create the virtual machine (for example to re-run the configuration scripts), you can destroy it first using `vagrant destroy`.
+Keep in mind that any edits to the code you make within the virtual machine will not be reflected outside of it, so make sure you commit your changes if necessary before destroying the virtual machine.
 
 # Additional information
 
