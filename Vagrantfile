@@ -82,9 +82,7 @@ Vagrant.configure("2") do |config|
     sudo apt-get update
     sudo apt-get install -y ros-kinetic-desktop-full
     echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
-    set -i
     source /opt/ros/kinetic/setup.bash
-    set +i
     sudo rosdep init
     rosdep update
 
