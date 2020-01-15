@@ -184,6 +184,15 @@ To create the virtual machine, navigate to the directory containing this README 
 This will create a new virtual machine and install all required packages on it.
 It will also re-clone this repository within the virtual machine.
 
+When you first create the machine, you will also have to reboot it to enable the GUI.
+This can be done like so:
+
+    vagrant ssh
+    sudo reboot
+
+The VirtualBox GUI will then show an Ubuntu 16 login screen.
+Log in as the user *vagrant* using the password *vagrant* (if you are prompted to upgrade to Ubuntu 18, decline the upgrade).
+
 Various virtual machine settings can be configured by editing the file `Vagrantfile`.
 For example, you can change the number of CPUs or amount of RAM to allocate to the virtual machine.
 By default, this is 8 CPUs and 6 GiB of RAM, but you may wish to change this to fit the capeabilities of your development machine.
