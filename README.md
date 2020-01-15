@@ -195,7 +195,7 @@ Log in as the user *vagrant* using the password *vagrant* (if you are prompted t
 
 Various virtual machine settings can be configured by editing the file `Vagrantfile`.
 For example, you can change the number of CPUs or amount of RAM to allocate to the virtual machine.
-By default, this is 8 CPUs and 6 GiB of RAM, but you may wish to change this to fit the capeabilities of your development machine.
+By default, this is 8 CPUs and 4 GB of RAM, but you may wish to change this to fit the capeabilities of your development machine.
 
 ## Developing on the virtual machine
 
