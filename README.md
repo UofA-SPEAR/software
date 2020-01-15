@@ -184,6 +184,10 @@ To create the virtual machine, navigate to the directory containing this README 
 This will create a new virtual machine and install all required packages on it.
 It will also re-clone this repository within the virtual machine.
 
+Various virtual machine settings can be configured by editing the file `Vagrantfile`.
+For example, you can change the number of CPUs or amount of RAM to allocate to the virtual machine.
+By default, this is 8 CPUs and 6 GiB of RAM, but you may wish to change this to fit the capeabilities of your development machine.
+
 ## Developing on the virtual machine
 
 If you wish to re-create the virtual machine (for example to re-run the configuration scripts), you can destroy it first using `vagrant destroy`.
