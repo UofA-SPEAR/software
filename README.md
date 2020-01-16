@@ -171,7 +171,7 @@ The easiest (though not simplest) way of dealing with all this is to install bot
 3. Type
     
         choco install virtualbox --version 6.0 -y
-        choco install vagrant --version 2.6.2 -y
+        choco install vagrant --version 2.2.6 -y
     
     to install VirtualBox and Vagrant.
 
