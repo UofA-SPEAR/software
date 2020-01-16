@@ -19,6 +19,7 @@ RUN apt-get update && apt-get install -y qt4-default libx264-dev \
                                          nano
 RUN apt-get install -y libxml2-utils
 RUN apt-get install -y python-catkin-tools
-RUN python -m pip install catkin_lint kivy
+RUN python -m pip install catkin_lint kivy kivy-garden
+RUN garden install knob
 
 SHELL ["/ros_entrypoint.sh", "bash", "-c"]
