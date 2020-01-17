@@ -12,7 +12,7 @@ matrix:
         - sudo apt-get update
         - sudo apt-get install pep8
       script:
-        - pep8 --ignore=E501 . --exclude='spear_behaviors/spear_flexbe_behaviors/src/**'
+        - pep8 --ignore=E501 --exclude=spear_behaviors/spear_flexbe_behaviors/src .
 
     - name: "c++ linting"
       language: c++
