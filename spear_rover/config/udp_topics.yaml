@@ -2,3 +2,4 @@ topics:
   - name: "/zed/left/image_raw_color"
     compress: true # enable bz2 compression
     rate: 60.0 # rate limit at 60Hz
+  - name: "/flexbe"
