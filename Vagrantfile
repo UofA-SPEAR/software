@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "ubuntu/xenial64"
+  config.vm.box = "hashicorp/bionic64"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -56,6 +56,9 @@ Vagrant.configure("2") do |config|
     # Customize the amount of memory on the VM:
     vb.memory = "4096"
     vb.cpus = 8
+
+    # Automatically update guest additions upon reboot
+    config.vbguest.auto_update = true
   end
   #
   # View the documentation for the provider you are using for more
@@ -70,47 +73,39 @@ Vagrant.configure("2") do |config|
     # Install a desktop
     sudo apt install -y ubuntu-desktop
     
-    # Install gazebo
-    sudo sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list'
-    wget http://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add -
-    sudo apt-get update
-    sudo apt-get install -y gazebo7 gazebo7-dev
-
     # Install ROS
     sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
     sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
     sudo apt-get update
-    sudo apt-get install -y ros-kinetic-desktop-full
-    echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
-    source /opt/ros/kinetic/setup.bash
+    sudo apt-get install -y ros-melodic-desktop-full
+    echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
+    source /opt/ros/melodic/setup.bash
     sudo rosdep init
     rosdep update
 
     # Install other stuff
     sudo apt-get install -y qt4-default libx264-dev \
-                                         ros-kinetic-rqt \
-                                         ros-kinetic-gscam \
-                                         ros-kinetic-catch-ros \
-                                         ros-kinetic-tf \
-                                         ros-kinetic-opencv3 \
-                                         ros-kinetic-cv-bridge \
-                                         gstreamer-0.1 \
-                                         libgstreamer0.10-dev \
-                                         libgstreamer-plugins-base0.10-dev \
-                                         ros-kinetic-rtabmap-ros \
-                                         ros-kinetic-move-base \
-                                         gstreamer0.10-plugins-good \
-                                         python-pip \
-                                         tmux \
-                                         vim \
-                                         nano \
-                                         libxml2-utils \
-                                         python-catkin-tools
+                            ros-melodic-rqt \
+                            ros-melodic-gscam \
+                            ros-melodic-catch-ros \
+                            ros-melodic-tf \
+                            ros-melodic-cv-bridge \
+                            ros-melodic-rtabmap-ros \
+                            ros-melodic-move-base \
+                            python-pip \
+                            tmux \
+                            vim \
+                            nano \
+                            libxml2-utils \
+                            python-catkin-tools
     python -m pip install catkin_lint
     
     # Clone the repository
     git clone https://github.com/UofA-SPEAR/software.git
     cd software
     ./unpack.sh dev
+
+    # Install vs code
+    sudo snap install code --classic
   SHELL
 end
