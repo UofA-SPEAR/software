@@ -1,0 +1,22 @@
+# This file enables a Virtual CANBus (vcan) interface in the spear container.
+#
+# Note: The `vcan` kernel module MUST be loaded before using this file!
+# i.e., run the command `sudo modprobe vcan`.
+#
+# To use, run this command:
+#
+#     $ sudo modprobe vcan && docker-compose -f docker-compose.yml -f docker-compose.with-vcan.yml run spear
+#
+
+version: "3.3"
+services:
+  spear:
+    # Launch vcan-setup.bash first, to set up vcan network interfaces, and then
+    # run a bash login shell.
+    command: ["bash", "-c", "/software/spear_rover/vcan-setup.bash && bash -l"]
+
+    # The below is needed so that we can actually configure network interfaces.
+    # NOTE: this will modify network ON THE HOST MACHINE!!! Be VERY careful what
+    #       software you run with this!!!!!!
+    cap_add:
+      - NET_ADMIN

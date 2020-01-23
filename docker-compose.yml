@@ -15,6 +15,7 @@ services:
       ROS_IP: 127.0.0.1
       QT_X11_NO_MITSHM: 1
       DOCKER_HOST_REPO_LOCATION: .
+      RUNNING_IN_DOCKER: "true"
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - $XAUTHORITY:/root/.Xauthority
@@ -24,7 +25,7 @@ services:
     devices:
        - /dev/dri:/dev/dri
     network_mode: host
-  
+
   spear_env:
     build:
       context: .
