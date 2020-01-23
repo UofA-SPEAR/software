@@ -198,8 +198,8 @@ It will also re-clone this repository within the virtual machine.
 When you first create the machine, you will also have to reboot it to enable the GUI.
 The easiest way to do this is to just close the window with the VM and select the option to power off the machine, then restart the VM in virtualbox or with another `vagrant up`.
 
-The VirtualBox GUI will then show an Ubuntu 16 login screen.
-Log in as the user *vagrant* using the password *vagrant* (if you are prompted to upgrade to Ubuntu 18, decline the upgrade).
+The VirtualBox GUI will then show an Ubuntu 18 login screen.
+Log in as the user *vagrant* using the password *vagrant*.
 
 Various virtual machine settings can be configured using the VirtualBox GUI.
 For example, you can change the number of CPUs or amount of RAM to allocate to the virtual machine.
