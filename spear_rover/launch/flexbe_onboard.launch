@@ -1,0 +1,6 @@
+<launch>
+  <node name="behavior" pkg="flexbe_onboard" type="start_behavior" output="screen" respawn="true">
+    <param name="log_enabled" value="False"/>
+    <param name="log_folder" value="~/.flexbe_logs"/>
+  </node>
+</launch>

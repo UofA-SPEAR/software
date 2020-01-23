@@ -85,6 +85,10 @@ git clone https://github.com/MonashUAS/canros.git
 cd ~/ros/src
 git clone https://github.com/gareth-cross/rviz_satellite.git
 
+###### Install FlexBE GUI
+cd ~/ros/src
+git clone https://github.com/FlexBE/flexbe_app.git
+
 #### Get our DSDL definitions
 cd ~
 git clone https://github.com/UofA-SPEAR/uavcan_dsdl.git
@@ -98,6 +102,7 @@ ln -s $DIR/spear_msgs
 ln -s $DIR/spear_rover
 ln -s $DIR/spear_station
 ln -s $DIR/spear_simulator
+ln -s $DIR/spear_behaviors
 
 ###### Link UAVCAN DSDL definitions to the home directory.
 mkdir -p ~/uavcan_vendor_specific_types
