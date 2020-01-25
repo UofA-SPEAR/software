@@ -107,8 +107,7 @@ def main():
             # State of health and charge.
             "state_of_health_pct": lambda data: data.state_of_health_pct,
             "state_of_charge_pct": lambda data: data.state_of_charge_pct,
-            "state_of_charge_pct_stdev": lambda data: data.
-            state_of_charge_pct_stdev,
+            "state_of_charge_pct_stdev": lambda data: data.state_of_charge_pct_stdev,
 
             # Battery identification.
             "battery_id": lambda data: data.battery_id,

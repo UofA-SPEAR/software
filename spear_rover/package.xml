@@ -58,4 +58,5 @@
 
   <exec_depend>rqt_graph</exec_depend>
   <exec_depend>rqt_reconfigure</exec_depend>
+  <exec_depend>rqt_ez_publisher</exec_depend>
 </package>
