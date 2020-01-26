@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/vagrant/software/spear_rover/MustafaNode/devel/setup.sh

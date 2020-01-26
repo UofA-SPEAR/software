@@ -1,0 +1,8 @@
+prefix=/home/vagrant/software/spear_rover/MustafaNode/devel
+
+Name: MustafaNode
+Description: Description of MustafaNode
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
