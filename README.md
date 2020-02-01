@@ -17,11 +17,12 @@ This is a seperate package so that a node or package can depend on it without ne
 
 This package is for all of the code that runs the rover.
 Essentially, any software that is supposed to run on the rover or is hardware-dependant (i.e. drive management or arm kinematics) should be placed in this package.
+This includes things which can run on the simulated rover, unless they are meant to exclusively run in simulation.
 
 ## spear_simulator
 
-This package contains the code and configuration for the simulator.
-This should ideally be able to run on the TX2, but it is not necessary for it to, as simulations can be run on more powerful computers.
+This package contains the code and configuration for anything that runs exclusively on the simulator.
+However, the simulator is still generally run by launching something from `spear_rover` (see [the Wiki](https://github.com/UofA-SPEAR/software/wiki/Launch-file-structure)).
 
 ## spear_station
 
@@ -37,10 +38,9 @@ The recommended way to run the software in this repo is with Docker.
 - Any linux distro
 - Docker
 
-For instructions on how to set up Docker inside a linux virtual machine on Mac or Windows, see these pages:
+For instructions on how to set up Docker inside a linux virtual machine on Mac, see these pages:
 
 - [Install Instructions for Mac](https://github.com/UofA-SPEAR/software/wiki/Install-Instructions-Mac)
-- [Install Instructions for Windows](https://github.com/UofA-SPEAR/software/wiki/Install-Instructions-Windows)
 
 Some distributions have old versions of docker. The recommended way to install
 is by using the convenience script, provided by docker.
@@ -54,6 +54,15 @@ sudo curl -sSL https://get.docker.com/ | sh
 Note: you may need to install curl if you don't have it already.
 
 On Ubuntu: `sudo apt-get install curl`
+
+Now install docker-compose. The easiest way to do this is to run
+
+    sudo apt install docker-compose
+
+Alternatively, following the instructions [here](https://github.com/docker/compose/releases), run
+
+    curl -L https://github.com/docker/compose/releases/download/1.25.1-rc1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+    chmod +x /usr/local/bin/docker-compose
 
 ## Docker setup
 
@@ -109,37 +118,19 @@ https://docs.docker.com/install/linux/linux-postinstall/
 
 ## Build Docker Image
 
-First pull the base ROS docker image:
+Navigate to the directory containing this readme, and run
 
-``` bash
-sudo docker pull ros:kinetic-robot
-```
+    docker-compose build
 
-To build our specific docker image, run these commands in the same directory as `Dockerfile`.
-
-Note: these 2 commands may take several minutes.
-
-``` bash
-docker build -t spear-env - < spear-env.Dockerfile
-```
-
-That one will take a few minutes so maybe go grab a coffee.
-
-Once that is finished, run:
-
-``` bash
-docker build -t spear .
-```
-
-This will build a docker image from our `Dockerfile` and tag it as "spear".
+This will build a docker image from our `Dockerfile` and tag it as `spear`.
 
 ## Run Docker container interactively
 
-Use the run script to start the docker container.
+Navigate to the directory containing this readme, and run
 
-``` bash
-./run-docker.bash
-```
+    docker-compose run spear
+
+which runs the `spear` image as a container named `spear-container` (it also runs the `spear-env` image as a container, but that container exits immediately).
 
 ## Working in Docker
 
@@ -159,71 +150,71 @@ cd /software
 ./build.bash
 ```
 
-# Manual setup and install instructions
+# Virtual machine setup and install instructions
 
-## Install Ubuntu 16.04 desktop
+You can also develop from a virtual machine.
+This is the recommended approach if you use Windows and don't want to dual-boot Linux (due to space constraints, for example).
 
-We use ROS Kinetic which requires Ubuntu 16.04.
-A virtual machine will work but a native install will run smoother, especially for the simulator.
+## Requirements
 
-You can find a .iso image of Ubuntu 16.04 [here](http://releases.ubuntu.com/16.04/).
+  - Windows 10 (older versions of windows, or even Linux, probably would work with some modification of the setup instructions)
 
-## Install ROS
+## Installing
 
-We use ROS for nearly everying on the rover.<br>
-To install ROS, follow the instructions [here](http://wiki.ros.org/kinetic/Installation/Ubuntu).<br>
-We recommend the "Desktop-Full Install" ROS package for best compatibility.
+We use [Vagrant](https://www.vagrantup.com/) for creating and managing the VM.
+Vagrant can be used with various VM providers; in our case, we use [VirtualBox](https://www.virtualbox.org/).
+Both programs must have compatible versions (and at the time of writing, the latest version of Vagrant is incompatible with the latest version of VirtualBox). 
+The easiest (though not simplest) way of dealing with all this is to install both programs using [Chocolatey](https://chocolatey.org/). So,
 
-## Install other dependencies
+1. Install Chocolatey from [its website](https://chocolatey.org/).
+2. Open up an administrator PowerShell (e.g. by using the keyboard shortcut `Win+X` and selecting *Windows PowerShell (Admin)* from the menu).
+3. Type
+    
+        choco install virtualbox --version 6.0 -y
+        choco install vagrant --version 2.6.2 -y
+        choco install git -y
+    
+    to install VirtualBox and Vagrant (and also [git](https://git-scm.com/), which we'll use in the next step)
+4. Install the [vagrant-vbguest](https://github.com/dotless-de/vagrant-vbguest) plugin
 
-Install the following dependencies:<br>
+        vagrant plugin install vagrant-vbguest
 
+## Creating the virtual machine
 
-- x264: `apt-get install libx264-dev`
-- Cython: `python -m pip install cython --user`
-- Pygame: `python -m pip install pygame --user`
-- Kivy: `python -m pip install kivy --user`
-- Kivy Garden: `python -m pip install kivy-garden --user`
-- Kivy Knob: `garden install knob`
-- ROS Joy: `sudo apt-get install ros-kinetic-joy`
-- libqt (required by nimbro_network): `apt-get install libqt4-dev`
-- qmake (required by nimbro_network): `apt-get install qt4-qmake`
-- ROS move\_base package: `apt-get install ros-kinetic-move-base`
+As mentioned above, we use Vagrant to create the virtual machine.
+Vagrant looks for a file named `Vagrantfile` which contains instructions for how to set up the machine and install the necessary software on it.
+To get this file, download this repository (for the sake of this example, we'll put it in the `Documents` folder):
 
-Notes:
-1. x264 is for encoding video and Kivy is for our user interface.
-2. ROS Kinetic requires the Python 2 versions of all modules.
+    cd $home\Documents
+    git clone https://github.com/UofA-SPEAR/software.git
 
-## Clone this repository and unpack
+Now create the virtual machine from the `Vagrantfile`:
 
-After installing the dependencies, clone this repo and run the `unpack.sh` script located within.
+    vagrant up
 
-This will setup your catkin workspace for development.
+This will create a new virtual machine and install all required packages on it.
+It will also re-clone this repository within the virtual machine.
 
-You must `source ~/.bashrc` for the changes made by `unpack.sh` to take effect.
+When you first create the machine, you will also have to reboot it to enable the GUI.
+The easiest way to do this is to just close the window with the VM and select the option to power off the machine, then restart the VM in virtualbox or with another `vagrant up`.
 
-Run rosdep to install the required packages:
+The VirtualBox GUI will then show an Ubuntu 18 login screen.
+Log in as the user *vagrant* using the password *vagrant*.
 
-```
-rosdep install --from-paths src --ignore-src -r -y
-```
+Various virtual machine settings can be configured using the VirtualBox GUI.
+For example, you can change the number of CPUs or amount of RAM to allocate to the virtual machine.
+By default, this is 8 CPUs and 4 GB of RAM, but you may wish to change this to fit the capabilities of your development machine.
 
-## Developing and building
+## Developing on the virtual machine
 
-The `unpack.sh` script will symlink all the source files to a catkin workspace located at `~/ros`.
-You can work in this directory and when you need to build, either run `catkin build` in the `~/ros` directory or simply run `./build.bash` from this directory which will handle things for you.
+All development takes place within the virtual machine, so you should edit the code there and not in Windows.
+The code can be found in the `/software` directory.
+The virtual machine comes with [VS Code](https://code.visualstudio.com/) pre-installed, but you can install another code editor if you want.
 
-## “Permission Denied” errors when running roslaunch or roscore
+Once created with `vagrant up`, the virtual machine can be started again either with another `vagrant up` in the same directory or through the VirtualBox GUI.
 
-Run the following 2 commands:
-```
-sudo rosdep fix-permissions
-rosdep update
-```
-
-See this forum post for more info:
-<https://answers.ros.org/question/60366/problem-with-roscore/>.
-
+If you wish to re-create the virtual machine (for example to re-run the configuration scripts), you can destroy it first using `vagrant destroy`.
+Keep in mind that any edits to the code you make within the virtual machine will not be reflected outside of it, so make sure you commit your changes if necessary before destroying the virtual machine.
 
 # Additional information
 
@@ -255,3 +246,7 @@ yapf -i <filename>
 ```
 
 Note: we are linting for python 3.5.
+
+### Launch files
+
+You will have to format the code yourself. If you want, you can use `xmllint --format`, but this removes all blank lines in the code which can harm readability. To check XML formatting for the launch files, run `./xml_lint.bash`. See [the Wiki](https://github.com/UofA-SPEAR/software/wiki/XML-Formatting-and-Linting).

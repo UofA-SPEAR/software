@@ -1,50 +1,55 @@
+<!-- Estimate robot pose by fusing odometry from multiple sources -->
 <launch>
-    <!-- state estimation nodes: ekf_localization_node and ukf_localization node (can be used interchangably); send odometries to this node-->
-    <!--navsat_transform_node: translating GPS data into csomething compatible with the robot's local map/frame of reference; fusing gps data with state estimate-->
-    <!--wiki.ros.org/move_base
-    replace odometry node with one of the state estimation nodes
-    or replace amc1 with one of the state est nodes and feed gps into it plus odometry: GPS>navsat_transform_node_ukf_localization_node-->
-    <!--Once state_estimation is fused, send 'navmsgs/Odometry to local_planner node', and "sensor transforms" through '/tf' to move base-->
-    <!--See REP 103 and 105
-    pose_data from odom msg and such gets sent to map or odom framework; fropm the framework, through ekf_loicalization_nide, send to baselink
-    IMU goes straight into base_link ()but there is a static transform of displcement from base_link to the IMU to account for adjusting measurements-->
-    <!--Frames: equies a base_link to imu_link transform-->
-  
-    <node ns='ekf' name='ekf_odom' pkg='robot_localization' type='ekf_localization_node'>
-        <param name='world_frame' value='odom'/>
-        <rosparam file='$(find spear_rover)/config/ekf/ekf_common.yaml' />
+  <!-- state estimation nodes: ekf_localization_node and ukf_localization node (can be used interchangably); send odometries to this node-->
+  <!--navsat_transform_node: translating GPS data into csomething compatible with the robot's local map/frame of reference; fusing gps data with state estimate-->
+  <!--wiki.ros.org/move_base
+  replace odometry node with one of the state estimation nodes
+  or replace amc1 with one of the state est nodes and feed gps into it plus odometry: GPS>navsat_transform_node_ukf_localization_node-->
+  <!--Once state_estimation is fused, send 'navmsgs/Odometry to local_planner node', and "sensor transforms" through "/tf" to move base-->
+  <!--See REP 103 and 105
+  pose_data from odom msg and such gets sent to map or odom framework; fropm the framework, through ekf_loicalization_nide, send to baselink
+  IMU goes straight into base_link ()but there is a static transform of displcement from base_link to the IMU to account for adjusting measurements-->
+  <!--Frames: equies a base_link to imu_link transform-->
 
-        <remap from='odometry/filtered' to='odom/odometry/filtered' />
-    </node>
+  <node ns="ekf" name="ekf_odom" pkg="robot_localization" type="ekf_localization_node">
+    <param name="world_frame" value="odom"/>
+    <rosparam file="$(find spear_rover)/config/ekf/ekf_common.yaml"/>
 
-    <!-- A second ekf as suggested by http://docs.ros.org/melodic/api/robot_localization/html/integrating_gps.html#notes-on-fusing-gps-data -->
-    <node ns='ekf' name='ekf_all' pkg='robot_localization' type='ekf_localization_node'>
-        <param name = 'world_frame' value = 'map'/>
-        <rosparam file='$(find spear_rover)/config/ekf/ekf_common.yaml' />
-        <rosparam file='$(find spear_rover)/config/ekf/ekf_map.yaml' />
-        <remap from='odometry/filtered' to='map/odometry/filtered' />
-    </node>
+    <remap from="odometry/filtered" to="odom/odometry/filtered"/>
+  </node>
 
-    <node ns='ekf' name='navsat_transform' pkg='robot_localization' type='navsat_transform_node'>
-        <!-- Subscribed topics -->
-        <remap from='imu/data' to='/imu/data' />
-        <remap from='odometry/filtered' to='map/odometry/filtered' />
-        <remap from='gps/fix' to='/gps/fix' />
-        <!-- Published topics -->
-        <remap from='odometry/gps' to='odometry/gps' />
-        <!-- Parameters -->
-        <param name='frequency' value='1.0' />
-        <param name='magnetic_declination_radians' value='0.6241' />
-        <param name='yaw_offset' value='0.0' /> <!-- This should probably not be 0 -->
-        <param name='zero_altitude' value='true' />
-        <param name='publish_filtered_gps' value='true' />
-        <param name='use_odometry_yaw' value='false' /> <!-- Consider setting this if IMU orientation is unreliable and we have yaw from another source -->
-        <param name='broadcast_utm_transform' value='true' />
-    </node>
+  <!-- A second ekf as suggested by http://docs.ros.org/melodic/api/robot_localization/html/integrating_gps.html#notes-on-fusing-gps-data -->
+  <node ns="ekf" name="ekf_all" pkg="robot_localization" type="ekf_localization_node">
+    <param name="world_frame" value="map"/>
+    <rosparam file="$(find spear_rover)/config/ekf/ekf_common.yaml"/>
+    <rosparam file="$(find spear_rover)/config/ekf/ekf_map.yaml"/>
 
-    <!-- <node pkg="tf" type="static_transform_publisher" name="base_link" args="0 0 0 x y z base base_link 100" />
+    <remap from="odometry/filtered" to="map/odometry/filtered"/>
+  </node>
 
-    <node pkg="tf" type="static_transform_publisher" name="odom" args="0 0 0 x y z base odom 100" /> -->
+  <node ns="ekf" name="navsat_transform" pkg="robot_localization" type="navsat_transform_node">
+    <!-- Subscribed topics -->
+    <remap from="imu/data" to="/imu/data"/>
+    <remap from="odometry/filtered" to="map/odometry/filtered"/>
+    <remap from="gps/fix" to="/gps/fix"/>
+    <!-- Published topics -->
+    <remap from="odometry/gps" to="odometry/gps"/>
+    <!-- Parameters -->
+    <param name="frequency" value="1.0"/>
+    <param name="magnetic_declination_radians" value="0.23562"/>
+    <!-- Possibly + 0.019887657 -->
+    <param name="yaw_offset" value="1.570796326794896619231321691639751442098584699687552910487"/>
+    <param name="zero_altitude" value="true"/>
+    <param name="publish_filtered_gps" value="true"/>
+    <!-- Consider setting this if IMU orientation is unreliable and we have yaw from another source -->
+    <param name="use_odometry_yaw" value="false"/>
+    <param name="broadcast_utm_transform" value="true"/>
+  </node>
 
-    <node name='gps_to_frame_server' pkg='spear_rover' type='gps_to_frame_server' output='screen'></node>
+  <!-- <node pkg="tf" type="static_transform_publisher" name="base_link" args="0 0 0 x y z base base_link 100"/>
+
+  <node pkg="tf" type="static_transform_publisher" name="odom" args="0 0 0 x y z base odom 100"/> -->
+
+  <node name="gps_to_frame_server" pkg="spear_rover" type="gps_to_frame_server" output="screen">
+  </node>
 </launch>

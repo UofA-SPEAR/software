@@ -1,35 +1,21 @@
-# Autonomy Simulator
-For training our Mars rover, we have decided to create a simulator that allows us to drive around a 3D model of our rover in a virtual world. This virtual world is designed to be similar to the types of environments we may encounter in competition.
-We have packaged all the models, worlds, and config files in a ros package and the simulator can be run using roslaunch to launch various files.
-See below for an explanation of the different launch files.
+# SPEAR Simulator
+For testing our Mars rover, we have decided to use a simulator that allows us to drive around a 3D model of our rover in a virtual world. This virtual world is designed to be similar to the types of environments we may encounter in competition.
+The `spear_simulator` ROS package contains all simulator worlds and models, as well as all code which runs exclusively in the simulator.
 
 ## Launch Files
 
-Each of these launch files can be launched using the command `roslaunch spear_simulator <name of launch file>`.
+To launch the simulator, run one of the top-level launch files in the `spear_rover` package, passing in `simulation:=true`.
+The launch files in this package are generally called by others within `spear_rover`, and either correspond to launch files in `spear_rover` or start activities only applicable in simulation.
 
-- `gazebo.launch`
-  - Launches Gazebo.
-  - Loads our worlds.
-  - Loads the the rover model.
+- `rover.launch` launches everything needed to drive the rover around by sending Twist messages to the appropriate topic. Specifically, it 
+  - Starts gazebo with the simulated world
+  - Puts the robot model within the world
+  - Launches the `controller_manager` to translate Twist messages to wheel commands
+  - Launches `robot_description.launch`
 
-- `diffdrive.launch`
-  - Includes `gazebo.launch`. If you launch this file, you don't have to also
-    launch `gazebo.launch`
-  - Launches nodes that allow us to control the rover.
+- `steering.launch` launches the rqt steering GUI which sends Twist messages to move the robot around.
 
-- `rtabmap.launch`
-  - Includes the main `rtabmap.launch` file from the `spear_rover` package.
-    The main `rtabmap.launch` file launches the mapping node.
-  - Also launches an `rgbd_odometry` node (also part of the `rtabmap` package).
-	Note that the zed camera on the rover has its own rgbd odometry node.
-	However, in the simulator, we must use the one from `rtabmap`.
-
-- `nav.launch`
-  - Launches a `move_base` node and loads all our yaml config files from the
-    planners and costmaps.
-  - Note: `nav.launch` as well as the files in the `config` directory should
-    eventually be moved to the `spear_rover` package since they provide actual
-    functionality and are not just for the simulator.
+- `visual_odom.launch` launch visual odometry using RTAB-Map.
 
 ## 3D models
 
@@ -45,6 +31,8 @@ This repo contains many object that will help the rover learn. From obstacles to
 In the models folder of this repo is a TARS rover 3D model. Using roslaunch, a fully functioning virtual version of the rover can be used for our simulations.
 
 If you would like to view a static version of TARS, simply follow the instructions in the 3D models section to add TARS to a world as a static model.
+
+The TARS `urdf` file also loads several gazebo plugins to simulate the robot's sensors, such as the main camera and IMU.
 
 ## Worlds
 Here is a description of the worlds currently stored on this repository:

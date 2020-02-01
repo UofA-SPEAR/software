@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <!-- created with Phobos 0.8 -->
-  <robot name="TARS_V2">
+  <robot name="TARS_V2" xmlns:xacro="http://ros.org/wiki/xacro">
+    <xacro:property name="M_PI" value="3.1415926535897" />
 
     <link name="link_camera_back">
     </link>
@@ -8,11 +9,14 @@
     <link name="link_camera_depth">
     </link>
 
+    <link name="camera_depth_optical_frame">
+    </link>
+
     <link name="imu_link">
     </link>
 
     <gazebo reference="link_camera_depth">  
-      <sensor type="depth" name="camera">
+      <sensor type="depth" name="camera_depth">
         <always_on>true</always_on>
         <update_rate>20.0</update_rate>
         <camera>
@@ -30,7 +34,7 @@
           </clip>
         </camera>
         <plugin name="kinect_camera_controller" filename="libgazebo_ros_openni_kinect.so">
-          <cameraName>camera</cameraName>
+          <cameraName>camera_depth</cameraName>
           <alwaysOn>true</alwaysOn>
           <updateRate>100</updateRate>
           <imageTopicName>rgb/image_raw</imageTopicName>
@@ -243,9 +247,15 @@
     </joint>
 
     <joint name="link_camera_depth" type="fixed">
-      <origin xyz="0.315 1e-05 0.3439" rpy="0 0 0"/>
+      <origin xyz="0.3 0 0.2" rpy="0 0 0"/>
       <parent link="base_link"/>
       <child link="link_camera_depth"/>
+    </joint>
+
+    <joint name="camera_depth_optical_frame" type="fixed">
+      <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}"/>
+      <parent link="link_camera_depth"/>
+      <child link="camera_depth_optical_frame"/>
     </joint>
 
     <joint name="imu_link" type="fixed">
@@ -297,7 +307,7 @@
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
       <joint name="link_wheel_backleft">
-        <hardwareInterface>VelocityJointInterface</hardwareInterface>
+        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
       </joint>
     </transmission>
     <gazebo reference="link_wheel_backleft">
@@ -320,7 +330,7 @@
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
       <joint name="link_wheel_backright">
-        <hardwareInterface>VelocityJointInterface</hardwareInterface>
+        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
       </joint>
     </transmission>
     <gazebo reference="link_wheel_backright">
@@ -343,7 +353,7 @@
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
       <joint name="link_wheel_frontleft">
-        <hardwareInterface>VelocityJointInterface</hardwareInterface>
+        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
       </joint>
     </transmission>
     <gazebo reference="link_wheel_frontleft">
@@ -366,7 +376,7 @@
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
       <joint name="link_wheel_frontright">
-        <hardwareInterface>VelocityJointInterface</hardwareInterface>
+        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
       </joint>
     </transmission>
     <gazebo reference="link_wheel_frontright">
@@ -379,7 +389,7 @@
 
     <gazebo>
       <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-        <robotNamespace>/</robotNamespace>
+        <legacyModeNS>true</legacyModeNS>
       </plugin>
     </gazebo>
 
@@ -410,9 +420,9 @@
           <gaussianNoise>0.0</gaussianNoise>
           <xyzOffset>0 0 0</xyzOffset>
           <rpyOffset>0 0 0</rpyOffset>
-        <frameName>imu_link</frameName>
-	</plugin>
-	<pose>0 0 0 0 0 0</pose> <!--180 _ _-->
+          <frameName>imu_link</frameName>
+        </plugin>
+        <pose>0 0 0 0 0 0</pose> <!--180 _ _-->
       </sensor>
     </gazebo>
   </robot>

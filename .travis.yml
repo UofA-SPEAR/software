@@ -12,7 +12,7 @@ matrix:
         - sudo apt-get update
         - sudo apt-get install pep8
       script:
-        - pep8 --ignore=E501 .
+        - pep8 --ignore=E501 --exclude=spear_behaviors/spear_flexbe_behaviors/src .
 
     - name: "c++ linting"
       language: c++
@@ -24,15 +24,31 @@ matrix:
         - "! find . -iname '*.h' -o -iname '*.cpp' |
           xargs clang-format-3.9 -output-replacements-xml -style=Google |
           grep -F \"</replacement>\""
+
+    - name: "javascript linting"
+      before_script:
+        - sudo apt-get update
+        - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
+        - nvm install 12.13
+      script:
+        - cd linting
+        - bash javascript.sh
+
+    - name: "xml linting"
+      before_script:
+        - sudo apt-get update
+        - sudo apt-get install libxml2-utils
+      script:
+        - bash xml_lint.bash
+
     - name: "build"
       services:
         - docker
       before_script:
         - docker pull ros:kinetic-robot
-        - docker build --rm -t spear-env - < spear-env.Dockerfile
       script:
-        - docker build --rm -t spear-rover2 .
-        - docker run spear-rover2 bash /software/catkin_lint.bash
+        - docker-compose build
+        - docker run spear bash /software/catkin_lint.bash
 
 notifications:
   email: false
