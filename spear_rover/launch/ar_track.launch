@@ -1,20 +1,24 @@
 <launch>
-	<arg name="marker_size" default="17.0" />
-	<arg name="max_new_marker_error" default="0.05" />
-	<arg name="max_track_error" default="0.2" />
+  <arg name="marker_size" default="17.0"/>
+  <arg name="max_new_marker_error" default="0.05"/>
+  <arg name="max_track_error" default="0.2"/>
 
-	<arg name="cam_image_topic" default="/camera_depth/rgb/image_raw" />
-	<arg name="cam_info_topic" default="/camera_depth/rgb/camera_info" />
-	<arg name="output_frame" default="base_link" />
+  <arg name="cam_image_topic" default="/camera_depth/rgb/image_raw"/>
+  <arg name="cam_info_topic" default="/camera_depth/rgb/camera_info"/>
+  <arg name="output_frame" default="base_link"/>
 
-	<node name="ar_track_alvar" pkg="ar_track_alvar" type="individualMarkersNoKinect" respawn="false" output="screen">
-		<param name="marker_size"           type="double" value="$(arg marker_size)" />
-		<param name="max_new_marker_error"  type="double" value="$(arg max_new_marker_error)" />
-		<param name="max_track_error"       type="double" value="$(arg max_track_error)" />
-		<param name="output_frame"          type="string" value="$(arg output_frame)" />
+  <node name="ar_track_alvar" pkg="ar_track_alvar" type="individualMarkersNoKinect" respawn="false" output="screen">
+    <param name="marker_size" value="$(arg marker_size)"/>
+    <param name="max_new_marker_error" value="$(arg max_new_marker_error)"/>
+    <param name="max_track_error" value="$(arg max_track_error)"/>
+    <param name="output_frame" value="$(arg output_frame)"/>
 
-		<remap from="camera_image"  to="$(arg cam_image_topic)" />
-		<remap from="camera_info"   to="$(arg cam_info_topic)" />
-	</node>
-
+    <remap from="camera_image" to="$(arg cam_image_topic)"/>
+    <remap from="camera_info" to="$(arg cam_info_topic)"/>
+  </node>
+  <!-- <node name="webcam" pkg="usb_cam" type="usb_cam_node">
+      <param name="video_device" value="/dev/video2"/>
+      <param name="pixel_format" value="yuyv"/>
+      <param name="camera_frame_id" value="base_link"/>
+  </node> -->
 </launch>
