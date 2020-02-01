@@ -185,6 +185,14 @@ Visualization Manager:
         basic_shapes: true
       Queue Size: 100
       Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /visualization_marker
+      Name: Marker
+      Namespaces:
+        basic_shapes: true
+      Queue Size: 100
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -220,18 +228,18 @@ Visualization Manager:
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.31938159465789795
-        Y: 0.646038830280304
-        Z: 0.2312551736831665
+        X: 0.222510427236557
+        Y: -0.16722065210342407
+        Z: 0.6387450695037842
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.4103977382183075
+      Pitch: 0.5303976535797119
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.750397205352783
+      Yaw: 3.8353967666625977
     Saved: ~
 Window Geometry:
   Displays:
