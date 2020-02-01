@@ -177,6 +177,14 @@ Visualization Manager:
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /visualization_marker
+      Name: Marker
+      Namespaces:
+        basic_shapes: true
+      Queue Size: 100
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -212,9 +220,9 @@ Visualization Manager:
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0
-        Y: 0
-        Z: 0
+        X: -0.31938159465789795
+        Y: 0.646038830280304
+        Z: 0.2312551736831665
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
@@ -223,7 +231,7 @@ Visualization Manager:
       Pitch: 0.4103977382183075
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.7353971004486084
+      Yaw: 3.750397205352783
     Saved: ~
 Window Geometry:
   Displays:
