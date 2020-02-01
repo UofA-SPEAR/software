@@ -1,5 +1,8 @@
 <launch>
-  <arg name="marker_size" default="17.0"/>
+  <arg name="simulation"/>
+  <!-- Markers at URC are 20cmx20cm -->
+  <arg name="marker_size" default="20.0" unless="$(arg simulation)"/>
+  <arg name="marker_size" default="17.0" if="$(arg simulation)"/>
   <arg name="max_new_marker_error" default="0.05"/>
   <arg name="max_track_error" default="0.2"/>
 
