@@ -58,4 +58,7 @@
 
   <exec_depend>rqt_graph</exec_depend>
   <exec_depend>rqt_reconfigure</exec_depend>
+
+  <build_depend>ar_track_alvar</build_depend>
+  <exec_depend>ar_track_alvar</exec_depend>
 </package>
