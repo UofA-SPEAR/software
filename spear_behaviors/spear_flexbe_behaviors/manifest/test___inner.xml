@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<behavior name="Test - inner">
+
+	<executable package_path="spear_flexbe_behaviors.test___inner_sm" class="TestinnerSM" />
+	<tagstring></tagstring>
+	<author>Mitchell</author>
+	<date>Sun Feb 02 2020</date>
+	<description>
+		An inner behavior to test nested behaviors
+	</description>
+
+
+	<!-- Contained Behaviors -->
+
+	<!-- Available Parameters -->
+
+</behavior>
