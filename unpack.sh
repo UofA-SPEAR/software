@@ -89,6 +89,10 @@ git clone https://github.com/gareth-cross/rviz_satellite.git
 cd ~/ros/src
 git clone https://github.com/FlexBE/flexbe_app.git
 
+###### Install ros_numpy
+cd ~/ros/src
+git clone https://github.com/eric-wieser/ros_numpy.git
+
 #### Get our DSDL definitions
 cd ~
 git clone https://github.com/UofA-SPEAR/uavcan_dsdl.git
