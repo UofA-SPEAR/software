@@ -60,7 +60,7 @@ class Gate:
         left_position = numpify(self._left_post.position)
         right_position = numpify(self._right_post.position)
 
-        normal = np.cross(right_position-left_position, np.array([0.0, 1.0, 0.0]))
+        normal = np.cross(right_position - left_position, np.array([0.0, 1.0, 0.0]))
         normal /= np.linalg.norm(normal)
 
         normal_vec = Vector3Stamped()
