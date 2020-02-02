@@ -67,3 +67,6 @@ class Gate:
         normal_vec.header.frame_id = self._left_post.position.header.frame_id
         normal_vec.vector = msgify(Vector3, normal)
         return normal_vec
+
+    def has_seen(self):
+        return self._left_post.has_seen() and self._right_post.has_seen()
