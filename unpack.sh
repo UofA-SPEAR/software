@@ -55,6 +55,13 @@ then
     export GAZEBO_MODEL_PATH=GAZEBO_MODEL_PATH:$DIR/spear_simulator/models
 fi
 
+# Add a nice default .tmuxrc
+cd ~
+git clone https://github.com/gpakosz/.tmux.git
+ln -s -f .tmux/.tmux.conf
+cp .tmux/.tmux.conf.local .
+sed -i '/#set -g mouse on/c\set -g mouse on' .tmux.conf.local
+
 # Add rosdep alias to make things nicer
 echo "alias update_rosdeps='cd ~/ros && rosdep install --from-paths src --ignore-src -r -y'" >> ~/.bashrc
 
