@@ -8,7 +8,7 @@
 
   <arg name="cam_image_topic" default="/camera_depth/rgb/image_raw"/>
   <arg name="cam_info_topic" default="/camera_depth/rgb/camera_info"/>
-  <arg name="output_frame" default="base_link"/>
+  <arg name="output_frame" default="odom"/>
 
   <node name="ar_track_alvar" pkg="ar_track_alvar" type="individualMarkersNoKinect" respawn="false" output="screen">
     <param name="marker_size" value="$(arg marker_size)"/>

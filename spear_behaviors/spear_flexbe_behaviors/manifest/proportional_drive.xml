@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<behavior name="Proportional drive">
+
+	<executable package_path="spear_flexbe_behaviors.proportional_drive_sm" class="ProportionaldriveSM" />
+	<tagstring></tagstring>
+	<author>Mitchell</author>
+	<date>Sun Feb 02 2020</date>
+	<description>
+		Drive directly to a target pose, ignoring obstacles
+	</description>
+
+
+	<!-- Contained Behaviors -->
+
+	<!-- Available Parameters -->
+
+</behavior>

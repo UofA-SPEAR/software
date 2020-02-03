@@ -5,6 +5,7 @@ from geometry_msgs.msg import PoseStamped, PointStamped, Point, Vector3Stamped, 
 from ros_numpy import msgify, numpify
 
 from ar_tracker import ARTracker
+from util.math import quaternion_rotate
 
 
 class Post:
@@ -25,6 +26,15 @@ class Post:
         point.point = self.pose.pose.position
         return point
 
+    @property
+    def normal(self):  # type: () -> Optional[Vector3Stamped]
+        if self.pose is None:
+            return None
+        normal_vec = Vector3Stamped()
+        normal_vec.header.frame_id = self.pose.header.frame_id
+        normal_vec.vector = msgify(Vector3, quaternion_rotate(numpify(self.pose.pose.orientation), np.array([0.0, 0.0, 1.0])))
+        return normal_vec
+
     def has_seen(self):  # type: () -> bool
         return self._tracker.has_seen(self._marker_id)
 
@@ -41,8 +51,8 @@ class Gate:
         assert self._left_post.position.header.frame_id == self._right_post.position.header.frame_id
         position = PointStamped()
         position.header.frame_id = self._left_post.pose.header.frame_id
-        left_position = numpify(self._left_post.position)
-        right_position = numpify(self._right_post.position)
+        left_position = numpify(self._left_post.position.point)
+        right_position = numpify(self._right_post.position.point)
         position.point = msgify(Point, (left_position + right_position) / 2)
         return position
 
@@ -57,10 +67,10 @@ class Gate:
             return None
         assert self._left_post.position.header.frame_id == self._right_post.position.header.frame_id
 
-        left_position = numpify(self._left_post.position)
-        right_position = numpify(self._right_post.position)
+        left_position = numpify(self._left_post.position.point)
+        right_position = numpify(self._right_post.position.point)
 
-        normal = np.cross(right_position - left_position, np.array([0.0, 1.0, 0.0]))
+        normal = np.cross(right_position - left_position, np.array([0.0, 0.0, 1.0]))
         normal /= np.linalg.norm(normal)
 
         normal_vec = Vector3Stamped()
