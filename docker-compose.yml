@@ -1,8 +1,6 @@
 version: "3.3"
 services:
   spear:
-    depends_on:
-      - spear_env
     build:
       context: .
       dockerfile: Dockerfile
@@ -25,9 +23,3 @@ services:
     devices:
        - /dev/dri:/dev/dri
     network_mode: host
-
-  spear_env:
-    build:
-      context: .
-      dockerfile: spear-env.Dockerfile
-    image: spear-env

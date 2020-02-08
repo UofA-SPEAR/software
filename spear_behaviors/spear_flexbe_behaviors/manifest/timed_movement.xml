@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<behavior name="Timed movement">
+
+	<executable package_path="spear_flexbe_behaviors.timed_movement_sm" class="TimedmovementSM" />
+	<tagstring></tagstring>
+	<author>Mitchell Epp</author>
+	<date>Sat Jan 18 2020</date>
+	<description>
+		Demo using timed movement states
+	</description>
+
+
+	<!-- Contained Behaviors -->
+
+	<!-- Available Parameters -->
+
+</behavior>

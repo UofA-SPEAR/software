@@ -14,5 +14,7 @@
   <include file="$(find spear_simulator)/launch/visual_odom.launch" if="$(arg simulation)"/>
   <include file="$(find spear_rover)/launch/rtabmap_obstacles.launch"/>
 
+  <include file="$(find spear_rover)/launch/flexbe_onboard.launch"/>
+
   <node type="rviz" name="rviz" pkg="rviz" args="-d $(find spear_rover)/rviz/navigate.rviz"/>
 </launch>
