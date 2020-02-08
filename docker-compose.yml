@@ -23,3 +23,9 @@ services:
     devices:
        - /dev/dri:/dev/dri
     network_mode: host
+
+    # The below is needed so that we can configure network interfaces
+    # (e.g. can0, vcan0) from inside the container.
+    # Note that this results in interfaces being modified on the host machine.
+    cap_add:
+      - NET_ADMIN
