@@ -132,6 +132,26 @@ Navigate to the directory containing this readme, and run
 
 which runs the `spear` image as a container named `spear-container` (it also runs the `spear-env` image as a container, but that container exits immediately).
 
+### Run with CANBus support
+
+We use CANBus for communicating between boards. Docker requires that some kernel
+modules are loaded by the host for CANBus to work. We use the
+[`docker-with-can.bash`](./docker-with-can.bash) script to handle that. It loads
+the kernel modules and runs `docker-compose run spear` for you.
+
+If you want to use a physical, real CANBus network, i.e. on the rover itself, run:
+
+```bash
+./docker-with-can.bash
+```
+
+If you want to test CANBus locally (i.e. on your own machine) with a virtual
+CANBus network, run:
+
+```bash
+./docker-with-can.bash --vcan
+```
+
 ## Working in Docker
 
 You should be able to edit files in your host machine and build and run the code in the docker container.
@@ -163,17 +183,17 @@ This is the recommended approach if you use Windows and don't want to dual-boot 
 
 We use [Vagrant](https://www.vagrantup.com/) for creating and managing the VM.
 Vagrant can be used with various VM providers; in our case, we use [VirtualBox](https://www.virtualbox.org/).
-Both programs must have compatible versions (and at the time of writing, the latest version of Vagrant is incompatible with the latest version of VirtualBox). 
+Both programs must have compatible versions (and at the time of writing, the latest version of Vagrant is incompatible with the latest version of VirtualBox).
 The easiest (though not simplest) way of dealing with all this is to install both programs using [Chocolatey](https://chocolatey.org/). So,
 
 1. Install Chocolatey from [its website](https://chocolatey.org/).
 2. Open up an administrator PowerShell (e.g. by using the keyboard shortcut `Win+X` and selecting *Windows PowerShell (Admin)* from the menu).
 3. Type
-    
+
         choco install virtualbox --version 6.0 -y
         choco install vagrant --version 2.6.2 -y
         choco install git -y
-    
+
     to install VirtualBox and Vagrant (and also [git](https://git-scm.com/), which we'll use in the next step)
 4. Install the [vagrant-vbguest](https://github.com/dotless-de/vagrant-vbguest) plugin
 

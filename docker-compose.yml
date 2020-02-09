@@ -13,6 +13,7 @@ services:
       ROS_IP: 127.0.0.1
       QT_X11_NO_MITSHM: 1
       DOCKER_HOST_REPO_LOCATION: .
+      RUNNING_IN_DOCKER: "true"
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - $XAUTHORITY:/root/.Xauthority
@@ -22,3 +23,9 @@ services:
     devices:
        - /dev/dri:/dev/dri
     network_mode: host
+
+    # The below is needed so that we can configure network interfaces
+    # (e.g. can0, vcan0) from inside the container.
+    # Note that this results in interfaces being modified on the host machine.
+    cap_add:
+      - NET_ADMIN
