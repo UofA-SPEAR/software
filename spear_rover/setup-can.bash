@@ -29,11 +29,15 @@ print_info() {
 
 print_warning "We're using sudo to enable can! Sorry!"
 
-print_info "Loading CAN kernel modules..."
-sudo modprobe can_dev
-sudo modprobe can
-sudo modprobe can_raw
-sudo modprobe mttcan
+if [[ "$IS_DOCKER" -eq "true" ]]; then
+  print_warning "You're running this script inside docker. We'll skip loading kernel modules."
+else
+  print_info "Loading CAN kernel modules..."
+  sudo modprobe can_dev
+  sudo modprobe can
+  sudo modprobe can_raw
+  sudo modprobe mttcan
+fi
 
 print_info "Setting up can0 network interface..."
 

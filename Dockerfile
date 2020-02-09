@@ -13,7 +13,8 @@ RUN apt-get update && apt-get install -y qt4-default libx264-dev \
                                          vim \
                                          nano \
                                          libxml2-utils \
-                                         python-catkin-tools
+                                         python-catkin-tools \
+                                         iproute2
 
 RUN python -m pip install catkin_lint
 
