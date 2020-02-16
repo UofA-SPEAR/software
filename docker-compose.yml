@@ -19,6 +19,5 @@ services:
       - .:/software
       - .docker-opt-ros-mount:/tmp/docker-opt-ros-mount
       - .docker-root-ros-include-mount:/tmp/docker-root-ros-include-mount
-    devices:
-       - /dev/dri:/dev/dri
+    privileged: true
     network_mode: host

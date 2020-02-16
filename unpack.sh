@@ -72,7 +72,7 @@ if [ $ROVER ]; then
     git clone https://github.com/UofA-SPEAR/zed-ros-wrapper.git
     cd zed-ros-wrapper
     # Checkout the latest stable release of zed-ros-wrapper
-    git checkout v2.7.x
+    git checkout v3.0.0
     cd ~/ros/src
 fi
 

@@ -1,7 +1,7 @@
 <!-- Launches everything needed to drive the rover by sending Twist messages -->
 <launch>
   <!-- Default can device -->
-  <arg name="interface" default="can0"/>
+  <arg name="interface" default="vcan0"/>
 
   <!-- Launch canros server -->
   <include file="$(find canros)/launch/server.launch">
