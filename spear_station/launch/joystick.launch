@@ -1,10 +1,15 @@
 <launch>
-  <node pkg="joy" name="joystick_input" type="joy_node" output="screen">
+  <node pkg="joy" name="joy_node" type="joy_node" output="screen">
     <param name="autorepeat_rate" value="10"/>
     <!--
         We want faster updates when moving the controller,
         but not so fast we flood things.
     -->
     <param name="coalesce_interval" value="0.05"/>
+  </node>
+  
+  <node pkg="teleop_twist_joy" name="teleop_node" type="teleop_node" output="screen">
+    <remap from="cmd_vel" to="/rover_diff_drive_controller/cmd_vel"/>
+    <param name="enable_button" value="8"/>
   </node>
 </launch>
