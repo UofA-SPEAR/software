@@ -10,7 +10,8 @@ services:
     stdin_open: true
     environment:
       DISPLAY: $DISPLAY
-      ROS_IP: 127.0.0.1
+      ROS_IP: 192.168.1.13
+      ROS_MASTER_URI: http://192.168.0.61:11311
       QT_X11_NO_MITSHM: 1
       DOCKER_HOST_REPO_LOCATION: .
     volumes:
