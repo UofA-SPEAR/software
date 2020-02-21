@@ -1,0 +1,28 @@
+<!-- Perform camera calibration using the calibration rectangle in the club room -->
+<launch>
+  <arg name="calibrate_webcam" default="true"/>
+
+  <group if="$(arg calibrate_webcam)">
+    <arg name="device" default="/dev/video2"/>
+
+    <node name="calibration" pkg="camera_calibration" type="cameracalibrator.py" args="--size 10x7 --square 3.509">
+      <remap from="image" to="webcam/image_raw"/>
+      <remap from="camera" to="webcam"/>
+    </node>
+
+    <node name="webcam" pkg="usb_cam" type="usb_cam_node">
+        <param name="video_device" value="$(arg device)"/>
+        <param name="pixel_format" value="yuyv"/>
+    </node>
+  </group>
+
+  <group unless="$(calibrate_webcam)">
+    <include file="$(find zed_wrapper)/launch/zed.launch"/>
+    <node name="calibration" pkg="camera_calibration" type="cameracalibrator.py" args="--size 10x7 --square 3.509 --no-service-check">
+      <remap from="right" to="/zed/zed_node/right_raw/image_raw_color"/>
+      <remap from="left" to="/zed/zed_node/left_raw/image_raw_color"/>
+      <remap from="right_camera" to="/zed/zed_node/right"/>
+      <remap from="left_camera" to="/zed/zed_node/left"/>
+    </node>
+  </group>
+</launch>

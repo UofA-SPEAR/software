@@ -10,10 +10,6 @@ class NavigateState(EventState):
     '''
     Navigate to waypoints.
 
-    -- linear float    Linear speed in m/s (positive is forward)
-    -- angular float   Angular speed in rad/s (positive is left)
-    -- duration float  Duration of the move
-
     ># target_pose Dict[str,float]   Pose to navigate to, a dictionary with the keys 'x', 'y', and 'frame_id'
 
     <= ok              Navigation complete with no errors

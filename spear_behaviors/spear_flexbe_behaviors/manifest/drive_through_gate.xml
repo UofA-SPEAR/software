@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<behavior name="Drive through gate">
+
+	<executable package_path="spear_flexbe_behaviors.drive_through_gate_sm" class="DrivethroughgateSM" />
+	<tagstring></tagstring>
+	<author>Mitchell</author>
+	<date>Mon Feb 03 2020</date>
+	<description>
+		Drive through a gate
+	</description>
+
+
+	<!-- Contained Behaviors -->
+	<contains name="Proportional drive" />
+
+	<!-- Available Parameters -->
+
+</behavior>

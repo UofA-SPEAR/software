@@ -1,0 +1,34 @@
+<launch>
+  <arg name="simulation"/>
+  <!-- Markers at URC are 20cmx20cm -->
+  <arg name="marker_size" default="20.0" unless="$(arg simulation)"/>
+  <arg name="marker_size" default="17" if="$(arg simulation)"/>
+  <arg name="max_new_marker_error" default="0.3"/>
+  <arg name="max_track_error" default="0.8"/>
+
+  <arg name="cam_image_topic" default="/camera_depth/rgb/image_raw"/>
+  <arg name="cam_info_topic" default="/camera_depth/rgb/camera_info"/>
+  <arg name="output_frame" default="base_link"/>
+
+  <node name="ar_track_alvar" pkg="ar_track_alvar" type="individualMarkersNoKinect" respawn="false" output="screen">
+    <param name="marker_size" value="$(arg marker_size)"/>
+    <param name="max_new_marker_error" value="$(arg max_new_marker_error)"/>
+    <param name="max_track_error" value="$(arg max_track_error)"/>
+    <param name="output_frame" value="$(arg output_frame)"/>
+
+    <remap from="camera_image" to="$(arg cam_image_topic)"/>
+    <remap from="camera_info" to="$(arg cam_info_topic)"/>
+  </node>
+  <!-- HACK: use a webcam outside of simulation -->
+  <group unless="$(arg simulation)">
+    <node name="webcam" pkg="usb_cam" type="usb_cam_node">
+        <param name="video_device" value="/dev/video2"/>
+        <param name="pixel_format" value="yuyv"/>
+        <param name="camera_frame_id" value="base_link"/>
+        <param name="camera_info_url" value="file://$(find spear_rover)/calibration/webcam1.yaml"/>
+
+        <remap from="webcam/image_raw" to="/camera_depth/rgb/image_raw"/>
+        <remap from="webcam/camera_info" to="/camera_depth/rgb/camera_info"/>
+    </node>
+  </group>
+</launch>
