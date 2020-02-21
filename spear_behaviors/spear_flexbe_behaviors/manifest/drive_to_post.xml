@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<behavior name="Drive to post">
+
+	<executable package_path="spear_flexbe_behaviors.drive_to_post_sm" class="DrivetopostSM" />
+	<tagstring></tagstring>
+	<author>Mitchell</author>
+	<date>Sun Feb 02 2020</date>
+	<description>
+		Drive to a post
+	</description>
+
+
+	<!-- Contained Behaviors -->
+	<contains name="Proportional drive" />
+
+	<!-- Available Parameters -->
+
+</behavior>
