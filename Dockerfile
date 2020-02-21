@@ -25,3 +25,4 @@ SHELL ["/ros_entrypoint.sh", "bash", "-c"]
 
 COPY . /software
 
+RUN ( cd software && bash ./unpack.sh dev )
