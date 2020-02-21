@@ -304,7 +304,7 @@ Visualization Manager:
         Shaft Length: 1
         Shaft Radius: 0.0500000007
         Value: Arrow
-      Topic: /camera/odom
+      Topic: /camera_depth/odom
       Unreliable: false
       Value: true
     - Angle Tolerance: 0.100000001

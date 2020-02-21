@@ -426,4 +426,60 @@
         <pose>0 0 0 0 0 0</pose> <!--180 _ _-->
       </sensor>
     </gazebo>
+
+    <!-- Camera Center -->
+    <joint name="zed_camera_center_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="zed_camera_center"/>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+    </joint>
+
+    <link name="zed_camera_center">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://zed_wrapper/urdf/models/ZED.stl" />
+            </geometry>
+            <material name="light_grey">
+                <color rgba="0.8 0.8 0.8 0.8"/>
+            </material>
+        </visual>
+    </link>
+
+<!-- Left Camera -->
+
+    <joint name="zed_left_camera_joint" type="fixed">
+        <parent link="zed_camera_center"/>
+        <child link="zed_left_camera_frame"/>
+        <origin xyz="0 0.06 0" rpy="0 0 0" />
+    </joint>
+
+    <link name="zed_left_camera_frame" />
+
+    <joint name="zed_left_camera_optical_joint" type="fixed">
+        <origin xyz="0 0 0" rpy="-1.57079632679 0.0 -1.57079632679"/>
+        <parent link="zed_left_camera_frame"/>
+        <child link="zed_left_camera_optical_frame"/>
+    </joint>
+
+    <link name="zed_left_camera_optical_frame"/>
+
+<!-- Right Camera -->
+
+    <joint name="zed_right_camera_joint" type="fixed">
+        <parent link="zed_camera_center"/>
+        <child link="zed_right_camera_frame"/>
+        <origin xyz="0 -0.06 0" rpy="0 0 0" />
+    </joint>
+
+    <link name="zed_right_camera_frame" />
+
+    <joint name="zed_right_camera_optical_joint" type="fixed">
+        <origin xyz="0 0 0" rpy="-1.57079632679 0.0 -1.57079632679"/>
+        <parent link="zed_right_camera_frame"/>
+        <child link="zed_right_camera_optical_frame"/>
+    </joint>
+
+    <link name="zed_right_camera_optical_frame"/>
+    
   </robot>
