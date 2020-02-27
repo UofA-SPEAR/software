@@ -21,4 +21,8 @@
   <include file="$(find spear_rover)/launch/flexbe_onboard.launch"/>
 
   <node type="rviz" name="rviz" pkg="rviz" args="-d $(find spear_rover)/rviz/navigate.rviz"/>
+
+  <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch"/>
+  <node type="diagnostics.py" name="diagnostics" pkg="spear_rover"/>
+
 </launch>
