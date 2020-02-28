@@ -74,6 +74,7 @@ rm -rf nimbro_network
 ###### Install ros wrapper package for zed camera
 # This requires the ZED SDK to be installed
 # ZED SDK requires CUDA
+# TODO: this is still not working properly for some reason
 if [ $ROVER ]; then
     cd ~/ros/src
     curl -o zed-ros-wrapper.tar.gz https://github.com/stereolabs/zed-ros-wrapper/archive/v3.0.0
