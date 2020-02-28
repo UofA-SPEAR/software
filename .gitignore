@@ -16,3 +16,11 @@ compile_commands.original.json
 .docker-root-ros-include-mount/
 
 arm_controls/dial.psd
+
+# Generated marker images
+markers/*.png
+
+# rosbag recordings
+**.bag
+
+
