@@ -9,7 +9,7 @@ from ros_numpy import numpify, msgify
 class SetGoalToPostState(EventState):
     '''
     Output a navigation goal to the given post as a userdata
-    
+
     ># leg_number int Which leg of the course the post is at (1 to 3)
     <# target_pose PoseStamped  A pose in front of and facing the post
 
@@ -28,7 +28,7 @@ class SetGoalToPostState(EventState):
         point = numpify(post.position.point)
         normal = numpify(post.normal.vector)
         target_pose.header.frame_id = post.pose.header.frame_id
-        target_pose.pose.position = msgify(Point, point + normal*2)
+        target_pose.pose.position = msgify(Point, point + normal * 2)
         target_pose.pose.orientation = msgify(Quaternion, normal_to_quaternion(-normal))
         userdata.target_pose = target_pose
 

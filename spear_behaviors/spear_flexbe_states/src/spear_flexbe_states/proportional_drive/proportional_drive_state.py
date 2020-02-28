@@ -48,12 +48,12 @@ class ProportionalDriveState(EventState):
             return 'ok'
 
         rover_angle = quaternion_to_yaw(odometry.pose.pose.orientation)
-        angle_to_target = np.arctan2(target_position2d[1]-rover_position2d[1], target_position2d[0]-rover_position2d[0])
+        angle_to_target = np.arctan2(target_position2d[1] - rover_position2d[1], target_position2d[0] - rover_position2d[0])
         diff = angular_diff(angle_to_target, rover_angle)
         print(diff)
 
         t = Twist()
-        if abs(diff) < np.pi/4:
+        if abs(diff) < np.pi / 4:
             t.linear.x = self.FORWARD_SPEED
         t.angular.z = diff * self.PROPORTIONAL_CONSTANT
         if abs(t.angular.z) > self.MAX_ANGULAR_SPEED:
@@ -62,5 +62,3 @@ class ProportionalDriveState(EventState):
 
     def on_exit(self, userdata):
         self._twist_publisher.publish(Twist())
-
-
