@@ -11,8 +11,8 @@
     </node>
 
     <node name="webcam" pkg="usb_cam" type="usb_cam_node">
-        <param name="video_device" value="$(arg device)"/>
-        <param name="pixel_format" value="yuyv"/>
+      <param name="video_device" value="$(arg device)"/>
+      <param name="pixel_format" value="yuyv"/>
     </node>
   </group>
 

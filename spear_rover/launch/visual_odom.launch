@@ -8,10 +8,10 @@
   <arg name="camera_name" default="camera_depth"/>
 
   <node name="$(arg camera_name)" pkg="zed_wrapper" type="zed_wrapper_node" output="screen">
-    <rosparam file="$(find zed_wrapper)/params/common.yaml" command="load" />
-    <rosparam file="$(find zed_wrapper)/params/zed.yaml" command="load" />
+    <rosparam file="$(find zed_wrapper)/params/common.yaml" command="load"/>
+    <rosparam file="$(find zed_wrapper)/params/zed.yaml" command="load"/>
     <rosparam file="$(find spear_rover)/config/zed/override_params.yaml" command="load"/>
-  
+
     <remap from="$(arg camera_name)/rgb/image_rect_color" to="$(arg camera_name)/$(arg rgb_topic)"/>
     <remap from="$(arg camera_name)/rgb/camera_info" to="$(arg camera_name)/$(arg camera_info_topic)"/>
     <remap from="$(arg camera_name)/depth/depth_registered" to="$(arg camera_name)/$(arg depth_topic)"/>

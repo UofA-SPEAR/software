@@ -22,13 +22,13 @@
   <!-- HACK: use a webcam outside of simulation -->
   <group unless="$(arg simulation)">
     <node name="webcam" pkg="usb_cam" type="usb_cam_node">
-        <param name="video_device" value="/dev/video2"/>
-        <param name="pixel_format" value="yuyv"/>
-        <param name="camera_frame_id" value="link_camera_depth"/>
-        <param name="camera_info_url" value="file://$(find spear_rover)/calibration/webcam1.yaml"/>
+      <param name="video_device" value="/dev/video2"/>
+      <param name="pixel_format" value="yuyv"/>
+      <param name="camera_frame_id" value="link_camera_depth"/>
+      <param name="camera_info_url" value="file://$(find spear_rover)/calibration/webcam1.yaml"/>
 
-        <remap from="webcam/image_raw" to="/camera_depth/rgb/image_raw"/>
-        <remap from="webcam/camera_info" to="/camera_depth/rgb/camera_info"/>
+      <remap from="webcam/image_raw" to="/camera_depth/rgb/image_raw"/>
+      <remap from="webcam/camera_info" to="/camera_depth/rgb/camera_info"/>
     </node>
   </group>
 </launch>
