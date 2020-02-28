@@ -22,9 +22,9 @@ def angular_diff(angle1, angle2):  # type: (float, float) -> float
     """
     diff = angle1 - angle2
     while diff < -np.pi:
-        diff += 2*np.pi
+        diff += 2 * np.pi
     while diff > np.pi:
-        diff -= 2*np.pi
+        diff -= 2 * np.pi
     return diff
 
 
@@ -36,9 +36,9 @@ def quaternion_rotate(quaternion, vector):  # type: (np.ndarray, np.ndarray) -> 
 
 
 def normal_to_quaternion(normal):  # type: (np.ndarray) -> np.ndarray
-    rotation_matrix = np.zeros((4,4))
-    rotation_matrix[3,3] = 1.0
-    rotation_matrix[:3,:3] = np.vstack((
+    rotation_matrix = np.zeros((4, 4))
+    rotation_matrix[3, 3] = 1.0
+    rotation_matrix[:3, :3] = np.vstack((
         normal,
         np.cross(np.array([0.0, 0.0, 1.0]), normal),
         np.array([0.0, 0.0, 1.0]),
