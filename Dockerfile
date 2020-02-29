@@ -34,6 +34,14 @@ SHELL ["/ros_entrypoint.sh", "/bin/bash", "-c"]
 # On the tx2 we also need:
 # sudo apt-get install libusb-0.1-4
 
+# Add a nice default .tmuxrc
+WORKDIR /root
+RUN git clone https://github.com/gpakosz/.tmux.git
+RUN ln -s -f .tmux/.tmux.conf
+RUN cp .tmux/.tmux.conf.local .
+RUN sed -i '/#set -g mouse on/c\set -g mouse on' .tmux.conf.local
+
+
 COPY . /software
 
 # Set IS_DOCKER to true so setup-vcan.bash and setup-can.bash don't try
