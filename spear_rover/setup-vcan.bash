@@ -29,12 +29,16 @@ print_info() {
 
 print_warning "We're using sudo to enable vcan! Sorry!"
 
-print_info "Loading virtual CAN kernel modules..."
-sudo modprobe can
-sudo modprobe can_raw
-sudo modprobe vcan
+if [[ "$IS_DOCKER" -eq "true" ]]; then
+  print_warning "You're running this script inside docker. We'll skip loading kernel modules."
+else
+  print_info "Loading virtual CAN kernel modules..."
+  sudo modprobe can
+  sudo modprobe can_raw
+  sudo modprobe vcan
+fi
 
-print_info "Setting up can0 network interface..."
+print_info "Setting up vcan0 network interface..."
 
 sudo ip link add dev vcan0 type vcan
 sudo ip link set up vcan0
@@ -46,7 +50,7 @@ print_info "Here's the network that just got set up:\n"
 #   -d ==> show details
 #   -h ==> human-readable numbers
 #   -c ==> colorize
-ip -s -d -h -c link show can0
+ip -s -d -h -c link show vcan0
 
 echo ""
 read -n 1 -s -r -p "Press any key to continue..."

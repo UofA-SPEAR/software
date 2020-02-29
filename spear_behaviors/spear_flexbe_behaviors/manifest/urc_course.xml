@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<behavior name="URC course">
+
+	<executable package_path="spear_flexbe_behaviors.urc_course_sm" class="URCcourseSM" />
+	<tagstring></tagstring>
+	<author>Mitchell</author>
+	<date>Mon Feb 03 2020</date>
+	<description>
+		Complete the URC test course world
+	</description>
+
+
+	<!-- Contained Behaviors -->
+	<contains name="Drive to post" />
+	<contains name="Drive through gate" />
+
+	<!-- Available Parameters -->
+
+</behavior>
