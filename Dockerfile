@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y qt4-default libx264-dev \
                                          libxml2-utils \
                                          python-catkin-tools \
                                          iproute2
-                                         
+
 RUN python -m pip install catkin_lint || echo "Error installing catkin_lint -- this is not a problem on the tx2"
 RUN python -m pip install typing
 
@@ -49,3 +49,4 @@ COPY . /software
 ENV IS_DOCKER true
 
 RUN ( cd software && bash ./unpack.sh dev )
+WORKDIR /software
