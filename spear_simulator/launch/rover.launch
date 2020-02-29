@@ -1,6 +1,6 @@
 <!-- Launches everything needed to drive the rover by sending Twist messages -->
 <launch>
-  <arg name="world_name" default="$(find spear_simulator)/worlds/ball_find_00.world"/>
+  <arg name="world_name" default="$(find spear_simulator)/worlds/ball_find_02.world"/>
 
   <!-- Launch gazebo to the specified world -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
@@ -13,7 +13,7 @@
   <!-- Translate twist messages to wheel commands, and publish wheel odometry -->
 
   <rosparam command="load" file="$(find spear_simulator)/config/diffdrive.yaml" ns="/rover_diff_drive_controller"/>
-  <node name="rover_controller_spawner" pkg="controller_manager" type="spawner" args="rover_diff_drive_controller --shutdown-timeout 3"/>
+  <node name="rover_controller_spawner" pkg="controller_manager" type="spawner" args="rover_diff_drive_controller --timeout 300"/>
 
   <!-- Publish robot description -->
   <include file="$(find spear_rover)/launch/robot_description.launch"/>

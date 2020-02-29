@@ -10,13 +10,13 @@ RUN apt-get update && apt-get install -y qt4-default libx264-dev \
                                          ros-melodic-move-base \
                                          python-pip \
                                          tmux \
-                                         vim \
-                                         nano \
+                                         curl \
                                          libxml2-utils \
                                          python-catkin-tools \
                                          iproute2
-
-RUN python -m pip install catkin_lint
+                                         
+RUN python -m pip install catkin_lint || echo "Error installing catkin_lint -- this is not a problem on the tx2"
+RUN python -m pip install typing
 
 # Install uavcan_gui_tool for can debugging / monitoring
 # (see https://uavcan.org/GUI_Tool/Overview/ for install docs)
@@ -30,6 +30,9 @@ RUN apt-get update && apt-get install -y python3-pip \
 RUN pip3 install git+https://github.com/UAVCAN/gui_tool@master
 
 SHELL ["/ros_entrypoint.sh", "/bin/bash", "-c"]
+
+# On the tx2 we also need:
+# sudo apt-get install libusb-0.1-4
 
 COPY . /software
 

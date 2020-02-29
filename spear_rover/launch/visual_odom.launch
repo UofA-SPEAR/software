@@ -1,53 +1,26 @@
 <!-- Launch ZED camera for visual odometry and RTAB-Map for SLAM -->
 <launch>
-
-  <!-- Start zed ros wrapper and rtabmap -->
-  <!-- see: https://github.com/stereolabs/zed-ros-wrapper/tree/master/examples/zed_rtabmap_example -->
-
-  <!-- <arg name="svo_file" default="path/to/svo/file.svo"> -->
-  <arg name="svo_file" default=""/>
-
-  <!-- 0=ZED, 1=ZEDM-->
-  <arg name="camera_model" default="0"/>
-  <arg name="serial_number" default="0"/>
-  <arg name="verbose" default="true"/>
-  <!--0=RESOLUTION_HD2K, 1=RESOLUTION_HD1080, 2=RESOLUTION_HD720, 3=RESOLUTION_VGA -->
-  <arg name="resolution" default="3"/>
-  <!-- RESOLUTION_HD2K   -> 2208*1242, available framerates: 15 fps.
-       RESOLUTION_HD1080 -> 1920*1080, available framerates: 15, 30 fps.
-       RESOLUTION_HD720  -> 1280*720,  available framerates: 15, 30, 60 fps.
-       RESOLUTION_VGA    -> 672*376,   available framerates: 15, 30, 60, 100 fps. -->
-  <arg name="frame_rate" default="60"/>
-
   <arg name="rgb_topic" default="rgb/image_raw"/>
-  <arg name="depth_topic" default="depth/image_raw"/>
   <arg name="camera_info_topic" default="rgb/camera_info"/>
+  <arg name="depth_topic" default="depth/image_raw"/>
   <arg name="depth_camera_info_topic" default="depth/camera_info"/>
-  <arg name="camera_frame" default="link_camera_depth"/>
+  <arg name="point_cloud_topic" default="depth/points"/>
+  <arg name="camera_name" default="camera_depth"/>
 
-  <group ns="camera_depth">
-    <!-- ZED Wrapper Node-->
-    <include file="$(find zed_wrapper)/launch/zed_camera.launch">
-      <arg name="svo_file" value="$(arg svo_file)"/>
-      <arg name="camera_model" value="$(arg camera_model)"/>
-      <arg name="serial_number" value="$(arg serial_number)"/>
-      <arg name="resolution" value="$(arg resolution)"/>
-      <arg name="frame_rate" value="$(arg frame_rate)"/>
-      <arg name="verbose" value="$(arg verbose)"/>
+  <node name="$(arg camera_name)" pkg="zed_wrapper" type="zed_wrapper_node" output="screen">
+    <rosparam file="$(find zed_wrapper)/params/common.yaml" command="load"/>
+    <rosparam file="$(find zed_wrapper)/params/zed.yaml" command="load"/>
+    <rosparam file="$(find spear_rover)/config/zed/override_params.yaml" command="load"/>
 
-      <!-- don't publish tf since only ekf node should do this -->
-      <arg name="publish_tf" value="false"/>
-      <arg name="publish_map_tf" value="false"/>
-      <!-- THIS IS IMPORTANT
-          The zed visual odom node will by default publish odometry between camera_frame
-                and "map" which is not what we want. -->
-      <arg name="pose_frame" value="odom"/>
+    <remap from="$(arg camera_name)/rgb/image_rect_color" to="$(arg camera_name)/$(arg rgb_topic)"/>
+    <remap from="$(arg camera_name)/rgb/camera_info" to="$(arg camera_name)/$(arg camera_info_topic)"/>
+    <remap from="$(arg camera_name)/depth/depth_registered" to="$(arg camera_name)/$(arg depth_topic)"/>
+    <remap from="$(arg camera_name)/depth/camera_info" to="$(arg camera_name)/$(arg depth_camera_info_topic)"/>
+    <remap from="$(arg camera_name)/point_cloud/cloud_registered" to="$(arg camera_name)/$(arg point_cloud_topic)"/>
+  </node>
 
-      <arg name="rgb_topic" value="$(arg rgb_topic)"/>
-      <arg name="depth_topic" value="$(arg depth_topic)"/>
-      <arg name="rgb_info_topic" value="$(arg camera_info_topic)"/>
-      <arg name="depth_cam_info_topic" value="$(arg depth_camera_info_topic)"/>
-      <arg name="base_frame" value="$(arg camera_frame)"/>
-    </include>
-  </group>
+  <!-- <param name="zed_description" textfile="$(find zed_wrapper)/urdf/zed.urdf" />
+  <node name="zed_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen" required="true">
+    <remap from="robot_description" to="zed_description" />
+  </node> -->
 </launch>
