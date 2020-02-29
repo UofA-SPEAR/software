@@ -40,7 +40,7 @@ RUN git clone https://github.com/gpakosz/.tmux.git
 RUN ln -s -f .tmux/.tmux.conf
 RUN cp .tmux/.tmux.conf.local .
 RUN sed -i '/#set -g mouse on/c\set -g mouse on' .tmux.conf.local
-
+WORKDIR /
 
 COPY . /software
 
