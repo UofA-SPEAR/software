@@ -1,6 +1,6 @@
 general:
-    frame_rate: 15
-    resolution: 3  # '0': HD2K, '1': HD1080, '2': HD720, '3': VGA
+    frame_rate: 30
+    resolution: 2  # '0': HD2K, '1': HD1080, '2': HD720, '3': VGA
 
 pos_tracking:
     publish_tf: false
