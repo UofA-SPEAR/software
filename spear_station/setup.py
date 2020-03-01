@@ -3,10 +3,12 @@
 from distutils.core import setup
 from catkin_pkg.python_setup import generate_distutils_setup
 
-# which folder should this actually go in?
-setup_args = generate_distutils_setup(
-    packages=['spear_station'], package_dir={
-        '': 'python'
-    })
+d = generate_distutils_setup(
+    packages=[
+        'spear_station', 'spear_station.rqt_arm_gui',
+        'spear_station.rqt_arm_gui.plugins'
+    ],
+    package_dir={'': 'python'},
+)
 
-setup(**setup_args)
+setup(**d)
