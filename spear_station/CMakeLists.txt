@@ -176,7 +176,7 @@ install(DIRECTORY
 
 # rqt plugin.xml definition file
 install(FILES
-  plugin.xml
+  rqt_arm_gui.plugin.xml
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 

@@ -37,6 +37,6 @@
 
   <export>
     <!-- This lets rqt find any gui plugins we make here. -->
-    <rqt_gui plugin="${prefix}/plugin.xml" />
+    <rqt_gui plugin="${prefix}/rqt_arm_gui.plugin.xml" />
   </export>
 </package>

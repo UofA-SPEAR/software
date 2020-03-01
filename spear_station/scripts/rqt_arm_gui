@@ -1,8 +1,11 @@
 #!/usr/bin/env python
+#
+# This is just the plugin importer script that rqt requires. rqt will spin up
+# the ros node for us as long as we use it's Main.main function.
 
 import sys
 
-from spear_station.rqt_arm_gui.test_module import MyPlugin
+from spear_station.rqt_arm_gui import ArmGuiPlugin
 from rqt_gui.main import Main
 
 plugin = 'rqt_arm_gui'

@@ -1,7 +1,7 @@
 <!-- This file is for any rqt plugins we develop. -->
 
 <library path="src">
-  <class name="SPEAR Arm Gui" type="spear_station.rqt_arm_gui.test_module.MyPlugin" base_class_type="rqt_gui_py::Plugin">
+  <class name="SPEAR Arm Gui" type="spear_station.rqt_arm_gui.ArmGuiPlugin" base_class_type="rqt_gui_py::Plugin">
     <description>
       A GUI for the arm. Allows individual joint manipulation, keyboard control, and joystick control.
     </description>
