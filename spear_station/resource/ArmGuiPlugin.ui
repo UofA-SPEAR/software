@@ -27,6 +27,9 @@
        <layout class="QGridLayout" name="joint1GridLayout">
         <item row="2" column="0" alignment="Qt::AlignHCenter">
          <widget class="QDoubleSpinBox" name="joint1SpinBox">
+          <property name="minimum">
+           <double>-90.000000000000000</double>
+          </property>
           <property name="maximum">
            <double>90.000000000000000</double>
           </property>
@@ -43,7 +46,19 @@
          </widget>
         </item>
         <item row="1" column="0" alignment="Qt::AlignHCenter">
-         <widget class="QSlider" name="joint1Slider">
+         <widget class="DoubleSlider" name="joint1Slider">
+          <property name="minimum">
+           <number>-9000</number>
+          </property>
+          <property name="maximum">
+           <number>9000</number>
+          </property>
+          <property name="singleStep">
+           <number>100</number>
+          </property>
+          <property name="pageStep">
+           <number>1000</number>
+          </property>
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
@@ -61,7 +76,19 @@
          </widget>
         </item>
         <item row="1" column="0" alignment="Qt::AlignHCenter">
-         <widget class="QSlider" name="joint2Slider">
+         <widget class="DoubleSlider" name="joint2Slider">
+          <property name="minimum">
+           <number>-9000</number>
+          </property>
+          <property name="maximum">
+           <number>9000</number>
+          </property>
+          <property name="singleStep">
+           <number>100</number>
+          </property>
+          <property name="pageStep">
+           <number>1000</number>
+          </property>
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
@@ -69,6 +96,9 @@
         </item>
         <item row="2" column="0" alignment="Qt::AlignHCenter">
          <widget class="QDoubleSpinBox" name="joint2SpinBox">
+          <property name="minimum">
+           <double>-90.000000000000000</double>
+          </property>
           <property name="maximum">
            <double>90.000000000000000</double>
           </property>
@@ -89,7 +119,19 @@
          </widget>
         </item>
         <item row="1" column="0" alignment="Qt::AlignHCenter">
-         <widget class="QSlider" name="joint3Slider">
+         <widget class="DoubleSlider" name="joint3Slider">
+          <property name="minimum">
+           <number>-9000</number>
+          </property>
+          <property name="maximum">
+           <number>9000</number>
+          </property>
+          <property name="singleStep">
+           <number>100</number>
+          </property>
+          <property name="pageStep">
+           <number>1000</number>
+          </property>
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
@@ -97,6 +139,9 @@
         </item>
         <item row="2" column="0" alignment="Qt::AlignHCenter">
          <widget class="QDoubleSpinBox" name="joint3SpinBox">
+          <property name="minimum">
+           <double>-90.000000000000000</double>
+          </property>
           <property name="maximum">
            <double>90.000000000000000</double>
           </property>
@@ -117,7 +162,19 @@
          </widget>
         </item>
         <item row="1" column="0" alignment="Qt::AlignHCenter">
-         <widget class="QSlider" name="joint4Slider">
+         <widget class="DoubleSlider" name="joint4Slider">
+          <property name="minimum">
+           <number>-9000</number>
+          </property>
+          <property name="maximum">
+           <number>9000</number>
+          </property>
+          <property name="singleStep">
+           <number>100</number>
+          </property>
+          <property name="pageStep">
+           <number>1000</number>
+          </property>
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
@@ -125,6 +182,9 @@
         </item>
         <item row="2" column="0" alignment="Qt::AlignHCenter">
          <widget class="QDoubleSpinBox" name="joint4SpinBox">
+          <property name="minimum">
+           <double>-90.000000000000000</double>
+          </property>
           <property name="maximum">
            <double>90.000000000000000</double>
           </property>
@@ -145,7 +205,19 @@
          </widget>
         </item>
         <item row="1" column="0" alignment="Qt::AlignHCenter">
-         <widget class="QSlider" name="joint5Slider">
+         <widget class="DoubleSlider" name="joint5Slider">
+          <property name="minimum">
+           <number>-9000</number>
+          </property>
+          <property name="maximum">
+           <number>9000</number>
+          </property>
+          <property name="singleStep">
+           <number>100</number>
+          </property>
+          <property name="pageStep">
+           <number>1000</number>
+          </property>
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
@@ -153,6 +225,9 @@
         </item>
         <item row="2" column="0" alignment="Qt::AlignHCenter">
          <widget class="QDoubleSpinBox" name="joint5SpinBox">
+          <property name="minimum">
+           <double>-90.000000000000000</double>
+          </property>
           <property name="maximum">
            <double>90.000000000000000</double>
           </property>
@@ -173,7 +248,19 @@
          </widget>
         </item>
         <item row="1" column="0" alignment="Qt::AlignHCenter">
-         <widget class="QSlider" name="joint6Slider">
+         <widget class="DoubleSlider" name="joint6Slider">
+          <property name="minimum">
+           <number>-9000</number>
+          </property>
+          <property name="maximum">
+           <number>9000</number>
+          </property>
+          <property name="singleStep">
+           <number>100</number>
+          </property>
+          <property name="pageStep">
+           <number>1000</number>
+          </property>
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
@@ -181,6 +268,9 @@
         </item>
         <item row="2" column="0" alignment="Qt::AlignHCenter">
          <widget class="QDoubleSpinBox" name="joint6SpinBox">
+          <property name="minimum">
+           <double>-90.000000000000000</double>
+          </property>
           <property name="maximum">
            <double>90.000000000000000</double>
           </property>
@@ -224,6 +314,13 @@
    </layout>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>DoubleSlider</class>
+   <extends>QSlider</extends>
+   <header>spear_station.rqt_arm_gui.double_slider</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>joint1Slider</tabstop>
   <tabstop>joint2Slider</tabstop>
