@@ -7,7 +7,9 @@ import rospkg
 from qt_gui.plugin import Plugin
 from python_qt_binding import loadUi
 from python_qt_binding.QtWidgets import QTabWidget, QDoubleSpinBox
+
 from double_slider import DoubleSlider
+from joint_props import joint_props
 
 
 class ArmGuiPlugin(Plugin):
@@ -16,7 +18,7 @@ class ArmGuiPlugin(Plugin):
         # Give QObjects reasonable names
         self.setObjectName('ArmGuiPlugin')
 
-        # Create QWidget
+        # Create QTabWidget
         self._widget = QTabWidget()
         # Get path to UI file which should be in the "resource" folder of this
         # package
@@ -37,13 +39,11 @@ class ArmGuiPlugin(Plugin):
         # Add widget to the user interface
         context.add_widget(self._widget)
 
-        self.connectSlidersAndWidgets()
+        self.connect_sliders_and_widgets()
 
-    def connectSlidersAndWidgets(self):
+    def connect_sliders_and_widgets(self):
         """Display slider changes on spinboxes, and vice-versa."""
-        for joint in [
-                'joint1', 'joint2', 'joint3', 'joint4', 'joint5', 'joint6'
-        ]:
+        for joint in joint_props:
             # Use the pyqt findChild method to loop over the above joint names.
             # These names are set in the ArmGuiPlugin.ui file.
             # Note that you can't just use python's getattr() function to
@@ -53,9 +53,10 @@ class ArmGuiPlugin(Plugin):
             # but that results in an unimaginable amount of repetative code. And
             # it makes PEP8 unhappy.
             slider = self._widget.findChild(DoubleSlider, joint + 'Slider')
-            spinBox = self._widget.findChild(QDoubleSpinBox, joint + 'SpinBox')
-            slider.doubleValueChanged.connect(spinBox.setValue)
-            spinBox.valueChanged.connect(slider.setDoubleValue)
+            spin_box = self._widget.findChild(QDoubleSpinBox,
+                                              joint + 'SpinBox')
+            slider.doubleValueChanged.connect(spin_box.setValue)
+            spin_box.valueChanged.connect(slider.setDoubleValue)
 
     def shutdown_plugin(self):
         # TODO: unregister all publishers, timers, etc. here

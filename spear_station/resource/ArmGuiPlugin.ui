@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>758</width>
-    <height>461</height>
+    <width>782</width>
+    <height>500</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,7 +25,14 @@
      <layout class="QHBoxLayout" name="jointControls">
       <item>
        <layout class="QGridLayout" name="joint1GridLayout">
-        <item row="2" column="0" alignment="Qt::AlignHCenter">
+        <item row="0" column="0" alignment="Qt::AlignHCenter">
+         <widget class="QLabel" name="joint1Label">
+          <property name="text">
+           <string>Joint 1</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
          <widget class="QDoubleSpinBox" name="joint1SpinBox">
           <property name="minimum">
            <double>-90.000000000000000</double>
@@ -34,18 +41,11 @@
            <double>90.000000000000000</double>
           </property>
           <property name="singleStep">
-           <double>0.100000000000000</double>
+           <double>0.500000000000000</double>
           </property>
          </widget>
         </item>
-        <item row="0" column="0" alignment="Qt::AlignHCenter">
-         <widget class="QLabel" name="joint1Label">
-          <property name="text">
-           <string>Joint 1</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0" alignment="Qt::AlignHCenter">
+        <item row="2" column="0" alignment="Qt::AlignHCenter">
          <widget class="DoubleSlider" name="joint1Slider">
           <property name="minimum">
            <number>-9000</number>
@@ -64,6 +64,20 @@
           </property>
          </widget>
         </item>
+        <item row="1" column="0" alignment="Qt::AlignHCenter">
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;+ &lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Q&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0" alignment="Qt::AlignHCenter">
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;- &lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;A&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
       <item>
@@ -76,6 +90,26 @@
          </widget>
         </item>
         <item row="1" column="0" alignment="Qt::AlignHCenter">
+         <widget class="QLabel" name="label_4">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;+ &lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;W&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QDoubleSpinBox" name="joint2SpinBox">
+          <property name="minimum">
+           <double>-90.000000000000000</double>
+          </property>
+          <property name="maximum">
+           <double>90.000000000000000</double>
+          </property>
+          <property name="singleStep">
+           <double>0.500000000000000</double>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0" alignment="Qt::AlignHCenter">
          <widget class="DoubleSlider" name="joint2Slider">
           <property name="minimum">
            <number>-9000</number>
@@ -94,16 +128,10 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="0" alignment="Qt::AlignHCenter">
-         <widget class="QDoubleSpinBox" name="joint2SpinBox">
-          <property name="minimum">
-           <double>-90.000000000000000</double>
-          </property>
-          <property name="maximum">
-           <double>90.000000000000000</double>
-          </property>
-          <property name="singleStep">
-           <double>0.100000000000000</double>
+        <item row="3" column="0" alignment="Qt::AlignHCenter">
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;- &lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;S&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
          </widget>
         </item>
@@ -111,14 +139,7 @@
       </item>
       <item>
        <layout class="QGridLayout" name="joint3GridLayout">
-        <item row="0" column="0" alignment="Qt::AlignHCenter">
-         <widget class="QLabel" name="joint3Label">
-          <property name="text">
-           <string>Joint 3</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0" alignment="Qt::AlignHCenter">
+        <item row="2" column="0" alignment="Qt::AlignHCenter">
          <widget class="DoubleSlider" name="joint3Slider">
           <property name="minimum">
            <number>-9000</number>
@@ -137,7 +158,7 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="0" alignment="Qt::AlignHCenter">
+        <item row="4" column="0">
          <widget class="QDoubleSpinBox" name="joint3SpinBox">
           <property name="minimum">
            <double>-90.000000000000000</double>
@@ -146,7 +167,28 @@
            <double>90.000000000000000</double>
           </property>
           <property name="singleStep">
-           <double>0.100000000000000</double>
+           <double>0.500000000000000</double>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" alignment="Qt::AlignHCenter">
+         <widget class="QLabel" name="label_6">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;+ &lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;E&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0" alignment="Qt::AlignHCenter">
+         <widget class="QLabel" name="joint3Label">
+          <property name="text">
+           <string>Joint 3</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0" alignment="Qt::AlignHCenter">
+         <widget class="QLabel" name="label_7">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;- &lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;D&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
          </widget>
         </item>
@@ -154,14 +196,27 @@
       </item>
       <item>
        <layout class="QGridLayout" name="joint4GridLayout">
-        <item row="0" column="0" alignment="Qt::AlignHCenter">
-         <widget class="QLabel" name="joint4Label">
-          <property name="text">
-           <string>Joint 4</string>
+        <item row="4" column="0">
+         <widget class="QDoubleSpinBox" name="joint4SpinBox">
+          <property name="minimum">
+           <double>-90.000000000000000</double>
+          </property>
+          <property name="maximum">
+           <double>90.000000000000000</double>
+          </property>
+          <property name="singleStep">
+           <double>0.500000000000000</double>
           </property>
          </widget>
         </item>
         <item row="1" column="0" alignment="Qt::AlignHCenter">
+         <widget class="QLabel" name="label_8">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;+ &lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;R&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0" alignment="Qt::AlignHCenter">
          <widget class="DoubleSlider" name="joint4Slider">
           <property name="minimum">
            <number>-9000</number>
@@ -180,16 +235,17 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="0" alignment="Qt::AlignHCenter">
-         <widget class="QDoubleSpinBox" name="joint4SpinBox">
-          <property name="minimum">
-           <double>-90.000000000000000</double>
+        <item row="0" column="0" alignment="Qt::AlignHCenter">
+         <widget class="QLabel" name="joint4Label">
+          <property name="text">
+           <string>Joint 4</string>
           </property>
-          <property name="maximum">
-           <double>90.000000000000000</double>
-          </property>
-          <property name="singleStep">
-           <double>0.100000000000000</double>
+         </widget>
+        </item>
+        <item row="3" column="0" alignment="Qt::AlignHCenter">
+         <widget class="QLabel" name="label_9">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;- &lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;F&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
          </widget>
         </item>
@@ -204,7 +260,7 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="0" alignment="Qt::AlignHCenter">
+        <item row="2" column="0" alignment="Qt::AlignHCenter">
          <widget class="DoubleSlider" name="joint5Slider">
           <property name="minimum">
            <number>-9000</number>
@@ -223,7 +279,7 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="0" alignment="Qt::AlignHCenter">
+        <item row="4" column="0">
          <widget class="QDoubleSpinBox" name="joint5SpinBox">
           <property name="minimum">
            <double>-90.000000000000000</double>
@@ -232,7 +288,21 @@
            <double>90.000000000000000</double>
           </property>
           <property name="singleStep">
-           <double>0.100000000000000</double>
+           <double>0.500000000000000</double>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" alignment="Qt::AlignHCenter">
+         <widget class="QLabel" name="label_10">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;+ &lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;T&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0" alignment="Qt::AlignHCenter">
+         <widget class="QLabel" name="label_11">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;- &lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;G&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
          </widget>
         </item>
@@ -247,7 +317,7 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="0" alignment="Qt::AlignHCenter">
+        <item row="2" column="0" alignment="Qt::AlignHCenter">
          <widget class="DoubleSlider" name="joint6Slider">
           <property name="minimum">
            <number>-9000</number>
@@ -266,7 +336,7 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="0" alignment="Qt::AlignHCenter">
+        <item row="4" column="0">
          <widget class="QDoubleSpinBox" name="joint6SpinBox">
           <property name="minimum">
            <double>-90.000000000000000</double>
@@ -275,7 +345,21 @@
            <double>90.000000000000000</double>
           </property>
           <property name="singleStep">
-           <double>0.100000000000000</double>
+           <double>0.500000000000000</double>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" alignment="Qt::AlignHCenter">
+         <widget class="QLabel" name="label_12">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;+ &lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Y&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0" alignment="Qt::AlignHCenter">
+         <widget class="QLabel" name="label_13">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;- &lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;H&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
          </widget>
         </item>
@@ -292,6 +376,16 @@
     </item>
     <item>
      <layout class="QGridLayout" name="gridLayout" columnstretch="1,0">
+      <item row="0" column="1">
+       <widget class="QDoubleSpinBox" name="nudgeAmountSpinBox">
+        <property name="singleStep">
+         <double>0.100000000000000</double>
+        </property>
+        <property name="value">
+         <double>0.500000000000000</double>
+        </property>
+       </widget>
+      </item>
       <item row="0" column="0" alignment="Qt::AlignRight">
        <widget class="QLabel" name="label">
         <property name="text">
@@ -299,13 +393,17 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
-       <widget class="QDoubleSpinBox" name="nudgeAmountSpinBox">
-        <property name="singleStep">
-         <double>0.100000000000000</double>
+      <item row="1" column="0" alignment="Qt::AlignRight">
+       <widget class="QLabel" name="label_14">
+        <property name="text">
+         <string>Keyboard controls speed [°/sec]:</string>
         </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QDoubleSpinBox" name="doubleSpinBox">
         <property name="value">
-         <double>0.100000000000000</double>
+         <double>1.000000000000000</double>
         </property>
        </widget>
       </item>
