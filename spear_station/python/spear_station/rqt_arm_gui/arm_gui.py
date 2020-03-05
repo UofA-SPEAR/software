@@ -10,6 +10,7 @@ from python_qt_binding.QtWidgets import QTabWidget, QDoubleSpinBox
 
 from double_slider import DoubleSlider
 from joint_props import joint_props
+from events import IndivJointsKeyboardEvents
 
 
 class ArmGuiPlugin(Plugin):
@@ -39,22 +40,26 @@ class ArmGuiPlugin(Plugin):
         # Add widget to the user interface
         context.add_widget(self._widget)
 
+        # Cache references to joint sliders, spin boxes.
+        self.joint_sliders = [
+            self._widget.findChild(DoubleSlider, joint + 'Slider')
+            for joint in joint_props
+        ]
+
+        self.joint_spin_boxes = [
+            self._widget.findChild(QDoubleSpinBox, joint + 'SpinBox')
+            for joint in joint_props
+        ]
+
+        # Install event filters (how we handle keyboard events in QT)
+        self.indiv_joints_keyboard_events = IndivJointsKeyboardEvents(self)
+        self._widget.installEventFilter(self.indiv_joints_keyboard_events)
+
         self.connect_sliders_and_widgets()
 
     def connect_sliders_and_widgets(self):
         """Display slider changes on spinboxes, and vice-versa."""
-        for joint in joint_props:
-            # Use the pyqt findChild method to loop over the above joint names.
-            # These names are set in the ArmGuiPlugin.ui file.
-            # Note that you can't just use python's getattr() function to
-            # accomplish this, as qt_gui.plugin.Plugin removes the __getitem__
-            # attribute when you inherit from it.
-            # You could also just manually reference each SpinBox and Slider,
-            # but that results in an unimaginable amount of repetative code. And
-            # it makes PEP8 unhappy.
-            slider = self._widget.findChild(DoubleSlider, joint + 'Slider')
-            spin_box = self._widget.findChild(QDoubleSpinBox,
-                                              joint + 'SpinBox')
+        for slider, spin_box in zip(self.joint_sliders, self.joint_spin_boxes):
             slider.doubleValueChanged.connect(spin_box.setValue)
             spin_box.valueChanged.connect(slider.setDoubleValue)
 
