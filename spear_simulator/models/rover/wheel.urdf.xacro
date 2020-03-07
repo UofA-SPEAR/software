@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<robot name="wheel" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:macro name="wheel" params="name side offset">
+    <xacro:property name="link_origin" value="0 0 0"/>
+    <xacro:property name="joint_origin" value="0 0 0"/>
+    
+    <xacro:if value="${side == 'left'}">
+      <xacro:property name="link_rotation" value="0 0 0"/>
+    </xacro:if>
+    <xacro:if value="${side == 'right'}">
+      <xacro:property name="link_rotation" value="0 0 ${M_PI}"/>
+    </xacro:if>
+    
+    <link name="link_wheel_${name}">
+      <inertial>
+        <origin xyz="${link_origin}" rpy="${link_rotation}"/>
+        <mass value="1.5"/>
+        <inertia ixx="0.01534" ixy="0" ixz="0" iyy="0.01534" iyz="0" izz="0.01534"/>
+      </inertial>
+      <visual name="visual_wheel_${name}">
+        <origin xyz="${link_origin}" rpy="${link_rotation}"/>
+        <geometry>
+          <mesh filename="package://spear_simulator/models/rover/meshes/stl/TARS.V2.Wheel.001.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </visual>
+      <collision name="collision_wheel_${name}">
+        <origin xyz="${link_origin}" rpy="${link_rotation}"/> <!-- 0 0.10244 -->
+        <geometry>
+          <sphere radius="0.15989"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- Stuff to make the wheels driveable -->
+    <joint name="link_wheel_${name}" type="continuous">
+      <axis xyz="0 1 0" rpy="0 0 0"/>
+      <origin xyz="${offset}" rpy="0 0 0"/>
+      <parent link="base_link"/>
+      <child link="link_wheel_${name}"/>
+    </joint>
+
+    <transmission name="wheel_${name}_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="wheel_${name}_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="link_wheel_${name}">
+        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
+    <gazebo reference="link_wheel_${name}">
+      <mu1 value="200.0"/>
+      <mu2 value="100.0"/>
+      <kp value="10000000.0" />
+      <kd value="1.0" />
+      <material>Gazebo/Grey</material>
+    </gazebo>
+
+  </xacro:macro>
+</robot>
