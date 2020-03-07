@@ -3,7 +3,7 @@
   <arg name="model" default="$(find spear_simulator)/models/rover/TARS_V2.urdf"/>
 
   <!-- Put the robot model on the parameter server -->
-  <param name="robot_description" command="$(find xacro)/xacro.py --inorder $(arg model)"/>
+  <param name="robot_description" command="$(find xacro)/xacro $(arg model)"/>
 
   <!-- Publish tf transforms, etc. from the robot model -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
