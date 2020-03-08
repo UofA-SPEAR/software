@@ -6,6 +6,7 @@ import rospkg
 
 from qt_gui.plugin import Plugin
 from python_qt_binding import loadUi
+from python_qt_binding.QtCore import Slot
 from python_qt_binding.QtWidgets import QTabWidget, QDoubleSpinBox
 
 from double_slider import DoubleSlider
@@ -51,6 +52,7 @@ class ArmGuiPlugin(Plugin):
             for joint in joint_props
         ]
 
+        self.nudge_box = self._widget.findChild(QDoubleSpinBox, 'nudgeBox')
         self.rate_box = self._widget.findChild(QDoubleSpinBox, 'rateBox')
 
         # Install event filters (how we handle keyboard events in QT)
@@ -62,13 +64,20 @@ class ArmGuiPlugin(Plugin):
             self.indiv_joints_keyboard_events.set_rate)
         self._widget.installEventFilter(self.indiv_joints_keyboard_events)
 
-        self.connect_sliders_and_widgets()
+        self.connect_sliders_and_spin_boxes()
 
-    def connect_sliders_and_widgets(self):
+        self.nudge_box.valueChanged.connect(self.update_nudge_amounts)
+
+    def connect_sliders_and_spin_boxes(self):
         """Display slider changes on spinboxes, and vice-versa."""
         for slider, spin_box in zip(self.joint_sliders, self.joint_spin_boxes):
             slider.doubleValueChanged.connect(spin_box.setValue)
             spin_box.valueChanged.connect(slider.setDoubleValue)
+
+    @Slot(float)
+    def update_nudge_amounts(self, amount):
+        for spin_box in self.joint_spin_boxes:
+            spin_box.setSingleStep(amount)
 
     def shutdown_plugin(self):
         # TODO: unregister all publishers, timers, etc. here

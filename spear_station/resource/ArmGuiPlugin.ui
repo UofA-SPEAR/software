@@ -377,7 +377,7 @@
     <item>
      <layout class="QGridLayout" name="gridLayout" columnstretch="1,0">
       <item row="0" column="1">
-       <widget class="QDoubleSpinBox" name="nudgeAmountSpinBox">
+       <widget class="QDoubleSpinBox" name="nudgeBox">
         <property name="singleStep">
          <double>0.100000000000000</double>
         </property>
@@ -435,7 +435,7 @@
   <tabstop>joint4SpinBox</tabstop>
   <tabstop>joint5SpinBox</tabstop>
   <tabstop>joint6SpinBox</tabstop>
-  <tabstop>nudgeAmountSpinBox</tabstop>
+  <tabstop>nudgeBox</tabstop>
  </tabstops>
  <resources/>
  <connections/>
