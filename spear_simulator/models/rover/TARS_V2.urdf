@@ -1,8 +1,13 @@
 <?xml version="1.0"?>
 <!-- created with Phobos 0.8 -->
-  <robot name="TARS_V2" xmlns:xacro="http://ros.org/wiki/xacro">
-    <xacro:property name="M_PI" value="3.1415926535897" />
 
+  <robot name="TARS_V2" xmlns:xacro="http://ros.org/wiki/xacro"> 
+    <xacro:include filename="$(find spear_simulator)/models/rover/wheel.urdf.xacro"/>
+    
+    <xacro:property name="M_PI" value="3.1415926535897" />
+    <xacro:property name="WHEEL_SEP_LENGTH" value="0.44"/>
+    <xacro:property name="WHEEL_SEP_WIDTH" value="0.44"/>
+    
     <link name="link_camera_back">
     </link>
 
@@ -58,7 +63,6 @@
 
     <link name="link_camera_front">
     </link>
-
 
     <link name="base_link">
       <!--<inertial>
@@ -160,86 +164,11 @@
       </collision>
     </link>
 
-    <link name="link_wheel_backleft">
-      <inertial>
-        <origin xyz="0 0.10244 0" rpy="0 0 0"/>
-        <mass value="1.5"/>
-        <inertia ixx="0.01534" ixy="0" ixz="0" iyy="0.01534" iyz="0" izz="0.01534"/>
-      </inertial>
-      <visual name="visual_wheel_backleft">
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-        <geometry>
-          <mesh filename="package://spear_simulator/models/rover/meshes/stl/TARS.V2.Wheel.001.stl" scale="0.001 0.001 0.001"/>
-        </geometry>
-      </visual>
-      <collision name="collision_wheel_backleft">
-        <origin xyz="0 0.10244 0" rpy="0 0 0"/>
-        <geometry>
-          <sphere radius="0.15989"/>
-        </geometry>
-      </collision>
-    </link>
-
-    <link name="link_wheel_backright">
-      <inertial>
-        <origin xyz="0 -0.10254 0" rpy="0 0 0"/>
-        <mass value="1.5"/>
-        <inertia ixx="0.01534" ixy="0" ixz="0" iyy="0.01534" iyz="0" izz="0.01534"/>
-      </inertial>
-      <visual name="visual_wheel_backright">
-        <origin xyz="0 0 0" rpy="0 0 -3.14159"/>
-        <geometry>
-          <mesh filename="package://spear_simulator/models/rover/meshes/stl/TARS.V2.Wheel.001.stl" scale="0.001 0.001 0.001"/>
-        </geometry>
-      </visual>
-      <collision name="collision_wheel_backright">
-        <origin xyz="0 -0.10254 0" rpy="0 0 0"/>
-        <geometry>
-          <sphere radius="0.15989"/>
-        </geometry>
-      </collision>
-    </link>
-
-    <link name="link_wheel_frontleft">
-      <inertial>
-        <origin xyz="0 0.10244 0" rpy="0 0 0"/>
-        <mass value="1.5"/>
-        <inertia ixx="0.01534" ixy="0" ixz="0" iyy="0.01534" iyz="0" izz="0.01534"/>
-      </inertial>
-      <visual name="visual_wheel_frontleft">
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-        <geometry>
-          <mesh filename="package://spear_simulator/models/rover/meshes/stl/TARS.V2.Wheel.001.stl" scale="0.001 0.001 0.001"/>
-        </geometry>
-      </visual>
-      <collision name="collision_wheel_frontleft">
-        <origin xyz="0 0.10244 0" rpy="0 0 0"/>
-        <geometry>
-          <sphere radius="0.15989"/>
-        </geometry>
-      </collision>
-    </link>
-
-    <link name="link_wheel_frontright">
-      <inertial>
-        <origin xyz="0 -0.10264 0" rpy="0 0 0"/>
-        <mass value="1.5"/>
-        <inertia ixx="0.01534" ixy="0" ixz="0" iyy="0.01534" iyz="0" izz="0.01534"/>
-      </inertial>
-      <visual name="visual_wheel_frontright">
-        <origin xyz="0 0 0" rpy="0 0 -3.14159"/>
-        <geometry>
-          <mesh filename="package://spear_simulator/models/rover/meshes/stl/TARS.V2.Wheel.001.stl" scale="0.001 0.001 0.001"/>
-        </geometry>
-      </visual>
-      <collision name="collision_wheel_frontright">
-        <origin xyz="0 -0.10264 0" rpy="0 0 0"/>
-        <geometry>
-          <sphere radius="0.15989"/>
-        </geometry>
-      </collision>
-    </link>
-
+    <xacro:wheel side="left" name="frontleft" offset="${WHEEL_SEP_LENGTH/2} ${WHEEL_SEP_WIDTH/2} 0"/>
+    <xacro:wheel side="right" name="frontright" offset="${WHEEL_SEP_LENGTH/2} ${-WHEEL_SEP_WIDTH/2} 0"/>
+    <xacro:wheel side="left" name="backleft" offset="${-WHEEL_SEP_LENGTH/2} ${WHEEL_SEP_WIDTH/2} 0"/>
+    <xacro:wheel side="right" name="backright" offset="${-WHEEL_SEP_LENGTH/2} ${-WHEEL_SEP_WIDTH/2} 0"/>
+    
     <joint name="link_camera_back" type="fixed">
       <origin xyz="-0.315 1e-05 0.3439" rpy="3.14159 1.5708 0"/>
       <parent link="base_link"/>
@@ -293,99 +222,6 @@
       <parent link="base_link"/>
       <child link="link_suspension_frontright"/>
     </joint>
-
-    <!-- Stuff to make the wheels driveable -->
-    <joint name="link_wheel_backleft" type="continuous">
-      <axis xyz="0 1 0" rpy="0 0 0"/>
-      <origin xyz="-0.21346 0.01924 -0.08012" rpy="0 0 0"/>
-      <parent link="link_suspension_backleft"/>
-      <child link="link_wheel_backleft"/>
-    </joint>
-    <transmission name="wheel_backleft_trans">
-      <type>transmission_interface/SimpleTransmission</type>
-      <actuator name="wheel_backleft_motor">
-        <mechanicalReduction>1</mechanicalReduction>
-      </actuator>
-      <joint name="link_wheel_backleft">
-        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-      </joint>
-    </transmission>
-    <gazebo reference="link_wheel_backleft">
-      <mu1 value="200.0"/>
-      <mu2 value="100.0"/>
-      <kp value="10000000.0" />
-      <kd value="1.0" />
-      <material>Gazebo/Grey</material>
-    </gazebo>
-
-    <joint name="link_wheel_backright" type="continuous">
-      <axis xyz="0 1 0" rpy="0 0 0"/>
-      <origin xyz="-0.21346 -0.01886 -0.08012" rpy="0 0 0"/>
-      <parent link="link_suspension_backright"/>
-      <child link="link_wheel_backright"/>
-    </joint>
-    <transmission name="wheel_backright_trans">
-      <type>transmission_interface/SimpleTransmission</type>
-      <actuator name="wheel_backright_motor">
-        <mechanicalReduction>1</mechanicalReduction>
-      </actuator>
-      <joint name="link_wheel_backright">
-        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-      </joint>
-    </transmission>
-    <gazebo reference="link_wheel_backright">
-      <mu1 value="200.0"/>
-      <mu2 value="100.0"/>
-      <kp value="10000000.0" />
-      <kd value="1.0" />
-      <material>Gazebo/Grey</material>
-    </gazebo>
-
-    <joint name="link_wheel_frontleft" type="continuous">
-      <axis xyz="0 1 0" rpy="0 0 0"/>
-      <origin xyz="0.21346 0.01886 -0.08012" rpy="0 0 0"/>
-      <parent link="link_suspension_frontleft"/>
-      <child link="link_wheel_frontleft"/>
-    </joint>
-    <transmission name="wheel_frontleft_trans">
-      <type>transmission_interface/SimpleTransmission</type>
-      <actuator name="wheel_frontleft_motor">
-        <mechanicalReduction>1</mechanicalReduction>
-      </actuator>
-      <joint name="link_wheel_frontleft">
-        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-      </joint>
-    </transmission>
-    <gazebo reference="link_wheel_frontleft">
-      <mu1 value="200.0"/>
-      <mu2 value="100.0"/>
-      <kp value="10000000.0" />
-      <kd value="1.0" />
-      <material>Gazebo/Grey</material>
-    </gazebo>
-
-    <joint name="link_wheel_frontright" type="continuous">
-      <axis xyz="0 1 0" rpy="0 0 0"/>
-      <origin xyz="0.21345 -0.01924 -0.08014" rpy="0 0 0"/>
-      <parent link="link_suspension_frontright"/>
-      <child link="link_wheel_frontright"/>
-    </joint>
-    <transmission name="wheel_frontright_trans">
-      <type>transmission_interface/SimpleTransmission</type>
-      <actuator name="wheel_frontright_motor">
-        <mechanicalReduction>1</mechanicalReduction>
-      </actuator>
-      <joint name="link_wheel_frontright">
-        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-      </joint>
-    </transmission>
-    <gazebo reference="link_wheel_frontright">
-      <mu1 value="200.0"/>
-      <mu2 value="100.0"/>
-      <kp value="10000000.0" />
-      <kd value="1.0" />
-      <material>Gazebo/Grey</material>
-    </gazebo>
 
     <gazebo>
       <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
