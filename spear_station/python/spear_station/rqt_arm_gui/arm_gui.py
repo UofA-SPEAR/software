@@ -42,17 +42,24 @@ class ArmGuiPlugin(Plugin):
 
         # Cache references to joint sliders, spin boxes.
         self.joint_sliders = [
-            self._widget.findChild(DoubleSlider, joint + 'Slider')
+            self._widget.findChild(DoubleSlider, joint['name'] + 'Slider')
             for joint in joint_props
         ]
 
         self.joint_spin_boxes = [
-            self._widget.findChild(QDoubleSpinBox, joint + 'SpinBox')
+            self._widget.findChild(QDoubleSpinBox, joint['name'] + 'SpinBox')
             for joint in joint_props
         ]
 
+        self.rate_box = self._widget.findChild(QDoubleSpinBox, 'rateBox')
+
         # Install event filters (how we handle keyboard events in QT)
-        self.indiv_joints_keyboard_events = IndivJointsKeyboardEvents(self)
+        self.indiv_joints_keyboard_events = IndivJointsKeyboardEvents(
+            zip(self.joint_spin_boxes, [v['keyboard'] for v in joint_props]),
+            self.rate_box.value())
+
+        self.rate_box.valueChanged.connect(
+            self.indiv_joints_keyboard_events.set_rate)
         self._widget.installEventFilter(self.indiv_joints_keyboard_events)
 
         self.connect_sliders_and_widgets()
