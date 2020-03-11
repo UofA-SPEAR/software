@@ -5,6 +5,7 @@ joint_props = [
             'incr': 'q',
             'decr': 'a',
         },
+        'range': (-90.0, 90.0),
     },
     {
         'name': 'joint2',
@@ -12,6 +13,7 @@ joint_props = [
             'incr': 'w',
             'decr': 's',
         },
+        'range': (-90.0, 90.0),
     },
     {
         'name': 'joint3',
@@ -19,6 +21,7 @@ joint_props = [
             'incr': 'e',
             'decr': 'd',
         },
+        'range': (-90.0, 90.0),
     },
     {
         'name': 'joint4',
@@ -26,6 +29,7 @@ joint_props = [
             'incr': 'r',
             'decr': 'f',
         },
+        'range': (-90.0, 90.0),
     },
     {
         'name': 'joint5',
@@ -33,6 +37,7 @@ joint_props = [
             'incr': 't',
             'decr': 'g',
         },
+        'range': (-90.0, 90.0),
     },
     {
         'name': 'joint6',
@@ -40,5 +45,6 @@ joint_props = [
             'incr': 'y',
             'decr': 'h',
         },
+        'range': (-90.0, 90.0),
     },
 ]

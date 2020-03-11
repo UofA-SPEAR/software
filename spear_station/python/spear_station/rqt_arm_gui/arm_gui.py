@@ -64,15 +64,30 @@ class ArmGuiPlugin(Plugin):
             self.indiv_joints_keyboard_events.set_rate)
         self._widget.installEventFilter(self.indiv_joints_keyboard_events)
 
-        self.connect_sliders_and_spin_boxes()
+        self.setup_sliders_and_spin_boxes()
 
         self.nudge_box.valueChanged.connect(self.update_nudge_amounts)
 
-    def connect_sliders_and_spin_boxes(self):
-        """Display slider changes on spinboxes, and vice-versa."""
-        for slider, spin_box in zip(self.joint_sliders, self.joint_spin_boxes):
+    def setup_sliders_and_spin_boxes(self):
+        """Display slider changes on spinboxes, and vice-versa.
+        And do some other miscellaneous setup.
+        """
+        # We use zip() here so that each slider, spin_box, and joint prop is
+        # conveniently matched up for looping. Might have a performance impact,
+        # but should only be during startup.
+        xs = zip(self.joint_sliders, self.joint_spin_boxes, joint_props)
+
+        for slider, spin_box, props in xs:
+            # Connect together slider and spin_box values
             slider.doubleValueChanged.connect(spin_box.setValue)
             spin_box.valueChanged.connect(slider.setDoubleValue)
+
+            # Set the range of the sliders and spin_boxes based on vlaues within
+            # joint_props
+            minVal, maxVal = props['range']
+            slider.setMinimum(int(minVal * 100))
+            slider.setMaximum(int(maxVal * 100))
+            spin_box.setRange(minVal, maxVal)
 
     @Slot(float)
     def update_nudge_amounts(self, amount):
