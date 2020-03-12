@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<robot name="arm">
+  <link name="base_link">
+  </link>
+
+  <property name="shoulder_height" value="0.09" />
+  <property name="bicep_length" value="0.355" />
+  <property name="forearm_length" value="0.185" />
+  <property name="hand_length" value="0.59" />
+
+
+  <joint name="shoulder_yaw" type="revolute">
+    <parent link="base_link"/>
+    <child link="shoulder"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="0 0 0" rpy= "0 0 0"/>
+    <limit lower="-1.58" upper="1.58" effort="1" velocity="0.5"/>
+  </joint>
+
+  <link name="shoulder">
+  </link>
+
+
+  <link name="bicep">
+  </link>
+
+  <joint name="shoulder_pitch" type="revolute">
+    <parent link="shoulder"/>
+    <child link="bicep"/>
+    <axis xyz="0 1 0"/>
+    <origin xyz="0 0 ${shoulder_height}" rpy= "0 0 0"/>
+    <limit lower="0.78" upper="2.15" effort="1" velocity="0.5"/>
+  </joint>
+
+  <link name="forearm">
+  </link>
+
+  <joint name="elbow_pitch" type="revolute">
+    <parent link="bicep"/>
+    <child link="forearm"/>
+    <axis xyz="0 1 0"/>
+    <origin xyz="0 0 ${bicep_length}" rpy= "0 0 0"/>
+    <limit lower="-2.7" upper="1.54" effort="1" velocity="0.5"/>
+  </joint>
+
+  <link name="wrist">
+  </link>
+
+  <joint name="wrist_pitch" type="revolute">
+    <parent link="forearm"/>
+    <child link="wrist"/>
+    <axis xyz="0 1 0"/>
+    <origin xyz="0 0 ${forearm_length/5}" rpy="0 0 0"/>
+    <limit lower="-2.09" upper="2.09" effort="1" velocity="0.5"/>
+  </joint>
+
+  <link name="palm">
+
+  </link>
+
+  <joint name="wrist_roll" type="revolute">
+    <parent link="wrist"/>
+    <child link="palm"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="0 0 ${forearm_length/4}" rpy="0 0 0"/>
+    <limit lower="-3" upper="3" effort="1" velocity="0.5"/>
+  </joint>
+
+  <link name="finger">
+  </link>
+
+  <joint name="grab" type="revolute">
+    <parent link="palm"/>
+    <child link="finger"/>
+    <axis xyz="1 0 0"/>
+    <origin xyz="0 0 ${hand_length/3}"/>
+    <limit lower="-1" upper="1" effort="1" velocity="0.5"/>
+  </joint>
+</robot>
+
