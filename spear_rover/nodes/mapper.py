@@ -4,7 +4,7 @@
 
 from canros import Message as CanrosMessage
 
-from spear_msgs.msg import WheelCmdArray
+from spear_msgs.msg import WheelCmdArray, ActuatorCmdArray
 from canros.msg import uavcan__equipment__actuator__ArrayCommand as ArrayCommand
 from canros.msg import uavcan__equipment__actuator__Status as ActuatorStatus
 from canros.msg import uavcan__equipment__power__BatteryInfo as BatteryInfo
@@ -56,7 +56,7 @@ def main():
                    'uavcan.equipment.actuator.ArrayCommand',
                    {"commands": wheel_cmd_array_mapper})
 
-    map_ros_to_can(ArrayCommand, '/arm/angles',
+    map_ros_to_can(ActuatorCmdArray, '/arm/angles',
                    'uavcan.equipment.actuator.ArrayCommand',
                    {'commands': arm_angles_mapper})
 
@@ -107,7 +107,8 @@ def main():
             # State of health and charge.
             "state_of_health_pct": lambda data: data.state_of_health_pct,
             "state_of_charge_pct": lambda data: data.state_of_charge_pct,
-            "state_of_charge_pct_stdev": lambda data: data.state_of_charge_pct_stdev,
+            "state_of_charge_pct_stdev":
+            lambda data: data.state_of_charge_pct_stdev,
 
             # Battery identification.
             "battery_id": lambda data: data.battery_id,

@@ -1,6 +1,7 @@
 #!/usr/bin/env python2
 
 import os
+import math
 import rospy
 import rospkg
 
@@ -8,6 +9,8 @@ from qt_gui.plugin import Plugin
 from python_qt_binding import loadUi
 from python_qt_binding.QtCore import Slot
 from python_qt_binding.QtWidgets import QTabWidget, QDoubleSpinBox
+
+from spear_msgs.msg import ActuatorCmdArray, ActuatorCmd
 
 from double_slider import DoubleSlider
 from joint_props import joint_props
@@ -40,6 +43,14 @@ class ArmGuiPlugin(Plugin):
                                         (' (%d)' % context.serial_number()))
         # Add widget to the user interface
         context.add_widget(self._widget)
+
+        # Setup ros publishers.
+        # Note that we don't need to start a ros node - rqt takes care of that
+        # for us.
+        # Make sure to unregister all ros publishers in self.shutdown_plugin()!
+        self.indiv_joints_publisher = rospy.Publisher("/arm/angles",
+                                                      ActuatorCmdArray,
+                                                      queue_size=1000)
 
         # Cache references to joint sliders, spin boxes.
         self.joint_sliders = [
@@ -89,13 +100,40 @@ class ArmGuiPlugin(Plugin):
             slider.setMaximum(int(maxVal * 100))
             spin_box.setRange(minVal, maxVal)
 
+            # Set up each spin_box to publish its value via ROS whenever they're
+            # changed.
+            spin_box.valueChanged.connect(
+                self.publish_indiv_joint(props['actuator_id']))
+
     @Slot(float)
     def update_nudge_amounts(self, amount):
         for spin_box in self.joint_spin_boxes:
             spin_box.setSingleStep(amount)
 
+    def publish_indiv_joint(self, actuator_id):
+        """Publishes the value recieved with self.indiv_joint_publisher
+
+        Note that this method takes an argument, `actuator_id`, and *returns*
+        a QT Slot function. This is so that we don't have to send the values
+        of *every single* joint spin box whenever one of them changes. Saves a
+        bit in effeciency.
+        """
+        @Slot(float)
+        def _internal_qt_slot_publisher_function(value):
+            self.indiv_joints_publisher.publish(
+                ActuatorCmdArray([
+                    ActuatorCmd(
+                        actuator_id=actuator_id,
+                        command_type=ActuatorCmd.COMMAND_TYPE_POSITION,
+                        # Make sure to map command_value to radians!
+                        command_value=(value / 180.0 * math.pi))
+                ]))
+
+        return _internal_qt_slot_publisher_function
+
     def shutdown_plugin(self):
-        # TODO: unregister all publishers, timers, etc. here
+        # Make sure to unregister ros publishers here!!!
+        self.indiv_joints_publisher.unregister()
         pass
 
     def save_settings(self, plugin_settings, instance_settings):

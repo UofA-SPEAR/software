@@ -15,6 +15,8 @@ add_message_files(
   arm_position.msg
   drive_cmd.msg
   WheelCmdArray.msg
+  ActuatorCmd.msg
+  ActuatorCmdArray.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -40,4 +42,3 @@ generate_messages(
 catkin_package(
  CATKIN_DEPENDS message_generation message_runtime std_msgs
 )
-

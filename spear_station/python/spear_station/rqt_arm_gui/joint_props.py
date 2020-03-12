@@ -1,6 +1,7 @@
 joint_props = [
     {
         'name': 'joint1',
+        'actuator_id': 0,
         'keyboard': {
             'incr': 'q',
             'decr': 'a',
@@ -9,6 +10,7 @@ joint_props = [
     },
     {
         'name': 'joint2',
+        'actuator_id': 1,
         'keyboard': {
             'incr': 'w',
             'decr': 's',
@@ -17,6 +19,7 @@ joint_props = [
     },
     {
         'name': 'joint3',
+        'actuator_id': 2,
         'keyboard': {
             'incr': 'e',
             'decr': 'd',
@@ -25,6 +28,7 @@ joint_props = [
     },
     {
         'name': 'joint4',
+        'actuator_id': 3,
         'keyboard': {
             'incr': 'r',
             'decr': 'f',
@@ -33,6 +37,7 @@ joint_props = [
     },
     {
         'name': 'joint5',
+        'actuator_id': 4,
         'keyboard': {
             'incr': 't',
             'decr': 'g',
@@ -41,6 +46,7 @@ joint_props = [
     },
     {
         'name': 'joint6',
+        'actuator_id': 5,
         'keyboard': {
             'incr': 'y',
             'decr': 'h',
