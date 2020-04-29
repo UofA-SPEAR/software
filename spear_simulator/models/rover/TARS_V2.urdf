@@ -233,7 +233,7 @@
     <gazebo>
       <plugin name="gps_controller" filename="libhector_gazebo_ros_gps.so">
         <alwaysOn>true</alwaysOn>
-        <updateRate>1.0</updateRate>
+        <updateRate>10.0</updateRate>
         <bodyName>base_link</bodyName>
         <topicName>/gps/fix</topicName>
         <velocityTopicName>/gps/fix_velocity</velocityTopicName>
