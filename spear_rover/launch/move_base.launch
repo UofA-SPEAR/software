@@ -10,9 +10,9 @@
 
     <rosparam file="$(find spear_rover)/config/move_base/move_base.yaml" command="load"/>
     <rosparam file="$(find spear_rover)/config/move_base/costmap_common_params.yaml" command="load" ns="local_costmap"/>
-    <rosparam file="$(find spear_rover)/config/move_base/local_costmap_params.yaml" command="load" ns="local_costmap"/>
-    <rosparam file="$(find spear_rover)/config/move_base/costmap_common_params.yaml" command="load" ns="global_costmap"/>
-    <rosparam file="$(find spear_rover)/config/move_base/global_costmap_params.yaml" command="load" ns="global_costmap"/>
+    <rosparam file="$(find spear_rover)/config/move_base/costmap_local.yaml" command="load" ns="local_costmap"/>
+    <rosparam file="$(find spear_rover)/config/move_base/costmap_common.yaml" command="load" ns="global_costmap"/>
+    <rosparam file="$(find spear_rover)/config/move_base/costmap_global.yaml" command="load" ns="global_costmap"/>
     <rosparam file="$(find spear_rover)/config/move_base/planner_local.yaml" command="load" ns="TrajectoryPlannerROS"/>
     <rosparam file="$(find spear_rover)/config/move_base/planner_global.yaml" command="load" ns="NavfnROS"/>
   </node>
