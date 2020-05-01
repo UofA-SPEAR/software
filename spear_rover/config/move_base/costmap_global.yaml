@@ -5,7 +5,7 @@ rolling_window: true
 resolution: 0.5
 width: 500
 height: 500
-track_unknown_space: true  # Should this be in obstacle layer?  # https://wiki.ros.org/navfn
+track_unknown_space: false  # Should this be in obstacle layer?  # https://wiki.ros.org/navfn
 
 plugins:
 #    - {name: static_layer,            type: "costmap_2d::StaticLayer"}
