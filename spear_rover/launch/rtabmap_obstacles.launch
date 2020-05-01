@@ -26,5 +26,16 @@
       <!-- <param name="decimation" value="47"/> -->
       <param name="voxel_size" value="0.05"/>
     </node>
+
+    <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pc2ls">
+      <remap from="cloud_in" to="obstacles"/>
+      <remap from="scan" to="scan"/>
+      <param name="target_frame" value="base_link"/>
+      <param name="use_inf" value="true"/>
+      <!-- The default values stated in the documentation are wrong, so these MUST be set -->
+      <param name="range_max" value="5"/>
+      <param name="angle_min" value="-0.5"/>
+      <param name="angle_max" value="0.5"/>
+    </node>
   </group>
 </launch>

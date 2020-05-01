@@ -65,4 +65,6 @@
   <exec_depend>camera_calibration</exec_depend>
 
   <exec_depend>rosbridge_suite</exec_depend>
+
+  <exec_depend>pointcloud_to_laserscan</exec_depend>
 </package>
