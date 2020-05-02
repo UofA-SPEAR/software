@@ -44,7 +44,7 @@ generate_messages(DEPENDENCIES
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES rover2
-  CATKIN_DEPENDS geometry_msgs message_generation message_runtime spear_msgs std_msgs
+  CATKIN_DEPENDS canros geometry_msgs message_generation message_runtime spear_msgs std_msgs
 #  DEPENDS system_lib
 )
 

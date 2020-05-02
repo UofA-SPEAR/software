@@ -14,9 +14,9 @@
     <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
     <atmosphere type='adiabatic'/>
     <physics name='default_physics' default='0' type='ode'>
-      <max_step_size>0.001</max_step_size>
+      <max_step_size>0.01</max_step_size>
       <real_time_factor>1</real_time_factor>
-      <real_time_update_rate>1000</real_time_update_rate>
+      <real_time_update_rate>100</real_time_update_rate>
     </physics>
     <wind/>
     <spherical_coordinates>
@@ -27,7 +27,7 @@
       <heading_deg>0</heading_deg>
     </spherical_coordinates>
     <state world_name='default'>
-      <sim_time>783 618000000</sim_time>
+      <sim_time>0</sim_time>
       <real_time>265 819298047</real_time>
       <wall_time>1539378567 265464277</wall_time>
       <iterations>237117</iterations>

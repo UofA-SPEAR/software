@@ -233,7 +233,7 @@
     <gazebo>
       <plugin name="gps_controller" filename="libhector_gazebo_ros_gps.so">
         <alwaysOn>true</alwaysOn>
-        <updateRate>1.0</updateRate>
+        <updateRate>10.0</updateRate>
         <bodyName>base_link</bodyName>
         <topicName>/gps/fix</topicName>
         <velocityTopicName>/gps/fix_velocity</velocityTopicName>
@@ -253,7 +253,7 @@
         <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
           <topicName>imu/data</topicName>
           <bodyName>base_link</bodyName>
-          <updateRateHZ>10.0</updateRateHZ>
+          <updateRateHZ>100.0</updateRateHZ>
           <gaussianNoise>0.0</gaussianNoise>
           <xyzOffset>0 0 0</xyzOffset>
           <rpyOffset>0 0 0</rpyOffset>

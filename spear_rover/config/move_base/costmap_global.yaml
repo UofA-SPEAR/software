@@ -1,11 +1,11 @@
 global_frame: map
-robot_base_frame: base_link
 update_frequency: 2.0
 publish_frequency: 2.0
 rolling_window: true
 resolution: 0.5
 width: 500
 height: 500
+track_unknown_space: false  # Should this be in obstacle layer?  # https://wiki.ros.org/navfn
 
 plugins:
 #    - {name: static_layer,            type: "costmap_2d::StaticLayer"}
