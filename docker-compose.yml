@@ -1,8 +1,6 @@
 version: "3.3"
 services:
   spear:
-    depends_on:
-      - spear_env
     build:
       context: .
       dockerfile: Dockerfile
@@ -12,21 +10,23 @@ services:
     stdin_open: true
     environment:
       DISPLAY: $DISPLAY
+      # ROS_IP: 192.168.1.13
+      # ROS_MASTER_URI: http://192.168.1.61:11311
       ROS_IP: 127.0.0.1
       QT_X11_NO_MITSHM: 1
       DOCKER_HOST_REPO_LOCATION: .
+      RUNNING_IN_DOCKER: "true"
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - $XAUTHORITY:/root/.Xauthority
       - .:/software
       - .docker-opt-ros-mount:/tmp/docker-opt-ros-mount
       - .docker-root-ros-include-mount:/tmp/docker-root-ros-include-mount
-    devices:
-       - /dev/dri:/dev/dri
+    privileged: true
     network_mode: host
-  
-  spear_env:
-    build:
-      context: .
-      dockerfile: spear-env.Dockerfile
-    image: spear-env
+
+    # The below is needed so that we can configure network interfaces
+    # (e.g. can0, vcan0) from inside the container.
+    # Note that this results in interfaces being modified on the host machine.
+    cap_add:
+      - NET_ADMIN

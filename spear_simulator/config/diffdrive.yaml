@@ -6,7 +6,15 @@ publish_rate: 50
 left_wheel: ['link_wheel_backleft', 'link_wheel_frontleft']
 right_wheel: ['link_wheel_backright', 'link_wheel_frontright']
 
-wheel_separation: 0.44
+# DiffDriveController isn't really meant for skid-steering, so it doesn't
+# understand that the robot is actually turning much slower than it is asked
+# to (DiffDriveController is using open loop control). To compensate for this,
+# use a model with a much larger wheel separation distance, which will move
+# the wheels faster during turns.
+# This works in simulation. Not sure if this value is still appropriate for the
+# real robot, but we can worry about that when we start using
+# DiffDriveController for the real robot.
+wheel_separation_multiplier: 3.0
 
 # Odometry covariances for the encoder output of the robot. These values should
 # be tuned to your robot's sample odometry data, but these values are a good place
@@ -26,7 +34,7 @@ linear:
     has_velocity_limits    : true
     max_velocity           : 3.0   # m/s
     has_acceleration_limits: true
-    max_acceleration       : 0.6   # m/s^2
+    max_acceleration       : 9.0   # m/s^2
 angular:
   z:
     has_velocity_limits    : true

@@ -14,5 +14,15 @@
   <include file="$(find spear_simulator)/launch/visual_odom.launch" if="$(arg simulation)"/>
   <include file="$(find spear_rover)/launch/rtabmap_obstacles.launch"/>
 
-  <node type="rviz" name="rviz" pkg="rviz" args="-d $(find spear_rover)/rviz/navigate.rviz"/>
+  <include file="$(find spear_rover)/launch/ar_track.launch">
+    <arg name="simulation" value="$(arg simulation)"/>
+  </include>
+
+  <include file="$(find spear_rover)/launch/flexbe_onboard.launch"/>
+
+  <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch"/>
+  <node type="diagnostics.py" name="diagnostics" pkg="spear_rover"/>
+
+  <node type="rviz" name="rviz" pkg="rviz" args="-d $(find spear_rover)/rviz/navigate.rviz" if="$(arg simulation)"/>
+
 </launch>

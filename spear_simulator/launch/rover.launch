@@ -1,19 +1,22 @@
 <!-- Launches everything needed to drive the rover by sending Twist messages -->
 <launch>
-  <arg name="world_name" default="$(find spear_simulator)/worlds/ball_find_00.world"/>
+  <arg name="world_name" default="$(find spear_simulator)/worlds/ball_find_02.world"/>
 
   <!-- Launch gazebo to the specified world -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="world_name" value="$(arg world_name)"/>
   </include>
 
+  <arg name="adjust_position" value="$(eval arg('world_name').split('/')[-1] in ['ball_find_00.world', 'ball_find_02.world'])"/>
+  <arg name="start_position" value="-x 0 -y 10 -z -63" if="$(arg adjust_position)"/>
+  <arg name="start_position" value="" unless="$(arg adjust_position)"/>
   <!-- Put the robot model in the world (automatically sets up sensors via plugins) -->
-  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" args="-z 1.0 -unpause -urdf -model robot -param robot_description" respawn="false" output="screen"/>
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" args="-unpause -urdf -model robot -param robot_description $(arg start_position)" respawn="false" output="screen"/>
 
   <!-- Translate twist messages to wheel commands, and publish wheel odometry -->
 
   <rosparam command="load" file="$(find spear_simulator)/config/diffdrive.yaml" ns="/rover_diff_drive_controller"/>
-  <node name="rover_controller_spawner" pkg="controller_manager" type="spawner" args="rover_diff_drive_controller --shutdown-timeout 3"/>
+  <node name="rover_controller_spawner" pkg="controller_manager" type="spawner" args="rover_diff_drive_controller --timeout 300"/>
 
   <!-- Publish robot description -->
   <include file="$(find spear_rover)/launch/robot_description.launch"/>

@@ -14,9 +14,9 @@
     <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
     <atmosphere type='adiabatic'/>
     <physics name='default_physics' default='0' type='ode'>
-      <max_step_size>0.004</max_step_size>
+      <max_step_size>0.01</max_step_size>
       <real_time_factor>1</real_time_factor>
-      <real_time_update_rate>250</real_time_update_rate>
+      <real_time_update_rate>100</real_time_update_rate>
     </physics>
     <wind/>
     <spherical_coordinates>
@@ -77,10 +77,40 @@
       <pose frame=''>0.00724 -0.006209 0 0 -0 0</pose>
     </model>
     <state world_name='default'>
-      <sim_time>146 495000000</sim_time>
+      <sim_time>0</sim_time>
       <real_time>45 547776197</real_time>
       <wall_time>1569112980 335303154</wall_time>
       <iterations>20759</iterations>
+      <model name='Marker12'>
+        <pose frame=''>3.3787 0.839265 0.860543 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>3.3787 0.839265 0.860543 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='Marker13'>
+        <pose frame=''>3.3654 -0.38705 0.561465 0 0 -0.187663</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>3.3654 -0.38705 0.561465 0 0 -0.187663</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='Marker6'>
+        <pose frame=''>2.70316 0.244111 0.914154 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>2.70316 0.244111 0.914154 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
       <model name='golf_ball'>
         <pose frame=''>-95.5126 203.465 0.936226 0.505658 -0.068978 -0.848725</pose>
         <scale>1 1 1</scale>
@@ -916,6 +946,57 @@
         <gravity>1</gravity>
       </link>
       <pose frame=''>2.12161 -0.174035 0 0 -0 0</pose>
+    </model>
+    <model name='Marker12'>
+      <static>1</static>
+      <link name='link'>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://marker12/meshes/Marker12.dae</uri>
+              <scale>0.346 0.346 0.346</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>3.3787 1.58698 0 0 -0 0</pose>
+    </model>
+    <model name='Marker6'>
+      <static>1</static>
+      <link name='link'>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://marker6/meshes/Marker6.dae</uri>
+              <scale>0.346 0.346 0.346</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>2.70316 0.244111 0 0 -0 0</pose>
+    </model>
+    <model name='Marker13'>
+      <static>1</static>
+      <link name='link'>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://marker13/meshes/Marker13.dae</uri>
+              <scale>0.346 0.346 0.346</scale>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>3.3654 -0.38705 0 0 -0 0</pose>
     </model>
   </world>
 </sdf>

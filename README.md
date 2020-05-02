@@ -55,11 +55,7 @@ Note: you may need to install curl if you don't have it already.
 
 On Ubuntu: `sudo apt-get install curl`
 
-Now install docker-compose. The easiest way to do this is to run
-
-    sudo apt install docker-compose
-
-Alternatively, following the instructions [here](https://github.com/docker/compose/releases), run
+Now install docker-compose. Following the instructions [here](https://github.com/docker/compose/releases), run
 
     curl -L https://github.com/docker/compose/releases/download/1.25.1-rc1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
     chmod +x /usr/local/bin/docker-compose
@@ -132,6 +128,26 @@ Navigate to the directory containing this readme, and run
 
 which runs the `spear` image as a container named `spear-container` (it also runs the `spear-env` image as a container, but that container exits immediately).
 
+### Run with CANBus support
+
+We use CANBus for communicating between boards. Docker requires that some kernel
+modules are loaded by the host for CANBus to work. We use the
+[`docker-with-can.bash`](./docker-with-can.bash) script to handle that. It loads
+the kernel modules and runs `docker-compose run spear` for you.
+
+If you want to use a physical, real CANBus network, i.e. on the rover itself, run:
+
+```bash
+./docker-with-can.bash
+```
+
+If you want to test CANBus locally (i.e. on your own machine) with a virtual
+CANBus network, run:
+
+```bash
+./docker-with-can.bash --vcan
+```
+
 ## Working in Docker
 
 You should be able to edit files in your host machine and build and run the code in the docker container.
@@ -159,48 +175,9 @@ This is the recommended approach if you use Windows and don't want to dual-boot 
 
   - Windows 10 (older versions of windows, or even Linux, probably would work with some modification of the setup instructions)
 
-## Installing
+## Instructions
 
-We use [Vagrant](https://www.vagrantup.com/) for creating and managing the VM.
-Vagrant can be used with various VM providers; in our case, we use [VirtualBox](https://www.virtualbox.org/).
-Both programs must have compatible versions (and at the time of writing, the latest version of Vagrant is incompatible with the latest version of VirtualBox).
-The easiest (though not simplest) way of dealing with all this is to install both programs using [Chocolatey](https://chocolatey.org/). So,
-
-1. Install Chocolatey from [its website](https://chocolatey.org/).
-2. Open up an administrator PowerShell (e.g. by using the keyboard shortcut `Win+X` and selecting *Windows PowerShell (Admin)* from the menu).
-3. Type
-    
-        choco install virtualbox --version 6.0 -y
-        choco install vagrant --version 2.2.6 -y
-    
-    to install VirtualBox and Vagrant.
-
-## Creating the virtual machine
-
-To create the virtual machine, navigate to the directory containing this README and type
-
-    vagrant up
-
-This will create a new virtual machine and install all required packages on it.
-It will also re-clone this repository within the virtual machine.
-
-When you first create the machine, you will also have to reboot it to enable the GUI.
-This can be done like so:
-
-    vagrant ssh
-    sudo reboot
-
-The VirtualBox GUI will then show an Ubuntu 16 login screen.
-Log in as the user *vagrant* using the password *vagrant* (if you are prompted to upgrade to Ubuntu 18, decline the upgrade).
-
-Various virtual machine settings can be configured by editing the file `Vagrantfile`.
-For example, you can change the number of CPUs or amount of RAM to allocate to the virtual machine.
-By default, this is 8 CPUs and 4 GB of RAM, but you may wish to change this to fit the capeabilities of your development machine.
-
-## Developing on the virtual machine
-
-If you wish to re-create the virtual machine (for example to re-run the configuration scripts), you can destroy it first using `vagrant destroy`.
-Keep in mind that any edits to the code you make within the virtual machine will not be reflected outside of it, so make sure you commit your changes if necessary before destroying the virtual machine.
+See [the Wiki page](https://github.com/UofA-SPEAR/software/wiki/Install-Instructions-Windows).
 
 # Additional information
 

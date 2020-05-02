@@ -1,0 +1,11 @@
+general:
+    frame_rate: 30
+    resolution: 2  # '0': HD2K, '1': HD1080, '2': HD720, '3': VGA
+
+pos_tracking:
+    publish_tf: false
+    publish_map_tf: false
+    world_frame: 'odom'
+
+depth:
+    quality: 4  # '0': NONE, '1': PERFORMANCE, '2': MEDIUM, '3': QUALITY, '4': ULTRA

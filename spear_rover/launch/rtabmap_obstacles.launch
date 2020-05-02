@@ -1,10 +1,8 @@
 <!-- Use RTAB-Map to segment the camera point cloud into ground and obstacles -->
 <launch>
   <group ns="obstacles_detection">
-    <arg name="point_cloud_topic" default="/camera_depth/depth/points"/>
-
     <node pkg="nodelet" type="nodelet" name="obstacles_nodelet_manager" args="manager"/>
-    <node pkg="nodelet" type="nodelet" name="obstacles_detection" args="load rtabmap_ros/obstacles_detection obstacles_nodelet_manager">
+    <node pkg="nodelet" type="nodelet" name="obstacles_detection" args="load rtabmap_ros/obstacles_detection obstacles_nodelet_manager" respawn="true">
       <!-- Input -->
       <remap from="cloud" to="downsampled_cloud"/>
       <!-- Output -->
@@ -12,17 +10,32 @@
       <remap from="obstacles" to="obstacles"/>
       <!-- Parameters -->
       <param name="frame_id" value="base_link"/>
+      <param name="normal_estimation_radius" value="0.05"/>
+      <param name="min_cluster_size" value="20"/>
+      <param name="ground_normal_angle" value="1.4"/>
+      <param name="max_obstacle_height" value="0"/>
     </node>
 
-    <node pkg="nodelet" type="nodelet" name="point_cloud_xyz" args="load rtabmap_ros/point_cloud_xyz obstacles_nodelet_manager">
+    <node pkg="nodelet" type="nodelet" name="point_cloud_xyz" args="load rtabmap_ros/point_cloud_xyz obstacles_nodelet_manager" respawn="true">
       <!-- Input -->
       <remap from="depth/image" to="/camera_depth/depth/image_raw"/>
       <remap from="depth/camera_info" to="/camera_depth/depth/camera_info"/>
       <!-- Output -->
       <remap from="cloud" to="downsampled_cloud"/>
       <!-- Parameters -->
-      <param name="decimation" value="10"/>
-      <param name="voxel_size" value="0.0"/>
+      <!-- <param name="decimation" value="47"/> -->
+      <param name="voxel_size" value="0.05"/>
+    </node>
+
+    <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pc2ls">
+      <remap from="cloud_in" to="obstacles"/>
+      <remap from="scan" to="scan"/>
+      <param name="target_frame" value="base_link"/>
+      <param name="use_inf" value="true"/>
+      <!-- The default values stated in the documentation are wrong, so these MUST be set -->
+      <param name="range_max" value="5"/>
+      <param name="angle_min" value="-0.5"/>
+      <param name="angle_max" value="0.5"/>
     </node>
   </group>
 </launch>

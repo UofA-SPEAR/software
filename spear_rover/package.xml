@@ -51,9 +51,20 @@
   <build_depend>robot_localization</build_depend>
   <exec_depend>robot_localization</exec_depend>
 
-  <exec_depend>razor_imu_9dof</exec_depend>
+  <exec_depend>flexbe_behavior_engine</exec_depend>
+
+  <!-- <exec_depend>razor_imu_9dof</exec_depend> -->
   <exec_depend>nmea_navsat_driver</exec_depend>
 
   <exec_depend>rqt_graph</exec_depend>
   <exec_depend>rqt_reconfigure</exec_depend>
+  <exec_depend>rqt_ez_publisher</exec_depend>
+  <build_depend>ar_track_alvar</build_depend>
+  <exec_depend>ar_track_alvar</exec_depend>
+  <exec_depend>usb_cam</exec_depend>
+  <exec_depend>camera_calibration</exec_depend>
+
+  <exec_depend>rosbridge_suite</exec_depend>
+
+  <exec_depend>pointcloud_to_laserscan</exec_depend>
 </package>

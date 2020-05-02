@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<behavior name="Test">
+
+	<executable package_path="spear_flexbe_behaviors.test_sm" class="TestSM" />
+	<tagstring></tagstring>
+	<author>Mitchell</author>
+	<date>Sun Feb 02 2020</date>
+	<description>
+		Test importing, global variables, and processes
+	</description>
+
+
+	<!-- Contained Behaviors -->
+	<contains name="Test - inner" />
+
+	<!-- Available Parameters -->
+
+</behavior>

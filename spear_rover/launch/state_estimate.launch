@@ -35,7 +35,7 @@
     <!-- Published topics -->
     <remap from="odometry/gps" to="odometry/gps"/>
     <!-- Parameters -->
-    <param name="frequency" value="1.0"/>
+    <param name="frequency" value="10.0"/>
     <param name="magnetic_declination_radians" value="0.23562"/>
     <!-- Possibly + 0.019887657 -->
     <param name="yaw_offset" value="1.570796326794896619231321691639751442098584699687552910487"/>
