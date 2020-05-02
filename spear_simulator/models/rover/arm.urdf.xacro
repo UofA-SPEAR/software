@@ -35,8 +35,8 @@
     <parent link="arm_mount"/>
     <child link="shoulder"/>
     <axis xyz="0 0 1"/>
-    <origin xyz="0 0 0" rpy= "0 0 0"/>
-    <limit lower="-1.58" upper="1.58" effort="1" velocity="0.5"/>
+    <origin xyz="0 0 0" rpy= "0 0 3.14"/>
+    <limit lower="-3.15" upper="3.15" effort="1" velocity="0.5"/>
   </joint>
 
   <arm_link name="shoulder" length="${shoulder_height}"/>
