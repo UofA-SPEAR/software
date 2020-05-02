@@ -3,6 +3,7 @@
 
   <robot name="TARS_V2" xmlns:xacro="http://ros.org/wiki/xacro"> 
     <xacro:include filename="$(find spear_simulator)/models/rover/wheel.urdf.xacro"/>
+    <xacro:include filename="$(find spear_simulator)/models/rover/arm.urdf.xacro"/>
     
     <xacro:property name="M_PI" value="3.1415926535897" />
     <xacro:property name="WHEEL_SEP_LENGTH" value="0.44"/>

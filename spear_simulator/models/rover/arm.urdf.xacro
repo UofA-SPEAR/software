@@ -1,16 +1,20 @@
 <?xml version="1.0"?>
 <robot name="arm" xmlns:xacro="http://ros.org/wiki/xacro">
-  <link name="base_link">
-  </link>
-
   <xacro:property name="shoulder_height" value="0.09" />
   <xacro:property name="bicep_length" value="0.355" />
   <xacro:property name="forearm_length" value="0.185" />
   <xacro:property name="hand_length" value="0.59" />
+  <joint name="arm_mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="arm_mount"/>
+    <origin xyz="0.25 0 0.3"/>
+  </joint>
 
+  <link name="arm_mount">
+  </link>
 
   <joint name="shoulder_yaw" type="revolute">
-    <parent link="base_link"/>
+    <parent link="arm_mount"/>
     <child link="shoulder"/>
     <axis xyz="0 0 1"/>
     <origin xyz="0 0 0" rpy= "0 0 0"/>
