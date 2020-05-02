@@ -1,6 +1,6 @@
 <launch>
 
-  <arg name="model" default="$(find spear_simulator)/models/rover/arm.urdf"/>
+  <arg name="model" default="$(find spear_simulator)/models/rover/arm.urdf.xacro"/>
   <arg name="gui" default="false"/>
   <arg name="rvizconfig" default="$(find spear_simulator)/models/rover/urdf.rviz"/>
 
