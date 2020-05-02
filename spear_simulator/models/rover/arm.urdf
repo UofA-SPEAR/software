@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
-<robot name="arm">
+<robot name="arm" xmlns:xacro="http://ros.org/wiki/xacro">
   <link name="base_link">
   </link>
 
-  <property name="shoulder_height" value="0.09" />
-  <property name="bicep_length" value="0.355" />
-  <property name="forearm_length" value="0.185" />
-  <property name="hand_length" value="0.59" />
+  <xacro:property name="shoulder_height" value="0.09" />
+  <xacro:property name="bicep_length" value="0.355" />
+  <xacro:property name="forearm_length" value="0.185" />
+  <xacro:property name="hand_length" value="0.59" />
 
 
   <joint name="shoulder_yaw" type="revolute">
