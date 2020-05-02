@@ -3,7 +3,25 @@
   <xacro:property name="shoulder_height" value="0.09" />
   <xacro:property name="bicep_length" value="0.355" />
   <xacro:property name="forearm_length" value="0.185" />
+  <xacro:property name="wrist_length" value="${forearm_length/5}" />
+  <xacro:property name="palm_length" value="${forearm_length/4}" />
+  <xacro:property name="finger_length" value="${forearm_length/3}" />
   <xacro:property name="hand_length" value="0.59" />
+  
+  <xacro:property name="arm_width" value="0.05" />
+  <xacro:property name="joint_sep" value="0.005" />
+
+  <xacro:macro name="arm_link" params="name length">
+    <link name="${name}">
+      <visual>
+        <origin xyz="0 0 ${length/2}" rpy="0 0 0"/>
+        <geometry>
+          <cylinder length="${length-joint_sep}" radius="${arm_width}"/>
+        </geometry>
+      </visual>
+    </link>
+  </xacro:macro>
+
   <joint name="arm_mount" type="fixed">
     <parent link="base_link"/>
     <child link="arm_mount"/>
@@ -21,12 +39,7 @@
     <limit lower="-1.58" upper="1.58" effort="1" velocity="0.5"/>
   </joint>
 
-  <link name="shoulder">
-  </link>
-
-
-  <link name="bicep">
-  </link>
+  <arm_link name="shoulder" length="${shoulder_height}"/>
 
   <joint name="shoulder_pitch" type="revolute">
     <parent link="shoulder"/>
@@ -36,8 +49,7 @@
     <limit lower="0.78" upper="2.15" effort="1" velocity="0.5"/>
   </joint>
 
-  <link name="forearm">
-  </link>
+  <arm_link name="bicep" length="${bicep_length}"/>
 
   <joint name="elbow_pitch" type="revolute">
     <parent link="bicep"/>
@@ -47,38 +59,37 @@
     <limit lower="-2.7" upper="1.54" effort="1" velocity="0.5"/>
   </joint>
 
-  <link name="wrist">
-  </link>
+  <arm_link name="forearm" length="${forearm_length}"/>
 
   <joint name="wrist_pitch" type="revolute">
     <parent link="forearm"/>
     <child link="wrist"/>
     <axis xyz="0 1 0"/>
-    <origin xyz="0 0 ${forearm_length/5}" rpy="0 0 0"/>
+    <origin xyz="0 0 ${forearm_length}" rpy="0 0 0"/>
     <limit lower="-2.09" upper="2.09" effort="1" velocity="0.5"/>
   </joint>
 
-  <link name="palm">
-
-  </link>
+  <arm_link name="wrist" length="${wrist_length}"/>
 
   <joint name="wrist_roll" type="revolute">
     <parent link="wrist"/>
     <child link="palm"/>
     <axis xyz="0 0 1"/>
-    <origin xyz="0 0 ${forearm_length/4}" rpy="0 0 0"/>
+    <origin xyz="0 0 ${wrist_length}" rpy="0 0 0"/>
     <limit lower="-3" upper="3" effort="1" velocity="0.5"/>
   </joint>
 
-  <link name="finger">
-  </link>
+  <arm_link name="palm" length="${palm_length}"/>
 
   <joint name="grab" type="revolute">
     <parent link="palm"/>
     <child link="finger"/>
     <axis xyz="1 0 0"/>
-    <origin xyz="0 0 ${hand_length/3}"/>
+    <origin xyz="0 0 ${palm_length}"/>
     <limit lower="-1" upper="1" effort="1" velocity="0.5"/>
   </joint>
+
+  <arm_link name="finger" length="${finger_length}"/>
+
 </robot>
 
