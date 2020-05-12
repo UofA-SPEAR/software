@@ -13,7 +13,8 @@
   <!-- Publish wheel odometry -->
   <node name="odom_tf_publisher_node" pkg="spear_rover" type="odom_tf_publisher_node"/>
   <!-- Convert twist messages to motor commands -->
-  <node name="twist_to_skidsteer_node" pkg="spear_rover" type="twist_to_skidsteer_node"/>
+  <!-- <node name="twist_to_skidsteer_node" pkg="spear_rover" type="twist_to_skidsteer_node"/> -->
+  <node name="hardware" pkg="spear_hardware" type="hardware"/>
 
   <!-- Publish robot description -->
   <include file="$(find spear_rover)/launch/robot_description.launch"/>

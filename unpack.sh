@@ -112,6 +112,7 @@ ln -s $DIR/spear_rover
 ln -s $DIR/spear_station
 ln -s $DIR/spear_simulator
 ln -s $DIR/spear_behaviors
+ln -s $DIR/spear_hardware
 
 ###### Link UAVCAN DSDL definitions to the home directory.
 mkdir -p ~/uavcan_vendor_specific_types
