@@ -1,17 +1,13 @@
+
+#include <canros/uavcan__equipment__actuator__ArrayCommand.h>
+#include <canros/uavcan__equipment__actuator__Command.h>
+#include <controller_manager/controller_manager.h>
 #include <hardware_interface/actuator_command_interface.h>
 #include <hardware_interface/joint_command_interface.h>
 #include <hardware_interface/joint_state_interface.h>
 #include <hardware_interface/robot_hw.h>
-#include <array>
-#include <vector>
-
-#include <canros/uavcan__equipment__actuator__ArrayCommand.h>
-#include <canros/uavcan__equipment__actuator__Command.h>
-
 #include <ros/ros.h>
-
-#include <controller_manager/controller_manager.h>
-#include <thread>
+#include <vector>
 
 using ActuatorArrayCommand = canros::uavcan__equipment__actuator__ArrayCommand;
 using ActuatorCommand = canros::uavcan__equipment__actuator__Command;
@@ -19,7 +15,7 @@ using ActuatorCommand = canros::uavcan__equipment__actuator__Command;
 using namespace hardware_interface;
 
 struct WheelInfo {
-  WheelInfo(const std::string& link, int actuator_id)
+  WheelInfo(const std::string &link, int actuator_id)
       : link(link), actuator_id(actuator_id), pos(0), vel(0), eff(0) {}
   std::string link;
   int actuator_id;
@@ -30,13 +26,13 @@ struct WheelInfo {
 };
 
 class CASEHardware : public RobotHW {
- public:
-  CASEHardware(ros::NodeHandle& nh) {
+public:
+  CASEHardware(ros::NodeHandle &nh) {
     wheel_infos = {WheelInfo("link_wheel_backleft", 44),
                    WheelInfo("link_wheel_frontleft", 45),
                    WheelInfo("link_wheel_backright", 43),
                    WheelInfo("link_wheel_frontright", 41)};
-    for (auto& wheel_info : wheel_infos) {
+    for (auto &wheel_info : wheel_infos) {
       const auto state_handle = JointStateHandle(
           wheel_info.link, &wheel_info.pos, &wheel_info.vel, &wheel_info.eff);
       const auto velocity_handle = JointHandle(state_handle, &wheel_info.cmd);
@@ -50,9 +46,9 @@ class CASEHardware : public RobotHW {
         nh.advertise<ActuatorArrayCommand>("/drive/cmds", 1);
   }
 
-  void write(const ros::Time& time, const ros::Duration& period) override {
+  void write(const ros::Time &time, const ros::Duration &period) override {
     auto wheel_commands = ActuatorArrayCommand();
-    for (const auto& wheel_info : wheel_infos) {
+    for (const auto &wheel_info : wheel_infos) {
       auto command = ActuatorCommand();
       command.actuator_id = wheel_info.actuator_id;
       command.command_type = ActuatorCommand::COMMAND_TYPE_SPEED;
@@ -63,9 +59,9 @@ class CASEHardware : public RobotHW {
     wheel_commands_publisher.publish(wheel_commands);
   }
 
-  void read(const ros::Time& time, const ros::Duration& period) override {}
+  void read(const ros::Time &time, const ros::Duration &period) override {}
 
- private:
+private:
   JointStateInterface wheel_state_interface;
   VelocityJointInterface wheel_velocity_interface;
 
@@ -74,11 +70,12 @@ class CASEHardware : public RobotHW {
   ros::Publisher wheel_commands_publisher;
 };
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   ros::init(argc, argv, "hardware");
   ros::NodeHandle nh;
 
-  if( ros::console::set_logger_level("ros.controller_manager", ros::console::levels::Debug) ) {
+  if (ros::console::set_logger_level("ros.controller_manager",
+                                     ros::console::levels::Debug)) {
     ros::console::notifyLoggerLevelsChanged();
   }
 
