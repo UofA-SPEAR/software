@@ -1,7 +1,7 @@
 <!-- Launches everything needed to drive the rover by sending Twist messages -->
 <launch>
   <!-- Default can device -->
-  <arg name="interface" default="can0"/>
+  <arg name="interface" default="vcan0"/>
 
   <!-- Launch canros server -->
   <include file="$(find canros)/launch/server.launch">
@@ -13,8 +13,7 @@
   <!-- Publish wheel odometry -->
   <node name="odom_tf_publisher_node" pkg="spear_rover" type="odom_tf_publisher_node"/>
   <!-- Convert twist messages to motor commands -->
-  <!-- <node name="twist_to_skidsteer_node" pkg="spear_rover" type="twist_to_skidsteer_node"/> -->
-  <node name="hardware" pkg="spear_hardware" type="hardware"/>
+  <include file="$(find spear_hardware)/launch/hardware.launch"/>
 
   <!-- Publish robot description -->
   <include file="$(find spear_rover)/launch/robot_description.launch"/>

@@ -11,6 +11,7 @@
 #include <ros/ros.h>
 
 #include <controller_manager/controller_manager.h>
+#include <thread>
 
 using ActuatorArrayCommand = canros::uavcan__equipment__actuator__ArrayCommand;
 using ActuatorCommand = canros::uavcan__equipment__actuator__Command;
@@ -57,6 +58,7 @@ class CASEHardware : public RobotHW {
       command.command_type = ActuatorCommand::COMMAND_TYPE_SPEED;
       command.command_value = wheel_info.cmd;
       wheel_commands.commands.push_back(command);
+      ROS_INFO("Command = %f", wheel_info.cmd);
     }
     wheel_commands_publisher.publish(wheel_commands);
   }
@@ -75,15 +77,20 @@ class CASEHardware : public RobotHW {
 int main(int argc, char* argv[]) {
   ros::init(argc, argv, "hardware");
   ros::NodeHandle nh;
+
+  if( ros::console::set_logger_level("ros.controller_manager", ros::console::levels::Debug) ) {
+    ros::console::notifyLoggerLevelsChanged();
+  }
+
   auto robot = CASEHardware(nh);
   controller_manager::ControllerManager cm(&robot, nh);
-  cm.loadController("rover_diff_drive_controller");
 
   ros::AsyncSpinner spinner(1);
   spinner.start();
+
   ros::Rate rate(10);
 
-  while (!ros::isShuttingDown()) {
+  while (ros::ok()) {
     const auto time = ros::Time::now();
     const auto duration = ros::Duration(0.1);
     robot.read(time, duration);
