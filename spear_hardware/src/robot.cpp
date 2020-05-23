@@ -7,6 +7,7 @@
 #include <hardware_interface/joint_state_interface.h>
 #include <hardware_interface/robot_hw.h>
 #include <ros/ros.h>
+
 #include <vector>
 
 using ActuatorArrayCommand = canros::uavcan__equipment__actuator__ArrayCommand;
@@ -26,7 +27,7 @@ struct WheelInfo {
 };
 
 class CASEHardware : public RobotHW {
-public:
+ public:
   CASEHardware(ros::NodeHandle &nh) {
     wheel_infos = {WheelInfo("link_wheel_backleft", 44),
                    WheelInfo("link_wheel_frontleft", 45),
@@ -61,7 +62,7 @@ public:
 
   void read(const ros::Time &time, const ros::Duration &period) override {}
 
-private:
+ private:
   JointStateInterface wheel_state_interface;
   VelocityJointInterface wheel_velocity_interface;
 
