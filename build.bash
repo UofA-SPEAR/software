@@ -20,6 +20,26 @@ echo "Returning to ${ORIGINAL_DIR}."
 cd "${ORIGINAL_DIR}"
 
 echo "Copying ~/ros/build/compile_commands.json to ${SCRIPT_DIR}/compile_commands.json (for code completion coolness)."
+
+# Make a single, unified compile_commands.json from each package's compile_commands.json.
+# From https://github.com/catkin/catkin_tools/issues/551#issuecomment-553521463
+cd ~/ros
+concatenated="build/compile_commands.json"
+echo "[" > $concatenated
+first=1
+for d in build/*
+do
+    f="$d/compile_commands.json"
+    if test -f "$f"; then
+        if [ $first -eq 0 ]; then
+            echo "," >> $concatenated
+        fi
+        cat $f | sed '1d;$d' >> $concatenated
+    fi
+    first=0
+done
+echo "]" >> $concatenated
+
 # We need to globally replace all occurences of /opt/ros with $DOCKER_HOST_REPO_LOCATION/.docker-opt-ros-mount,
 # and all occurences of /root/ros/devel/include with $DOCKER_HOST_REPO_LOCATION/.docker-root-ros-include-mount,
 # so that all ros-related headers and libs will be picked up by autocomplete engines.
