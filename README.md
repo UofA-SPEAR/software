@@ -112,6 +112,15 @@ You should see a welcome message from docker. If this works, your docker install
 More information about linux configuration of docker can be found here:
 https://docs.docker.com/install/linux/linux-postinstall/
 
+### Additional setup for NVIDIA GPUs
+
+If you have an nvidia gpu you should set up the nvidia docker runtime.
+You will need at docker>=19, which you should have if you followed the directions above.
+
+First, make sure you have the correct drivers installed (that is outside the scope of this document, but if you're using Ubuntu I suggest you go to *Settings & Updates > Additional Drivers* before messing around with installing things manually).
+
+You will need [nvidia-container-toolkit](https://github.com/NVIDIA/nvidia-docker) and [nvidia-container-runtime](https://github.com/nvidia/nvidia-container-runtime) (follow the setup instructions in their READMEs, and in particular make sure you set the default runtime to nvidia).
+
 ## Build Docker Image
 
 Navigate to the directory containing this readme, and run
