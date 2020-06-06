@@ -1,3 +1,4 @@
+#include <canros/spear__drive__WheelOdom.h>
 #include <canros/uavcan__equipment__actuator__ArrayCommand.h>
 #include <canros/uavcan__equipment__actuator__Command.h>
 #include <controller_manager/controller_manager.h>
@@ -7,10 +8,12 @@
 #include <hardware_interface/robot_hw.h>
 #include <ros/ros.h>
 
+#include <boost/functional.hpp>
 #include <vector>
 
 using ActuatorArrayCommand = canros::uavcan__equipment__actuator__ArrayCommand;
 using ActuatorCommand = canros::uavcan__equipment__actuator__Command;
+using WheelOdomPtr = canros::spear__drive__WheelOdom::ConstPtr;
 
 using namespace hardware_interface;
 
@@ -44,6 +47,10 @@ class CASEHardware : public RobotHW {
 
     wheel_commands_publisher =
         nh.advertise<ActuatorArrayCommand>("/drive/cmds", 1);
+    boost::function<void(const WheelOdomPtr &)> odom_callback =
+        [&](const WheelOdomPtr &message) { on_wheel_odom_message(message); };
+    wheel_odom_subscriber =
+        nh.subscribe("/canros/spear/drive/WheelOdom", 1000, odom_callback);
   }
 
   void write(const ros::Time &time, const ros::Duration &period) override {
@@ -62,12 +69,19 @@ class CASEHardware : public RobotHW {
   void read(const ros::Time &time, const ros::Duration &period) override {}
 
  private:
+  void on_wheel_odom_message(const WheelOdomPtr &message) {
+    // Index is in the same order as wheel_infos are initialized
+    const auto wheel_index = message->wheel_id;
+    wheel_infos.at(wheel_index).pos += message->delta;
+  }
+
   JointStateInterface wheel_state_interface;
   VelocityJointInterface wheel_velocity_interface;
 
   std::vector<WheelInfo> wheel_infos;
 
   ros::Publisher wheel_commands_publisher;
+  ros::Subscriber wheel_odom_subscriber;
 };
 
 int main(int argc, char *argv[]) {

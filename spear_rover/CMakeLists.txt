@@ -128,15 +128,6 @@ target_link_libraries(simple_navigation_goals_node
   ${catkin_LIBRARIES}
 )
 
-# add_executable(odom_tf_publisher_node src/odom_tf_publisher.cpp)
-# add_dependencies(odom_tf_publisher_node
-#    ${${PROJECT_NAME}_EXPORTED_TARGETS}
-#    ${catkin_EXPORTED_TARGETS}
-# )
-# target_link_libraries(odom_tf_publisher_node
-#   ${catkin_LIBRARIES}
-# )
-
 add_executable(hardware_node src/hardware.cpp)
 add_dependencies(hardware_node
    ${${PROJECT_NAME}_EXPORTED_TARGETS}
