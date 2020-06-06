@@ -42,7 +42,6 @@ RUN cp .tmux/.tmux.conf.local .
 RUN sed -i '/#set -g mouse on/c\set -g mouse on' .tmux.conf.local
 WORKDIR /
 
-
 # nvidia-container-runtime
 ENV NVIDIA_VISIBLE_DEVICES \
     ${NVIDIA_VISIBLE_DEVICES:-all}
@@ -51,6 +50,7 @@ ENV NVIDIA_DRIVER_CAPABILITIES \
 
 # Download gazebo model database
 RUN hg clone https://bitbucket.org/osrf/gazebo_models ~/.gazebo/models
+
 
 COPY . /software
 
