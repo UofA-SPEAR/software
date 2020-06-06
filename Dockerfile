@@ -48,6 +48,10 @@ ENV NVIDIA_VISIBLE_DEVICES \
 ENV NVIDIA_DRIVER_CAPABILITIES \
     ${NVIDIA_DRIVER_CAPABILITIES:+$NVIDIA_DRIVER_CAPABILITIES,}graphics
 
+# Download gazebo model database
+RUN hg clone https://bitbucket.org/osrf/gazebo_models ~/.gazebo/models
+
+
 COPY . /software
 
 # Set IS_DOCKER to true so setup-vcan.bash and setup-can.bash don't try
