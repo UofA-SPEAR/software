@@ -1,4 +1,3 @@
-
 #include <canros/uavcan__equipment__actuator__ArrayCommand.h>
 #include <canros/uavcan__equipment__actuator__Command.h>
 #include <controller_manager/controller_manager.h>
@@ -72,7 +71,7 @@ class CASEHardware : public RobotHW {
 };
 
 int main(int argc, char *argv[]) {
-  ros::init(argc, argv, "hardware");
+  ros::init(argc, argv, "hardware_node");
   ros::NodeHandle nh;
 
   if (ros::console::set_logger_level("ros.controller_manager",

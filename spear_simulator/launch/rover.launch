@@ -14,7 +14,7 @@
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" args="-unpause -urdf -model robot -param robot_description $(arg start_position)" respawn="false" output="screen"/>
 
   <!-- Translate twist messages to wheel commands, and publish wheel odometry -->
-  <include file="$(find spear_hardware)/launch/hardware.launch">
+  <include file="$(find spear_rover)/launch/hardware.launch">
     <arg name="start_controller_manager" value="false"/>
   </include>
 
