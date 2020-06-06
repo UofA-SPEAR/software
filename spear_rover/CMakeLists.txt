@@ -57,7 +57,6 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-  include
   ${catkin_INCLUDE_DIRS}
   ${OpenCV_INCLUDE_DIRS}
 )
@@ -137,15 +136,6 @@ target_link_libraries(hardware_node
   ${catkin_LIBRARIES}
 )
 
-
-add_executable(test_wheel_odom_publisher_node src/test_wheel_odom_publisher.cpp)
-add_dependencies(test_wheel_odom_publisher_node
-   ${${PROJECT_NAME}_EXPORTED_TARGETS}
-   ${catkin_EXPORTED_TARGETS}
-)
-target_link_libraries(test_wheel_odom_publisher_node
-  ${catkin_LIBRARIES}
-)
 
 install(PROGRAMS
     nodes/mapper.py
