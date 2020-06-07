@@ -34,7 +34,7 @@ See [the readme](https://github.com/UofA-SPEAR/software#virtual-machine-setup-an
 
 ## 2. Write a simple ROS publisher and subscriber
 
-Create 2 simple ROS nodes by following our tutorial [here](https://github.com/UofA-SPEAR/software/wiki/ROS-publisher-and-subscriber).
+Create 2 simple ROS nodes by following our tutorial [here](ROS-publisher-and-subscriber.md).
 
 ## 3. Push to github and create a pull request
 
