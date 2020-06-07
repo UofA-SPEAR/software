@@ -46,7 +46,7 @@ class CASEHardware : public RobotHW {
     registerInterface(&wheel_velocity_interface);
 
     wheel_commands_publisher =
-        nh.advertise<ActuatorArrayCommand>("/drive/cmds", 1);
+        nh.advertise<ActuatorArrayCommand>("/canros/msg/uavcan/equipment/actuator/ArrayCommand", 1);
     boost::function<void(const WheelOdomPtr &)> odom_callback =
         [&](const WheelOdomPtr &message) { on_wheel_odom_message(message); };
     wheel_odom_subscriber =
