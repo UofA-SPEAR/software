@@ -49,12 +49,6 @@ ROS <-> UAVCAN mapper node.
 Subscribes to various ROS topics and maps them in a unified interface to the canros node,
 which publishes over CAN bus. And vice versa.
 
-### hardware_interface_node
-
-Node to interface with hardware on the rover.
-
-As of now it only maps left/right drive commands to commands to send to the wheels.
-
 ### arm_ik_node
 
 Node to take positions for the arm and publish them as angles.

@@ -43,19 +43,12 @@
     <transmission name="wheel_${name}_trans">
       <type>transmission_interface/SimpleTransmission</type>
       <actuator name="wheel_${name}_motor">
+        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
       <joint name="link_wheel_${name}">
         <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
       </joint>
     </transmission>
-    <gazebo reference="link_wheel_${name}">
-      <mu1 value="200.0"/>
-      <mu2 value="100.0"/>
-      <kp value="10000000.0" />
-      <kd value="1.0" />
-      <material>Gazebo/Grey</material>
-    </gazebo>
-
   </xacro:macro>
 </robot>

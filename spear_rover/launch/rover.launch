@@ -10,10 +10,9 @@
 
   <!-- Map ROS messages to/from CAN messages -->
   <node name="can_mapper" pkg="spear_rover" type="mapper.py" output="screen"/>
-  <!-- Publish wheel odometry -->
-  <node name="odom_tf_publisher_node" pkg="spear_rover" type="odom_tf_publisher_node"/>
-  <!-- Convert twist messages to motor commands -->
-  <node name="twist_to_skidsteer_node" pkg="spear_rover" type="twist_to_skidsteer_node"/>
+
+  <!-- Convert twist messages to motor commands, publish wheel odometry -->
+  <include file="$(find spear_rover)/launch/hardware.launch"/>
 
   <!-- Publish robot description -->
   <include file="$(find spear_rover)/launch/robot_description.launch"/>

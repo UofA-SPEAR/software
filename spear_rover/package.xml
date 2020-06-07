@@ -67,4 +67,7 @@
   <exec_depend>rosbridge_suite</exec_depend>
 
   <exec_depend>pointcloud_to_laserscan</exec_depend>
+
+  <depend>hardware_interface</depend>
+  <depend>controller_manager</depend>
 </package>
