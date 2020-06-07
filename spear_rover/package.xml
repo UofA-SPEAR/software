@@ -71,6 +71,6 @@
 
   <depend>hardware_interface</depend>
   <depend>controller_manager</depend>
-  <depend>joint_trajectory_controller</depend>
-  <depend>joint_state_controller</depend>
+  <exec_depend>joint_trajectory_controller</exec_depend>
+  <exec_depend>joint_state_controller</exec_depend>
 </package>
