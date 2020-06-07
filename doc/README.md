@@ -5,6 +5,8 @@ Lower level code documentation (such as documenting the parameters of a function
 
 ## Directory Structure
 
+- `code-overview`: High-level documentation of the code.
+
 - `install`: Additional documentation for installing the necessary tools to develop ROS code. 
   Note: most of the documentation for this is in the README at the top level of this repo.
 
