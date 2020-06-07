@@ -22,6 +22,8 @@ find_package(catkin REQUIRED COMPONENTS
     spear_msgs
     std_msgs
     tf
+    hardware_interface
+    controller_manager
 )
 
 catkin_python_setup()
@@ -44,7 +46,7 @@ generate_messages(DEPENDENCIES
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES rover2
-  CATKIN_DEPENDS canros geometry_msgs message_generation message_runtime spear_msgs std_msgs
+  CATKIN_DEPENDS canros geometry_msgs message_generation message_runtime spear_msgs std_msgs hardware_interface controller_manager
 #  DEPENDS system_lib
 )
 
@@ -55,7 +57,6 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-  include
   ${catkin_INCLUDE_DIRS}
   ${OpenCV_INCLUDE_DIRS}
 )
@@ -126,32 +127,15 @@ target_link_libraries(simple_navigation_goals_node
   ${catkin_LIBRARIES}
 )
 
-add_executable(odom_tf_publisher_node src/odom_tf_publisher.cpp)
-add_dependencies(odom_tf_publisher_node
+add_executable(hardware_node src/hardware.cpp)
+add_dependencies(hardware_node
    ${${PROJECT_NAME}_EXPORTED_TARGETS}
    ${catkin_EXPORTED_TARGETS}
 )
-target_link_libraries(odom_tf_publisher_node
+target_link_libraries(hardware_node
   ${catkin_LIBRARIES}
 )
 
-add_executable(test_wheel_odom_publisher_node src/test_wheel_odom_publisher.cpp)
-add_dependencies(test_wheel_odom_publisher_node
-   ${${PROJECT_NAME}_EXPORTED_TARGETS}
-   ${catkin_EXPORTED_TARGETS}
-)
-target_link_libraries(test_wheel_odom_publisher_node
-  ${catkin_LIBRARIES}
-)
-
-add_executable(twist_to_skidsteer_node src/twist_to_skidsteer.cpp)
-add_dependencies(twist_to_skidsteer_node
-   ${${PROJECT_NAME}_EXPORTED_TARGETS}
-   ${catkin_EXPORTED_TARGETS}
-)
-target_link_libraries(twist_to_skidsteer_node
-  ${catkin_LIBRARIES}
-)
 
 install(PROGRAMS
     nodes/mapper.py

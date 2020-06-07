@@ -14,9 +14,9 @@
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" args="-unpause -urdf -model robot -param robot_description $(arg start_position)" respawn="false" output="screen"/>
 
   <!-- Translate twist messages to wheel commands, and publish wheel odometry -->
-
-  <rosparam command="load" file="$(find spear_simulator)/config/diffdrive.yaml" ns="/rover_diff_drive_controller"/>
-  <node name="rover_controller_spawner" pkg="controller_manager" type="spawner" args="rover_diff_drive_controller --timeout 300"/>
+  <include file="$(find spear_rover)/launch/hardware.launch">
+    <arg name="start_controller_manager" value="false"/>
+  </include>
 
   <!-- Publish robot description -->
   <include file="$(find spear_rover)/launch/robot_description.launch"/>
