@@ -19,5 +19,4 @@
   <exec_depend>rqt_graph</exec_depend>
   <exec_depend>gazebo_plugins</exec_depend>
   <exec_depend>hector_gazebo_plugins</exec_depend>
-  <exec_depend>moveit</exec_depend>
 </package>
