@@ -77,3 +77,10 @@ arm_controller:
             d: 1
             i: 1
             i_clamp: 1
+
+# This is called a "controller" but is not. It is actually way to publish
+# the arm/wheel joint angles to /joint_states, since the controllers don't do
+# that themselves.
+joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50
