@@ -19,7 +19,28 @@
           <cylinder length="${length-joint_sep}" radius="${arm_width}"/>
         </geometry>
       </visual>
+      <inertial>
+        <origin xyz="0 0 ${length/2}" rpy="0 0 0"/>
+        <mass value="0.001" />
+        <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
+      </inertial>
     </link>
+  </xacro:macro>
+
+  <xacro:macro name="arm_joint" params="name **container">
+    <joint name="${name}" type="revolute">
+      <xacro:insert_block name="container"/>
+    </joint>
+    <transmission name="${name}_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="${name}_actuator">
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+      <joint name="${name}">
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+    </transmission>
   </xacro:macro>
 
   <joint name="arm_mount" type="fixed">
@@ -29,65 +50,70 @@
   </joint>
 
   <link name="arm_mount">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="0.001" />
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
+    </inertial>
   </link>
 
-  <joint name="shoulder_yaw" type="revolute">
+  <xacro:arm_joint name="shoulder_yaw"><container>
     <parent link="arm_mount"/>
     <child link="shoulder"/>
     <axis xyz="0 0 1"/>
     <origin xyz="0 0 0" rpy= "0 0 3.14"/>
     <limit lower="-3.15" upper="3.15" effort="1" velocity="0.5"/>
-  </joint>
+  </container></xacro:arm_joint>
 
   <arm_link name="shoulder" length="${shoulder_height}"/>
 
-  <joint name="shoulder_pitch" type="revolute">
+  <xacro:arm_joint name="shoulder_pitch"><container>
     <parent link="shoulder"/>
     <child link="bicep"/>
     <axis xyz="0 1 0"/>
     <origin xyz="0 0 ${shoulder_height}" rpy= "0 0 0"/>
     <limit lower="0.78" upper="2.15" effort="1" velocity="0.5"/>
-  </joint>
+  </container></xacro:arm_joint>
 
   <arm_link name="bicep" length="${bicep_length}"/>
 
-  <joint name="elbow_pitch" type="revolute">
+  <xacro:arm_joint name="elbow_pitch"><container>
     <parent link="bicep"/>
     <child link="forearm"/>
     <axis xyz="0 1 0"/>
     <origin xyz="0 0 ${bicep_length}" rpy= "0 0 0"/>
     <limit lower="-2.7" upper="1.54" effort="1" velocity="0.5"/>
-  </joint>
+  </container></xacro:arm_joint>
 
   <arm_link name="forearm" length="${forearm_length}"/>
 
-  <joint name="wrist_pitch" type="revolute">
+  <xacro:arm_joint name="wrist_pitch"><container>
     <parent link="forearm"/>
     <child link="wrist"/>
     <axis xyz="0 1 0"/>
     <origin xyz="0 0 ${forearm_length}" rpy="0 0 0"/>
     <limit lower="-2.09" upper="2.09" effort="1" velocity="0.5"/>
-  </joint>
+  </container></xacro:arm_joint>
 
   <arm_link name="wrist" length="${wrist_length}"/>
 
-  <joint name="wrist_roll" type="revolute">
+  <xacro:arm_joint name="wrist_roll"><container>
     <parent link="wrist"/>
     <child link="palm"/>
     <axis xyz="0 0 1"/>
     <origin xyz="0 0 ${wrist_length}" rpy="0 0 0"/>
     <limit lower="-3" upper="3" effort="1" velocity="0.5"/>
-  </joint>
+  </container></xacro:arm_joint>
 
   <arm_link name="palm" length="${palm_length}"/>
 
-  <joint name="grab" type="revolute">
+  <xacro:arm_joint name="grab"><container>
     <parent link="palm"/>
     <child link="finger"/>
     <axis xyz="1 0 0"/>
     <origin xyz="0 0 ${palm_length}"/>
     <limit lower="-1" upper="1" effort="1" velocity="0.5"/>
-  </joint>
+  </container></xacro:arm_joint>
 
   <arm_link name="finger" length="${finger_length}"/>
 
