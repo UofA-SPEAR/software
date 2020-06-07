@@ -50,7 +50,7 @@ class CASEHardware : public RobotHW {
     boost::function<void(const WheelOdomPtr &)> odom_callback =
         [&](const WheelOdomPtr &message) { on_wheel_odom_message(message); };
     wheel_odom_subscriber =
-        nh.subscribe("/canros/spear/drive/WheelOdom", 1000, odom_callback);
+        nh.subscribe("/canros/msg/spear/drive/WheelOdom", 1000, odom_callback);
   }
 
   void write(const ros::Time &time, const ros::Duration &period) override {
