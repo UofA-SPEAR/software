@@ -1,7 +1,7 @@
 <launch>
   <arg name="start_controller_manager" default="true"/>
   <!-- Start controller manager with CASE-specific hardware interface -->
-  <node name="hardware" type="hardware" pkg="spear_rover" if="$(arg start_controller_manager)"/>
+  <node name="hardware" type="hardware_node" pkg="spear_rover" if="$(arg start_controller_manager)"/>
   <!-- Load and configure controllers -->
   <rosparam command="load" file="$(find spear_rover)/config/controllers.yaml"/>
   <node name="rover_controller_spawner" pkg="controller_manager" type="spawner" args="rover_diff_drive_controller --timeout 300"/>
