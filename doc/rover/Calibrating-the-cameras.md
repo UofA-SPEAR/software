@@ -1,0 +1,3 @@
+There are three cameras: the webcams (labelled 1 and 2) and the ZED camera. The webcams are calibrated using the launch file `calibrate.launch`. The ZED camera is calibrated using the calibration utility from the ZED SDK.
+
+The calibration parameters for the webcams are stored in the folder `spear_rover/calibration`. When launching the webcam nodes with `usb_cam`, these parameters can be loaded by setting `cam_info_url` to e.g. `file://$(find spear_rover)/calibration/webcam1.yaml` for webcam1. Unfortunately, the ZED camera doesn't have an equivalent way to load parameters like this. So the parameters are stored on the tx2, which means that if the tx2 is reset or something we will have to redo calibration.
