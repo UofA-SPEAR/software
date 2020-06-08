@@ -9,6 +9,7 @@
 #include <ros/ros.h>
 
 #include <boost/functional.hpp>
+#include <memory>
 #include <vector>
 
 using ActuatorArrayCommand = canros::uavcan__equipment__actuator__ArrayCommand;
@@ -22,15 +23,32 @@ struct WheelInfo {
       : link(link), actuator_id(actuator_id), pos(0), vel(0), eff(0) {}
   std::string link;
   int actuator_id;
-  double cmd;
+  double cmd_vel;
   double pos;
   double vel;
   double eff;
 };
 
-class CASEHardware : public RobotHW {
+struct ArmJointInfo {
+  ArmJointInfo(const std::string &link, int actuator_id)
+      : link(link), actuator_id(actuator_id), pos(0), vel(0), eff(0) {}
+  std::string link;
+  int actuator_id;
+  double cmd_pos;
+  double pos;
+  double vel;
+  double eff;
+};
+
+class RobotHWChild {
  public:
-  CASEHardware(ros::NodeHandle &nh) {
+  virtual void write(const ros::Time &time, const ros::Duration &period) = 0;
+  virtual void read(const ros::Time &time, const ros::Duration &period) = 0;
+};
+
+class CASEDriveHardware : public RobotHWChild {
+ public:
+  CASEDriveHardware(RobotHW &parent, ros::NodeHandle &nh) {
     wheel_infos = {WheelInfo("link_wheel_backleft", 44),
                    WheelInfo("link_wheel_frontleft", 45),
                    WheelInfo("link_wheel_backright", 43),
@@ -38,19 +56,20 @@ class CASEHardware : public RobotHW {
     for (auto &wheel_info : wheel_infos) {
       const auto state_handle = JointStateHandle(
           wheel_info.link, &wheel_info.pos, &wheel_info.vel, &wheel_info.eff);
-      const auto velocity_handle = JointHandle(state_handle, &wheel_info.cmd);
+      const auto velocity_handle =
+          JointHandle(state_handle, &wheel_info.cmd_vel);
       wheel_state_interface.registerHandle(state_handle);
       wheel_velocity_interface.registerHandle(velocity_handle);
     }
-    registerInterface(&wheel_state_interface);
-    registerInterface(&wheel_velocity_interface);
+    parent.registerInterface(&wheel_state_interface);
+    parent.registerInterface(&wheel_velocity_interface);
 
-    wheel_commands_publisher =
-        nh.advertise<ActuatorArrayCommand>("/drive/cmds", 1);
+    wheel_commands_publisher = nh.advertise<ActuatorArrayCommand>(
+        "/canros/msg/uavcan/equipment/actuator/ArrayCommand", 1);
     boost::function<void(const WheelOdomPtr &)> odom_callback =
         [&](const WheelOdomPtr &message) { on_wheel_odom_message(message); };
     wheel_odom_subscriber =
-        nh.subscribe("/canros/spear/drive/WheelOdom", 1000, odom_callback);
+        nh.subscribe("/canros/msg/spear/drive/WheelOdom", 1000, odom_callback);
   }
 
   void write(const ros::Time &time, const ros::Duration &period) override {
@@ -59,9 +78,9 @@ class CASEHardware : public RobotHW {
       auto command = ActuatorCommand();
       command.actuator_id = wheel_info.actuator_id;
       command.command_type = ActuatorCommand::COMMAND_TYPE_SPEED;
-      command.command_value = wheel_info.cmd;
+      command.command_value = wheel_info.cmd_vel;
       wheel_commands.commands.push_back(command);
-      ROS_INFO("Command = %f", wheel_info.cmd);
+      ROS_INFO("Command = %f", wheel_info.cmd_vel);
     }
     wheel_commands_publisher.publish(wheel_commands);
   }
@@ -82,6 +101,74 @@ class CASEHardware : public RobotHW {
 
   ros::Publisher wheel_commands_publisher;
   ros::Subscriber wheel_odom_subscriber;
+};
+
+class CASEArmHardware : public RobotHWChild {
+ public:
+  CASEArmHardware(RobotHW &parent, ros::NodeHandle &nh) {
+    arm_joint_infos = {
+        ArmJointInfo("shoulder_yaw", 10), ArmJointInfo("shoulder_pitch", 11),
+        ArmJointInfo("elbow_pitch", 12), ArmJointInfo("wrist_pitch", 13),
+        ArmJointInfo("wrist_roll", 14)};
+
+    for (auto &joint_info : arm_joint_infos) {
+      const auto state_handle = JointStateHandle(
+          joint_info.link, &joint_info.pos, &joint_info.vel, &joint_info.eff);
+      const auto position_handle =
+          JointHandle(state_handle, &joint_info.cmd_pos);
+      arm_state_interface.registerHandle(state_handle);
+      arm_position_interface.registerHandle(position_handle);
+    }
+    parent.registerInterface(&arm_state_interface);
+    parent.registerInterface(&arm_position_interface);
+
+    arm_commands_publisher = nh.advertise<ActuatorArrayCommand>(
+        "/canros/msg/uavcan/equipment/actuator/ArrayCommand", 1);
+  }
+
+  void write(const ros::Time &time, const ros::Duration &period) override {
+    auto arm_angles = ActuatorArrayCommand();
+    for (const auto &joint_info : arm_joint_infos) {
+      auto command = ActuatorCommand();
+      command.actuator_id = joint_info.actuator_id;
+      command.command_type = ActuatorCommand::COMMAND_TYPE_POSITION;
+      command.command_value = joint_info.cmd_pos;
+      arm_angles.commands.push_back(command);
+      ROS_INFO("Command = %f", joint_info.cmd_pos);
+    }
+    arm_commands_publisher.publish(arm_angles);
+  }
+
+  void read(const ros::Time &time, const ros::Duration &period) override {}
+
+ private:
+  std::vector<ArmJointInfo> arm_joint_infos;
+
+  JointStateInterface arm_state_interface;
+  PositionJointInterface arm_position_interface;
+
+  ros::Publisher arm_commands_publisher;
+};
+
+class CASEHardware : public RobotHW {
+ public:
+  CASEHardware(ros::NodeHandle &nh) {
+    children = {std::make_shared<CASEDriveHardware>(*this, nh),
+                std::make_shared<CASEArmHardware>(*this, nh)};
+  }
+  void write(const ros::Time &time, const ros::Duration &period) override {
+    for (auto child : children) {
+      child->write(time, period);
+    }
+  }
+  void read(const ros::Time &time, const ros::Duration &period) override {
+    for (auto child : children) {
+      child->read(time, period);
+    }
+  }
+
+ private:
+  std::vector<std::shared_ptr<RobotHWChild>> children;
 };
 
 int main(int argc, char *argv[]) {

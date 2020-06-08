@@ -4,5 +4,6 @@
   <node name="hardware" type="hardware_node" pkg="spear_rover" if="$(arg start_controller_manager)"/>
   <!-- Load and configure controllers -->
   <rosparam command="load" file="$(find spear_rover)/config/controllers.yaml"/>
-  <node name="rover_controller_spawner" pkg="controller_manager" type="spawner" args="rover_diff_drive_controller --timeout 300"/>
+  <arg name="controllers" value="rover_diff_drive_controller arm_controller joint_state_controller"/>
+  <node name="rover_controller_spawner" pkg="controller_manager" type="spawner" args="$(arg controllers) --timeout 300"/>
 </launch>

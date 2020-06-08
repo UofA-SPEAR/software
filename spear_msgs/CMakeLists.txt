@@ -14,7 +14,6 @@ add_message_files(
   BallCoords.msg
   arm_position.msg
   drive_cmd.msg
-  WheelCmdArray.msg
 )
 
 ## Generate services in the 'srv' folder

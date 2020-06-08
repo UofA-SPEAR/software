@@ -1,6 +1,6 @@
 <!-- Robot description and state publisher -->
 <launch>
-  <arg name="model" default="$(find spear_simulator)/models/rover/TARS_V2.urdf"/>
+  <arg name="model" default="$(find spear_simulator)/models/rover/TARS_V2.urdf.xacro"/>
 
   <!-- Put the robot model on the parameter server -->
   <param name="robot_description" command="$(find xacro)/xacro $(arg model)"/>
@@ -9,6 +9,4 @@
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
     <param name="publish_frequency" value="30.0"/>
   </node>
-  <!-- Publish TF transforms for moveable joints (such as arm or wheels) -->
-  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
 </launch>

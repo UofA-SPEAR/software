@@ -59,6 +59,7 @@
   <exec_depend>rqt_graph</exec_depend>
   <exec_depend>rqt_reconfigure</exec_depend>
   <exec_depend>rqt_ez_publisher</exec_depend>
+  <exec_depend>rqt_joint_trajectory_controller</exec_depend>
   <build_depend>ar_track_alvar</build_depend>
   <exec_depend>ar_track_alvar</exec_depend>
   <exec_depend>usb_cam</exec_depend>
@@ -70,4 +71,6 @@
 
   <depend>hardware_interface</depend>
   <depend>controller_manager</depend>
+  <exec_depend>joint_trajectory_controller</exec_depend>
+  <exec_depend>joint_state_controller</exec_depend>
 </package>

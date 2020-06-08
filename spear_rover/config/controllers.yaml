@@ -42,3 +42,45 @@ rover_diff_drive_controller:
             max_velocity           : 2.0   # rad/s
             has_acceleration_limits: true
             max_acceleration       : 6.0   # rad/s^2
+
+arm_controller:
+    type: position_controllers/JointTrajectoryController
+    joints:
+        - shoulder_yaw
+        - shoulder_pitch
+        - elbow_pitch
+        - wrist_pitch
+        - wrist_roll
+    gains:
+        shoulder_yaw:
+            p: 100
+            d: 1
+            i: 1
+            i_clamp: 1
+        shoulder_pitch:
+            p: 100
+            d: 1
+            i: 1
+            i_clamp: 1
+        elbow_pitch:
+            p: 100
+            d: 1
+            i: 1
+            i_clamp: 1
+        wrist_pitch:
+            p: 100
+            d: 1
+            i: 1
+            i_clamp: 1
+        wrist_roll:
+            p: 100
+            d: 1
+            i: 1
+            i_clamp: 1
+
+# This is called a "controller" but is not. It is actually way to publish
+# the arm/wheel joint angles to /joint_states, since the controllers don't do
+# that themselves.
+joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50
