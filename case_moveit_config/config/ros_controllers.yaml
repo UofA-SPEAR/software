@@ -15,44 +15,14 @@ hardware_interface:
     - wrist_pitch
     - wrist_roll
   sim_control_mode: 1  # 0: position, 1: velocity
-# Publish all joint states
-# Creates the /joint_states topic necessary in ROS
-joint_state_controller:
-  type: joint_state_controller/JointStateController
-  publish_rate: 50
+
 controller_list:
-  []
-arm_controller:
-  type: position_controllers/JointTrajectoryController
-  joints:
-    - shoulder_yaw
-    - shoulder_pitch
-    - elbow_pitch
-    - wrist_pitch
-    - wrist_roll
-  gains:
-    shoulder_yaw:
-      p: 100
-      d: 1
-      i: 1
-      i_clamp: 1
-    shoulder_pitch:
-      p: 100
-      d: 1
-      i: 1
-      i_clamp: 1
-    elbow_pitch:
-      p: 100
-      d: 1
-      i: 1
-      i_clamp: 1
-    wrist_pitch:
-      p: 100
-      d: 1
-      i: 1
-      i_clamp: 1
-    wrist_roll:
-      p: 100
-      d: 1
-      i: 1
-      i_clamp: 1
+  - name: arm_controller
+    joints:
+      - shoulder_yaw
+      - shoulder_pitch
+      - elbow_pitch
+      - wrist_pitch
+      - wrist_roll
+    action_ns: 'follow_joint_trajectory'
+    type: FollowJointTrajectory
