@@ -14,6 +14,8 @@
   <include file="$(find spear_simulator)/launch/visual_odom.launch" if="$(arg simulation)"/>
   <include file="$(find spear_rover)/launch/rtabmap_obstacles.launch"/>
 
+  <include file="$(find spear_rover)/launch/moveit.launch"/>
+
   <include file="$(find spear_rover)/launch/ar_track.launch">
     <arg name="simulation" value="$(arg simulation)"/>
   </include>

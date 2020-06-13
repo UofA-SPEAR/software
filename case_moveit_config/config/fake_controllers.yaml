@@ -1,0 +1,14 @@
+controller_list:
+  - name: fake_case_arm_controller
+    joints:
+      - shoulder_yaw
+      - shoulder_pitch
+      - elbow_pitch
+      - wrist_pitch
+      - wrist_roll
+  - name: fake_case_hand_controller
+    joints:
+      []
+initial:  # Define initial robot poses.
+  - group: case_arm
+    pose: rest

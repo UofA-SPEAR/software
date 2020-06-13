@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: spear_simulator
+    relative_path: models/rover/TARS_V2.urdf.xacro
+    xacro_args: ""
+  SRDF:
+    relative_path: config/TARS_V2.srdf
+  CONFIG:
+    author_name: Mitchell Epp
+    author_email: mdepp@ualberta.ca
+    generated_timestamp: 1591549328
