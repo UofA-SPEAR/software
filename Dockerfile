@@ -49,7 +49,7 @@ ENV NVIDIA_DRIVER_CAPABILITIES \
     ${NVIDIA_DRIVER_CAPABILITIES:+$NVIDIA_DRIVER_CAPABILITIES,}graphics
 
 # Download gazebo model database
-RUN hg clone https://bitbucket.org/osrf/gazebo_models ~/.gazebo/models
+RUN git clone https://github.com/osrf/gazebo_models ~/.gazebo/models
 
 
 COPY . /software
