@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.1.3)
 project(case_moveit_config)
 
-find_package(catkin REQUIRED)
+find_package(catkin REQUIRED spear_simulator)
 
 catkin_package()
 
