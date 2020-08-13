@@ -46,7 +46,7 @@
   <joint name="arm_mount" type="fixed">
     <parent link="base_link"/>
     <child link="arm_mount"/>
-    <origin xyz="0.25 0 0.3"/>
+    <origin xyz="0.25 0 0.3" rpy="0 0 3.1415926535897"/>
   </joint>
 
   <link name="arm_mount">
@@ -111,7 +111,7 @@
     <parent link="palm"/>
     <child link="finger"/>
     <axis xyz="1 0 0"/>
-    <origin xyz="0 0 ${palm_length}"/>
+    <origin xyz="0 0 ${palm_length}" rpy="0 0 0"/>
     <limit lower="-1" upper="1" effort="1" velocity="0.5"/>
   </container></xacro:arm_joint>
 

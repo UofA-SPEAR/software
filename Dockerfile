@@ -17,6 +17,7 @@ RUN apt-get update && apt-get install -y qt4-default libx264-dev \
 
 RUN python -m pip install catkin_lint || echo "Error installing catkin_lint -- this is not a problem on the tx2"
 RUN python -m pip install typing
+RUN python -m pip install pygame ikpy
 
 # Install uavcan_gui_tool for can debugging / monitoring
 # (see https://uavcan.org/GUI_Tool/Overview/ for install docs)
