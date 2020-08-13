@@ -53,12 +53,6 @@ fi
 # Add rosdep alias to make things nicer
 echo "alias update_rosdeps='cd ~/ros && rosdep install --from-paths src --ignore-src -r -y'" >> ~/.bashrc
 
-###### Install nimbro networks
-cd ~/ros/src
-git clone https://github.com/AIS-Bonn/nimbro_network.git
-mv nimbro_network/*/ .
-rm -rf nimbro_network
-
 ###### Install ros wrapper package for zed camera
 # This requires the ZED SDK to be installed
 # ZED SDK requires CUDA
@@ -76,28 +70,29 @@ if [ $ROVER ]; then
     # cd ~/ros/src
 fi
 
-###### Install canros
+###### Install various dependencies from source
+
+repos=(
+    MonashUAS/canros
+    gareth-cross/rviz_satellite
+    FlexBE/flexbe_app
+    eric-wieser/ros_numpy
+    AIS-Bonn/nimbro_network
+    UofA-SPEAR/uavcan_dsdl
+)
+
+cd ~/ros/src
+for repo in ${repos[@]}; do
+    echo $repo
+    git clone https://github.com/$repo.git --depth=1 --recurse-submodules --jobs=12 &
+done
+wait
+mv nimbro_network/*/ .
+rm -rf nimbro_network
 python -m pip install uavcan
-cd ~/ros/src
-git clone https://github.com/MonashUAS/canros.git
-
-###### Install rviz_satellite
-cd ~/ros/src
-git clone https://github.com/gareth-cross/rviz_satellite.git
-
-###### Install FlexBE GUI
-cd ~/ros/src
-git clone https://github.com/FlexBE/flexbe_app.git
-
-###### Install ros_numpy
-cd ~/ros/src
-git clone https://github.com/eric-wieser/ros_numpy.git
-
-#### Get our DSDL definitions
-cd ~
-git clone https://github.com/UofA-SPEAR/uavcan_dsdl.git
-cd uavcan_dsdl
-git submodule update --init
+mkdir -p ~/uavcan_vendor_specific_types
+cd ~/uavcan_vendor_specific_types
+ln -s ~/ros/src/uavcan_dsdl/spear
 
 ###### Link our packages
 # This needs to be moved all back into rover2 at some point
@@ -108,11 +103,6 @@ ln -s $DIR/spear_station
 ln -s $DIR/spear_simulator
 ln -s $DIR/spear_behaviors
 ln -s $DIR/case_moveit_config
-
-###### Link UAVCAN DSDL definitions to the home directory.
-mkdir -p ~/uavcan_vendor_specific_types
-cd ~/uavcan_vendor_specific_types
-ln -s ~/uavcan_dsdl/spear
 
 ###### Build everything
 cd ~/ros
