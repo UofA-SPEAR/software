@@ -92,7 +92,7 @@ rm -rf nimbro_network
 python -m pip install uavcan
 mkdir -p ~/uavcan_vendor_specific_types
 cd ~/uavcan_vendor_specific_types
-ln -s ~ros/src/uavcan_dsdl/spear
+ln -s ~/ros/src/uavcan_dsdl/spear
 
 ###### Link our packages
 # This needs to be moved all back into rover2 at some point
