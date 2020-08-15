@@ -97,26 +97,6 @@ target_link_libraries(ball_drawer_node
   ${OpenCV_LIBRARIES}
 )
 
-# add_executable(arm_ik_node src/arm_ik.cpp)
-# add_dependencies(arm_ik_node
-#    ${${PROJECT_NAME}_EXPORTED_TARGETS}
-#    ${catkin_EXPORTED_TARGETS}
-# )
-# ## Specify libraries to link a library or executable target against
-# target_link_libraries(arm_ik_node
-#   ${catkin_LIBRARIES}
-# )
-
-# add_executable(arm_verifier_node src/arm_verifier.cpp)
-# add_dependencies(arm_verifier_node
-#    ${${PROJECT_NAME}_EXPORTED_TARGETS}
-#    ${catkin_EXPORTED_TARGETS}
-# )
-# ## Specify libraries to link a library or executable target against
-# target_link_libraries(arm_verifier_node
-#   ${catkin_LIBRARIES}
-# )
-
 # Add simple_navigation_goals node
 add_executable(simple_navigation_goals_node src/simple_navigation_goals.cpp)
 add_dependencies(simple_navigation_goals_node
