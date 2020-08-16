@@ -1,0 +1,13 @@
+<launch>
+  <arg name="rover" default="192.168.1.61"/>
+
+  <include file="$(find spear_station)/launch/nimbro_network.launch">
+    <arg name="rover" value="$(arg rover)"/>
+  </include>
+
+  <include file="$(find spear_station)/launch/steering.launch"/>
+  <include file="$(find spear_station)/launch/joystick.launch"/>
+  <node pkg="spear_station" type="arm_ik.py" name="arm_ik"/>
+
+  <node type="rviz" name="rviz" pkg="rviz" args="-d $(find spear_station)/rviz/drive.rviz" if="$(arg simulation)"/>
+</launch>

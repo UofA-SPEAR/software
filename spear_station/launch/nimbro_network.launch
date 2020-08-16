@@ -1,7 +1,7 @@
 <!-- Send commands to and receive feedback from the rover over UDP, translating to/from ROS messages -->
 <launch>
   <!-- Destination (rover) IP address and port -->
-  <arg name="rover" default="192.168.1.61"/>
+  <arg name="rover"/>
 
   <!-- Receive feedback from the rover -->
   <node name="udp_topic_receiver" pkg="nimbro_topic_transport" type="udp_receiver" output="screen">
