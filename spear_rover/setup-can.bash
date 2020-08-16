@@ -29,7 +29,9 @@ print_info() {
 
 print_warning "We're using sudo to enable can! Sorry!"
 
-if [[ "$IS_DOCKER" -eq "true" ]]; then
+echo "Docker is $IS_DOCKER"
+
+if [[ "$IS_DOCKER" == "true" ]]; then
   print_warning "You're running this script inside docker. We'll skip loading kernel modules."
 else
   print_info "Loading CAN kernel modules..."
