@@ -8,7 +8,7 @@
 
   <include file="$(find spear_rover)/launch/station_adapter.launch">
     <arg name="station" value="$(arg station)"/>
-  </launch>
+  </include>
 
   <include file="$(find spear_rover)/launch/moveit.launch"/>
 

@@ -9,5 +9,5 @@
   <include file="$(find spear_station)/launch/joystick.launch"/>
   <node pkg="spear_station" type="arm_ik.py" name="arm_ik"/>
 
-  <node type="rviz" name="rviz" pkg="rviz" args="-d $(find spear_station)/rviz/drive.rviz" if="$(arg simulation)"/>
+  <node type="rviz" name="rviz" pkg="rviz" args="-d $(find spear_station)/rviz/drive.rviz"/>
 </launch>

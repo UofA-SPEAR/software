@@ -6,9 +6,9 @@
   <include file="$(find spear_rover)/launch/rover.launch" unless="$(arg simulation)"/>
   <include file="$(find spear_simulator)/launch/rover.launch" if="$(arg simulation)"/>
 
-    <include file="$(find spear_rover)/launch/station_adapter.launch">
+  <include file="$(find spear_rover)/launch/station_adapter.launch">
     <arg name="station" value="$(arg station)"/>
-  </launch>
+  </incldue>
 
   <include file="$(find spear_rover)/launch/move_base.launch"/>
   <include file="$(find spear_rover)/launch/state_estimate.launch"/>
