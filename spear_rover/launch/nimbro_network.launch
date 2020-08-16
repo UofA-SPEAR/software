@@ -1,7 +1,7 @@
 <!-- Receive and send commands over UDP to the station, and translate them to/from ROS messages -->
 <launch>
   <!-- Destination host name or IP address, and destination port -->
-  <arg name="target" default="localhost"/>
+  <arg name="station"/>
 
   <!-- Receive commands from the station -->
   <node name="udp_topic_receiver" pkg="nimbro_topic_transport" type="udp_receiver" output="screen">
@@ -10,7 +10,7 @@
 
   <!-- Send feedback to the station -->
   <node name="udp_topic_sender" pkg="nimbro_topic_transport" type="udp_sender" output="screen">
-    <param name="destination_addr" value="$(arg target)"/>
+    <param name="destination_addr" value="$(arg station)"/>
     <param name="destination_port" value="17001"/>
     <!-- Only send certain topics back to the station -->
     <rosparam command="load" file="$(find spear_rover)/config/nimbro_network/udp_topics.yaml"/>
