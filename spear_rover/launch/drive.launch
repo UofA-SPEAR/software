@@ -5,8 +5,7 @@
   <include file="$(find spear_rover)/launch/rover.launch" unless="$(arg simulation)"/>
   <include file="$(find spear_simulator)/launch/rover.launch" if="$(arg simulation)"/>
 
-  <include file="$(find spear_rover)/launch/udp.launch" unless="$(arg simulation)"/>
-  <include file="$(find spear_simulator)/launch/steering.launch"/>
+  <include file="$(find spear_rover)/launch/station_adapter.launch"/>
 
   <include file="$(find spear_rover)/launch/moveit.launch"/>
 

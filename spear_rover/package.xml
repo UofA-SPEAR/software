@@ -72,4 +72,6 @@
   <depend>controller_manager</depend>
   <exec_depend>joint_trajectory_controller</exec_depend>
   <exec_depend>joint_state_controller</exec_depend>
+
+  <exec_depend>image_proc</exec_depend>
 </package>

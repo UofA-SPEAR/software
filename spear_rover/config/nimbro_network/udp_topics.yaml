@@ -1,0 +1,9 @@
+topics:
+  - name: /feedback/camera_depth/image
+    compress: true
+    rate: 10.0
+  - name: /tf
+  - name: /tf_static
+  - name: /joint_states
+
+  - name: /arm_controller/state
