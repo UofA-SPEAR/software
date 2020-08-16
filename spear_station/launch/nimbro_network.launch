@@ -1,0 +1,26 @@
+<!-- Send commands to and receive feedback from the rover over UDP, translating to/from ROS messages -->
+<launch>
+  <!-- Destination (rover) IP address and port -->
+  <arg name="rover" default="192.168.1.61"/>
+
+  <!-- Receive feedback from the rover -->
+  <node name="udp_topic_receiver" pkg="nimbro_topic_transport" type="udp_receiver" output="screen">
+    <param name="port" value="17001"/>
+  </node>
+
+  <!-- Send commands to the rover -->
+  <node name="udp_topic_sender" pkg="nimbro_topic_transport" type="udp_sender" output="screen">
+    <param name="destination_addr" value="$(arg rover)"/>
+    <param name="destination_port" value="17001"/>
+    <!-- Only send messages from certain topics -->
+    <rosparam command="load" file="$(find spear_station)/config/nimbro_network/udp_topics.yaml"/>
+  </node>
+
+  <!-- Send service calls to the rover -->
+  <node name="tcp_service_client" pkg="nimbro_service_transport" type="service_client" output="screen">
+    <param name="server" value="$(arg rover)"/>
+    <param name="port" value="17002"/>
+    <!-- Only call certain services -->
+    <rosparam command="load" file="$(find spear_station)/config/nimbro_network/tcp_services.yaml"/>
+  </node>
+</launch>

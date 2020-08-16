@@ -1,4 +1,0 @@
-topics:
-  - name: "/joy"
-    compress: false # enable bz2 compression
-    rate: 60.0 # rate limit at 60Hz

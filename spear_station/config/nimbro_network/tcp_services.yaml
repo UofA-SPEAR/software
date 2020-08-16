@@ -1,0 +1,17 @@
+services:
+  - name: /controller_manager/list_controller_types
+    type: controller_manager_msgs/ListControllerTypes
+  - name: /controller_manager/list_controllers
+    type: controller_manager_msgs/ListControllers
+
+  - name: /controller_manager/load_controller
+    type: controller_manager_msgs/LoadController
+  - name: /controller_manager/reload_controller_libraries
+    type: controller_manager_msgs/ReloadControllerLibraries
+  - name: /controller_manager/switch_controller
+    type: controller_manager_msgs/SwitchController
+  - name: /controller_manager/unload_controller
+    type: controller_manager_msgs/UnloadController
+
+  - name: /arm_controller/query_state
+    type: control_msgs/QueryTrajectoryState
