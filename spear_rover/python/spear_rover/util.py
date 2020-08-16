@@ -1,12 +1,12 @@
 # Utility functions.
 
-from functools import partial
+from typing import Any, Callable, Dict, List, Tuple, Type, TypeVar
 
 import canros
 import rospy
 
 
-def test_bit(number, offset):
+def test_bit(number, offset):  # type: (int, int) -> int
     """
     Tests for the prescence of a bit at `offset` on `number`.
     Returns True if it does exist, False if it doesn't.
@@ -16,7 +16,12 @@ def test_bit(number, offset):
     return result
 
 
-def map_ros_to_can(ros_msg, ros_topic, uavcan_message_type, *mappings):
+RosMessage = TypeVar('RosMessage')
+
+
+def map_ros_to_can(
+    ros_msg, ros_topic, uavcan_message_type, *mappings
+):  # type: (Type[RosMessage], str, str, Dict[str, Callable[[RosMessage], List[canros.Message]]]) -> None
     """
     Subscribes to the specified ros_topic & message type, maps ros message data
     from ros's format to UAVCAN's format using mapping functions specified in
@@ -83,7 +88,12 @@ def map_ros_to_can(ros_msg, ros_topic, uavcan_message_type, *mappings):
     rospy.Subscriber(ros_topic, ros_msg, cb)
 
 
-def map_can_to_ros(uavcan_message_type, ros_message, ros_topic, *mappings):
+RosMessage = TypeVar('RosMessage')
+
+
+def map_can_to_ros(
+    uavcan_message_type, ros_message, ros_topic, *mappings
+):  # type: (str, Type[RosMessage], str, Dict[str, Callable[[RosMessage], Any]]) -> None
     """
     Subscribes to the specified UAVCAN message type, and maps the data in each
     received message of that type to the fields of the ROS message type given
@@ -111,7 +121,7 @@ def map_can_to_ros(uavcan_message_type, ros_message, ros_topic, *mappings):
 
     ros_topic (string): The ros topic to publish to.
 
-    *mappings (list&lt;dict&gt;): Dictionaries of mappings from UAVCAN messages
+    *mappings (list<dict>): Dictionaries of mappings from UAVCAN messages
     to the specified ROS message type. The keys of the dictionaries are the ROS
     parameters, and the keys are the mapping functions. Each mapping function
     recieves a single argument, `data`, which contains all of the UAVCAN

@@ -8,7 +8,7 @@ from canros.msg import uavcan__protocol__NodeStatus as NodeStatus
 from canros.msg import spear__general__PpmMessage as PpmMessage
 import rospy
 # How do you make it span multiple lines?
-from spear_rover import map_ros_to_can, map_can_to_ros, test_bit
+from spear_rover import map_can_to_ros, test_bit
 
 
 def main():
@@ -67,7 +67,8 @@ def main():
             # State of health and charge.
             "state_of_health_pct": lambda data: data.state_of_health_pct,
             "state_of_charge_pct": lambda data: data.state_of_charge_pct,
-            "state_of_charge_pct_stdev": lambda data: data.state_of_charge_pct_stdev,
+            "state_of_charge_pct_stdev":
+            lambda data: data.state_of_charge_pct_stdev,
 
             # Battery identification.
             "battery_id": lambda data: data.battery_id,
