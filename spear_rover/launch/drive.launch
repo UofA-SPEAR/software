@@ -2,9 +2,15 @@
 <launch>
   <arg name="simulation" default="true"/>
   <arg name="station" default="localhost"/>
+  <arg name="use_vcan" default="false"/>
 
-  <include file="$(find spear_rover)/launch/rover.launch" unless="$(arg simulation)"/>
+  <include file="$(find spear_rover)/launch/rover.launch" unless="$(arg simulation)">
+    <arg name="use_vcan" value="$(arg use_vcan)"/>
+  </include>
   <include file="$(find spear_simulator)/launch/rover.launch" if="$(arg simulation)"/>
+
+  <!-- This launches the camera -->
+  <include file="$(find spear_rover)/launch/visual_odom.launch" unless="$(arg simulation)"/>
 
   <include file="$(find spear_rover)/launch/station_adapter.launch">
     <arg name="station" value="$(arg station)"/>
