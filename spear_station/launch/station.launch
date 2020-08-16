@@ -1,5 +1,5 @@
 <launch>
-  <arg name="rover" default="192.168.1.61"/>
+  <arg name="rover" default="localhost"/>
 
   <include file="$(find spear_station)/launch/nimbro_network.launch">
     <arg name="rover" value="$(arg rover)"/>

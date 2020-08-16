@@ -1,7 +1,7 @@
 <!-- Top-level launch file which starts everything for autonomous navigation -->
 <launch>
-  <arg name="simulation" default="false"/>
-  <arg name="station" default="192.168.1.13"/>
+  <arg name="simulation" default="true"/>
+  <arg name="station" default="localhost"/>
 
   <include file="$(find spear_rover)/launch/rover.launch" unless="$(arg simulation)"/>
   <include file="$(find spear_simulator)/launch/rover.launch" if="$(arg simulation)"/>
