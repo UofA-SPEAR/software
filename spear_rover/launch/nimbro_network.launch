@@ -1,23 +1,26 @@
 <!-- Receive and send commands over UDP to the station, and translate them to/from ROS messages -->
 <launch>
-  <!-- Destination host name or IP address, and destination port -->
+  <!-- Station IP address -->
   <arg name="station"/>
 
-  <!-- Receive commands from the station -->
-  <node name="udp_topic_receiver" pkg="nimbro_topic_transport" type="udp_receiver" output="screen">
-    <param name="port" value="17001"/>
-  </node>
+  <!-- Only set up nimbro_network if the station is on a different machine -->
+  <group unless="$(eval arg('station') == 'localhost')">
+    <!-- Receive commands from the station -->
+    <node name="udp_topic_receiver" pkg="nimbro_topic_transport" type="udp_receiver" output="screen">
+      <param name="port" value="17001"/>
+    </node>
 
-  <!-- Send feedback to the station -->
-  <node name="udp_topic_sender" pkg="nimbro_topic_transport" type="udp_sender" output="screen">
-    <param name="destination_addr" value="$(arg station)"/>
-    <param name="destination_port" value="17001"/>
-    <!-- Only send certain topics back to the station -->
-    <rosparam command="load" file="$(find spear_rover)/config/nimbro_network/udp_topics.yaml"/>
-  </node>
+    <!-- Send feedback to the station -->
+    <node name="udp_topic_sender" pkg="nimbro_topic_transport" type="udp_sender" output="screen">
+      <param name="destination_addr" value="$(arg station)"/>
+      <param name="destination_port" value="17001"/>
+      <!-- Only send certain topics back to the station -->
+      <rosparam command="load" file="$(find spear_rover)/config/nimbro_network/udp_topics.yaml"/>
+    </node>
 
-  <!-- Allow station to call services -->
-  <node name="tcp_service_server" pkg="nimbro_service_transport" type="service_server" output="screen">
-    <param name="port" value="17002"/>
-  </node>
+    <!-- Allow station to call services -->
+    <node name="tcp_service_server" pkg="nimbro_service_transport" type="service_server" output="screen">
+      <param name="port" value="17002"/>
+    </node>
+  </group>
 </launch>
