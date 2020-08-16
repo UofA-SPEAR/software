@@ -5,6 +5,8 @@
     <arg name="rover" value="$(arg rover)"/>
   </include>
 
+  <include file="$(find spear_rover)/launch/robot_description.launch"/>
+
   <include file="$(find spear_station)/launch/steering.launch"/>
   <include file="$(find spear_station)/launch/joystick.launch"/>
   <node pkg="spear_station" type="arm_ik.py" name="arm_ik"/>
