@@ -1,8 +1,7 @@
-<!-- Launch rqt GUIs for drive and arm control. This is a rough equivalent of
-     spear_rover's udp.launch -->
+<!-- Launch rqt GUIs for drive and arm control -->
 <launch>
   <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
-    <param name="default_topic" value="/rover_diff_drive_controller/cmd_vel"/>
+    <param name="default_topic" value="/drive_controller/cmd_vel"/>
   </node>
   <node name="rqt_joint_trajectory_controller" pkg="rqt_joint_trajectory_controller" type="rqt_joint_trajectory_controller"/>
 </launch>
