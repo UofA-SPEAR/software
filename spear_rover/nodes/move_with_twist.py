@@ -15,7 +15,7 @@ def main():
     import sys
     rospy.loginfo(sys.argv)
 
-    publisher = rospy.Publisher('/rover_diff_drive_controller/cmd_vel', Twist)
+    publisher = rospy.Publisher('/drive_controller/cmd_vel', Twist)
 
     message = Twist()
     if action == 'forward':

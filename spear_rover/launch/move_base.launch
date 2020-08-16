@@ -4,7 +4,7 @@
     <!-- local_costmap_params.yaml expects a point cloud published to topic /planner_cloud  -->
     <remap from="planner_cloud" to="/obstacles_detection/obstacles"/>
     <remap from="map" to="/rtabmap/grid_map"/>
-    <remap from="cmd_vel" to="/rover_diff_drive_controller/cmd_vel"/>
+    <remap from="cmd_vel" to="/drive_controller/cmd_vel"/>
     <!-- Subscribe to the filtered odometry from the ekf node -->
     <remap from="odom" to="/ekf/map/odometry/filtered"/>
 

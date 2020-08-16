@@ -20,7 +20,7 @@ class TimedMoveState(EventState):
     '''
     def __init__(self, linear, angular, duration):
         super(TimedMoveState, self).__init__(outcomes=['ok'])
-        self._publisher = rospy.Publisher('/rover_diff_drive_controller/cmd_vel', Twist, queue_size=1)
+        self._publisher = rospy.Publisher('/drive_controller/cmd_vel', Twist, queue_size=1)
         self._start_time = None
         self._twist_message = Twist()
         self._twist_message.linear.x = linear

@@ -18,7 +18,7 @@ class TurnCorrectionState(EventState):
     """
     def __init__(self):
         super(TurnCorrectionState, self).__init__(outcomes=['ok'], input_keys=['target_orientation'])
-        self._twist_topic = '/rover_diff_drive_controller/cmd_vel'
+        self._twist_topic = '/drive_controller/cmd_vel'
         self._odom_topic = '/ekf/odom/odometry/filtered'
         self._twist_publisher = Publisher(self._twist_topic, Twist, queue_size=1)
         self._odometry = SubscriberValue(self._odom_topic, Odometry)
