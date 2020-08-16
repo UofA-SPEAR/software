@@ -20,6 +20,13 @@ find_package(catkin REQUIRED COMPONENTS
 #   Action2.action
 # )
 
+add_message_files(
+  FILES
+  BallCoord.msg
+  BallCoords.msg
+  arm_position.msg
+)
+
 ## Generate added messages and services with any dependencies listed here
 generate_messages(
   DEPENDENCIES
