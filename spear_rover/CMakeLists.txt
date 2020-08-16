@@ -120,7 +120,6 @@ target_link_libraries(hardware_node
 install(PROGRAMS
     nodes/mapper.py
     nodes/move_with_twist.py
-    nodes/arm_ik.py
     DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
