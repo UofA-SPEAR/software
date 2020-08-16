@@ -102,5 +102,5 @@ You should now be able to drive the rover around by holding down the left trigge
 > For additional debugging, you might
 >  - run `rostopic echo /joy` to see if the joystick input is being received at all
 >  - run `rostopic echo /joy`, and make sure the left trigger and horizontal/vertical axes of the left joystick map to the correct buttons/axes (if not, you will have to change some parameters in `joystick.launch`)
->  - run `rostopic echo /rover_diff_drive_controller/cmd_vel` to verify that joystick inputs are being correctly translated to drive commands
->  - go back to the terminal that is ssh'd into the rover and run `rostopic echo /rover_diff_drive_controller/cmd_vel` in *that* terminal to verify that the drive commands are being correctly sent over the network
+>  - run `rostopic echo /drive_controller/cmd_vel` to verify that joystick inputs are being correctly translated to drive commands
+>  - go back to the terminal that is ssh'd into the rover and run `rostopic echo /drive_controller/cmd_vel` in *that* terminal to verify that the drive commands are being correctly sent over the network

@@ -10,7 +10,7 @@ The navigation stack is a complicated and highly configurable piece of software,
 
 > The navigation stack can also take as input a map of the environment. This is a sort of "base map" to which the navigation stack adds obstacles from its sensors. There is no requirement that this map be similar or identical to the map used in localization or SLAM. It can even be blank, in which case navigation is performed entirely using detected obstacles. We do not use this input, however.
 
-The navigation stack outputs [Twist](https://docs.ros.org/melodic/api/geometry_msgs/html/msg/Twist.html) messages to the topic `/rover_diff_drive_controller/cmd_vel` describing how the rover should move.
+The navigation stack outputs [Twist](https://docs.ros.org/melodic/api/geometry_msgs/html/msg/Twist.html) messages to the topic `/drive_controller/cmd_vel` describing how the rover should move.
 It is not responsible for determining how exactly the wheels should turn in order to perform this movement.
 
 ### More details about move_base
