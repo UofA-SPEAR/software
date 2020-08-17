@@ -3,6 +3,7 @@ project(spear_msgs)
 
 find_package(catkin REQUIRED COMPONENTS
   message_generation
+  message_runtime
   std_msgs
 )
 
@@ -34,6 +35,9 @@ generate_messages(
 )
 
 catkin_package(
- CATKIN_DEPENDS message_generation message_runtime std_msgs
+ CATKIN_DEPENDS
+  message_generation
+  message_runtime
+  std_msgs
 )
 

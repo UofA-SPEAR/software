@@ -9,21 +9,22 @@ add_compile_options(-std=c++14)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
     actionlib
-    ar_track_alvar
     canros
+    controller_manager
     cv_bridge
     geometry_msgs
+    hardware_interface
     image_transport
     message_generation
     message_runtime
+    move_base
     robot_localization
     roscpp
     rospy
+    sensor_msgs
     spear_msgs
     std_msgs
     tf
-    hardware_interface
-    controller_manager
 )
 
 catkin_python_setup()
@@ -32,6 +33,7 @@ catkin_python_setup()
 add_service_files(FILES GpsToFrame.srv)
 generate_messages(DEPENDENCIES
   geometry_msgs
+  std_msgs
 )
 
 ###################################
@@ -46,7 +48,24 @@ generate_messages(DEPENDENCIES
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES rover2
-  CATKIN_DEPENDS canros geometry_msgs message_generation message_runtime spear_msgs std_msgs hardware_interface controller_manager
+  CATKIN_DEPENDS
+  actionlib
+  canros
+  controller_manager
+  cv_bridge
+  geometry_msgs
+  hardware_interface
+  image_transport
+  message_generation
+  message_runtime
+  move_base
+  robot_localization
+  roscpp
+  rospy
+  sensor_msgs
+  spear_msgs
+  std_msgs
+  tf
 #  DEPENDS system_lib
 )
 

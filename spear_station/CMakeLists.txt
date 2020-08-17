@@ -7,7 +7,15 @@ add_compile_options(-std=c++14)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED)
+find_package(catkin REQUIRED COMPONENTS
+    control_msgs
+    geometry_msgs
+    message_runtime
+    rospy
+    tf2_geometry_msgs
+    tf2_ros
+    trajectory_msgs
+)
 
 catkin_python_setup()
 
@@ -94,7 +102,14 @@ catkin_python_setup()
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES spear_station
-#  CATKIN_DEPENDS other_catkin_pkg
+  CATKIN_DEPENDS
+    control_msgs
+    geometry_msgs
+    message_runtime
+    rospy
+    tf2_geometry_msgs
+    tf2_ros
+    trajectory_msgs
 #  DEPENDS system_lib
 )
 
