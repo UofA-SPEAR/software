@@ -188,22 +188,23 @@ This is the recommended approach if you use Windows and don't want to dual-boot 
 
 See [the Wiki page](https://github.com/UofA-SPEAR/software/wiki/Install-Instructions-Windows).
 
+# Next steps
+
+Once you have a your environment set up, you might want to play around with the simulated rover a bit.
+Within a docker container / VM, run
+```
+roslaunch spear_rover navigate.launch
+```
+to start the simulator, and
+```
+roslaunch spear_station station.launch rviz:=navigate
+```
+to start the station.
+
+You may also wish to browse through the documentation.
+In particular, the _development_ section gives some additional information about our development practices, editor setup, using ROS, etc.
+
 # Additional information
-
-## Running "remote" launch files
-
-Current status is: not working but close.
-
-For now, just ssh into the remote and run the main launch file.
-Then, on the local machine, run:
-
-```
-export ROS_MASTER_URI=http://tegra-ubuntu:11311/
-```
-
-Afterward, any nodes you run on your local machine will automatically connect to the remote machine.
-
-See [this post](https://answers.ros.org/question/41446/a-is-not-in-your-ssh-known_hosts-file/).
 
 ## Code Formatting
 
