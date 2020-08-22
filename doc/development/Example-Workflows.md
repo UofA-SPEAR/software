@@ -33,7 +33,7 @@ Any changes you make will be immediately reflected in the `software` folder outs
 Now we're going to get autocomplete and code formatting working.
 Install the following extensions
 
-  - cland (`llvm-vs-code-extensions.vscode-clangd`)
+  - clangd (`llvm-vs-code-extensions.vscode-clangd`)
   - Python (`ms-python.python`)
   - Pylance (`ms-python.vscode-pylance`)
 
@@ -45,7 +45,7 @@ And add the following to your workspace settings:
         "**/.docker-*/**": true
     },
     
-    "clangd.path": "clangd-9",
+    "clangd.path": "clangd-10",
     "[cpp]": {
         "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
         "editor.formatOnSave": true,
@@ -53,10 +53,9 @@ And add the following to your workspace settings:
     },
     
     "python.languageServer": "Pylance",
-    "python.pythonPath": "/usr/bin/python",
     "python.analysis.extraPaths": [
-        "/home/nvidia/software/spear_rover/python",
-        "/home/nvidia/ros/devel/lib/python2.7/dist-packages",
+        "/software/spear_rover/python",
+        "/root/ros/devel/lib/python2.7/dist-packages",
         "/opt/ros/melodic/lib/python2.7/dist-packages"
     ],
     "python.analysis.typeCheckingMode": "basic",
