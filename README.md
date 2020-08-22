@@ -117,7 +117,7 @@ https://docs.docker.com/install/linux/linux-postinstall/
 If you have an nvidia gpu you should set up the nvidia docker runtime.
 You will need at least Docker 19.xx, which you should have if you followed the directions above.
 
-First, make sure you have the correct drivers installed (that is outside the scope of this document, but if you're using Ubuntu I suggest you go to *Settings & Updates > Additional Drivers* before messing around with installing things manually).
+First, make sure you have the correct drivers installed (that is outside the scope of this document, but if you're using Ubuntu I suggest you go to *Software & Updates > Additional Drivers* before messing around with installing things manually).
 
 You will need [nvidia-container-toolkit](https://github.com/NVIDIA/nvidia-docker) and [nvidia-container-runtime](https://github.com/nvidia/nvidia-container-runtime) (follow the setup instructions in their READMEs, and in particular make sure you set the default runtime to nvidia).
 
