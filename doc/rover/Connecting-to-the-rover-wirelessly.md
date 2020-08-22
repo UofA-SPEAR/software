@@ -83,7 +83,7 @@ Start up a docker container by running `docker-compose run spear` from the `soft
 > To verify the joystick is visible from within the container, run `ls /dev/input/js*` in the container.
 
 Run `tmux` to start up tmux in the container, since it is useful for debugging.
-Now run `roslaunch speat_station station.launch rover:=192.168.1.61`.
+Now run `roslaunch spear_station station.launch rover:=192.168.1.61`.
 Various GUIs will appear to control the arm and wheels.
 You should also now be able to drive the rover around by holding down the left trigger and moving the left joystick.
 
