@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import math
 from tempfile import TemporaryFile
+from typing import Dict, List, Optional
 
 import ikpy
 import numpy as np
@@ -14,10 +15,12 @@ from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 
 
 class JointAngles:
-    def __init__(self, angles):
+    def __init__(self, angles):  # type: (Dict[str, float]) -> None
         self._angles = angles
 
-    def to_command(self, time_from_start):
+    def to_command(
+            self,
+            time_from_start):  # type: (rospy.Duration) -> JointTrajectory
         trajectory = JointTrajectory()
         trajectory.joint_names = self._angles.keys()
         trajectory.points = [JointTrajectoryPoint()]
@@ -27,7 +30,8 @@ class JointAngles:
 
 
 class IK:
-    def __init__(self, robot_description, valid_joints, base_joint):
+    def __init__(self, robot_description, valid_joints,
+                 base_joint):  # type: (str, List[str], str) -> None
         self.valid_joints = valid_joints
         self.base_joint = base_joint
         with TemporaryFile() as file:
@@ -35,7 +39,7 @@ class IK:
             file.seek(0)
             self.chain = ikpy.chain.Chain.from_urdf_file(file, [base_joint])
 
-    def backward(self, target_position):
+    def backward(self, target_position):  # type: (np.ndarray) -> JointAngles
         angles = self.chain.inverse_kinematics(target_position)
         joints = [link.name for link in self.chain.links]
         return JointAngles({
@@ -48,7 +52,7 @@ class IK:
 
 
 class Target:
-    def __init__(self, frame_id):
+    def __init__(self, frame_id):  # type: (str) -> None
         self._frame_id = frame_id
         self._yaw = 0
         self._pitch = 0
@@ -56,29 +60,29 @@ class Target:
         self._tf_buffer = tf2_ros.Buffer()
         self._tf_listener = tf2_ros.TransformListener(self._tf_buffer)
 
-    def cw(self, angle):
+    def cw(self, angle):  # type: (float) -> None
         self._yaw -= angle
 
-    def ccw(self, angle):
+    def ccw(self, angle):  # type: (float) -> None
         self._yaw += angle
 
-    def up(self, angle):
+    def up(self, angle):  # type: (float) -> None
         self._pitch += angle
 
-    def down(self, angle):
+    def down(self, angle):  # type: (float) -> None
         self._pitch -= angle
 
-    def retract(self, value):
+    def retract(self, value):  # type: (float) -> None
         self._radius -= value
 
-    def expand(self, value):
+    def expand(self, value):  # type: (float) -> None
         self._radius += value
 
-    def position(self, frame_id=None):
+    def position(self, frame_id=None):  # type: (Optional[str]) -> None
         point = self.point(frame_id)
         return np.array([point.point.x, point.point.y, point.point.z])
 
-    def point(self, frame_id=None):
+    def point(self, frame_id=None):  # type: (Optional[str]) -> PointStamped
         point = PointStamped()
         point.header.frame_id = self._frame_id
         point.point.x, point.point.y, point.point.z = np.array([
@@ -118,7 +122,7 @@ query_trajectory_state = rospy.ServiceProxy('/arm_controller/query_state',
                                             QueryTrajectoryState)
 joint_names = query_trajectory_state(rospy.Time.now()).name
 
-robot_description = rospy.get_param('robot_description')
+robot_description = rospy.get_param('robot_description')  # type: str
 ik = IK(robot_description, joint_names, 'arm_mount')
 target = Target('arm_mount')
 target.up(-math.pi / 6)
@@ -130,7 +134,7 @@ pygame.display.set_mode((100, 100))
 pygame.display.set_caption('IK Controller')
 
 
-def key_pressed(key):
+def key_pressed(key):  # type: (str) -> bool
     index = pygame.__dict__['K_' + key]
     return pygame.key.get_pressed()[index]
 
