@@ -2,7 +2,6 @@
 
 The launch files in `spear_rover` and `spear_simulator` are organized into a tree-like hierarchy.
 At the top, `spear_rover/drive.launch` launches everything which needs to run on the rover to drive it around manually, and `spear_rover/navigate.launch` launches everything which needs to run on the rover for autonomous navigation.
-Both launch files take an argument `simulation` which controls whether they start with the simulator or with the real robot (so to start `navigate.launch` in simulation you could run `roslaunch spear_rover navigate.launch simulation:=true`).
 
 As a general principle, a non-top-level launch file that runs on the robot (simulation or otherwise) should either
 
