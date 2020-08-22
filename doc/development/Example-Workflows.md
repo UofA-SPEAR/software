@@ -28,10 +28,45 @@ Run the command `Remote-Containers: Attach to running container` to attach to th
 Now open the folder `/software` in the container and start editing.
 Any changes you make will be immediately reflected in the `software` folder outside the container, and vice versa.
 
-### C++ autocomplete
+### C++ and Python autocomplete
 
-Now we need to get C++ autocomplete working.
-Install the `clangd` extension (it's _much_ better than the default C++ extension), and install the clangd language server when it prompts you to do so.
+Now we're going to get autocomplete and code formatting working.
+Install the following extensions
+
+  - cland (`llvm-vs-code-extensions.vscode-clangd`)
+  - Python (`ms-python.python`)
+  - Pylance (`ms-python.vscode-pylance`)
+
+And add the following to your workspace settings:
+
+```json
+{
+    "files.watcherExclude": {
+        "**/.docker-*/**": true
+    },
+    
+    "clangd.path": "clangd-9",
+    "[cpp]": {
+        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
+        "editor.formatOnSave": true,
+        "editor.formatOnType": true
+    },
+    
+    "python.languageServer": "Pylance",
+    "python.pythonPath": "/usr/bin/python",
+    "python.analysis.extraPaths": [
+        "/home/nvidia/software/spear_rover/python",
+        "/home/nvidia/ros/devel/lib/python2.7/dist-packages",
+        "/opt/ros/melodic/lib/python2.7/dist-packages"
+    ],
+    "python.analysis.typeCheckingMode": "basic",
+    "python.formatting.provider": "yapf",
+    "[python]": {
+        "editor.formatOnSave": true
+    },
+}
+```
+
 `clangd` knows what things like include paths are by reading a file called `compile-commands.json`.
 Our `build.bash` script automatically copies over this file, but currently the method for doing so is broken in this workflow.
 To fix it, go to `build.bash` and replace this line
@@ -50,29 +85,6 @@ and delete everything after that line.
 
 Now run `./build.bash` and C++ autocomplete should work.
 
-### Python autocomplete
-
-Python autocomplete is a similar process.
-Install the `Python` and `Pylance` extensions (pylance is important because it supports type hinting comments in Python 2).
-Go to your workspace settings and change the python language server to pylance, and change `python.analysis.typeCheckingMode` to _basic_ (the default is _none_).
-Open a python file and make sure you have `Python 2.7.17 64-bit` (or similar) selected as the python to use in the project.
-
-Python doesn't have an equivalent of `compile-commands.json`, so you need to set some paths yourself.
-Add the following to `python.analysis.extraPaths`:
-
-- _/opt/ros/melodic/lib/python2.7/dist-packages_ (system ros packages)
-- _/root/ros/devel/lib/python2.7/dist-packages_ (ros packages installed from source)
-- _/software/spear_rover/python_ (probably if we had things configured properly this wouldn't be needed)
-
-(the first two of these are also in PYTHONPATH, but for some reason vscode doesn't seem to recognize that like you'd expect)
-
-### Code formatting
-
-Before you commit your code, you should format it.
-For C++, the clangd extension should handle this for you.
-Just run `Format Document` and select the extension as the formatting provider if necessary.
-For Python, run `Format Document` and select `yapf` as the formatting provider.
-
 ### Building and running
 
 After changing a C++ source file, you will need to run `./build.bash` for the changes to be reflected in anything you run.
@@ -84,3 +96,7 @@ You don't have to be in the `/software` directory.
 The container should support communications with the rover out of the box, as long as you've configured your network settings per the rover communications guide.
 Likewise, support for peripherals such as joysticks and cameras should just work.
 
+### Saving changes and git
+
+Changes to the `/software` directory within the docker container are mirrored outside of it, so you can stop and restart the image and your changes will still be saved.
+But since commands are 
