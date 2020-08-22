@@ -59,15 +59,11 @@ echo "alias update_rosdeps='cd ~/ros && rosdep install --from-paths src --ignore
 # TODO: this is still not working properly for some reason
 if [ $ROVER ]; then
     cd ~/ros/src
-    curl -o zed-ros-wrapper.tar.gz https://github.com/stereolabs/zed-ros-wrapper/archive/v3.0.0
+    rm -rf zed-ros-wrapper
+    curl -o zed-ros-wrapper.tar.gz https://codeload.github.com/stereolabs/zed-ros-wrapper/tar.gz/v3.0.0
     tar xzf zed-ros-wrapper.tar.gz
     mv zed-ros-wrapper-3.0.0 zed-ros-wrapper
     rm zed-ros-wrapper.tar.gz
-    # git clone https://github.com/UofA-SPEAR/zed-ros-wrapper.git
-    # cd zed-ros-wrapper
-    # Checkout the latest stable release of zed-ros-wrapper
-    # git checkout v3.0.0
-    # cd ~/ros/src
 fi
 
 ###### Install various dependencies from source
