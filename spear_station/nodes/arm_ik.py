@@ -113,7 +113,7 @@ rospy.sleep(0)
 arm_command_publisher = rospy.Publisher('/arm_controller/command',
                                         JointTrajectory,
                                         queue_size=1)
-target_point_publisher = rospy.Publisher('/arm_target',
+target_point_publisher = rospy.Publisher('/viz/arm_target',
                                          PointStamped,
                                          queue_size=1)
 

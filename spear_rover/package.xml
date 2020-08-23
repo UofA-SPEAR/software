@@ -7,69 +7,49 @@
   <license>MIT</license>
   <buildtool_depend>catkin</buildtool_depend>
 
-  <build_depend>roscpp</build_depend>
-  <exec_depend>roscpp</exec_depend>
+  <depend>roscpp</depend>
+  <depend>rospy</depend>
 
-  <build_depend>rospy</build_depend>
-  <exec_depend>rospy</exec_depend>
+  <depend>message_generation</depend>
+  <depend>message_runtime</depend>
 
-  <build_depend>tf</build_depend>
-  <exec_depend>tf</exec_depend>
-
-  <build_depend>actionlib</build_depend>
-  <exec_depend>actionlib</exec_depend>
-
-  <build_depend>cv_bridge</build_depend>
-  <exec_depend>cv_bridge</exec_depend>
-
-  <build_depend>image_transport</build_depend>
-  <exec_depend>image_transport</exec_depend>
-  
-  <build_depend>message_runtime</build_depend>
-  <exec_depend>message_runtime</exec_depend>
-
-  <build_depend>message_generation</build_depend>
-  <build_export_depend>message_generation</build_export_depend>
-  <exec_depend>message_generation</exec_depend>
-
-  <build_depend>std_msgs</build_depend>
-  <build_export_depend>std_msgs</build_export_depend>
-  <exec_depend>std_msgs</exec_depend>
-
-  <build_depend>geometry_msgs</build_depend>
-  <build_export_depend>geometry_msgs</build_export_depend>
-  <exec_depend>geometry_msgs</exec_depend>
-
+  <!-- Dependencies from nodes -->
+  <depend>actionlib</depend>
+  <depend>canros</depend>
+  <depend>controller_manager</depend>
+  <depend>cv_bridge</depend>
+  <depend>geometry_msgs</depend>
+  <depend>hardware_interface</depend>
+  <depend>image_transport</depend>
+  <depend>move_base</depend>
+  <depend>robot_localization</depend>
+  <depend>sensor_msgs</depend>
   <depend>spear_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>tf</depend>
 
-  <build_depend>canros</build_depend>
-  <build_export_depend>canros</build_export_depend>
-  <exec_depend>canros</exec_depend>
-
-  <exec_depend>joy</exec_depend>
-
-  <build_depend>robot_localization</build_depend>
-  <exec_depend>robot_localization</exec_depend>
-
-  <exec_depend>flexbe_behavior_engine</exec_depend>
-
-  <!-- <exec_depend>razor_imu_9dof</exec_depend> -->
+  <!-- Dependencies from launch files -->
+  <exec_depend>ar_track_alvar</exec_depend>
+  <exec_depend>camera_calibration</exec_depend>
+  <exec_depend>case_moveit_config</exec_depend>
+  <exec_depend>diff_drive_controller</exec_depend>
+  <exec_depend>flexbe_onboard</exec_depend>
+  <exec_depend>image_proc</exec_depend>
+  <exec_depend>joint_state_controller</exec_depend>
+  <exec_depend>joint_trajectory_controller</exec_depend>
+  <exec_depend>nimbro_service_transport</exec_depend>
+  <exec_depend>nimbro_topic_transport</exec_depend>
   <exec_depend>nmea_navsat_driver</exec_depend>
+  <exec_depend>nodelet</exec_depend>
+  <exec_depend>pointcloud_to_laserscan</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>rosbridge_server</exec_depend>
+  <exec_depend>rosbridge_server</exec_depend>
+  <exec_depend>usb_cam</exec_depend>
+  <exec_depend>xacro</exec_depend>
+  
 
+  <!-- Misc things that can be useful -->
   <exec_depend>rqt_graph</exec_depend>
   <exec_depend>rqt_reconfigure</exec_depend>
-  <exec_depend>rqt_joint_trajectory_controller</exec_depend>
-  <build_depend>ar_track_alvar</build_depend>
-  <exec_depend>ar_track_alvar</exec_depend>
-  <exec_depend>usb_cam</exec_depend>
-  <exec_depend>camera_calibration</exec_depend>
-
-  <exec_depend>rosbridge_suite</exec_depend>
-
-  <exec_depend>pointcloud_to_laserscan</exec_depend>
-
-  <depend>hardware_interface</depend>
-  <depend>controller_manager</depend>
-  <exec_depend>joint_trajectory_controller</exec_depend>
-  <exec_depend>joint_state_controller</exec_depend>
 </package>

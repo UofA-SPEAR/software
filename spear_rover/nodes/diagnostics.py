@@ -23,7 +23,6 @@ class DiagnosticPublisher:
 twist_forward_publisher = DiagnosticPublisher('web/twist/forward', Float64)
 twist_turn_publisher = DiagnosticPublisher('web/twist/turn', Float64)
 
-
 twist_publisher = rospy.Publisher('web/twist', Twist, queue_size=1)
 
 
@@ -34,7 +33,7 @@ def on_twist(message):  # type: (Twist) -> None
 
 def main():
     rospy.init_node('diagnostics')
-    s = rospy.Subscriber('/rover_diff_drive_controller/cmd_vel', Twist, on_twist)
+    s = rospy.Subscriber('/drive_controller/cmd_vel', Twist, on_twist)
     rospy.spin()
 
 

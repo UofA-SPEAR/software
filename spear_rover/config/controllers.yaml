@@ -1,4 +1,4 @@
-rover_diff_drive_controller:
+drive_controller:
     # Copied from urdf_sim_tutorial package
 
     type: "diff_drive_controller/DiffDriveController"

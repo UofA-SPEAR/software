@@ -9,7 +9,7 @@
   </node>
 
   <node pkg="teleop_twist_joy" name="teleop_node" type="teleop_node" output="screen">
-    <remap from="cmd_vel" to="/rover_diff_drive_controller/cmd_vel"/>
+    <remap from="cmd_vel" to="/drive_controller/cmd_vel"/>
     <param name="enable_button" value="6"/>
     <param name="scale_angular" value="3"/>
     <param name="scale_linear" value="2"/>

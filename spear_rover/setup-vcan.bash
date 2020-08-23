@@ -29,7 +29,7 @@ print_info() {
 
 print_warning "We're using sudo to enable vcan! Sorry!"
 
-if [[ "$IS_DOCKER" -eq "true" ]]; then
+if [[ "$IS_DOCKER" == "true" ]]; then
   print_warning "You're running this script inside docker. We'll skip loading kernel modules."
 else
   print_info "Loading virtual CAN kernel modules..."

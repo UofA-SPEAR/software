@@ -42,12 +42,6 @@ The routers are configured as follows:
 
 We plan to eventually route all communication between the rover and the base station to nimbro_topic_transport, which directly sends ros topics over a network (ros can also do this automatically but nimbro_topic_transport gives more control over the process). Currently however we just run ros nodes on both the base station (in docker) and the rover (over ssh) and use ROS_MASTER_URI to tell ros where to send the topics. To set this up,
 
-- **At the base station**, `ROS_MASTER_URI` should be `http://192.168.1.61:11311` and `ROS_IP` should be the IP address of the laptop.
-- **At the rover**, `ROS_MASTER_URI` should be `http://192.168.1.61:11311` and `ROS_IP` should be `192.168.1.61` (of course, these would change if the tx2 IP address changed).
-
-Ideally, these environment variables should be set up by `docker-compose.yml` or `unpack.sh`. In practice, until we improve the code you should probably double-check before running things.
-
-
 ## Setting up and running a drive test
 
 What follows is a guide to running the necessary code on the rover to perform drive tests.
@@ -64,8 +58,6 @@ To verify this has been done correctly, you can
 
 Now ssh into the tx2 using `ssh -X nvidia@192.168.1.61` (the password is `nvidia`), and run `tmux` so we can run multiple things at once. Start a ROS master by running `roscore`.
 
-> At this point, if `roscore` displays no output or crashes with some kind of complaint about addresses, the environment variables on the rover have not been set properly. Make sure `ROS_MASTER_URI` and `ROS_IP` are set as described earlier.
-
 Every time the tx2 reboots you will need to set up CAN.
 To do this, run the setup script with
 
@@ -73,34 +65,42 @@ To do this, run the setup script with
 
 Now run everything needed for drive using
 
-    roslaunch spear_rover drive.launch
+    roslaunch spear_rover drive.launch simulation:=false station:=<your-station-ip>
 
-Since this launch file launches *rqt_robot_steering*, a GUI should appear with sliders for linear and angular velocities.
-You can move these sliders around to make sure the wheels work as expected.
+A quick way to test the wheels at this point is to run *rqt_robot_steering* on the rover and move the sliders around.
 
-> If not, and in the absence of an obvious error in `drive.launch`, there is probably a firmware issue in the wheel drivers (e.g. they are not configured properly).
+> If the wheels don't move, and in the absence of an obvious error in `drive.launch`, there is probably a firmware issue in the wheel drivers (e.g. they are not configured properly).
 
-The rover can technically be controlled entirely by the steering GUI, but it's pretty clunky.
-Using a joystick is far better.
+However, it's better to control the rover directly from the base station.
 To get started, plug the DualShock 3 controller into your laptop.
 If all four red lights on the controller are flashing, it is not connected.
 Press the central button to connect (once it is connected, only a single red light will be on).
 To verify it is connected, run `ls /dev/input/js*` to list all connected joysticks.
 
-Since the joystick is connected to your laptop and not to the rover, the joystick code needs to run locally.
+The base station code runs locally on your laptop, not on the rover.
 Start up a docker container by running `docker-compose run spear` from the `software` directory.
-To verify the container has started correctly, you can
-  - run `ls /dev/input/js*` to make sure the joystick is visible within the container
-  - run `echo $ROS_MASTER_URI` and `echo $ROS_IP` to ensure they have been set correctly as per the previous section
+
+> To verify the joystick is visible from within the container, run `ls /dev/input/js*` in the container.
 
 Run `tmux` to start up tmux in the container, since it is useful for debugging.
-Now run `roslaunch spear_rover joystick.launch`.
-You should now be able to drive the rover around by holding down the left trigger and moving the left joystick.
+Now run `roslaunch spear_station station.launch rover:=192.168.1.61`.
+Various GUIs will appear to control the arm and wheels.
+You should also now be able to drive the rover around by holding down the left trigger and moving the left joystick.
 
 > If at this point the wheels don't turn, but they *do* turn when using the steering GUI, something has gone wrong either in the station code or in the connection to the rover.
 > Make sure to verify the previous sections if you have not done so already.
 > For additional debugging, you might
 >  - run `rostopic echo /joy` to see if the joystick input is being received at all
 >  - run `rostopic echo /joy`, and make sure the left trigger and horizontal/vertical axes of the left joystick map to the correct buttons/axes (if not, you will have to change some parameters in `joystick.launch`)
->  - run `rostopic echo /rover_diff_drive_controller/cmd_vel` to verify that joystick inputs are being correctly translated to drive commands
->  - go back to the terminal that is ssh'd into the rover and run `rostopic echo /rover_diff_drive_controller/cmd_vel` in *that* terminal to verify that the drive commands are being correctly sent over the network
+>  - run `rostopic echo /drive_controller/cmd_vel` to verify that joystick inputs are being correctly translated to drive commands
+>  - go back to the terminal that is ssh'd into the rover and run `rostopic echo /drive_controller/cmd_vel` in *that* terminal to verify that the drive commands are being correctly sent over the network
+
+## Additional base station computers
+
+To set up a base station with multiple computers, you can use ROS's built-in networking support.
+Choose one computer to be the main station computer (the one where ros master runs).
+For the purposes of this explanation, I will assume this computer has the IP address `192.168.1.13`.
+Now set environment variables as follows:
+
+- ***On the main computer***, `ROS_MASTER_URI` should be `http://192.168.1.13:11311` and `ROS_IP` should be `192.168.1.13`.
+- ***On each other computer***, `ROS_MASTER_URI` should be `http://192.168.1.13:11311` and `ROS_IP` should be the IP address of that computer.

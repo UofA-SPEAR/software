@@ -3,17 +3,8 @@ project(spear_msgs)
 
 find_package(catkin REQUIRED COMPONENTS
   message_generation
+  message_runtime
   std_msgs
-)
-
-## Generate messages in the 'msg' folder
-add_message_files(
-  # Probably more messages to add here
-  FILES
-  BallCoord.msg
-  BallCoords.msg
-  arm_position.msg
-  drive_cmd.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -30,6 +21,13 @@ add_message_files(
 #   Action2.action
 # )
 
+add_message_files(
+  FILES
+  BallCoord.msg
+  BallCoords.msg
+  arm_position.msg
+)
+
 ## Generate added messages and services with any dependencies listed here
 generate_messages(
   DEPENDENCIES
@@ -37,6 +35,9 @@ generate_messages(
 )
 
 catkin_package(
- CATKIN_DEPENDS message_generation message_runtime std_msgs
+ CATKIN_DEPENDS
+  message_generation
+  message_runtime
+  std_msgs
 )
 

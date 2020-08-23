@@ -1,0 +1,16 @@
+<launch>
+  <arg name="rover" default="localhost"/>
+  <arg name="rviz" default="basic"/>
+
+  <include file="$(find spear_station)/launch/nimbro_network.launch">
+    <arg name="rover" value="$(arg rover)"/>
+  </include>
+
+  <include file="$(find spear_rover)/launch/robot_description.launch" unless="$(eval arg('rover') == 'localhost')"/>
+
+  <include file="$(find spear_station)/launch/steering.launch"/>
+  <include file="$(find spear_station)/launch/joystick.launch"/>
+  <node pkg="spear_station" type="arm_ik.py" name="arm_ik"/>
+
+  <node type="rviz" name="rviz" pkg="rviz" args="-d $(find spear_station)/rviz/$(arg rviz).rviz"/>
+</launch>

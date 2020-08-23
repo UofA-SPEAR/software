@@ -1,0 +1,20 @@
+<!-- Handles comms with the station -->
+<launch>
+  <arg name="station"/>
+
+  <!-- Set up topic transport across the network -->
+  <include file="$(find spear_rover)/launch/nimbro_network.launch">
+    <arg name="station" value="$(arg station)"/>
+  </include>
+
+  <!-- Downsample camera image for transfer to station -->
+  <node pkg="nodelet" type="nodelet" name="image_downsample" args="standalone image_proc/crop_decimate image_downsample_nodelet_manager">
+    <remap from="camera/image_raw" to="/camera_depth/rgb/image_raw"/>
+    <remap from="camera/camera_info" to="/camera_depth/rgb/camera_info"/>
+    <remap from="camera_out/image_raw" to="/feedback/camera_depth/image"/>
+    <remap from="camera_out/camera_info" to="/feedback/camera_depth/camera_info"/>
+
+    <param name="decimation_x" value="4"/>
+    <param name="decimation_y" value="4"/>
+  </node>
+</launch>

@@ -19,7 +19,7 @@ class ProportionalDriveState(EventState):
     """
     def __init__(self):
         super(ProportionalDriveState, self).__init__(outcomes=['ok'], input_keys=['target_position'])
-        self._twist_topic = '/rover_diff_drive_controller/cmd_vel'
+        self._twist_topic = '/drive_controller/cmd_vel'
         self._odom_topic = '/ekf/odom/odometry/filtered'
         self._visual_topic = '/viz/proportional_drive/target_position'
         self._twist_publisher = Publisher(self._twist_topic, Twist, queue_size=1)

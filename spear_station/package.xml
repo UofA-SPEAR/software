@@ -14,25 +14,26 @@
   <!-- Commonly used license strings: -->
   <!--   BSD, MIT, Boost Software License, GPLv2, GPLv3, LGPLv2.1, LGPLv3 -->
   <license>MIT</license>
-
-  <build_depend>sensor_msgs</build_depend>
-  <exec_depend>sensor_msgs</exec_depend>
-
-  <build_depend>rospy</build_depend>
-  <exec_depend>rospy</exec_depend>
-
-  <exec_depend>nimbro_topic_transport</exec_depend>
-  
-  <build_depend>std_msgs</build_depend>
-  <exec_depend>std_msgs</exec_depend>
-  <exec_depend>message_runtime</exec_depend>
-
-
   <buildtool_depend>catkin</buildtool_depend>
-
-  <exec_depend>teleop_twist_joy</exec_depend>
   
-  <export>
+  <depend>rospy</depend>
+  <depend>message_runtime</depend>
 
-  </export>
+  <!-- Dependencies from nodes -->
+  <depend>control_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>tf2_geometry_msgs</depend>
+  <depend>tf2_ros</depend>
+  <depend>trajectory_msgs</depend>
+  
+  <!-- Dependencies from launch files -->
+  <exec_depend>flexbe_app</exec_depend>
+  <exec_depend>joy</exec_depend>
+  <exec_depend>nimbro_service_transport</exec_depend>
+  <exec_depend>nimbro_topic_transport</exec_depend>
+  <exec_depend>rqt_joint_trajectory_controller</exec_depend>
+  <exec_depend>rqt_robot_steering</exec_depend>
+  <exec_depend>rviz</exec_depend>
+  <exec_depend>spear_rover</exec_depend>
+  <exec_depend>teleop_twist_joy</exec_depend>
 </package>

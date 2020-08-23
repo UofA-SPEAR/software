@@ -6,20 +6,13 @@ If it depends on the hardware configuration of the rover (and isn't part of the 
 ## Launch Files
 
 The main two launch files are `drive.launch` and `navigate.launch`.
-Each takes a `simulation` argument, which starts them in simulation if set to true.
-Generally, the only reason this would be set to false is when running on the actual rover.
-Here's a list of what each launch file does (for an overview of the principles of the launch file structure, see [the Wiki](https://github.com/UofA-SPEAR/software/wiki/Launch-file-structure)).
+Each takes a `simulation` argument, which starts them in simulation if set to true (the default), and a `station` argument, which can be set to the IP address of another computer which is running the station nodes (set to localhost by default).
 
-- `drive.launch` launches all nodes necessary to drive the rover manually. In simulation, this starts `rqt_robot_steering` to control it. Out of simulation, this listens for twist messages from the station.
-- `move_base.launch` launches the ROS navigation stack for autonomous navigation (this basically takes sensors (and/or obstacles) and localization, and produces twist messages which must be translated to the motors).
-- `navigate.launch` launches all nodes necessary for autonomous navigation. This includes the nav stack, sensors, localization, etc. Navigation is then accomplished by sending commands to `move_base`.
-- `robot_description.launch` reads the robot model file and publishes the appropriate tf transforms. This allows us to know e.g. where the camera is in and out of simulation.
-- `rover.launch` launches everything needed to drive around the rover by directly sending twist messages to the correct topic. These messages might come from `move_base`, `rqt_robot_steering`, or from the base station.
-- `rtabmap_obstacles.launch` downsamples the point cloud from the camera and performs obstacle segmentation using RTAB-Map. Technically RTAB-Map should be doing this internally anyway, but for whatever reason this approach is needed to ensure the obstacle cloud is published fast enough.
-- `sensors.launch` launches everything needed for all sensors, such as the GPS or IMU. Basically it corresponds to anything started via plugins in the simulator (with the exception of the camera, which is handled by the ZED wrapper in `visual_odom.launch`).
-- `state_estimate.launch` performs localization using EKF's.
-- `udp.launch` uses the `nimbro_topic_transport` package to send and receive topics to and from the base station. 
-- `visual_odom.launch` launches visual odometry using the ZED camera.
+- `drive.launch` launches all rover nodes needed for manual driving. You can optionally point this at another computer to use as the station.
+- `navigate.launch` launches all nodes necessary for autonomous navigation. This includes the nav stack, sensors, localization, etc. Navigation is then accomplished by sending commands to `move_base`. Otherwise functions like `drive.launch`
+
+For an overview of the principles of the launch file structure, see [the Wiki](https://github.com/UofA-SPEAR/software/wiki/Launch-file-structure).
+For more information on what each launch file does, see the comments in each launch file.
 
 ## Nodes
 
@@ -48,9 +41,3 @@ Pulls messages from the ball_detector_node and draws the appropriate circles ont
 ROS <-> UAVCAN mapper node.
 Subscribes to various ROS topics and maps them in a unified interface to the canros node,
 which publishes over CAN bus. And vice versa.
-
-### arm_ik_node
-
-Node to take positions for the arm and publish them as angles.
-
-(maybe should be merged into hardware_interface_node?)

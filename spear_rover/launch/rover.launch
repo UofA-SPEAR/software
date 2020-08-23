@@ -1,11 +1,14 @@
 <!-- Launches everything needed to drive the rover by sending Twist messages -->
 <launch>
-  <!-- Default can device -->
-  <arg name="interface" default="can0"/>
+  <!-- Set true to use virtual CAN interface (for testing) -->
+  <arg name="use_vcan"/>
+  <arg name="can_interface" value="vcan0" if="$(arg use_vcan)"/>
+  <arg name="can_interface" value="can0" unless="$(arg use_vcan)"/>
+
 
   <!-- Launch canros server -->
   <include file="$(find canros)/launch/server.launch">
-    <arg name="can_interface" value="$(arg interface)"/>
+    <arg name="can_interface" value="$(arg can_interface)"/>
   </include>
 
   <!-- Map ROS messages to/from CAN messages -->
