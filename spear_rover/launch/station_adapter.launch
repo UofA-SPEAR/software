@@ -19,7 +19,7 @@
     <param name="decimation_y" value="4"/>
   </node>
 
-  <!-- Save full-size camera stills -->
+  <!-- Save full-size camera images -->
   <arg name="filename_format" value="$(arg image_dest)/image%04i.%s"/>
   <node pkg="image_view" type="image_saver" name="image_saver">
     <remap from="image" to="/camera_depth/rgb/image_raw"/>
