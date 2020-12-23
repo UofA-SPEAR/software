@@ -1,6 +1,7 @@
 <!-- Handles comms with the station -->
 <launch>
   <arg name="station"/>
+  <arg name="image_dest" default="$(find spear_rover)/../images"/>
 
   <!-- Set up topic transport across the network -->
   <include file="$(find spear_rover)/launch/nimbro_network.launch">
@@ -16,5 +17,13 @@
 
     <param name="decimation_x" value="4"/>
     <param name="decimation_y" value="4"/>
+  </node>
+
+  <!-- Save full-size camera images -->
+  <arg name="filename_format" value="$(arg image_dest)/image%04i.%s"/>
+  <node pkg="image_view" type="image_saver" name="image_saver">
+    <remap from="image" to="/camera_depth/rgb/image_raw"/>
+    <param name="filename_format" value="$(arg filename_format)"/>
+    <param name="save_all_image" value="false"/>
   </node>
 </launch>

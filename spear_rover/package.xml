@@ -35,6 +35,7 @@
   <exec_depend>diff_drive_controller</exec_depend>
   <exec_depend>flexbe_onboard</exec_depend>
   <exec_depend>image_proc</exec_depend>
+  <exec_depend>image_view</exec_depend>
   <exec_depend>joint_state_controller</exec_depend>
   <exec_depend>joint_trajectory_controller</exec_depend>
   <exec_depend>nimbro_service_transport</exec_depend>
