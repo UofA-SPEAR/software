@@ -1,0 +1,3 @@
+[submodule "spear_rover/libcanard"]
+	path = spear_rover/libcanard
+	url = https://github.com/UAVCAN/libcanard
