@@ -20,16 +20,9 @@ RUN python -m pip install typing
 # Later versions of ikpy drop Python 2 support
 RUN python -m pip install pygame ikpy==3.0.1
 
-# Install uavcan_gui_tool for can debugging / monitoring
-# (see https://uavcan.org/GUI_Tool/Overview/ for install docs)
-RUN apt-get update && apt-get install -y python3-pip \
-                                         python3-setuptools \
-                                         python3-wheel \
-                                         python3-numpy \
-                                         python3-pyqt5 \
-                                         python3-pyqt5.qtsvg \
-                                         git-core
-RUN pip3 install git+https://github.com/UAVCAN/gui_tool@master
+# Install nunavut for serialization code generation
+RUN apt-get update && apt-get install -y python3-pip
+RUN pip3 install nunavut
 
 SHELL ["/ros_entrypoint.sh", "/bin/bash", "-c"]
 
