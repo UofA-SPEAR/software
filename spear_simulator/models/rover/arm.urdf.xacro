@@ -8,7 +8,7 @@
   <xacro:property name="finger_length" value="${forearm_length/3}" />
   <xacro:property name="hand_length" value="0.59" />
   
-  <xacro:property name="arm_width" value="0.05" />
+  <xacro:property name="arm_width" value="0.1" />
   <xacro:property name="joint_sep" value="0.005" />
 
   <xacro:macro name="arm_link" params="name length">
@@ -16,7 +16,7 @@
       <visual>
         <origin xyz="0 0 ${length/2}" rpy="0 0 0"/>
         <geometry>
-          <cylinder length="${length-joint_sep}" radius="${arm_width}"/>
+          <cylinder length="${length-joint_sep}" radius="${width/2}"/>
         </geometry>
       </visual>
       <inertial>
