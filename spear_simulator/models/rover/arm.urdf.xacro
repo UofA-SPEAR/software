@@ -11,7 +11,7 @@
   <xacro:property name="arm_width" value="0.1" />
   <xacro:property name="joint_sep" value="0.005" />
 
-  <xacro:macro name="arm_link" params="name length">
+  <xacro:macro name="arm_link" params="name length width:=${arm_width}">
     <link name="${name}">
       <visual>
         <origin xyz="0 0 ${length/2}" rpy="0 0 0"/>
@@ -109,13 +109,47 @@
 
   <xacro:arm_joint name="grab"><container>
     <parent link="palm"/>
-    <child link="finger"/>
+    <child link="grab_placeholder"/>
     <axis xyz="1 0 0"/>
-    <origin xyz="0 0 ${palm_length}" rpy="0 0 0"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
     <limit lower="-1" upper="1" effort="1" velocity="0.5"/>
   </container></xacro:arm_joint>
 
-  <arm_link name="finger" length="${finger_length}"/>
+  <link name="grab_placeholder">
+    <inertial>
+      <mass value="0.001" />
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
+    </inertial>
+  </link>
+
+  <!-- These joints cannot have a transmission, since they are not controlled by gazebo_ros_control -->
+  <joint name="knuckle1" type="revolute">
+    <parent link="palm"/>
+    <child link="finger1"/>
+    <axis xyz="1 0 0"/>
+    <origin xyz="0 0.03 ${palm_length}" rpy="0 0 0"/>
+    <limit lower="-1" upper="1" effort="1" velocity="0.5"/>
+  </joint>
+  <joint name="knuckle2" type="revolute">
+    <parent link="palm"/>
+    <child link="finger2"/>
+    <axis xyz="-1 0 0"/>
+    <origin xyz="0 -0.03 ${palm_length}" rpy="0 0 0"/>
+    <limit lower="-1" upper="1" effort="1" velocity="0.5"/>
+  </joint>
+
+  <xacro:arm_link name="finger1" length="${finger_length}" width="0.05"/>
+  <xacro:arm_link name="finger2" length="${finger_length}" width="0.05"/>
+
+  <gazebo>
+    <plugin filename="libroboticsgroup_upatras_gazebo_mimic_joint_plugin.so" name="mimic_joint">
+      <joint>grab</joint>
+      <mimicJoint>knuckle1</mimicJoint>
+    </plugin>
+    <plugin filename="libroboticsgroup_upatras_gazebo_mimic_joint_plugin.so" name="mimic_joint">
+      <joint>grab</joint>
+      <mimicJoint>knuckle2</mimicJoint>
+    </plugin>
+  </gazebo>
 
 </robot>
-

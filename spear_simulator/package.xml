@@ -13,5 +13,6 @@
   <exec_depend>gazebo_ros</exec_depend>
   <exec_depend>hector_gazebo_plugins</exec_depend>
   <exec_depend>nodelet</exec_depend>
+  <exec_depend>roboticsgroup_upatras_gazebo_plugins</exec_depend>
   <exec_depend>rtabmap_ros</exec_depend>
 </package>
