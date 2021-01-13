@@ -12,5 +12,6 @@ python -m catkin_lint ~/ros/src \
   --skip-pkg tf_throttle \
   --skip-pkg flexbe_app \
   --skip-pkg ros_numpy \
+  --skip-pkg roboticsgroup_upatras_gazebo_plugins \
   -W2 \
   "$@"
