@@ -51,6 +51,7 @@ arm_controller:
         - elbow_pitch
         - wrist_pitch
         - wrist_roll
+        - grab
 
 # This is called a "controller" but is not. It is actually way to publish
 # the arm/wheel joint angles to /joint_states, since the controllers don't do

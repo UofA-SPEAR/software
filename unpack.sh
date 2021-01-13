@@ -75,6 +75,7 @@ repos=(
     eric-wieser/ros_numpy
     AIS-Bonn/nimbro_network
     UofA-SPEAR/uavcan_dsdl
+    roboticsgroup/roboticsgroup_upatras_gazebo_plugins
 )
 
 cd ~/ros/src
