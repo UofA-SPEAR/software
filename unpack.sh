@@ -107,4 +107,10 @@ cd ~/ros
 rosdep install --from-paths src --ignore-src -r -y && \
 catkin build --force-cmake && \
 
+###### Build UAVCAN messages
+# Temporary solution until we get python 3
+DSDL=/software/spear_rover/uavcan_dsdl
+nnvg $DSDL/public_regulated_data_types/uavcan --target-language c --outdir spear_rover/dsdl
+nnvg $DSDL/spear -I $DSDL/public_regulated_data_types/uavcan --target-language c --outdir spear_rover/dsdl
+
 printf "Thanks for unpacking!\nNow that your enviroment is setup, you should never have to do this again.\nPlease run the following command to install the correct packages:\nrosdep install --from-paths src --ignore-src -r -y\n"

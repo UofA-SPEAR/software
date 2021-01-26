@@ -161,11 +161,3 @@ target_include_directories(mapper_node
 target_link_libraries(mapper_node
     ${catkin_LIBRARIES}
 )
-
-## Generate UAVCAN serialisation code
-# (Runs before build happens)
-add_custom_command(TARGET mapper_node
-    PRE_BUILD
-    COMMAND nnvg uavcan_dsdl/public_regulated_data_types/uavcan --target-language c --outdir dsdl
-    COMMAND nnvg uavcan_dsdl/spear -I uavcan_dsdl/public_regulated_data_types/uavcan --target-language c --outdir dsdl
-)
