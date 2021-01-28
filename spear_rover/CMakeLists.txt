@@ -151,6 +151,7 @@ add_dependencies(gps_to_frame_server ${PROJECT_NAME}_gencpp
 #### UAVCAN Mapper Node
 add_executable(mapper_node
     src/mapper.cpp
+    src/mapper_helpers.cpp
     libcanard/libcanard/canard.c
 )
 target_include_directories(mapper_node
