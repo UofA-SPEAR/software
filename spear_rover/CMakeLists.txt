@@ -138,6 +138,7 @@ target_link_libraries(hardware_node
 
 install(PROGRAMS
     nodes/move_with_twist.py
+    nodes/drive_publisher.py
     DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

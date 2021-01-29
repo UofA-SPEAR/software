@@ -1,7 +1,7 @@
 #include <ros/ros.h>
-#include <spear_msgs/drive_command.h>
+#include <spear_msgs/DriveCommand.h>
 
-void callback(spear_msgs::drive_command::ConstPtr& msg) {
+void callback(spear_msgs::DriveCommand::ConstPtr& msg) {
     ROS_INFO("[Drive Command] id: %d, speed: %d", msg->id, msg->speed);
 }
 
@@ -10,11 +10,11 @@ int main(int argc, char **argv) {
 
     ros::NodeHandle n;
 
-    auto publisher = n.advertise<spear_msgs::drive_command>("/core/drive", 100);
+    auto publisher = n.advertise<spear_msgs::DriveCommand>("/core/drive", 100);
     ros::Rate rate(1); // 1Hz
 
     while (1) {
-        spear_msgs::drive_command cmd;
+        spear_msgs::DriveCommand cmd;
         cmd.id = 1;
         cmd.speed = 42.0;
         publisher.publish(cmd);

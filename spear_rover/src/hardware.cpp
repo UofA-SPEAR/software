@@ -1,6 +1,6 @@
-#include <canros/spear__drive__WheelOdom.h>
-#include <canros/uavcan__equipment__actuator__ArrayCommand.h>
-#include <canros/uavcan__equipment__actuator__Command.h>
+#include <spear_msgs/DriveCommand.h>
+#include <spear_msgs/JointCommand.h>
+#include <spear_msgs/DriveOdometry.h>
 #include <controller_manager/controller_manager.h>
 #include <hardware_interface/actuator_command_interface.h>
 #include <hardware_interface/joint_command_interface.h>
@@ -11,10 +11,6 @@
 #include <boost/functional.hpp>
 #include <memory>
 #include <vector>
-
-using ActuatorArrayCommand = canros::uavcan__equipment__actuator__ArrayCommand;
-using ActuatorCommand = canros::uavcan__equipment__actuator__Command;
-using WheelOdomPtr = canros::spear__drive__WheelOdom::ConstPtr;
 
 using namespace hardware_interface;
 
@@ -64,33 +60,30 @@ class CASEDriveHardware : public RobotHWChild {
     parent.registerInterface(&wheel_state_interface);
     parent.registerInterface(&wheel_velocity_interface);
 
-    wheel_commands_publisher = nh.advertise<ActuatorArrayCommand>(
-        "/canros/msg/uavcan/equipment/actuator/ArrayCommand", 1);
-    boost::function<void(const WheelOdomPtr &)> odom_callback =
-        [&](const WheelOdomPtr &message) { on_wheel_odom_message(message); };
+    wheel_commands_publisher = nh.advertise<spear_msgs::DriveCommand>(
+        "/can/spear/actuators/drive_command", 1);
+    boost::function<void(const spear_msgs::DriveOdometry::ConstPtr &)> odom_callback =
+        [&](const spear_msgs::DriveOdometry::ConstPtr &message) { on_wheel_odom_message(message); };
     wheel_odom_subscriber =
-        nh.subscribe("/canros/msg/spear/drive/WheelOdom", 1000, odom_callback);
+        nh.subscribe("/canros/msg/spear/drive/drive_odometry", 1000, odom_callback);
   }
 
   void write(const ros::Time &time, const ros::Duration &period) override {
-    auto wheel_commands = ActuatorArrayCommand();
     for (const auto &wheel_info : wheel_infos) {
-      auto command = ActuatorCommand();
-      command.actuator_id = wheel_info.actuator_id;
-      command.command_type = ActuatorCommand::COMMAND_TYPE_SPEED;
-      command.command_value = wheel_info.cmd_vel;
-      wheel_commands.commands.push_back(command);
+      auto command = spear_msgs::DriveCommand();
+      command.id = wheel_info.actuator_id;
+      command.speed = wheel_info.cmd_vel;
+      wheel_commands_publisher.publish(command);
       ROS_INFO("Command = %f", wheel_info.cmd_vel);
     }
-    wheel_commands_publisher.publish(wheel_commands);
   }
 
   void read(const ros::Time &time, const ros::Duration &period) override {}
 
  private:
-  void on_wheel_odom_message(const WheelOdomPtr &message) {
+  void on_wheel_odom_message(const spear_msgs::DriveOdometry::ConstPtr &message) {
     // Index is in the same order as wheel_infos are initialized
-    const auto wheel_index = message->wheel_id;
+    const auto wheel_index = message->id;
     wheel_infos.at(wheel_index).pos += message->delta;
   }
 
@@ -122,21 +115,18 @@ class CASEArmHardware : public RobotHWChild {
     parent.registerInterface(&arm_state_interface);
     parent.registerInterface(&arm_position_interface);
 
-    arm_commands_publisher = nh.advertise<ActuatorArrayCommand>(
-        "/canros/msg/uavcan/equipment/actuator/ArrayCommand", 1);
+    arm_commands_publisher = nh.advertise<spear_msgs::JointCommand>(
+        "/can/spear/actuators/joint_command", 1);
   }
 
   void write(const ros::Time &time, const ros::Duration &period) override {
-    auto arm_angles = ActuatorArrayCommand();
     for (const auto &joint_info : arm_joint_infos) {
-      auto command = ActuatorCommand();
-      command.actuator_id = joint_info.actuator_id;
-      command.command_type = ActuatorCommand::COMMAND_TYPE_POSITION;
-      command.command_value = joint_info.cmd_pos;
-      arm_angles.commands.push_back(command);
+      auto command = spear_msgs::JointCommand();
+      command.id = joint_info.actuator_id;
+      command.angle = joint_info.cmd_pos;
+      arm_commands_publisher.publish(command);
       ROS_INFO("Command = %f", joint_info.cmd_pos);
     }
-    arm_commands_publisher.publish(arm_angles);
   }
 
   void read(const ros::Time &time, const ros::Duration &period) override {}

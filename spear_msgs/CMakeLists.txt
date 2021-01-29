@@ -26,7 +26,9 @@ add_message_files(
   BallCoord.msg
   BallCoords.msg
   arm_position.msg
-  drive_command.msg
+  DriveCommand.msg
+  JointCommand.msg
+  DriveOdometry.msg
 )
 
 ## Generate added messages and services with any dependencies listed here

@@ -4,13 +4,6 @@
 #include <ros/ros.h>
 #include "canard.h"
 
-// ROS message types
-#include <std_msgs/String.h>
-#include <spear_msgs/drive_command.h>
-
-// UAVCAN message types
-#include "spear/drive/DriveCommand_1_0.h"
-
 #include <mutex>
 #include <chrono>
 
