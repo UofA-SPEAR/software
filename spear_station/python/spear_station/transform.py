@@ -23,7 +23,6 @@ def lookup_transform_simple(
 
 def transform_to_matrix(
         transform):  # type: (Union[Transform, TransformStamped]) -> np.ndarray
-    # return msg_to_se3(transform)
     """
     Converts a Transform message to the corresponding homogeneous transformation
     matrix (an np array).
