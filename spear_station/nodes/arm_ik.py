@@ -12,6 +12,9 @@ import tf2_ros
 from control_msgs.srv import QueryTrajectoryState
 from geometry_msgs.msg import PointStamped
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
+import transforms3d
+from geometry_msgs.msg import TransformStamped, Transform, Vector3, _Vector3Stamped
+from spear_station import transform_to_matrix, lookup_transform_simple
 
 
 class JointAngles:
@@ -28,6 +31,19 @@ class JointAngles:
         trajectory.points[0].time_from_start = time_from_start
         return trajectory
 
+    def combine_with(self, other):  # type: (JointAngles) -> JointAngles
+        common_keys = set(self._angles.keys()).intersection(
+            other._angles.keys())
+        if common_keys:
+            rospy.logwarn('Redundant joints in JointAngles.combine: {}'.format(
+                common_keys))
+        angles = self._angles.copy()
+        angles.update(other._angles)
+        return JointAngles(angles)
+
+    def get(self, joint_name, default=None):
+        return self._angles.get(joint_name, default)
+
 
 class IK:
     def __init__(self, robot_description, valid_joints,
@@ -41,17 +57,24 @@ class IK:
 
     def backward(self, target_position):  # type: (np.ndarray) -> JointAngles
         angles = self.chain.inverse_kinematics(target_position)
-        joints = [link.name for link in self.chain.links]
+        joint_names = [link.name for link in self.chain.links]
         return JointAngles({
             name: angle
-            for name, angle in zip(joints, angles) if name in self.valid_joints
+            for name, angle in zip(joint_names, angles)
+            if name in self.valid_joints
         })
+
+    def forward(self, joint_angles):
+        joint_names = [link.name for link in self.chain.links]
+        joint_angles = [joint_angles.get(name, 0) for name in joint_names]
+        target_matrix = self.chain.forward_kinematics(joint_angles)
+        return target_matrix
 
     def frame(self):
         return self.base_joint
 
 
-class Target:
+class ArmTarget:
     def __init__(self, frame_id):  # type: (str) -> None
         self._frame_id = frame_id
         self._yaw = 0
@@ -92,42 +115,84 @@ class Target:
         ]) * self._radius
 
         if frame_id is not None:
-            while not rospy.is_shutdown():
-                try:
-                    transform = self._tf_buffer.lookup_transform(
-                        target_frame=frame_id,
-                        source_frame=self._frame_id,
-                        time=rospy.Time(0),
-                        timeout=rospy.Duration(0.1))
-                    point = tf2_geometry_msgs.do_transform_point(
-                        point, transform)
-                    break
-                except Exception as err:
-                    rospy.logerr(err)
+            transform = lookup_transform_simple(self._tf_buffer,
+                                                target_frame=frame_id,
+                                                source_frame=self._frame_id)
+            point = tf2_geometry_msgs.do_transform_point(point, transform)
         return point
+
+
+class HandTarget:
+    def __init__(self):
+        self._pitch = 0
+        self._roll = 0
+        self._grip = 0
+
+    def up(self, angle):
+        self._pitch -= angle
+
+    def down(self, angle):
+        self._pitch += angle
+
+    def cw(self, angle):
+        self._roll += angle
+
+    def ccw(self, angle):
+        self._roll -= angle
+
+    def tighten(self, angle):
+        self._grip += angle
+
+    def loosen(self, angle):
+        self._grip -= angle
+
+    def goal(self):
+        return self._pitch, self._roll, self._grip
+
+
+class HandPlanner:
+    def __init__(self, pitch_joint, roll_joint,
+                 grip_joint):  # type: (str, str, str) -> None
+        self.pitch_joint = pitch_joint
+        self.roll_joint = roll_joint
+        self.grip_joint = grip_joint
+
+    def angles(self, pitch_roll_grip):
+        pitch, roll, grip = pitch_roll_grip
+        return JointAngles({
+            self.pitch_joint: pitch,
+            self.roll_joint: roll,
+            self.grip_joint: grip,
+        })
 
 
 rospy.init_node('arm_ik')
 rospy.sleep(0)
 
-arm_command_publisher = rospy.Publisher('/arm_controller/command',
-                                        JointTrajectory,
-                                        queue_size=1)
+command_publisher = rospy.Publisher('/arm_controller/command',
+                                    JointTrajectory,
+                                    queue_size=1)
 target_point_publisher = rospy.Publisher('/viz/arm_target',
                                          PointStamped,
                                          queue_size=1)
 
-rospy.wait_for_service('/arm_controller/query_state')
-query_trajectory_state = rospy.ServiceProxy('/arm_controller/query_state',
-                                            QueryTrajectoryState)
-joint_names = query_trajectory_state(rospy.Time.now()).name
+# rospy.wait_for_service('/arm_controller/query_state')
+# query_trajectory_state = rospy.ServiceProxy('/arm_controller/query_state',
+#                                             QueryTrajectoryState)
+# joint_names = query_trajectory_state(rospy.Time.now()).name
+hand_joint_names = ['wrist_pitch', 'wrist_roll', 'grab']
+arm_joint_names = ['shoulder_yaw', 'shoulder_pitch', 'elbow_pitch']
 
 robot_description = rospy.get_param('robot_description')  # type: str
-ik = IK(robot_description, joint_names, 'arm_mount')
-target = Target('arm_mount')
-target.up(-math.pi / 6)
-target.cw(math.pi)
-target.retract(0.5)
+ik = IK(robot_description, arm_joint_names, 'arm_mount')
+arm_target = ArmTarget('arm_mount')
+
+hand_target = HandTarget()
+hand_planner = HandPlanner(*hand_joint_names)
+
+arm_target.up(-math.pi / 6)
+arm_target.cw(math.pi)
+arm_target.retract(0.5)
 
 pygame.init()
 pygame.display.set_mode((100, 100))
@@ -139,28 +204,77 @@ def key_pressed(key):  # type: (str) -> bool
     return pygame.key.get_pressed()[index]
 
 
+tf_buffer = arm_target._tf_buffer
+
+angle_locked = True
+angle_target = 3.14 / 2
+
 rate = rospy.Rate(10)
 while not rospy.is_shutdown():
-    position = target.position(ik.frame())
-    trajectory = ik.backward(position).to_command(rospy.Duration(0.01))
-    arm_command_publisher.publish(trajectory)
-    target_point_publisher.publish(target.point())
+    arm_angles = ik.backward(arm_target.position(ik.frame()))
+    hand_angles = hand_planner.angles(hand_target.goal())
+    trajectory = arm_angles.combine_with(hand_angles).to_command(
+        rospy.Duration(0.01))
+    command_publisher.publish(trajectory)
+    target_point_publisher.publish(arm_target.point())
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             break
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_l:
+            angle_locked = not angle_locked
+            if angle_locked:
+                hand_to_base_link = transform_to_matrix(
+                lookup_transform_simple(tf_buffer, 'base_link', 'forearm'))
+                _, hand_to_base_link_rot, _, _ = transforms3d.affines.decompose44(
+                    hand_to_base_link)
+
+                x = np.asarray([0, 0, 1])
+
+                x_transformed = np.matmul(hand_to_base_link_rot, x)
+                angle_target = np.arccos(np.clip(np.dot([0, 0, 1], x_transformed), -1.0, 1.0))
     if key_pressed('a'):
-        target.ccw(0.05)
+        arm_target.ccw(0.05)
     if key_pressed('d'):
-        target.cw(0.05)
+        arm_target.cw(0.05)
     if key_pressed('w'):
-        target.up(0.05)
+        arm_target.up(0.05)
     if key_pressed('s'):
-        target.down(0.05)
+        arm_target.down(0.05)
     if key_pressed('e'):
-        target.expand(0.01)
+        arm_target.expand(0.01)
     if key_pressed('q'):
-        target.retract(0.01)
+        arm_target.retract(0.01)
+    if key_pressed('j'):
+        hand_target.ccw(0.05)
+    if key_pressed('l'):
+        hand_target.cw(0.05)
+    if key_pressed('i'):
+        hand_target.up(0.05)
+    if key_pressed('k'):
+        hand_target.down(0.05)
+    if key_pressed('u'):
+        hand_target.tighten(0.01)
+    if key_pressed('o'):
+        hand_target.loosen(0.01)
+
+    if angle_locked:  # Maintain hand pitch relative to base
+        # arm_mount_to_hand = ik.forward(arm_angles)
+        # base_link_to_arm_mount = transform_to_matrix(
+        #     lookup_transform_simple(tf_buffer, 'base_link', ik.frame()))
+        # base_link_to_hand = np.matmul(base_link_to_arm_mount,
+        #                               arm_mount_to_hand)
+        # hand_to_base_link = np.linalg.inv(base_link_to_hand)
+        hand_to_base_link = transform_to_matrix(
+            lookup_transform_simple(tf_buffer, 'base_link', 'forearm'))
+        _, hand_to_base_link_rot, _, _ = transforms3d.affines.decompose44(
+            hand_to_base_link)
+
+        x = np.asarray([0, 0, 1])
+
+        x_transformed = np.matmul(hand_to_base_link_rot, x)
+        angle = np.arccos(np.clip(np.dot([0, 0, 1], x_transformed), -1.0, 1.0))
+        hand_target._pitch = angle_target - angle
 
     rate.sleep()
