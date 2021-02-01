@@ -1,15 +1,23 @@
-from typing import Union
+from typing import Optional, TypeVar, Union
 
 import numpy as np
 import rospy
+import tf2_geometry_msgs
 import transforms3d
-from geometry_msgs.msg import Transform, TransformStamped
+from geometry_msgs.msg import (PointStamped, PoseStamped, Transform,
+                               TransformStamped, Vector3Stamped, WrenchStamped)
 from tf2_ros import Buffer
+
+from .util import get_tf_buffer
 
 
 def lookup_transform_simple(
-        tf_buffer, target_frame,
-        source_frame):  # type: (Buffer, str, str) -> TransformStamped
+        target_frame,
+        source_frame,
+        tf_buffer=None
+):  # type: (str, str, Optional[Buffer]) -> TransformStamped
+    if tf_buffer is None:
+        tf_buffer = get_tf_buffer()
     while not rospy.is_shutdown():
         try:
             return tf_buffer.lookup_transform(target_frame=target_frame,
@@ -19,6 +27,24 @@ def lookup_transform_simple(
 
         except Exception as err:
             rospy.logerr(err)
+
+
+TransformableMessage = TypeVar("TransformableMessage", PointStamped,
+                               Vector3Stamped, WrenchStamped, PoseStamped)
+
+
+def do_transform_msg(msg, target_frame, transform=None):
+    if transform is None:
+        transform = lookup_transform_simple(target_frame, msg.header.frame_id)
+    if isinstance(msg, PointStamped):
+        return tf2_geometry_msgs.do_transform_point(msg, transform)
+    if isinstance(msg, Vector3Stamped):
+        return tf2_geometry_msgs.do_transform_vector3(msg, transform)
+    if isinstance(msg, WrenchStamped):
+        return tf2_geometry_msgs.do_transform_wrench(msg, transform)
+    if isinstance(msg, PoseStamped):
+        return tf2_geometry_msgs.do_transform_pose(msg, transform)
+    raise TypeError("Unexpected message type {}".format(type(msg)))
 
 
 def transform_to_matrix(
