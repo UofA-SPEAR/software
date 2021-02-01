@@ -12,9 +12,6 @@ from geometry_msgs.msg import PointStamped
 from spear_util.transform import do_transform_msg, lookup_transform_simple, transform_to_matrix
 from spear_util.urdf import get_urdf
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
-import transforms3d
-from geometry_msgs.msg import TransformStamped, Transform, Vector3, _Vector3Stamped
-from spear_station import transform_to_matrix, lookup_transform_simple
 
 
 class JointAngles:
@@ -79,12 +76,6 @@ class IKPlanner:
             for name, angle in zip(joint_names, angles)
             if name in self._valid_joints
         })
-
-    def forward(self, joint_angles):
-        joint_names = [link.name for link in self.chain.links]
-        joint_angles = [joint_angles.get(name, 0) for name in joint_names]
-        target_matrix = self.chain.forward_kinematics(joint_angles)
-        return target_matrix
 
     def frame(self):
         return self._base_link
@@ -286,11 +277,6 @@ ik_controller.radius_binding().value = 0.5
 wrist_controller.binding().value = math.pi / 2
 
 ik_goal = ik_controller.goal_binding()
-
-tf_buffer = arm_target._tf_buffer
-
-angle_locked = True
-angle_target = 3.14 / 2
 
 rate = rospy.Rate(10)
 running = True
