@@ -4,7 +4,7 @@ import numpy as np
 import rospy
 import tf2_geometry_msgs
 import transforms3d
-from geometry_msgs.msg import (PointStamped, PoseStamped, Transform,
+from geometry_msgs.msg import (PointStamped, Pose, PoseStamped, Transform,
                                TransformStamped, Vector3Stamped, WrenchStamped)
 from tf2_ros import Buffer
 
@@ -72,3 +72,14 @@ def transform_to_matrix(
         T=translation,
         R=transforms3d.quaternions.quat2mat(rotation),
         Z=np.ones(shape=(3, )))
+
+def pose_to_matrix(pose):  # type: (Union[Pose, PoseStamped]) -> np.ndarray
+    if isinstance(pose, PoseStamped):
+        pose = pose.pose
+
+    transform = Transform()
+    transform.translation.x = pose.position.x
+    transform.translation.y = pose.position.y
+    transform.translation.z = pose.position.z
+    transform.rotation = pose.orientation
+    return transform_to_matrix(transform)

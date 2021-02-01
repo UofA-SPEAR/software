@@ -102,6 +102,7 @@ ln -s $DIR/spear_simulator
 ln -s $DIR/spear_behaviors
 ln -s $DIR/case_moveit_config
 ln -s $DIR/spear_util
+ln -s $DIR/tests
 
 ###### Build everything
 cd ~/ros

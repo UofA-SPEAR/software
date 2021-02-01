@@ -1,0 +1,7 @@
+<launch>
+    <include file="$(find spear_simulator)/launch/rover.launch">
+        <arg name="gui" value="false"/>
+    </include>
+
+    <test test-name="test_drive_sim" pkg="tests" type="test_drive_sim.py"/>
+</launch>
