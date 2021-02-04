@@ -108,6 +108,21 @@ class PointTarget:
 
 T = TypeVar("T")
 
+
+class OneWayBinding:
+    def __init__(self, get_fn):  # type: (Callable[[], T]) -> None
+        self._get_fn = get_fn
+
+    @property
+    def value(self):
+        return self._get_fn()
+
+    @classmethod
+    def from_member(cls, object_,
+                    name):  # type: (object, str) -> OneWayBinding
+        return cls(get_fn=lambda: getattr(object_, name))
+
+
 class TwoWayBinding(Generic[T]):
     def __init__(
             self, get_fn,
@@ -124,7 +139,8 @@ class TwoWayBinding(Generic[T]):
         self._set_fn(x)
 
     @classmethod
-    def from_member(cls, object_, name):  # type: (object, str) -> TwoWayBinding
+    def from_member(cls, object_,
+                    name):  # type: (object, str) -> TwoWayBinding
         return cls(get_fn=lambda: getattr(object_, name),
                    set_fn=lambda value: setattr(object_, name, value))
 
@@ -147,6 +163,9 @@ class IKController:
 
     def radius_binding(self):
         return TwoWayBinding.from_member(self._target, 'radius')
+
+    def goal_binding(self):
+        return OneWayBinding(lambda: self._target.point(self._planner.frame()))
 
 
 class ManualJointController:
@@ -257,6 +276,8 @@ ik_controller.yaw_binding().value = math.pi
 ik_controller.radius_binding().value = 0.5
 wrist_controller.binding().value = math.pi / 2
 
+ik_goal = ik_controller.goal_binding()
+
 rate = rospy.Rate(10)
 running = True
 while running and not rospy.is_shutdown():
@@ -268,8 +289,8 @@ while running and not rospy.is_shutdown():
     trajectory = angles.to_command(rospy.Duration(0.01))
     command_publisher.publish(trajectory)
 
-    # XXX: a total hack, fix this
-    target_point_publisher.publish(ik_controller._target.point())
+    # XXX: could be more systematic
+    target_point_publisher.publish(ik_goal.value)
 
     for view in views:
         view.tick()
