@@ -55,7 +55,7 @@ And add the following to your workspace settings:
     "python.languageServer": "Pylance",
     "python.analysis.extraPaths": [
         "/software/spear_rover/python",
-        "/software/spear_station/python",
+        "/software/spear_util/python",
         "/root/ros/devel/lib/python2.7/dist-packages",
         "/opt/ros/melodic/lib/python2.7/dist-packages"
     ],
