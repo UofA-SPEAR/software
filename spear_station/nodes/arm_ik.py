@@ -9,8 +9,8 @@ import pygame
 import rospy
 import transforms3d
 from geometry_msgs.msg import PointStamped
-from spear_station import (do_transform_msg, get_urdf, lookup_transform_simple,
-                           transform_to_matrix)
+from spear_util.transform import do_transform_msg, lookup_transform_simple, transform_to_matrix
+from spear_util.urdf import get_urdf
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 
 

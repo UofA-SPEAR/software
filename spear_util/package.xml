@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>spear_util</name>
+  <version>0.0.0</version>
+  <description>Basic utilities used by other packages (math functions, etc.)</description>
+
+  <maintainer email="mdepp@ualberta.ca">Rain Epp</maintainer>
+
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <exec_depend>rospy</exec_depend>
+</package>

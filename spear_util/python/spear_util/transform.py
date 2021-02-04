@@ -6,9 +6,18 @@ import tf2_geometry_msgs
 import transforms3d
 from geometry_msgs.msg import (PointStamped, PoseStamped, Transform,
                                TransformStamped, Vector3Stamped, WrenchStamped)
-from tf2_ros import Buffer
+from tf2_ros import Buffer, TransformListener
 
-from .util import get_tf_buffer
+__tf_buffer = None
+__tf_listener = None
+
+
+def get_tf_buffer():
+    global __tf_buffer, __tf_listener
+    if __tf_buffer is None:
+        __tf_buffer = Buffer()
+        __tf_listener = TransformListener(__tf_buffer)
+    return __tf_buffer
 
 
 def lookup_transform_simple(
