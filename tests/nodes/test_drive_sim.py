@@ -7,7 +7,7 @@ from gazebo_msgs.srv import GetModelState, GetModelStateRequest, GetModelStateRe
 import numpy as np
 import transforms3d
 
-from spear_station import pose_to_matrix
+from spear_util.transform import pose_to_matrix
 
 
 class TestDrive(unittest.TestCase):
