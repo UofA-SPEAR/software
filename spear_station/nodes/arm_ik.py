@@ -84,9 +84,9 @@ class IKPlanner:
 class PointTarget:
     def __init__(self, frame_id):  # type: (str) -> None
         self._frame_id = frame_id
-        self._yaw = 0
-        self._pitch = 0
-        self._radius = 1
+        self.yaw = 0
+        self.pitch = 0
+        self.radius = 1
 
     def position(self, frame_id=None):  # type: (Optional[str]) -> None
         point = self.point(frame_id)
@@ -96,10 +96,10 @@ class PointTarget:
         point = PointStamped()
         point.header.frame_id = self._frame_id
         point.point.x, point.point.y, point.point.z = np.array([
-            np.cos(self._yaw) * np.cos(self._pitch),
-            np.sin(self._yaw),
-            np.sin(self._pitch)
-        ]) * self._radius
+            np.cos(self.yaw) * np.cos(self.pitch),
+            np.sin(self.yaw),
+            np.sin(self.pitch)
+        ]) * self.radius
 
         if frame_id is not None:
             point = do_transform_msg(point, target_frame=frame_id)
@@ -140,13 +140,13 @@ class IKController:
             self._target.position(self._planner.frame()))
 
     def yaw_binding(self):
-        return TwoWayBinding.from_member(self._target, '_yaw')
+        return TwoWayBinding.from_member(self._target, 'yaw')
 
     def pitch_binding(self):
-        return TwoWayBinding.from_member(self._target, '_pitch')
+        return TwoWayBinding.from_member(self._target, 'pitch')
 
     def radius_binding(self):
-        return TwoWayBinding.from_member(self._target, '_radius')
+        return TwoWayBinding.from_member(self._target, 'radius')
 
 
 class ManualJointController:
