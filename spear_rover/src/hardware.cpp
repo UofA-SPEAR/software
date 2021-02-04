@@ -65,7 +65,7 @@ class CASEDriveHardware : public RobotHWChild {
     boost::function<void(const spear_msgs::DriveOdometry::ConstPtr &)> odom_callback =
         [&](const spear_msgs::DriveOdometry::ConstPtr &message) { on_wheel_odom_message(message); };
     wheel_odom_subscriber =
-        nh.subscribe("/canros/msg/spear/drive/drive_odometry", 1000, odom_callback);
+        nh.subscribe("/can/spear/actuators/drive_odometry", 1000, odom_callback);
   }
 
   void write(const ros::Time &time, const ros::Duration &period) override {
