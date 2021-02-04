@@ -55,7 +55,6 @@ TransformableMessage = TypeVar("TransformableMessage",
                                bound=Union[PointStamped, TransformStamped,
                                            Vector3Stamped, WrenchStamped])
 
-
 def do_transform_msg(
     msg,
     target_frame,
@@ -106,6 +105,9 @@ def transform_to_matrix(
 
 
 def pose_to_matrix(pose):  # type: (Union[Pose, PoseStamped]) -> np.ndarray
+    """
+    Converts a Pose to the corresponding homogenous transformation matrix.
+    """
     if isinstance(pose, PoseStamped):
         pose = pose.pose
 
