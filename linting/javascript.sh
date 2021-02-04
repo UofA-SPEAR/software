@@ -4,12 +4,6 @@
 declare -r ESLINTRC=".eslintrc.json"
 declare -ar PROJECTS=("../mission-planner-gui" "../rover-map-view")
 
-# Installs ESLint if not already installed.
-if ! [ -x "$(command -v eslint)" ]
-then
-    npm install -g eslint
-fi
-
 # Prepares all of the JavaScript projects.
 for PROJECT in ${PROJECTS[@]}
 do
@@ -20,7 +14,7 @@ do
     if ! [ -d "node_modules" ]
     then
         npm install
-        npm install eslint-plugin-react@latest eslint-config-google@latest
+        npm install eslint-plugin-react@latest eslint-config-google@latest eslint
     fi
 done
 
@@ -28,6 +22,6 @@ done
 for PROJECT in ${PROJECTS[@]}
 do
     echo "Linting ${PROJECT}"
-    eslint src/*.js
+    npx eslint src/*.js
 done
 
