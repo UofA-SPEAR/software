@@ -37,3 +37,5 @@ jobs:
       run: docker-compose build
     - name: Run catkin lint
       run: docker run spear bash /software/catkin_lint.bash
+    - name: Run integration tests
+      run: docker run spear bash -c 'source ~/ros/devel/setup.bash && make rostest'
