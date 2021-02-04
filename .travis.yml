@@ -49,7 +49,7 @@ matrix:
       script:
         - docker-compose build
         - docker run spear bash /software/catkin_lint.bash
-        - docker run spear make rostest
+        - docker run spear bash -c 'source ~/ros/devel/setup.bash && make rostest'
 
 notifications:
   email: false
