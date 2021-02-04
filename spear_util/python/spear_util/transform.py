@@ -43,15 +43,16 @@ def lookup_transform_simple(
             rospy.logerr(err)
 
 
-TransformableMessage = TypeVar("TransformableMessage", PointStamped,
-                               Vector3Stamped, WrenchStamped, PoseStamped)
+TransformableMessage = TypeVar("TransformableMessage",
+                               bound=Union[PointStamped, TransformStamped,
+                                           Vector3Stamped, WrenchStamped])
 
 
 def do_transform_msg(
     msg,
     target_frame,
     transform=None
-):  # type: (Union[PointStamped, Vector3Stamped, WrenchStamped, PoseStamped], str, Optional[TransformStamped]) -> ...
+):  # type: (TransformableMessage, str, Optional[TransformStamped]) -> TransformableMessage
     """
     Transforms a point, vector, wrench, or pose to the given frame. If no
     transform is specified the correct transform is looked up automatically.
