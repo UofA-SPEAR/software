@@ -108,8 +108,7 @@ class PointTarget:
 
 T = TypeVar("T")
 
-
-class ScalarModel(Generic[T]):  # type: ControlledValue[T]
+class TwoWayBinding(Generic[T]):
     def __init__(
             self, get_fn,
             set_fn):  # type: (Callable[[], T], Callable[[T], None]) -> None
@@ -125,7 +124,7 @@ class ScalarModel(Generic[T]):  # type: ControlledValue[T]
         self._set_fn(x)
 
     @classmethod
-    def from_member(cls, object_, name):  # type: (object, str) -> ScalarModel
+    def from_member(cls, object_, name):  # type: (object, str) -> TwoWayBinding
         return cls(get_fn=lambda: getattr(object_, name),
                    set_fn=lambda value: setattr(object_, name, value))
 
@@ -140,14 +139,14 @@ class IKController:
         return self._planner.angles(
             self._target.position(self._planner.frame()))
 
-    def yaw_model(self):
-        return ScalarModel.from_member(self._target, '_yaw')
+    def yaw_binding(self):
+        return TwoWayBinding.from_member(self._target, '_yaw')
 
-    def pitch_model(self):
-        return ScalarModel.from_member(self._target, '_pitch')
+    def pitch_binding(self):
+        return TwoWayBinding.from_member(self._target, '_pitch')
 
-    def radius_model(self):
-        return ScalarModel.from_member(self._target, '_radius')
+    def radius_binding(self):
+        return TwoWayBinding.from_member(self._target, '_radius')
 
 
 class ManualJointController:
@@ -158,8 +157,8 @@ class ManualJointController:
     def angles(self):
         return JointAngles({self._joint: self._angle})
 
-    def model(self):
-        return ScalarModel.from_member(self, '_angle')
+    def binding(self):
+        return TwoWayBinding.from_member(self, '_angle')
 
 
 class LockedJointController:
@@ -195,13 +194,13 @@ class LockedJointController:
         return JointAngles(
             {self._joint_name: self._target_angle - self._get_actual_angle()})
 
-    def model(self):
-        return ScalarModel.from_member(self, '_target_angle')
+    def binding(self):
+        return TwoWayBinding.from_member(self, '_target_angle')
 
 
 class KeypressedView:
     def __init__(self, keys, model,
-                 increment):  # type: (str, ScalarModel, float) -> None
+                 increment):  # type: (str, TwoWayBinding, float) -> None
         self._inc_key, self._dec_key = keys
         self._model = model
         self._increment = increment
@@ -245,18 +244,18 @@ controllers = [
 ]
 
 views = [
-    KeypressedView('ws', ik_controller.pitch_model(), 0.05),
-    KeypressedView('ad', ik_controller.yaw_model(), 0.05),
-    KeypressedView('eq', ik_controller.radius_model(), 0.01),
-    KeypressedView('ki', wrist_controller.model(), 0.05),
-    KeypressedView('lj', hand_roll_controller.model(), 0.05),
-    KeypressedView('uo', hand_grab_controller.model(), 0.1),
+    KeypressedView('ws', ik_controller.pitch_binding(), 0.05),
+    KeypressedView('ad', ik_controller.yaw_binding(), 0.05),
+    KeypressedView('eq', ik_controller.radius_binding(), 0.01),
+    KeypressedView('ki', wrist_controller.binding(), 0.05),
+    KeypressedView('lj', hand_roll_controller.binding(), 0.05),
+    KeypressedView('uo', hand_grab_controller.binding(), 0.1),
 ]
 
-ik_controller.pitch_model().value = -math.pi / 6
-ik_controller.yaw_model().value = math.pi
-ik_controller.radius_model().value = 0.5
-wrist_controller.model().value = math.pi / 2
+ik_controller.pitch_binding().value = -math.pi / 6
+ik_controller.yaw_binding().value = math.pi
+ik_controller.radius_binding().value = 0.5
+wrist_controller.binding().value = math.pi / 2
 
 rate = rospy.Rate(10)
 running = True
