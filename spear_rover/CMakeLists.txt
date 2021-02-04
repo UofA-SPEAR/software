@@ -167,12 +167,6 @@ target_link_libraries(mapper_node
 
 
 ############ Temp Testing stuff
-add_executable(drive_publisher
-    src/drive_publisher.cpp
-)
-target_link_libraries(drive_publisher ${catkin_LIBRARIES})
-
-
 add_executable(can_sender
     src/can_sender.cpp
     libcanard/libcanard/canard.c

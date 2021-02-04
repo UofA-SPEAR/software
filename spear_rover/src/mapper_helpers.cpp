@@ -30,14 +30,17 @@ UavcanMapper::UavcanMapper(CanardNodeID can_id, std::string can_iface) {
 
 }
 
-void UavcanMapper::map_can2ros(Can2Ros sub) {
-  can2ros.push_back(sub);
+void UavcanMapper::map_can2ros(CanardPortID port_id, std::function<void(CanardTransfer*)> callback) {
+  Can2Ros subscription{};
+  subscription.port_id = port_id;
+  subscription.callback = callback;
+  can2ros.push_back(subscription);
   Can2Ros* _sub = &can2ros[can2ros.size() - 1];
   // TODO configure timeout
   canardRxSubscribe(
     &can_node,
     CanardTransferKindMessage,
-    _sub->subject_id,
+    _sub->port_id,
     100,
     10000,
     &_sub->subscription
@@ -58,7 +61,7 @@ void UavcanMapper::handle_frame(struct can_frame* in_frame) {
   // TODO proper error handling
   if (rc == 1) {
     for (auto const& sub: can2ros) {
-      if (sub.subject_id == xfer.port_id) {
+      if (sub.port_id == xfer.port_id) {
         sub.callback(&xfer);
       }
     }

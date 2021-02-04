@@ -19,7 +19,7 @@
 
 /* -------- Convenience Macros -------- */
 // TODO error handling
-#define TX_TRANSFER(type, msg, _transfer_id, _port_id, _priority) {\
+#define TX_TRANSFER(mapper, type, msg, _transfer_id, _port_id, _priority) {\
   using namespace std::chrono; \
   uint8_t _ser_buf[type ## _SERIALIZATION_BUFFER_SIZE_BYTES_]; \
   size_t _ser_size = type ## _SERIALIZATION_BUFFER_SIZE_BYTES_; \
@@ -33,7 +33,7 @@
   _xfer.transfer_id = _transfer_id; \
   _xfer.payload = _ser_buf; \
   _xfer.payload_size = _ser_size; \
-  m->send_transfer(&_xfer); \
+  mapper->send_transfer(&_xfer); \
 }
 
 // TODO error handling
@@ -44,8 +44,9 @@
 
 /* -------- Main mapper helpers -------- */
 // TODO improve visibility constraints
+/// Internal subscription identifier.
 struct Can2Ros {
-  CanardPortID subject_id;
+  CanardPortID port_id;
   std::function<void(CanardTransfer*)> callback;
   CanardRxSubscription subscription;
 };
@@ -53,8 +54,7 @@ struct Can2Ros {
 class UavcanMapper {
   public:
     UavcanMapper(CanardNodeID can_id, std::string can_iface);
-    void map_can2ros(Can2Ros sub);
-    void handle_frame(struct can_frame* in_frame);
+    void map_can2ros(CanardPortID port_id, std::function<void(CanardTransfer*)> callback);
     void send_transfer(CanardTransfer* xfer);
 
     void spin();
@@ -70,6 +70,8 @@ class UavcanMapper {
     std::mutex _can_sock_mtx;
 
     std::vector<Can2Ros> can2ros;
+
+    void handle_frame(struct can_frame* in_frame);
 };
 
 /* -------- libcanard wrapper functions -------- */
