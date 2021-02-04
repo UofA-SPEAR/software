@@ -108,4 +108,4 @@ cd ~/ros
 rosdep install --from-paths src --ignore-src -r -y && \
 catkin build --force-cmake && \
 
-printf "Thanks for unpacking!\nNow that your enviroment is setup, you should never have to do this again.\nPlease run the following command to install the correct packages:\nrosdep install --from-paths src --ignore-src -r -y\n"
+printf "Thanks for unpacking!\nNow that your enviroment is setup, you should never have to do this again.\nIf you are running this manually and have added a new package, please run the following command to make sure ROS sees it: source ~/ros/devel/setup.bash\n"
