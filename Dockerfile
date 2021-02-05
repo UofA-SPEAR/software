@@ -23,7 +23,6 @@ RUN python3 -m pip install catkin_lint || echo "Error installing catkin_lint -- 
 RUN python3 -m pip install pygame ikpy osrf-pycommon
 
 # Install nunavut for serialization code generation
-RUN apt-get update && apt-get install -y python3-pip
 RUN pip3 install nunavut
 
 SHELL ["/ros_entrypoint.sh", "/bin/bash", "-c"]
