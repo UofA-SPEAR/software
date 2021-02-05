@@ -1,24 +1,26 @@
-FROM ros:melodic-robot
+FROM ros:noetic-robot
+ARG DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update && apt-get install -y qt4-default libx264-dev \
-                                         ros-melodic-rqt \
-                                         ros-melodic-gscam \
-                                         ros-melodic-catch-ros \
-                                         ros-melodic-tf \
-                                         ros-melodic-cv-bridge \
-                                         ros-melodic-rtabmap-ros \
-                                         ros-melodic-move-base \
-                                         python-pip \
+# nimbro_network needs qt4
+RUN apt-get update && apt-get install -y software-properties-common
+RUN add-apt-repository ppa:rock-core/qt4
+
+RUN apt-get update && apt-get install -y libx264-dev \
+                                         ros-noetic-rqt \
+                                         ros-noetic-catch-ros \
+                                         ros-noetic-tf \
+                                         ros-noetic-cv-bridge \
+                                         ros-noetic-rtabmap-ros \
+                                         ros-noetic-move-base \
+                                         python3-pip \
                                          tmux \
                                          curl \
                                          libxml2-utils \
-                                         python-catkin-tools \
+                                         python3-catkin-tools \
                                          iproute2
 
-RUN python -m pip install catkin_lint || echo "Error installing catkin_lint -- this is not a problem on the tx2"
-RUN python -m pip install typing
-# Later versions of ikpy drop Python 2 support
-RUN python -m pip install pygame ikpy==3.0.1
+RUN python3 -m pip install catkin_lint || echo "Error installing catkin_lint -- this is not a problem on the tx2"
+RUN python3 -m pip install pygame ikpy osrf-pycommon
 
 # Install nunavut for serialization code generation
 RUN apt-get update && apt-get install -y python3-pip

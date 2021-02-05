@@ -55,8 +55,8 @@ And add the following to your workspace settings:
     "python.languageServer": "Pylance",
     "python.analysis.extraPaths": [
         "/software/spear_rover/python",
-        "/root/ros/devel/lib/python2.7/dist-packages",
-        "/opt/ros/melodic/lib/python2.7/dist-packages"
+        "/root/ros/devel/lib/python3/dist-packages",
+        "/opt/ros/noetic/lib/python3/dist-packages"
     ],
     "python.analysis.typeCheckingMode": "basic",
     "python.formatting.provider": "yapf",

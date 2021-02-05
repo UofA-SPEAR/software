@@ -8,7 +8,7 @@ Sometimes, you might want to temporarily install a ROS package to test it out be
 To do this, simply start a docker container then use `apt-get install` to install the package.
 
 You will need to change the name of the ROS package to match the naming scheme of ROS packages in the apt repository.
-The involves replacing all the underscores in the ROS package name with hyphens and add the prefix `ros-kinetic` (or `ros-melodic` if you're using melodic).
+The involves replacing all the underscores in the ROS package name with hyphens and add the prefix `ros-kinetic` (or `ros-noetic` if you're using noetic).
 For example, if you wanted to install the ROS package `move_base`, you would use this command:
 
 ```bash
