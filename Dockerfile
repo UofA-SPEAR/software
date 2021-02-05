@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y libx264-dev \
                                          ros-noetic-rtabmap-ros \
                                          ros-noetic-move-base \
                                          python3-pip \
+                                         git \
                                          tmux \
                                          curl \
                                          libxml2-utils \
