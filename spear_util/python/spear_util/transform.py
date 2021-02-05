@@ -21,17 +21,21 @@ def get_tf_buffer():
 
 
 def lookup_transform_simple(
-        target_frame,
-        source_frame,
-        tf_buffer=None
-):  # type: (str, str, Optional[Buffer]) -> TransformStamped
+    target_frame,
+    source_frame,
+    tf_buffer=None,
+    timeout=60,
+):  # type: (str, str, Optional[Buffer], float) -> TransformStamped
     """
     A version of tf2_ros.TransformBuffer.lookup_transform which has some
-    reasonable defaults and is much simpler to use. The drawback is that this
-    function will hang forever if the transform cannot be performed.
+    reasonable defaults and is much simpler to use. If the transform cannot be
+    looked up within the timeout (default one minute), an exception is raised.
     """
     if tf_buffer is None:
         tf_buffer = get_tf_buffer()
+
+    start_time = rospy.Time.now()
+
     while not rospy.is_shutdown():
         try:
             return tf_buffer.lookup_transform(target_frame=target_frame,
@@ -41,6 +45,10 @@ def lookup_transform_simple(
 
         except Exception as err:
             rospy.logerr(err)
+
+        if (rospy.Time.now() - start_time).to_sec() < timeout:
+            raise RuntimeError(
+                f"Lookup transform {source_frame}->{target_frame} timed out")
 
 
 TransformableMessage = TypeVar("TransformableMessage",
