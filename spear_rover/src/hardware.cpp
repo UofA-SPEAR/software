@@ -1,12 +1,12 @@
-#include <spear_msgs/DriveCommand.h>
-#include <spear_msgs/JointCommand.h>
-#include <spear_msgs/DriveOdometry.h>
 #include <controller_manager/controller_manager.h>
 #include <hardware_interface/actuator_command_interface.h>
 #include <hardware_interface/joint_command_interface.h>
 #include <hardware_interface/joint_state_interface.h>
 #include <hardware_interface/robot_hw.h>
 #include <ros/ros.h>
+#include <spear_msgs/DriveCommand.h>
+#include <spear_msgs/DriveOdometry.h>
+#include <spear_msgs/JointCommand.h>
 
 #include <boost/functional.hpp>
 #include <memory>
@@ -62,10 +62,13 @@ class CASEDriveHardware : public RobotHWChild {
 
     wheel_commands_publisher = nh.advertise<spear_msgs::DriveCommand>(
         "/can/spear/actuators/drive_command", 1);
-    boost::function<void(const spear_msgs::DriveOdometry::ConstPtr &)> odom_callback =
-        [&](const spear_msgs::DriveOdometry::ConstPtr &message) { on_wheel_odom_message(message); };
-    wheel_odom_subscriber =
-        nh.subscribe("/can/spear/actuators/drive_odometry", 1000, odom_callback);
+    boost::function<void(const spear_msgs::DriveOdometry::ConstPtr &)>
+        odom_callback =
+            [&](const spear_msgs::DriveOdometry::ConstPtr &message) {
+              on_wheel_odom_message(message);
+            };
+    wheel_odom_subscriber = nh.subscribe("/can/spear/actuators/drive_odometry",
+                                         1000, odom_callback);
   }
 
   void write(const ros::Time &time, const ros::Duration &period) override {
@@ -81,7 +84,8 @@ class CASEDriveHardware : public RobotHWChild {
   void read(const ros::Time &time, const ros::Duration &period) override {}
 
  private:
-  void on_wheel_odom_message(const spear_msgs::DriveOdometry::ConstPtr &message) {
+  void on_wheel_odom_message(
+      const spear_msgs::DriveOdometry::ConstPtr &message) {
     // Index is in the same order as wheel_infos are initialized
     const auto wheel_index = message->id;
     wheel_infos.at(wheel_index).pos += message->delta;
