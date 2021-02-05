@@ -47,8 +47,8 @@ def lookup_transform_simple(
             rospy.logerr(err)
 
         if (rospy.Time.now() - start_time).to_sec() < timeout:
-            raise RuntimeError(
-                f"Lookup transform {source_frame}->{target_frame} timed out")
+            raise RuntimeError("Lookup transform {}->{} timed out".format(
+                source_frame, target_frame))
 
 
 TransformableMessage = TypeVar("TransformableMessage",
