@@ -18,7 +18,7 @@ RUN apt-get update && apt-get install -y qt4-default libx264-dev \
 RUN python -m pip install catkin_lint || echo "Error installing catkin_lint -- this is not a problem on the tx2"
 RUN python -m pip install typing
 # Later versions of ikpy drop Python 2 support
-RUN python -m pip install pygame ikpy==3.0.1
+RUN python -m pip install pygame ikpy==3.0.1 transforms3d
 
 # Install uavcan_gui_tool for can debugging / monitoring
 # (see https://uavcan.org/GUI_Tool/Overview/ for install docs)
