@@ -1,4 +1,4 @@
-﻿[![Build Status](https://travis-ci.com/UofA-SPEAR/software.svg?branch=master)](https://travis-ci.com/UofA-SPEAR/software)
+﻿![Build Status](https://github.com/UofA-SPEAR/software/workflows/Build,%20lint,%20and%20test/badge.svg?branch=master)
 
 # Software
 
