@@ -2,7 +2,7 @@
 #include <ros/ros.h>
 #include "canard.h"
 
-#include "spear/drive/DriveCommand_1_0.h"
+#include "spear/actuators/DriveCommand_1_0.h"
 
 #include <net/if.h>
 #include <sys/types.h>
@@ -51,13 +51,13 @@ int main(int argc, char **argv) {
 
     while (1) {
         using namespace std::chrono;
-        spear_drive_DriveCommand_1_0 cmd{};
+        spear_actuators_DriveCommand_1_0 cmd{};
         cmd.id.value = 2;
         cmd.speed = 12.0;
 
         uint8_t buf[20];
         size_t size = 10;
-        spear_drive_DriveCommand_1_0_serialize_(&cmd, buf, &size);
+        spear_actuators_DriveCommand_1_0_serialize_(&cmd, buf, &size);
 
         CanardTransfer xfer{};
         xfer.timestamp_usec = milliseconds(duration_cast<milliseconds>(steady_clock::now().time_since_epoch())).count();
