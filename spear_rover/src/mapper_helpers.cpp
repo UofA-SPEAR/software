@@ -31,11 +31,11 @@ UavcanMapper::UavcanMapper(CanardNodeID can_id, std::string can_iface) {
 }
 
 void UavcanMapper::map_can2ros(CanardPortID port_id, std::function<void(CanardTransfer*)> callback) {
-  Can2Ros subscription{};
+  CanSubscription subscription{};
   subscription.port_id = port_id;
   subscription.callback = callback;
   can2ros.push_back(subscription);
-  Can2Ros* _sub = &can2ros[can2ros.size() - 1];
+  CanSubscription* _sub = &can2ros[can2ros.size() - 1];
   // TODO configure timeout
   canardRxSubscribe(
     &can_node,

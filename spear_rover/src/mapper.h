@@ -45,7 +45,7 @@
 /* -------- Main mapper helpers -------- */
 // TODO improve visibility constraints
 /// Internal subscription identifier.
-struct Can2Ros {
+struct CanSubscription {
   CanardPortID port_id;
   std::function<void(CanardTransfer*)> callback;
   CanardRxSubscription subscription;
@@ -69,7 +69,7 @@ class UavcanMapper {
     int _can_sock;
     std::mutex _can_sock_mtx;
 
-    std::vector<Can2Ros> can2ros;
+    std::vector<CanSubscription> can2ros;
 
     void handle_frame(struct can_frame* in_frame);
 };

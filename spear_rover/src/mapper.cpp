@@ -13,6 +13,36 @@
 #include "spear/actuators/JointCommand_1_0.h"
 #include "spear/actuators/DriveOdometry_1_0.h"
 
+void ros2can_drive_cb(std::shared_ptr<UavcanMapper>& m, const spear_msgs::DriveCommand::ConstPtr& msg) {
+  // Transfer ID must monotonically increase
+  static uint8_t transfer_id = 0;
+
+  // Business conversion logic, in this case it's a 1:1 mapping so very simple.
+  spear_actuators_DriveCommand_1_0 cmd;
+  cmd.speed = msg->speed;
+  cmd.id.value = msg->id;
+
+  // Simplest I could make a macro.
+  TX_TRANSFER(m, spear_actuators_DriveCommand_1_0, cmd, transfer_id, 0, CanardPriorityNominal);
+  transfer_id++;
+}
+
+void ros2can_joint_cb(std::shared_ptr<UavcanMapper>& m, const spear_msgs::JointCommand::ConstPtr& msg) {
+  // Transfer ID must monotonically increase
+  static uint8_t transfer_id = 0;
+
+  // Business conversion logic, in this case it's a 1:1 mapping so very simple.
+  spear_actuators_JointCommand_1_0 cmd;
+  cmd.angle = msg->angle;
+  cmd.id.value = msg->id;
+
+  // Simplest I could make a macro.
+  // TODO decide on port IDs
+  TX_TRANSFER(m, spear_actuators_JointCommand_1_0, cmd, transfer_id, 0, CanardPriorityNominal);
+  transfer_id++;
+}
+
+
 int main(int argc, char **argv) {
   ros::init(argc, argv, "uavcan_mapper");
   auto nh = std::make_unique<ros::NodeHandle>();
@@ -23,38 +53,18 @@ int main(int argc, char **argv) {
   auto m = std::make_shared<UavcanMapper>(can_id, can_iface);
 
   /* -------- Subscribe to relevant ROS topics here -------- */
-  boost::function<void(const spear_msgs::DriveCommand::ConstPtr&)> ros2can_drive_cb =
-    [&](const spear_msgs::DriveCommand::ConstPtr& msg) {
-      // Transfer ID must monotonically increase
-      static uint8_t transfer_id = 0;
-
-      // Business conversion logic, in this case it's a 1:1 mapping so very simple.
-      spear_actuators_DriveCommand_1_0 cmd;
-      cmd.speed = msg->speed;
-      cmd.id.value = msg->id;
-
-      // Simplest I could make a macro.
-      TX_TRANSFER(m, spear_actuators_DriveCommand_1_0, cmd, transfer_id, 0, CanardPriorityNominal);
-      transfer_id++;
+  //boost::function<void(const spear_msgs::DriveCommand::ConstPtr&)> ros2can_drive_cb =
+  //  [&](const spear_msgs::DriveCommand::ConstPtr& msg) {
+  //};
+  boost::function<void(const spear_msgs::DriveCommand::ConstPtr&)> _ros2can_drive_cb = [&m](const auto msg) {
+    ros2can_drive_cb(m, msg);
   };
-  auto _ros2can_drive_sub = nh->subscribe("/can/spear/actuators/drive_command", 100, ros2can_drive_cb);
+  auto _ros2can_drive_sub = nh->subscribe("/can/spear/actuators/drive_command", 100, _ros2can_drive_cb);
 
-  boost::function<void(const spear_msgs::JointCommand::ConstPtr&)> ros2can_joint_cb =
-    [&](const spear_msgs::JointCommand::ConstPtr& msg) {
-      // Transfer ID must monotonically increase
-      static uint8_t transfer_id = 0;
-
-      // Business conversion logic, in this case it's a 1:1 mapping so very simple.
-      spear_actuators_JointCommand_1_0 cmd;
-      cmd.angle = msg->angle;
-      cmd.id.value = msg->id;
-
-      // Simplest I could make a macro.
-      // TODO decide on port IDs
-      TX_TRANSFER(m, spear_actuators_JointCommand_1_0, cmd, transfer_id, 0, CanardPriorityNominal);
-      transfer_id++;
+  boost::function<void(const spear_msgs::JointCommand::ConstPtr&)> _ros2can_joint_cb = [&](const auto msg) {
+    ros2can_joint_cb(m, msg);
   };
-  auto _ros2can_arm_sub = nh->subscribe("/can/spear/actuators/joint_command", 100, ros2can_joint_cb);
+  auto _ros2can_arm_sub = nh->subscribe("/can/spear/actuators/joint_command", 100, _ros2can_joint_cb);
 
   /* -------- UAVCAN mappings -------- */
   // Map drive odometry messages from CAN into ROS.
