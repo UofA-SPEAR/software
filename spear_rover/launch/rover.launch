@@ -12,7 +12,7 @@
   </include>
 
   <!-- Map ROS messages to/from CAN messages -->
-  <node name="can_mapper" pkg="spear_rover" type="mapper.py" output="screen"/>
+  <node name="mapper_node" pkg="spear_rover" type="mapper_node" output="screen"/>
 
   <!-- Convert twist messages to motor commands, publish wheel odometry -->
   <include file="$(find spear_rover)/launch/hardware.launch"/>

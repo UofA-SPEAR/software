@@ -38,7 +38,7 @@ void ros2can_joint_cb(std::shared_ptr<UavcanMapper>& m, const spear_msgs::JointC
 
   // Simplest I could make a macro.
   // TODO decide on port IDs
-  TX_TRANSFER(m, spear_actuators_JointCommand_1_0, cmd, transfer_id, 0, CanardPriorityNominal);
+  TX_TRANSFER(m, spear_actuators_JointCommand_1_0, cmd, transfer_id, 1, CanardPriorityNominal);
   transfer_id++;
 }
 
@@ -68,8 +68,8 @@ int main(int argc, char **argv) {
 
   /* -------- UAVCAN mappings -------- */
   // Map drive odometry messages from CAN into ROS.
-  ros::Publisher can2ros_odom_pub = nh->advertise<spear_msgs::DriveCommand>("/can/spear/actuators/drive_odometry", 100);
-  m->map_can2ros(0, [&can2ros_odom_pub](CanardTransfer* xfer) {
+  ros::Publisher can2ros_odom_pub = nh->advertise<spear_msgs::DriveOdometry>("/can/spear/actuators/drive_odometry", 100);
+  m->map_can2ros(3, [&can2ros_odom_pub](CanardTransfer* xfer) {
     // Need to deserialize UAVCAN message and deal with the transfer
     spear_actuators_DriveOdometry_1_0 cmd;
     RX_TRANSFER(spear_actuators_DriveOdometry_1_0, xfer, cmd);

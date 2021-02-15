@@ -79,7 +79,7 @@ void UavcanMapper::send_transfer(CanardTransfer* xfer) {
   const CanardFrame* frame;
   while ((frame = canardTxPeek(&can_node)) != NULL) {
     struct can_frame out_frame;
-    out_frame.can_id = frame->extended_can_id;
+    out_frame.can_id = frame->extended_can_id | CAN_EFF_FLAG;
     out_frame.can_dlc = frame->payload_size;
     memcpy(out_frame.data, frame->payload, frame->payload_size);
     int rc = write(_can_sock, &out_frame, sizeof(out_frame));
