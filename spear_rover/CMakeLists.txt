@@ -164,20 +164,3 @@ target_include_directories(mapper_node
 target_link_libraries(mapper_node
     ${catkin_LIBRARIES}
 )
-
-
-############ Temp Testing stuff
-add_executable(can_sender
-    src/can_sender.cpp
-    libcanard/libcanard/canard.c
-)
-# TODO how the hell do I add the include directories
-target_include_directories(can_sender
-    PUBLIC
-    libcanard/libcanard/
-    dsdl/
-    dsdl/nunavut
-)
-target_link_libraries(can_sender
-    ${catkin_LIBRARIES}
-)
