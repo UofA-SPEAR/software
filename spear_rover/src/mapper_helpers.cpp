@@ -9,11 +9,13 @@ UavcanMapper::UavcanMapper(CanardNodeID can_id, std::string can_iface) {
   can_node.node_id = can_id;
 
   // Note: I was talking with some external people about some of the C++ stuff,
-  // and substrate was recommended to me as a library: https://github.com/bad-alloc-heavy-industries/substrate
+  // and substrate was recommended to me as a library:
+  // https://github.com/bad-alloc-heavy-industries/substrate
   //
-  // It has much nicer abstractions for sockets and some core stuff that would be much nicer to use.
-  // Integrating it could be as simple as adding it as a submodule and an include directory, but it's an
-  // extra unnecessary dependancy, so I'm not adding it in yet unless others find it interesting.
+  // It has much nicer abstractions for sockets and some core stuff that would
+  // be much nicer to use. Integrating it could be as simple as adding it as a
+  // submodule and an include directory, but it's an extra unnecessary
+  // dependancy, so I'm not adding it in yet unless others find it interesting.
   if ((_can_sock = socket(PF_CAN, SOCK_RAW, CAN_RAW)) < 0) {
     perror("Error while openning CAN socket");
     throw;
@@ -23,28 +25,22 @@ UavcanMapper::UavcanMapper(CanardNodeID can_id, std::string can_iface) {
   can_addr.can_family = AF_CAN;
   can_addr.can_ifindex = can_ifr.ifr_ifindex;
   // TODO idiomatic C++ casts
-  if (bind(_can_sock, (struct sockaddr *)&can_addr, sizeof(can_addr)) < 0) {
+  if (bind(_can_sock, (struct sockaddr*)&can_addr, sizeof(can_addr)) < 0) {
     perror("Error binding to CAN socket");
     throw;
   }
-
 }
 
-void UavcanMapper::map_can2ros(CanardPortID port_id, std::function<void(CanardTransfer*)> callback) {
+void UavcanMapper::map_can2ros(CanardPortID port_id,
+                               std::function<void(CanardTransfer*)> callback) {
   CanSubscription subscription{};
   subscription.port_id = port_id;
   subscription.callback = callback;
   can2ros.push_back(subscription);
   CanSubscription* _sub = &can2ros[can2ros.size() - 1];
   // TODO configure timeout
-  canardRxSubscribe(
-    &can_node,
-    CanardTransferKindMessage,
-    _sub->port_id,
-    100,
-    10000,
-    &_sub->subscription
-  );
+  canardRxSubscribe(&can_node, CanardTransferKindMessage, _sub->port_id, 100,
+                    10000, &_sub->subscription);
 }
 
 void UavcanMapper::handle_frame(struct can_frame* in_frame) {
@@ -54,19 +50,21 @@ void UavcanMapper::handle_frame(struct can_frame* in_frame) {
   frame.payload = &in_frame->data;
   frame.payload_size = in_frame->can_dlc;
   // TODO timestamps
-  frame.timestamp_usec = milliseconds(duration_cast<milliseconds>(steady_clock::now().time_since_epoch())).count();
+  frame.timestamp_usec =
+      milliseconds(
+          duration_cast<milliseconds>(steady_clock::now().time_since_epoch()))
+          .count();
 
   CanardTransfer xfer;
   int8_t rc = canardRxAccept(&can_node, &frame, 0, &xfer);
   // TODO proper error handling
   if (rc == 1) {
-    for (auto const& sub: can2ros) {
+    for (auto const& sub : can2ros) {
       if (sub.port_id == xfer.port_id) {
         sub.callback(&xfer);
       }
     }
   }
-
 }
 
 void UavcanMapper::send_transfer(CanardTransfer* xfer) {
