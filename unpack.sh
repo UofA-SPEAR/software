@@ -31,7 +31,7 @@ DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null && pwd )"
 git submodule update --init --recursive
 
 # Generate UAVCAN DSDL
-generate_dsdl.sh
+./generate_dsdl.sh
 
 ###### Setup ros path
 cd ~
