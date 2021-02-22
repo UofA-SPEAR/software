@@ -13,8 +13,7 @@ them away and you don't need to know exactly how they work to add new mappings.
 3) Test the living heck out of everything.
 
 ## Testing locally (i.e. in a VM)
-You can use a virtual CAN bus to facilitate testing this node. Run the
-`vcan-setup.bash` script within this directory to set one up. I reccomend
+You can use a virtual CAN bus to facilitate testing this node. Run `make setup-vcan` to set one up. I reccomend
 downloading the official [UAVCAN GUI tool](https://uavcan.org/GUI_Tool/Overview/)
 to send and recieve UAVCAN messages (the bus monitor is particuarly useful).
 
