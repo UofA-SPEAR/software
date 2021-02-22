@@ -1,3 +1,5 @@
+include config.mk
+
 scripts_dir=scripts
 
 .PHONY: all
@@ -26,8 +28,8 @@ run-docker-with-vcan:
 # Compilation
 
 .PHONY: build
-build:
-	./$(scripts_dir)/build.bash
+build: $(if $(filter $(BUILD_GENERATE_DSDL), true), generate-dsdl)
+	BUILD_COPY_HEADERS_AND_LIBS=$(BUILD_COPY_HEADERS_AND_LIBS) ./$(scripts_dir)/build.bash
 
 # Testing
 
@@ -50,11 +52,7 @@ generate-dsdl: init-submodules
 
 .PHONY: unpack
 unpack: generate-dsdl init-submodules
-	./$(scripts_dir)/unpack.sh dev
-
-.PHONY: unpack-rover
-unpack-rover: generate_dsdl
-	./$(scripts_dir)/unpack.sh rover
+	UNPACK_ENV=$(UNPACK_ENV) UNPACK_SKIP_BUILD=$(UNPACK_SKIP_BUILD) ./$(scripts_dir)/unpack.sh
 
 # Stuff for initializing CAN
 

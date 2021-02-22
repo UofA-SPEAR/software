@@ -36,4 +36,4 @@ jobs:
     - name: Build the Docker image
       run: docker-compose build
     - name: Run catkin lint
-      run: docker run spear bash make lint-catkin
+      run: docker run spear make lint-catkin
