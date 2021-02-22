@@ -30,6 +30,9 @@ DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null && pwd )"
 ###### Update/ install git submodules
 git submodule update --init --recursive
 
+# Generate UAVCAN DSDL
+./generate_dsdl.sh
+
 ###### Setup ros path
 cd ~
 mkdir -p ~/ros/src

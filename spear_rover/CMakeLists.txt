@@ -137,7 +137,6 @@ target_link_libraries(hardware_node
 
 
 install(PROGRAMS
-    nodes/mapper.py
     nodes/move_with_twist.py
     DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
@@ -147,4 +146,20 @@ target_link_libraries(gps_to_frame_server ${catkin_LIBRARIES})
 add_dependencies(gps_to_frame_server ${PROJECT_NAME}_gencpp
    ${${PROJECT_NAME}_EXPORTED_TARGETS}
    ${catkin_EXPORTED_TARGETS}
+)
+
+#### UAVCAN Mapper Node
+add_executable(mapper_node
+    src/mapper.cpp
+    src/mapper_helpers.cpp
+    libcanard/libcanard/canard.c
+)
+target_include_directories(mapper_node
+    PUBLIC
+    libcanard/libcanard
+    dsdl/
+    dsdl/nunavut
+)
+target_link_libraries(mapper_node
+    ${catkin_LIBRARIES}
 )
