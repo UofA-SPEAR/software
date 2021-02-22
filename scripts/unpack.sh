@@ -25,13 +25,10 @@ while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symli
   SOURCE="$(readlink "$SOURCE")"
   [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
 done
-DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null && pwd )"
+DIR="$( cd -P "$( dirname "$SOURCE/.." )" >/dev/null && pwd )"
 
 ###### Update/ install git submodules
 git submodule update --init --recursive
-
-# Generate UAVCAN DSDL
-./generate_dsdl.sh
 
 ###### Setup ros path
 cd ~

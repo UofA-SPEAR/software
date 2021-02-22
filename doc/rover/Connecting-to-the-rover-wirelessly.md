@@ -61,7 +61,7 @@ Now ssh into the tx2 using `ssh -X nvidia@192.168.1.61` (the password is `nvidia
 Every time the tx2 reboots you will need to set up CAN.
 To do this, run the setup script with
 
-    /home/nvidia/Desktop/setup-can.bash
+    make setup-can
 
 Now run everything needed for drive using
 
