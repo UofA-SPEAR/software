@@ -40,12 +40,16 @@ rostest:
 
 # Unpacking, bootstrapping, etc.
 
+.PHONY: init-submodules
+init-submodules:
+	git submodule update --init --recursive
+
 .PHONY: generate-dsdl
-generate-dsdl:
+generate-dsdl: init-submodules
 	./$(scripts_dir)/generate_dsdl.sh
 
 .PHONY: unpack
-unpack: generate-dsdl
+unpack: generate-dsdl init-submodules
 	./$(scripts_dir)/unpack.sh dev
 
 .PHONY: unpack-rover
