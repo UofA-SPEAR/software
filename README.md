@@ -222,4 +222,4 @@ Note: we are linting for python 3.5.
 
 ### Launch files
 
-You will have to format the code yourself. If you want, you can use `xmllint --format`, but this removes all blank lines in the code which can harm readability. To check XML formatting for the launch files, run `./xml_lint.bash`. See [the Wiki](https://github.com/UofA-SPEAR/software/wiki/XML-Formatting-and-Linting).
+You will have to format the code yourself. If you want, you can use `xmllint --format`, but this removes all blank lines in the code which can harm readability. To check XML formatting for the launch files, run `make lint-xml`. See [the Wiki](https://github.com/UofA-SPEAR/software/wiki/XML-Formatting-and-Linting).

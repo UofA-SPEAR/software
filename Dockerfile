@@ -53,5 +53,5 @@ COPY . /software
 # modprobing things
 ENV IS_DOCKER true
 
-RUN ( cd software && bash ./unpack.sh dev )
+RUN ( cd software && make unpack )
 WORKDIR /software
