@@ -24,7 +24,7 @@ $ ip -d -s -h -c link show vcan0
     link/can
 ```
 
-Or, use the `setup-vcan.bash` script on the desktop.
+Or, use `make setup-vcan` on the desktop.
 
 ### For using with physical CAN nodes hooked up
 
@@ -49,7 +49,7 @@ $ sudo ip link set up can0
 $ ip -d -s -h -c link show can0
 ```
 
-Or, use the `setup-can.bash` script on the desktop.
+Or, use the `make setup-can` script on the desktop.
 
 #### Explanation of parameters:
 - `type can`: Set type of interface to can

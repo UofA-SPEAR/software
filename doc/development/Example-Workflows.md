@@ -69,25 +69,25 @@ And add the following to your workspace settings:
 
 `clangd` knows what things like include paths are by reading a file called `compile-commands.json`.
 Our `build.bash` script automatically copies over this file, but currently the method for doing so is broken in this workflow.
-To fix it, go to `build.bash` and replace this line
+To fix it, go to `scripts/build.bash` and replace this line
 
 ```
-cp ~/ros/build/compile_commands.json ${SCRIPT_DIR}/compile_commands.original.json
+cp ~/ros/build/compile_commands.json ${SOURCE_DIR}/compile_commands.original.json
 ```
 
 with this one
 
 ```
-cp ~/ros/build/compile_commands.json ${SCRIPT_DIR}/compile_commands.json
+cp ~/ros/build/compile_commands.json ${SOURCE_DIR}/compile_commands.json
 ```
 
 and delete everything after that line.
 
-Now run `./build.bash` and C++ autocomplete should work.
+Now run `make build` and C++ autocomplete should work.
 
 ### Building and running
 
-After changing a C++ source file, you will need to run `./build.bash` for the changes to be reflected in anything you run.
+After changing a C++ source file, you will need to run `make build` for the changes to be reflected in anything you run.
 Changes to Python files will be reflected immediately after changing them.
 
 You can use the `rosrun` and `roslaunch` commands from anywhere.

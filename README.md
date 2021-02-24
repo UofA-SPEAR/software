@@ -140,21 +140,21 @@ which runs the `spear` image as a container named `spear-container` (it also run
 ### Run with CANBus support
 
 We use CANBus for communicating between boards. Docker requires that some kernel
-modules are loaded by the host for CANBus to work. We use the
-[`docker-with-can.bash`](./docker-with-can.bash) script to handle that. It loads
+modules are loaded by the host for CANBus to work. We use the command
+`make run-docker-with-can` to handle that. It loads
 the kernel modules and runs `docker-compose run spear` for you.
 
 If you want to use a physical, real CANBus network, i.e. on the rover itself, run:
 
 ```bash
-./docker-with-can.bash
+make run-docker-with-can
 ```
 
 If you want to test CANBus locally (i.e. on your own machine) with a virtual
 CANBus network, run:
 
 ```bash
-./docker-with-can.bash --vcan
+make run-docker-with-vcan
 ```
 
 ## Working in Docker
@@ -172,7 +172,7 @@ Or, if you also want to generate things like `compile-commands.json` (which give
 
 ```bash
 cd /software
-./build.bash
+make build
 ```
 
 # Virtual machine setup and install instructions
@@ -222,4 +222,4 @@ Note: we are linting for python 3.5.
 
 ### Launch files
 
-You will have to format the code yourself. If you want, you can use `xmllint --format`, but this removes all blank lines in the code which can harm readability. To check XML formatting for the launch files, run `./xml_lint.bash`. See [the Wiki](https://github.com/UofA-SPEAR/software/wiki/XML-Formatting-and-Linting).
+You will have to format the code yourself. If you want, you can use `xmllint --format`, but this removes all blank lines in the code which can harm readability. To check XML formatting for the launch files, run `make lint-xml`. See [the Wiki](https://github.com/UofA-SPEAR/software/wiki/XML-Formatting-and-Linting).

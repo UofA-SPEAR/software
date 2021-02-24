@@ -1,21 +1,17 @@
 #!/usr/bin/env bash
 
-# NOT VERIFIED, DO NOT USE THIS
-
-# Parse command line options
-# Some dependencies only need to be installed on the rover
-if [ "$1" == "dev" ]; then
+# Parse options
+if [ $UNPACK_ENV == "dev" ]; then
     DEV=true
     echo dev
-elif [ "$1" == "rover" ]; then
+elif [ $UNPACK_ENV == "rover" ]; then
     ROVER=true
     echo rover
 else
-    echo "Usage: unpack.sh [dev|rover]"
-    echo "Use dev if you're developing on your own computer"
-    echo "Use rover if you're unpacking on the tx2 (this will install zed-ros-wrapper)"
+    echo "UNPACK_ENV should be set to one of rover or dev"
     exit 1
 fi
+SKIP_BUILD=$UNPACK_SKIP_BUILD
 
 ###### Get script location
 # https://stackoverflow.com/a/246128
@@ -25,19 +21,15 @@ while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symli
   SOURCE="$(readlink "$SOURCE")"
   [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
 done
-DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null && pwd )"
-
-###### Update/ install git submodules
-git submodule update --init --recursive
-
-# Generate UAVCAN DSDL
-./generate_dsdl.sh
+DIR="$( cd -P "$( dirname "$SOURCE/" )/.." >/dev/null && pwd )"
 
 ###### Setup ros path
 cd ~
 mkdir -p ~/ros/src
 cd ~/ros
-catkin build
+if ! $SKIP_BUILD; then
+    catkin build
+fi
 # Add a line in .bashrc to source ros setup script
 # Uses grep to check if the line already exists
 if ! grep -Fxq "source ~/ros/devel/setup.bash" ~/.bashrc
@@ -108,9 +100,12 @@ ln -s $DIR/spear_util
 ln -s $DIR/tests
 
 ###### Build everything
+set -e
 cd ~/ros
 # update rosdeps first
-rosdep install --from-paths src --ignore-src -r -y && \
-catkin build --force-cmake && \
+rosdep install --from-paths src --ignore-src -r -y
+if ! $SKIP_BUILD; then
+    catkin build --force-cmake
+fi
 
 printf "Thanks for unpacking!\nNow that your enviroment is setup, you should never have to do this again.\nIf you are running this manually and have added a new package, please run the following command to make sure ROS sees it: source ~/ros/devel/setup.bash\n"
