@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #
 # An interface between ros messages and the uavcan protocol.
 

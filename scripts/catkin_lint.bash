@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-python -m catkin_lint ~/ros/src \
+python3 -m catkin_lint ~/ros/src \
   --skip-pkg case_moveit_config \
   --skip-pkg spear_flexbe_states \
   --skip-pkg canros \
@@ -13,5 +13,7 @@ python -m catkin_lint ~/ros/src \
   --skip-pkg flexbe_app \
   --skip-pkg ros_numpy \
   --skip-pkg roboticsgroup_upatras_gazebo_plugins \
+  --skip-pkg ar_track_alvar \
+  --skip-pkg ar_track_alvar_msgs \
   -W2 \
   "$@"

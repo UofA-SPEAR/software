@@ -18,7 +18,7 @@ You can create and edit this file outside the docker container (in your virtual 
 In this file, paste the following code:
 
 ```python
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import rospy
 from std_msgs.msg import String
 
@@ -51,7 +51,7 @@ chmod +x talker.py
 I'll go line by line and explain the code above.
 
 ```python
-#!/usr/bin/env python
+#!/usr/bin/env python3
 ```
 
 This tells the computer to execute the file using the python interpreter (as opposed to the interpreter for some other language like bash).
@@ -137,7 +137,7 @@ Create another file in `software/spear_rover/nodes` called `listener.py`.
 Paste in the following code:
 
 ```python
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import rospy
 from std_msgs.msg import String
 
@@ -164,7 +164,7 @@ chmod +x listener.py
 ## Explanation of subscriber code
 
 ```python
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import rospy
 from std_msgs.msg import String
 ```
