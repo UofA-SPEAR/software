@@ -64,7 +64,6 @@ fi
 ###### Install various dependencies from source
 
 repos=(
-    MonashUAS/canros
     gareth-cross/rviz_satellite:master
     FlexBE/flexbe_app:master
     eric-wieser/ros_numpy:master
@@ -85,7 +84,6 @@ pip3 install uavcan
 mkdir -p ~/uavcan_vendor_specific_types
 cd ~/uavcan_vendor_specific_types
 ln -s ~/ros/src/uavcan_dsdl/spear
-pip3 install monotonic # Dependency for canros
 
 ###### Link our packages
 # This needs to be moved all back into rover2 at some point

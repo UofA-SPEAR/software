@@ -3,7 +3,6 @@
 python3 -m catkin_lint ~/ros/src \
   --skip-pkg case_moveit_config \
   --skip-pkg spear_flexbe_states \
-  --skip-pkg canros \
   --skip-pkg nimbro_topic_transport \
   --skip-pkg nimbro_service_transport \
   --skip-pkg nimbro_log_transport \

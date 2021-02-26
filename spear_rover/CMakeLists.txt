@@ -9,7 +9,6 @@ add_compile_options(-std=c++14)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
     actionlib
-    canros
     controller_manager
     cv_bridge
     geometry_msgs
@@ -50,7 +49,6 @@ catkin_package(
 #  LIBRARIES rover2
   CATKIN_DEPENDS
   actionlib
-  canros
   controller_manager
   cv_bridge
   geometry_msgs
