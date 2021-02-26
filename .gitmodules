@@ -1,0 +1,6 @@
+[submodule "pkg/pkg/case_hardware/libcanard"]
+	path = pkg/pkg/case_hardware/libcanard
+	url = https://github.com/UAVCAN/libcanard
+[submodule "pkg/pkg/case_hardware/uavcan_dsdl"]
+	path = pkg/pkg/case_hardware/uavcan_dsdl
+	url = https://github.com/UofA-SPEAR/uavcan_dsdl
