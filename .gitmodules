@@ -1,6 +1,6 @@
 [submodule "spear_rover/libcanard"]
-	path = spear_rover/libcanard
+	path = pkg/spear_rover/libcanard
 	url = https://github.com/UAVCAN/libcanard
 [submodule "spear_rover/uavcan_dsdl"]
-	path = spear_rover/uavcan_dsdl
+	path = pkg/spear_rover/uavcan_dsdl
 	url = https://github.com/UofA-SPEAR/uavcan_dsdl
