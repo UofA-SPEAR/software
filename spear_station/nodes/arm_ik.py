@@ -1,9 +1,9 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import math
 from tempfile import TemporaryFile
 from typing import Callable, Dict, Generic, Iterable, Optional, TypeVar
 
-import ikpy
+from ikpy.chain import Chain
 import numpy as np
 import pygame
 import rospy
@@ -61,12 +61,12 @@ class IKPlanner:
                                                   links=False)
 
     @staticmethod
-    def _get_ikpy_chain(base_link):  # type: (str) -> ikpy.chain.Chain
-        robot_description = rospy.get_param('robot_description')
+    def _get_ikpy_chain(base_link):  # type: (str) -> Chain
+        robot_description: str = rospy.get_param('robot_description')
         with TemporaryFile() as file:
-            file.write(robot_description)
+            file.write(robot_description.encode())
             file.seek(0)
-            return ikpy.chain.Chain.from_urdf_file(file, [base_link])
+            return Chain.from_urdf_file(file, [base_link])
 
     def angles(self, target_position):  # type: (np.ndarray) -> JointAngles
         angles = self._chain.inverse_kinematics(target_position)
