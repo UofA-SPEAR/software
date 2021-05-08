@@ -4,32 +4,32 @@ on: [push, pull_request]
 
 jobs:
   python_lint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - run: sudo apt-get install pep8
       - uses: actions/checkout@v2
       - run: pep8 --ignore=E501 --exclude=spear_behaviors/spear_flexbe_behaviors/src .
   cpp_lint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
-      - run: sudo apt-get install clang-format-3.9
+      - run: sudo apt-get install clang-format-11
       - uses: actions/checkout@v2
-      - run: "! find . -iname '*.h' -o -iname '*.cpp' | xargs clang-format-3.9 -output-replacements-xml -style=Google | grep -F \"</replacement>\""
+      - run: "! find . -iname '*.h' -o -iname '*.cpp' | xargs clang-format-11 -output-replacements-xml -style=Google | grep -F \"</replacement>\""
   js_lint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - run: nvm install 12.13
         shell: bash -l {0}
       - uses: actions/checkout@v2
       - run: cd linting && bash javascript.sh
   xml_lint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - run: sudo apt-get install libxml2-utils
       - uses: actions/checkout@v2
       - run: make lint-xml
   build_image:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     needs: [python_lint, cpp_lint, js_lint, xml_lint]  # Don't consume build minutes if linting fails
     steps:
     - uses: actions/checkout@v2
