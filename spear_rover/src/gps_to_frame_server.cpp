@@ -1,17 +1,15 @@
-#include "robot_localization/navsat_conversions.h"
-#include "ros/ros.h"
-#include "spear_rover/GpsToFrame.h"
-
-#include "geometry_msgs/Point.h"
-#include "sensor_msgs/NavSatFix.h"
-
-#include "tf/tf.h"
-#include "tf/transform_listener.h"
-
 #include <chrono>
 #include <memory>
 #include <string>
 #include <thread>
+
+#include "geometry_msgs/Point.h"
+#include "robot_localization/navsat_conversions.h"
+#include "ros/ros.h"
+#include "sensor_msgs/NavSatFix.h"
+#include "spear_rover/GpsToFrame.h"
+#include "tf/tf.h"
+#include "tf/transform_listener.h"
 
 using namespace std::chrono_literals;
 
