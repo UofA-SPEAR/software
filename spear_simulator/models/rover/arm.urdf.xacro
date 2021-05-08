@@ -65,7 +65,7 @@
     <limit lower="-3.15" upper="3.15" effort="1" velocity="0.5"/>
   </container></xacro:arm_joint>
 
-  <arm_link name="shoulder" length="${shoulder_height}"/>
+  <xacro:arm_link name="shoulder" length="${shoulder_height}"/>
 
   <xacro:arm_joint name="shoulder_pitch"><container>
     <parent link="shoulder"/>
@@ -75,7 +75,7 @@
     <limit lower="0.78" upper="2.15" effort="1" velocity="0.5"/>
   </container></xacro:arm_joint>
 
-  <arm_link name="bicep" length="${bicep_length}"/>
+  <xacro:arm_link name="bicep" length="${bicep_length}"/>
 
   <xacro:arm_joint name="elbow_pitch"><container>
     <parent link="bicep"/>
@@ -85,7 +85,7 @@
     <limit lower="-2.7" upper="1.54" effort="1" velocity="0.5"/>
   </container></xacro:arm_joint>
 
-  <arm_link name="forearm" length="${forearm_length}"/>
+  <xacro:arm_link name="forearm" length="${forearm_length}"/>
 
   <xacro:arm_joint name="wrist_pitch"><container>
     <parent link="forearm"/>
@@ -95,7 +95,7 @@
     <limit lower="-2.09" upper="2.09" effort="1" velocity="0.5"/>
   </container></xacro:arm_joint>
 
-  <arm_link name="wrist" length="${wrist_length}"/>
+  <xacro:arm_link name="wrist" length="${wrist_length}"/>
 
   <xacro:arm_joint name="wrist_roll"><container>
     <parent link="wrist"/>
@@ -105,7 +105,7 @@
     <limit lower="-3" upper="3" effort="1" velocity="0.5"/>
   </container></xacro:arm_joint>
 
-  <arm_link name="palm" length="${palm_length}"/>
+  <xacro:arm_link name="palm" length="${palm_length}"/>
 
   <xacro:arm_joint name="grab"><container>
     <parent link="palm"/>

@@ -64,28 +64,26 @@ fi
 ###### Install various dependencies from source
 
 repos=(
-    MonashUAS/canros
-    gareth-cross/rviz_satellite
-    FlexBE/flexbe_app
-    eric-wieser/ros_numpy
-    AIS-Bonn/nimbro_network
-    UofA-SPEAR/uavcan_dsdl
-    roboticsgroup/roboticsgroup_upatras_gazebo_plugins
+    gareth-cross/rviz_satellite:master
+    FlexBE/flexbe_app:master
+    eric-wieser/ros_numpy:master
+    UofA-SPEAR/nimbro_network:noetic
+    UofA-SPEAR/uavcan_dsdl:master
+    roboticsgroup/roboticsgroup_upatras_gazebo_plugins:master
+    machinekoder/ar_track_alvar:noetic-devel
 )
 
 cd ~/ros/src
-for repo in ${repos[@]}; do
-    echo $repo
-    git clone https://github.com/$repo.git --depth=1 --recurse-submodules --jobs=12 &
+for item in ${repos[@]}; do
+    IFS=':' read repo branch <<< "${item}"
+    echo "$repo ($branch)"
+    git clone --branch $branch https://github.com/$repo.git --depth=1 --recurse-submodules --jobs=12 &
 done
 wait
-mv nimbro_network/*/ .
-rm -rf nimbro_network
-python -m pip install uavcan
+pip3 install uavcan
 mkdir -p ~/uavcan_vendor_specific_types
 cd ~/uavcan_vendor_specific_types
 ln -s ~/ros/src/uavcan_dsdl/spear
-python -m pip install monotonic # Dependency for canros
 
 ###### Link our packages
 # This needs to be moved all back into rover2 at some point

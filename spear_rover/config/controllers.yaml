@@ -4,8 +4,8 @@ drive_controller:
     type: "diff_drive_controller/DiffDriveController"
     publish_rate: 50
 
-    left_wheel: ['link_wheel_backleft', 'link_wheel_frontleft']
-    right_wheel: ['link_wheel_backright', 'link_wheel_frontright']
+    left_wheel: ['joint_wheel_backleft', 'joint_wheel_frontleft']
+    right_wheel: ['joint_wheel_backright', 'joint_wheel_frontright']
 
     # DiffDriveController isn't really meant for skid-steering, so it doesn't
     # understand that the robot is actually turning much slower than it is asked

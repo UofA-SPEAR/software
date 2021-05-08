@@ -33,7 +33,7 @@
     </link>
 
     <!-- Stuff to make the wheels driveable -->
-    <joint name="link_wheel_${name}" type="continuous">
+    <joint name="joint_wheel_${name}" type="continuous">
       <axis xyz="0 1 0" rpy="0 0 0"/>
       <origin xyz="${offset}" rpy="0 0 0"/>
       <parent link="base_link"/>
@@ -46,7 +46,7 @@
         <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
-      <joint name="link_wheel_${name}">
+      <joint name="joint_wheel_${name}">
         <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
       </joint>
     </transmission>
