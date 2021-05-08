@@ -8,7 +8,7 @@ jobs:
     steps:
       - run: sudo apt-get install pep8
       - uses: actions/checkout@v2
-      - run: pep8 --ignore=E501 --exclude=spear_behaviors/spear_flexbe_behaviors/src .
+      - run: pep8 --ignore=E501 --exclude=pkg/spear_behaviors/spear_flexbe_behaviors/src .
   cpp_lint:
     runs-on: ubuntu-latest
     steps:
