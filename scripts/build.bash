@@ -53,10 +53,10 @@ if $COPY_HEADERS_AND_LIBS; then
     cat ${SOURCE_DIR}/compile_commands.original.json \
         | sed -e "s@/opt/ros@${DOCKER_HOST_REPO_LOCATION}/\.docker-opt-ros-mount@g" \
         | sed -e "s@/root/ros/devel/include@${DOCKER_HOST_REPO_LOCATION}/\.docker-root-ros-include-mount@g" \
-        | sed -e "s@/root/ros/src/spear_rover@${DOCKER_HOST_REPO_LOCATION}/spear_rover@g" \
-        | sed -e "s@/root/ros/src/spear_simulator@${DOCKER_HOST_REPO_LOCATION}/spear_simulator@g" \
-        | sed -e "s@/root/ros/src/spear_msgs@${DOCKER_HOST_REPO_LOCATION}/spear_msgs@g" \
-        | sed -e "s@/root/ros/src/spear_station@${DOCKER_HOST_REPO_LOCATION}/spear_station@g" \
+        | sed -e "s@/root/ros/src/spear_rover@${DOCKER_HOST_REPO_LOCATION}/pkg/spear_rover@g" \
+        | sed -e "s@/root/ros/src/spear_simulator@${DOCKER_HOST_REPO_LOCATION}/pkg/spear_simulator@g" \
+        | sed -e "s@/root/ros/src/spear_msgs@${DOCKER_HOST_REPO_LOCATION}/pkg/spear_msgs@g" \
+        | sed -e "s@/root/ros/src/spear_station@${DOCKER_HOST_REPO_LOCATION}/pkg/spear_station@g" \
         > ${SOURCE_DIR}/compile_commands.json
 else
     cp ${SOURCE_DIR}/compile_commands.original.json ${SOURCE_DIR}/compile_commands.json

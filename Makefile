@@ -1,6 +1,7 @@
 include config.mk
 
 scripts_dir=scripts
+package_dir=pkg
 
 .PHONY: all
 all: build
@@ -35,7 +36,7 @@ build: $(if $(filter $(BUILD_GENERATE_DSDL), true), generate-dsdl)
 
 .PHONY: rostest
 rostest:
-	for filepath in tests/test/*.test; do \
+	for filepath in $(package_dir)/tests/test/*.test; do \
 		filename=$$(basename $$filepath); \
 		rostest tests $$filename; \
 	done

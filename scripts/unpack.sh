@@ -39,10 +39,11 @@ then
 fi
 
 # Add our models to GAZEBO_MODEL_PATH
-if ! grep -Fxq "export GAZEBO_MODEL_PATH=GAZEBO_MODEL_PATH:${DIR}/spear_simulator/models" ~/.bashrc
+MODEL_PATH=$DIR/pkg/spear_simulator/models
+if ! grep -Fxq "export GAZEBO_MODEL_PATH=\$GAZEBO_MODEL_PATH:$MODEL_PATH" ~/.bashrc
 then
-    echo "export GAZEBO_MODEL_PATH=GAZEBO_MODEL_PATH:${DIR}/spear_simulator/models" >> ~/.bashrc
-    export GAZEBO_MODEL_PATH=GAZEBO_MODEL_PATH:$DIR/spear_simulator/models
+    echo "export GAZEBO_MODEL_PATH=\$GAZEBO_MODEL_PATH:$MODEL_PATH" >> ~/.bashrc
+    export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:$MODEL_PATH
 fi
 
 # Add rosdep alias to make things nicer
@@ -88,14 +89,7 @@ ln -s ~/ros/src/uavcan_dsdl/spear
 ###### Link our packages
 # This needs to be moved all back into rover2 at some point
 cd ~/ros/src
-ln -s $DIR/spear_msgs
-ln -s $DIR/spear_rover
-ln -s $DIR/spear_station
-ln -s $DIR/spear_simulator
-ln -s $DIR/spear_behaviors
-ln -s $DIR/case_moveit_config
-ln -s $DIR/spear_util
-ln -s $DIR/tests
+find $DIR/pkg -mindepth 1 -maxdepth 1 -type d -exec ln -s {} ';'
 
 ###### Build everything
 set -e
