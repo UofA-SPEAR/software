@@ -13,7 +13,7 @@ You can find a tutorial for C++ on the ROS website.
 
 ## Publisher
 
-In the directory `software/spear_rover/nodes`, create a new file called `talker.py`.
+In the directory `software/pkg/spear_rover/nodes`, create a new file called `talker.py`.
 You can create and edit this file outside the docker container (in your virtual machine if you are using one or in your host machine if you have a native linux install).
 In this file, paste the following code:
 
@@ -40,7 +40,7 @@ if __name__ == "__main__":
         pass
 ```
 
-Once you have created the file `talker.py`, run this command in the `software/spear_rover/nodes` directory to make sure it is executable:
+Once you have created the file `talker.py`, run this command in the `software/pkg/spear_rover/nodes` directory to make sure it is executable:
 
 ```bash
 chmod +x talker.py
@@ -132,7 +132,7 @@ Don't worry too much about them right now.
 
 Now we will create another node to listen to messages from the talker node.
 
-Create another file in `software/spear_rover/nodes` called `listener.py`.
+Create another file in `software/pkg/spear_rover/nodes` called `listener.py`.
 
 Paste in the following code:
 

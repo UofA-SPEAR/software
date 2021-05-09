@@ -83,7 +83,7 @@ move_base:
 ```
 
 In practice, this configuration is usually loaded from multiple yaml files.
-See the launch file [move_base.launch](https://github.com/UofA-SPEAR/software/blob/master/spear_rover/launch/move_base.launch) in the `spear_rover` package, as well as the configuration files in [spear_rover/config/move_base](https://github.com/UofA-SPEAR/software/tree/master/spear_rover/config/move_base).
+See the launch file [move_base.launch](https://github.com/UofA-SPEAR/software/blob/master/pkg/spear_rover/launch/move_base.launch) in the `spear_rover` package, as well as the configuration files in [spear_rover/config/move_base](https://github.com/UofA-SPEAR/software/tree/master/pkg/spear_rover/config/move_base).
 
 #### List of parameters
 
@@ -122,4 +122,4 @@ and the second fuses all of these sources, with the addition of
 
 - absolute position from the GPS
 
-For more information, see the launch file [state_estimate.launch](https://github.com/UofA-SPEAR/software/blob/master/spear_rover/launch/state_estimate.launch) in the `spear_rover` package, as well as the configuration files in [spear_rover/config/ekf](https://github.com/UofA-SPEAR/software/tree/master/spear_rover/config/ekf).
+For more information, see the launch file [state_estimate.launch](https://github.com/UofA-SPEAR/software/blob/master/pkg/spear_rover/launch/state_estimate.launch) in the `spear_rover` package, as well as the configuration files in [spear_rover/config/ekf](https://github.com/UofA-SPEAR/software/tree/master/pkg/spear_rover/config/ekf).

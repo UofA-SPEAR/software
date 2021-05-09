@@ -13,7 +13,7 @@ We can also SSH into the rover from the base station and run scripts on it direc
 [FlexBE](https://wiki.ros.org/flexbe) provides the infrastructure for the state machine that runs during autonomous control.
 Because the network connection between the rover and the base station is often poor, state machine logic must run on the rover itself.
 FlexBE provides a graphical interface to define state machines for autonomous navigation and manages their synchronization and control between the rover and station.
-The individual states are defined in the [spear_flexbe_states](https://github.com/UofA-SPEAR/software/tree/master/spear_behaviors/spear_flexbe_states) package.
+The individual states are defined in the [spear_flexbe_states](https://github.com/UofA-SPEAR/software/tree/master/pkg/spear_behaviors/spear_flexbe_states) package.
 
 ![](../images/flexbe.png)
 
