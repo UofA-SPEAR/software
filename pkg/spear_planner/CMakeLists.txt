@@ -7,7 +7,9 @@ project(spear_planner)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED)
+find_package(catkin REQUIRED COMPONENTS
+    smach
+)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -16,7 +18,7 @@ find_package(catkin REQUIRED)
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
 ## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py.html
-# catkin_python_setup()
+catkin_python_setup()
 
 ################################################
 ## Declare ROS messages, services and actions ##
@@ -199,4 +201,6 @@ include_directories(
 # endif()
 
 ## Add folders to be run by python nosetests
-catkin_add_nosetests(python/spear_planner)
+if(CATKIN_ENABLE_TESTING)
+    catkin_add_nosetests(python/${PROJECT_NAME})
+endif()
