@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-PKG = 'spear_planner'
 from unittest import TestCase, TestSuite
 from spear_planner.history import Checkpoint, ContainerHistory, ContainerSaveState, ResumableStateMachine
 
@@ -9,16 +8,19 @@ from smach.user_data import UserData
 from uuid import uuid4
 from datetime import datetime
 
+PKG = 'spear_planner'
+
 
 class TestResumableStateMachine(TestCase):
     def setUp(self) -> None:
         self._trace = []
 
     def simple_sm(self):
-        sm = ResumableStateMachine(outcomes=['ok'])
         def execute(name):
             self._trace.append(name)
             return 'ok'
+
+        sm = ResumableStateMachine(outcomes=['ok'])
         with sm:
             StateMachine.add('A', CBState(lambda ud: execute('A'), outcomes=['ok']), {'ok': 'B'})
             StateMachine.add('B', CBState(lambda ud: execute('B'), outcomes=['ok']), {'ok': 'C'})
@@ -26,10 +28,11 @@ class TestResumableStateMachine(TestCase):
         return sm
 
     def sm_with_userdata(self):
-        sm = ResumableStateMachine(outcomes=['ok'], input_keys=['key'])
         def execute(name, outcome):
             self._trace.append(name)
             return outcome
+
+        sm = ResumableStateMachine(outcomes=['ok'], input_keys=['key'])
         with sm:
             StateMachine.add('A', CBState(lambda ud: execute('A', ud['key']), outcomes=['B'], io_keys=['key']), {'B': 'B'})
             StateMachine.add('B', CBState(lambda ud: execute('B', ud['key']), outcomes=['ok'], input_keys=['key']))
@@ -43,7 +46,7 @@ class TestResumableStateMachine(TestCase):
         resumable_inner_sm = ResumableStateMachine(outcomes=['ok'])
         inner_sm = StateMachine(outcomes=['ok'])
         outer_sm = ResumableStateMachine(outcomes=['ok'])
-       
+
         with outer_sm:
             StateMachine.add('A', resumable_inner_sm, {'ok': 'B'})
             StateMachine.add('B', inner_sm, {'ok': 'C'})
@@ -169,16 +172,17 @@ class TestResumableStateMachine(TestCase):
             ContainerSaveState(label='C', userdata=UserData()),
         ])))
 
+
 class TestContainerHistory(TestCase):
     def make_sm(self):
         inner_sm_1 = ResumableStateMachine(outcomes=['ok'], input_keys=['key'], output_keys=['key'])
         inner_sm_2 = ResumableStateMachine(outcomes=['ok'], input_keys=['key'], output_keys=['key'])
         outer_sm = ResumableStateMachine(outcomes=['ok'], input_keys=['key'], output_keys=['key'])
-        
+
         def execute(ud):
             ud['key'] += 1
             return 'ok'
-        
+
         def make_state():
             return CBState(execute, outcomes=['ok'], io_keys=['key'])
 
@@ -225,7 +229,7 @@ class TestContainerHistory(TestCase):
     def test_resume_from_history(self):
         sm = self.make_sm()
         history = ContainerHistory(sm)
-        
+
         parent_ud = UserData()
         parent_ud.key = 0
         outcome = sm.execute(parent_ud)

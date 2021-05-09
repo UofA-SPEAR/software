@@ -48,7 +48,6 @@ class ResumableStateMachine(StateMachine):
 
             child._request_resume(remaining_save_states)
 
-
     def execute(self, parent_ud: UserData = UserData()):
         if self._resume_save_state is not None:
             resume_label = self._resume_save_state.label
