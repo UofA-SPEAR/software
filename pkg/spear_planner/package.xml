@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>spear_planner</name>
+  <version>0.0.0</version>
+  <description>Mission planning utilities and other "glue"</description>
+  <maintainer email="rain.epp@ualberta.ca">Rain Epp</maintainer>
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>smach</depend>
+
+  <test_depend>rosunit</test_depend>
+</package>
