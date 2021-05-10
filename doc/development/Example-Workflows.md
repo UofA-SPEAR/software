@@ -54,14 +54,14 @@ And add the following to your workspace settings:
     
     "python.languageServer": "Pylance",
     "python.analysis.extraPaths": [
-        "/software/spear_rover/python",
-        "/software/spear_util/python",
+        "/software/pkg/spear_rover/python",
+        "/software/pkg/spear_util/python",
         "/root/ros/devel/lib/python3/dist-packages",
         "/opt/ros/noetic/lib/python3/dist-packages",
     ],
     "python.autoComplete.extraPaths": [
-        "/software/spear_rover/python",
-        "/software/spear_util/python",
+        "/software/pkg/spear_rover/python",
+        "/software/pkg/spear_util/python",
         "/root/ros/devel/lib/python3/dist-packages",
         "/opt/ros/noetic/lib/python3/dist-packages",
     ],
