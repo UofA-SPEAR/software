@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <robot name="wheel" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find spear_simulator)/models/rover/constants.xacro"/>
 
   <xacro:macro name="wheel" params="name side offset">
     <xacro:property name="link_origin" value="0 0 0"/>
