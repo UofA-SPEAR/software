@@ -72,6 +72,7 @@ repos=(
     UofA-SPEAR/uavcan_dsdl:master
     roboticsgroup/roboticsgroup_upatras_gazebo_plugins:master
     machinekoder/ar_track_alvar:noetic-devel
+    UofA-SPEAR/zed-models:main
 )
 
 cd ~/ros/src

@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<robot name="zed_cam" xmlns:xacro="http://ros.org/wiki/xacro">
+    <xacro:include filename="$(find spear_simulator)/models/rover/materials.xacro"/>
+    <xacro:macro name="webcam" params="name xyz rpy">
+        <joint name="joint_webcam_${name}" type="fixed">
+            <origin xyz="${xyz}" rpy="${rpy}" />
+            <parent link="base_link" />
+            <child link="link_webcam_${name}" />
+        </joint>
+        <link name="link_webcam_${name}">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <box size="0.05 0.05 0.05" />
+                </geometry>
+                <material name="orange" />
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <box size="0.05 0.05 0.05" />
+                </geometry>
+            </collision>
+            <inertial>
+                <mass value="1e-5" />
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+            </inertial>
+        </link>
+
+        <gazebo reference="link_webcam_${name}">
+            <material>Gazebo/Orange</material>
+            <sensor type="camera" name="webcam_${name}">
+                <update_rate>30.0</update_rate>
+                <camera name="${name}">
+                    <horizontal_fov>1.3962634</horizontal_fov>
+                    <image>
+                        <width>800</width>
+                        <height>800</height>
+                        <format>R8G8B8</format>
+                    </image>
+                    <clip>
+                        <near>0.2</near>
+                        <far>300</far>
+                    </clip>
+                    <noise>
+                        <type>gaussian</type>
+                        <mean>0.0</mean>
+                        <stddev>0.007</stddev>
+                    </noise>
+                </camera>
+                <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+                    <alwaysOn>true</alwaysOn>
+                    <updateRate>0.0</updateRate>
+                    <cameraName>webcam_${name}</cameraName>
+                    <frameName>link_webcam_${name}</frameName>
+                </plugin>
+            </sensor>
+        </gazebo>
+    </xacro:macro>
+</robot>
