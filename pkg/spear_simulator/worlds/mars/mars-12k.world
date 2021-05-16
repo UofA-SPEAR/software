@@ -1,0 +1,12 @@
+<!-- Note: the 12k mars texture is not committed to source control and shuold be
+  downloaded from our google drive -->
+<sdf version='1.7'>
+  <world name='default'>
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    <include>
+      <uri>model://mars-12k</uri>
+    </include>
+  </world>
+</sdf>

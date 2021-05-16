@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+<sdf version="1.4">
+    <model name="mars_heightmap_2k">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <heightmap>
+              <uri>file://media/materials/textures/terrain.png</uri>
+              <size>150 150 10</size>
+              <pos>0 0 -5</pos>
+            </heightmap>
+          </geometry>
+        </collision>
+
+        <visual name="mars_visual_2k">
+          <geometry>
+            <heightmap>
+              <texture>
+                <diffuse>model://mars-2k/terrain-texture-2k-tiled.jpg</diffuse>
+                <normal>file://media/materials/textures/flat_normal.png</normal>
+                <size>25</size>
+              </texture>
+              <uri>file://media/materials/textures/terrain.png</uri>
+              <size>150 150 10</size>
+              <pos>0 0 -5</pos>
+            </heightmap>
+          </geometry>
+        </visual>
+
+      </link>
+    </model>
+</sdf>
