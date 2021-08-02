@@ -67,14 +67,10 @@ class CASEDriveHardware : public RobotHWChild {
     parent.registerInterface(&wheel_velocity_interface);
 
     canros_client.observe_actuator_status(position_observer(
-        [&](const actuator_id_t id, const command_value_t delta) {
+        [&](const actuator_id_t id, const command_value_t angle) {
           auto it = wheel_infos.find(id);
           if (it != wheel_infos.end()) {
-            // XXX Probably shouldn't give delta for odometry, better to give
-            // speed or position (that way we can safely skip a couple
-            // messages and so we can use read() correctly instead of using a
-            // callback structure.)
-            it->second.pos += delta;
+            it->second.pos = angle;
           }
         }));
   }
