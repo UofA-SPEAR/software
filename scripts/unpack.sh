@@ -68,9 +68,9 @@ repos=(
     eric-wieser/ros_numpy:master
     FlexBE/flexbe_app:master
     gareth-cross/rviz_satellite:master
-    machinekoder/ar_track_alvar:melodic
+    machinekoder/ar_track_alvar:melodic-devel
     roboticsgroup/roboticsgroup_upatras_gazebo_plugins:master
-    UofA-SPEAR/nimbro_network:melodic
+    UofA-SPEAR/nimbro_network:master
     UofA-SPEAR/uavcan_dsdl:master
     UofA-SPEAR/zed-models:main
 )
