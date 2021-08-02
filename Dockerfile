@@ -22,7 +22,7 @@ RUN apt-get update && apt-get install -y libx264-dev \
                                          python-catkin-tools \
                                          iproute2
 
-RUN pip install catkin_lint || echo "Error installing catkin_lint -- this is not a problem on the tx2"
+RUN apt-get update && apt-get install -y python-catkin-lint || echo "Error installing catkin_lint -- this is not a problem on the tx2"
 RUN pip install \
     pygame \
     # ikpy==3.0.1 \
