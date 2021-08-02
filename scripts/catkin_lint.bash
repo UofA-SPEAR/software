@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-python3 -m catkin_lint ~/ros/src \
+catkin_lint ~/ros/src \
   --skip-pkg case_moveit_config \
   --skip-pkg spear_flexbe_states \
   --skip-pkg nimbro_topic_transport \

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 from unittest import TestCase, TestSuite
 from spear_planner.history import Checkpoint, ContainerHistory, ContainerSaveState, ResumableStateMachine
 
