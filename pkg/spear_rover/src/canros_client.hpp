@@ -17,8 +17,8 @@ using command_value_t =
 class ActuatorArrayCommand {
  public:
   ActuatorArrayCommand() = default;
-  ActuatorArrayCommand(ActuatorArrayCommand &&) = default;
   ActuatorArrayCommand(ActuatorArrayCommand &) = delete;
+  ActuatorArrayCommand(ActuatorArrayCommand &&) = default;
 
   ActuatorArrayCommand *add_speed(actuator_id_t id, command_value_t speed) {
     return this->add(
@@ -53,27 +53,53 @@ class ActuatorArrayCommand {
   std::vector<canros::uavcan__equipment__actuator__Command> commands;
 };
 
-template <typename T>
-using Listener = std::function<void(const typename T::ConstPtr &)>;
+/**
+ * Provides a nicer callback interface to a Subscriber.
+ */
+template <typename Message>
+class ObservableSubscriber {
+ public:
+  using StdObserver = std::function<void(const typename Message::ConstPtr &)>;
+  using BoostObserver =
+      boost::function<void(const typename Message::ConstPtr &)>;
+
+  ObservableSubscriber(ros::NodeHandle &nh, const std::string &topic) {
+    this->message_callback = [&](const typename Message::ConstPtr &msg) {
+      for (auto &observer : this->observers) {
+        observer(msg);
+      }
+    };
+    this->subscriber = nh.subscribe<Message>(topic, 1, this->message_callback);
+  }
+  ObservableSubscriber() = delete;
+  ObservableSubscriber(ObservableSubscriber<Message> &) = delete;
+  ObservableSubscriber(ObservableSubscriber<Message> &&) = default;
+
+  /**
+   * Beware of dangling references
+   */
+  template <typename Func>
+  void observe(Func &&observer) {
+    this->observers.emplace_back(std::forward<Func>(observer));
+  }
+
+ private:
+  ros::Subscriber subscriber;
+  BoostObserver message_callback;
+  std::vector<StdObserver> observers;
+};
 
 /*
  * XXX For unknown reasons, Command doesn't work, you have to use ArrayCommand
  */
 class CanrosClient {
  public:
-  CanrosClient(ros::NodeHandle &nh) {
+  CanrosClient(ros::NodeHandle &nh)
+      : actuator_status_subscriber(
+            nh, "/canros/msg/uavcan/equipment/actuator/Status") {
     this->actuator_array_command_publisher =
         nh.advertise<canros::uavcan__equipment__actuator__ArrayCommand>(
             "/canros/msg/uavcan/equipment/actuator/ArrayCommand", 1);
-
-    // Needs to be a boost function, not clear why
-    boost::function<void(
-        const canros::uavcan__equipment__actuator__Status::ConstPtr &)>
-        listener =
-            [&](const canros::uavcan__equipment__actuator__Status::ConstPtr
-                    &status) { this->_on_actuator_status(status); };
-    this->actuator_status_subscriber = nh.subscribe(
-        "/canros/msg/uavcan/equipment/actuator/Status", 1, listener);
   }
 
   void send_actuator_commands(
@@ -81,39 +107,29 @@ class CanrosClient {
     this->actuator_array_command_publisher.publish(command);
   }
 
-  void recv_actuator_status(
-      Listener<canros::uavcan__equipment__actuator__Status> listener) {
-    this->actuator_status_listeners.push_back(std::move(listener));
+  template <typename Func>
+  void observe_actuator_status(Func &&observer) {
+    this->actuator_status_subscriber.observe(std::forward<Func>(observer));
   }
 
  private:
-  void _on_actuator_status(
-      const canros::uavcan__equipment__actuator__Status::ConstPtr &status) {
-    for (auto &listener : this->actuator_status_listeners) {
-      listener(status);
-    }
-  }
-
   ros::Publisher actuator_array_command_publisher;
-  ros::Subscriber actuator_status_subscriber;
-  std::vector<Listener<canros::uavcan__equipment__actuator__Status>>
-      actuator_status_listeners;
+  ObservableSubscriber<canros::uavcan__equipment__actuator__Status>
+      actuator_status_subscriber;
 };
 
 template <typename T>
-auto position_listener(T &&func) {
+auto position_observer(T &&func) {
   using Status = canros::uavcan__equipment__actuator__Status;
-  Listener<Status> listener = [&](const Status::ConstPtr &status) {
+  return [&](const Status::ConstPtr &status) {
     func(status->actuator_id, status->position);
   };
-  return listener;
 }
 
 template <typename T>
-auto speed_listener(T &&func) {
+auto speed_observer(T &&func) {
   using Status = canros::uavcan__equipment__actuator__Status;
-  Listener<Status> listener = [&](const Status::ConstPtr &status) {
+  return [&](const Status::ConstPtr &status) {
     func(status->actuator_id, status->speed);
   };
-  return listener;
 }

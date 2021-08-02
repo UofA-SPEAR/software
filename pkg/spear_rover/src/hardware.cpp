@@ -66,7 +66,7 @@ public:
     parent.registerInterface(&wheel_state_interface);
     parent.registerInterface(&wheel_velocity_interface);
 
-    canros_client.recv_actuator_status(position_listener(
+    canros_client.observe_actuator_status(position_observer(
         [&](const actuator_id_t id, const command_value_t delta) {
           auto it = wheel_infos.find(id);
           if (it != wheel_infos.end()) {
@@ -126,7 +126,7 @@ public:
     parent.registerInterface(&arm_state_interface);
     parent.registerInterface(&arm_position_interface);
 
-    canros_client.recv_actuator_status(position_listener(
+    canros_client.observe_actuator_status(position_observer(
         [&](const actuator_id_t id, const command_value_t angle) {
           auto it = arm_joint_infos.find(id);
           if (it != arm_joint_infos.end()) {
