@@ -27,7 +27,9 @@ RUN pip install \
     pygame \
     # ikpy==3.0.1 \
     transforms3d==0.2.1 \
-    osrf-pycommon
+    osrf-pycommon \
+    pyuavcan_v0 \
+    monotonic
 
 
 # Install nunavut for serialization code generation

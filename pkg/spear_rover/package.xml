@@ -15,6 +15,7 @@
 
   <!-- Dependencies from nodes -->
   <depend>actionlib</depend>
+  <depend>canros</depend>
   <depend>controller_manager</depend>
   <depend>cv_bridge</depend>
   <depend>geometry_msgs</depend>
