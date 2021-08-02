@@ -6,7 +6,10 @@
   <arg name="can_interface" value="can0" unless="$(arg use_vcan)"/>
 
   <!-- Map ROS messages to/from CAN messages -->
-  <node name="mapper_node" pkg="spear_rover" type="mapper_node" output="screen"/>
+  <include file="$(find canros)/launch/server.launch">
+    <arg name="uavcan_id" value="127"/>
+    <arg name="can_interface" value="$(arg can_interface)"/>
+  </include>
 
   <!-- Convert twist messages to motor commands, publish wheel odometry -->
   <include file="$(find spear_rover)/launch/hardware.launch"/>
