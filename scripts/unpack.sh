@@ -65,13 +65,13 @@ fi
 ###### Install various dependencies from source
 
 repos=(
-    gareth-cross/rviz_satellite:master
-    FlexBE/flexbe_app:master
     eric-wieser/ros_numpy:master
-    UofA-SPEAR/nimbro_network:noetic
-    UofA-SPEAR/uavcan_dsdl:master
+    FlexBE/flexbe_app:master
+    gareth-cross/rviz_satellite:master
+    machinekoder/ar_track_alvar:melodic
     roboticsgroup/roboticsgroup_upatras_gazebo_plugins:master
-    machinekoder/ar_track_alvar:noetic-devel
+    UofA-SPEAR/nimbro_network:melodic
+    UofA-SPEAR/uavcan_dsdl:master
     UofA-SPEAR/zed-models:main
 )
 

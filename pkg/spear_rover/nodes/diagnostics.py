@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 #
 # A node which reads diagnostics information from various sources and sends them
 # to spearMCT

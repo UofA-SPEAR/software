@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 import math
 from tempfile import TemporaryFile
 from typing import Callable, Dict, Generic, Iterable, Optional, TypeVar
