@@ -92,8 +92,6 @@ public:
   void read(const ros::Time &time, const ros::Duration &period) override {}
 
 private:
-  void on_wheel_odom(const actuator_id_t id, const command_value_t delta) {}
-
   JointStateInterface wheel_state_interface;
   VelocityJointInterface wheel_velocity_interface;
 
@@ -148,10 +146,10 @@ public:
   void read(const ros::Time &time, const ros::Duration &period) override {}
 
 private:
-  std::unordered_map<actuator_id_t, ArmJointInfo> arm_joint_infos;
-
   JointStateInterface arm_state_interface;
   PositionJointInterface arm_position_interface;
+
+  std::unordered_map<actuator_id_t, ArmJointInfo> arm_joint_infos;
 
   CanrosClient &canros_client;
 };
