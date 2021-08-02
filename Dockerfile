@@ -23,7 +23,13 @@ RUN apt-get update && apt-get install -y libx264-dev \
                                          iproute2
 
 RUN pip3 install catkin_lint || echo "Error installing catkin_lint -- this is not a problem on the tx2"
-RUN pip3 install pygame ikpy transforms3d osrf-pycommon
+RUN pip3 install \
+    pygame \
+    ikpy \
+    transforms3d \
+    osrf-pycommon \
+    pyuavcan_v0 \
+    monotonic
 
 # Install nunavut for serialization code generation
 RUN pip3 install nunavut
