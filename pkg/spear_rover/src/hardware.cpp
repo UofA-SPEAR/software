@@ -40,13 +40,13 @@ struct ArmJointInfo {
 };
 
 class RobotHWChild {
-public:
+ public:
   virtual void write(const ros::Time &time, const ros::Duration &period) = 0;
   virtual void read(const ros::Time &time, const ros::Duration &period) = 0;
 };
 
 class CASEDriveHardware : public RobotHWChild {
-public:
+ public:
   CASEDriveHardware(RobotHW &parent, ros::NodeHandle &nh,
                     CanrosClient &canros_client)
       : canros_client(canros_client) {
@@ -91,7 +91,7 @@ public:
 
   void read(const ros::Time &time, const ros::Duration &period) override {}
 
-private:
+ private:
   JointStateInterface wheel_state_interface;
   VelocityJointInterface wheel_velocity_interface;
 
@@ -101,7 +101,7 @@ private:
 };
 
 class CASEArmHardware : public RobotHWChild {
-public:
+ public:
   CASEArmHardware(RobotHW &parent, ros::NodeHandle &nh,
                   CanrosClient &canros_client)
       : canros_client(canros_client) {
@@ -145,7 +145,7 @@ public:
 
   void read(const ros::Time &time, const ros::Duration &period) override {}
 
-private:
+ private:
   JointStateInterface arm_state_interface;
   PositionJointInterface arm_position_interface;
 
@@ -155,7 +155,7 @@ private:
 };
 
 class CASEHardware : public RobotHW {
-public:
+ public:
   CASEHardware(ros::NodeHandle &nh, CanrosClient &canros_client) {
     children = {std::make_shared<CASEDriveHardware>(*this, nh, canros_client),
                 std::make_shared<CASEArmHardware>(*this, nh, canros_client)};
@@ -171,7 +171,7 @@ public:
     }
   }
 
-private:
+ private:
   std::vector<std::shared_ptr<RobotHWChild>> children;
 };
 
