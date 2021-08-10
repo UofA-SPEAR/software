@@ -29,7 +29,7 @@
   <depend>tf</depend>
 
   <!-- Dependencies from launch files -->
-  <exec_depend>ar_track_alvar</exec_depend>
+  <!-- <exec_depend>ar_track_alvar</exec_depend> -->
   <exec_depend>camera_calibration</exec_depend>
   <exec_depend>case_moveit_config</exec_depend>
   <exec_depend>diff_drive_controller</exec_depend>
