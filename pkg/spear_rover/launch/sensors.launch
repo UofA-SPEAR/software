@@ -7,10 +7,9 @@
   </node> -->
 
   <!-- Launch GPS -->
-  <node pkg="nmea_navsat_driver" type="nmea_serial_driver" name="gps_node" output="screen">
+  <node ns="gps" pkg="nmea_navsat_driver" type="nmea_serial_driver" name="gps_node" output="screen">
     <param name="port" value="/dev/ttyTHS2"/>
     <param name="baud" value="4800"/>
-    <remap from="/fix" to="/gps/fix"/>
   </node>
 
   <node name="webcam1" pkg="usb_cam" type="usb_cam_node">
