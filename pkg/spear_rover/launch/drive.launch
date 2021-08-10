@@ -16,14 +16,14 @@
     <arg name="station" value="$(arg station)"/>
   </include>
 
-  <include file="$(find spear_rover)/launch/moveit.launch"/>
+  <!-- <include file="$(find spear_rover)/launch/moveit.launch"/> -->
 
-  <include file="$(find spear_rover)/launch/flexbe_onboard.launch"/>
+  <!-- <include file="$(find spear_rover)/launch/flexbe_onboard.launch"/> -->
 
-  <include file="$(find spear_rover)/launch/ar_track.launch">
+  <!-- <include file="$(find spear_rover)/launch/ar_track.launch">
     <arg name="simulation" value="$(arg simulation)"/>
-  </include>
+  </include> -->
 
-  <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch"/>
-  <node type="diagnostics.py" name="diagnostics" pkg="spear_rover"/>
+  <!-- <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch"/>
+  <node type="diagnostics.py" name="diagnostics" pkg="spear_rover"/> -->
 </launch>
