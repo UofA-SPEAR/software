@@ -19,6 +19,26 @@
     <param name="decimation_y" value="4"/>
   </node>
 
+  <node pkg="nodelet" type="nodelet" name="image_downsample_webcam1" args="standalone image_proc/crop_decimate image_downsample_nodelet_manager">
+    <remap from="camera/image_raw" to="/webcam1/image_raw"/>
+    <remap from="camera/camera_info" to="/webcam1/camera_info"/>
+    <remap from="camera_out/image_raw" to="/feedback/webcam1/image"/>
+    <remap from="camera_out/camera_info" to="/feedback/webcam1/camera_info"/>
+
+    <param name="decimation_x" value="4"/>
+    <param name="decimation_y" value="4"/>
+  </node>
+
+  <node pkg="nodelet" type="nodelet" name="image_downsample_webcam2" args="standalone image_proc/crop_decimate image_downsample_nodelet_manager">
+    <remap from="camera/image_raw" to="/webcam2/image_raw"/>
+    <remap from="camera/camera_info" to="/webcam2/camera_info"/>
+    <remap from="camera_out/image_raw" to="/feedback/webcam2/image"/>
+    <remap from="camera_out/camera_info" to="/feedback/webcam2/camera_info"/>
+
+    <param name="decimation_x" value="4"/>
+    <param name="decimation_y" value="4"/>
+  </node>
+
   <!-- Save full-size camera images -->
   <arg name="filename_format" value="$(arg image_dest)/image%04i.%s"/>
   <node pkg="image_view" type="image_saver" name="image_saver">
