@@ -74,6 +74,8 @@ class CASEDriveHardware : public RobotHWChild {
           }
         }));
   }
+  CASEDriveHardware(CASEDriveHardware&) = delete;
+  CASEDriveHardware(CASEDriveHardware&&) = delete;
 
   void write(const ros::Time &time, const ros::Duration &period) override {
     auto command = ActuatorArrayCommand();
@@ -120,13 +122,13 @@ class CASEArmHardware : public RobotHWChild {
     parent.registerInterface(&arm_state_interface);
     parent.registerInterface(&arm_position_interface);
 
-    canros_client.observe_actuator_status(position_observer(
-        [&](const actuator_id_t id, const command_value_t angle) {
-          auto it = arm_joint_infos.find(id);
-          if (it != arm_joint_infos.end()) {
-            it->second.pos = angle;
-          }
-        }));
+    // canros_client.observe_actuator_status(position_observer(
+    //     [&](const actuator_id_t id, const command_value_t angle) {
+    //       auto it = arm_joint_infos.find(id);
+    //       if (it != arm_joint_infos.end()) {
+    //         it->second.pos = angle;
+    //       }
+    //     }));
   }
 
   void write(const ros::Time &time, const ros::Duration &period) override {
@@ -180,9 +182,12 @@ int main(int argc, char *argv[]) {
     ros::console::notifyLoggerLevelsChanged();
   }
 
+  ROS_ERROR("Create canros client");
   auto canros_client = CanrosClient(nh);
 
+  ROS_ERROR("Create robot");
   auto robot = CASEHardware(nh, canros_client);
+  ROS_ERROR("Create controller manager");
   controller_manager::ControllerManager cm(&robot, nh);
 
   ros::AsyncSpinner spinner(1);
@@ -191,6 +196,7 @@ int main(int argc, char *argv[]) {
   ros::Rate rate(10);
 
   while (ros::ok()) {
+    // ROS_ERROR("top of loop");
     const auto time = ros::Time::now();
     const auto duration = ros::Duration(0.1);
     robot.read(time, duration);
