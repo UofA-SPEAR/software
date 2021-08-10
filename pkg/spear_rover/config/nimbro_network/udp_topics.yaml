@@ -7,3 +7,12 @@ topics:
   - name: /joint_states
 
   - name: /arm_controller/state
+
+  - name: /feedback/webcam1/image
+    compress: true
+    rate: 10.0
+  - name: /feedback/webcam2/image
+    compress: true
+    rate: 10.0
+
+  - name: /gps/fix
