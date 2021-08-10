@@ -1,7 +1,7 @@
 <!-- Handles comms with the station -->
 <launch>
   <arg name="station"/>
-  <arg name="image_dest" default="$(find spear_rover)/../images"/>
+  <arg name="image_dest" default="/home/nvidia/software/images"/>
 
   <!-- Set up topic transport across the network -->
   <include file="$(find spear_rover)/launch/nimbro_network.launch">
