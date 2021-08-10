@@ -100,6 +100,7 @@ class CanrosClient {
     this->actuator_array_command_publisher =
         nh.advertise<canros::uavcan__equipment__actuator__ArrayCommand>(
             "/canros/msg/uavcan/equipment/actuator/ArrayCommand", 1);
+    ROS_ERROR("Make canros clien");
   }
 
   void send_actuator_commands(
@@ -109,6 +110,7 @@ class CanrosClient {
 
   template <typename Func>
   void observe_actuator_status(Func &&observer) {
+    ROS_ERROR("Set up observer");
     this->actuator_status_subscriber.observe(std::forward<Func>(observer));
   }
 
@@ -121,7 +123,7 @@ class CanrosClient {
 template <typename T>
 auto position_observer(T &&func) {
   using Status = canros::uavcan__equipment__actuator__Status;
-  return [&](const Status::ConstPtr &status) {
+  return [func](const Status::ConstPtr &status) {
     func(status->actuator_id, status->position);
   };
 }
@@ -129,7 +131,7 @@ auto position_observer(T &&func) {
 template <typename T>
 auto speed_observer(T &&func) {
   using Status = canros::uavcan__equipment__actuator__Status;
-  return [&](const Status::ConstPtr &status) {
+  return [func](const Status::ConstPtr &status) {
     func(status->actuator_id, status->speed);
   };
 }
