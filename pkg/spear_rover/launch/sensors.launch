@@ -8,19 +8,19 @@
 
   <!-- Launch GPS -->
   <node ns="gps" pkg="nmea_navsat_driver" type="nmea_serial_driver" name="gps_node" output="screen">
-    <param name="port" value="/dev/ttyTHS2"/>
+    <param name="port" value="/dev/spear/gps"/>
     <param name="baud" value="4800"/>
   </node>
 
   <node name="webcam1" pkg="usb_cam" type="usb_cam_node">
-    <param name="video_device" value="/dev/video2"/>
+    <param name="video_device" value="/dev/spear/webcam1"/>
     <param name="pixel_format" value="yuyv"/>
     <param name="camera_frame_id" value="link_camera_depth"/>
     <param name="camera_info_url" value="file://$(find spear_rover)/calibration/webcam1.yaml"/>
   </node>
 
   <node name="webcam2" pkg="usb_cam" type="usb_cam_node">
-    <param name="video_device" value="/dev/video3"/>
+    <param name="video_device" value="/dev/spear/webcam2"/>
     <param name="pixel_format" value="yuyv"/>
     <param name="camera_frame_id" value="link_camera_depth"/>
     <param name="camera_info_url" value="file://$(find spear_rover)/calibration/webcam2.yaml"/>
