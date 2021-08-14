@@ -11,8 +11,8 @@
   <node pkg="teleop_twist_joy" name="teleop_node" type="teleop_node" output="screen">
     <remap from="cmd_vel" to="/drive_controller/cmd_vel"/>
     <param name="enable_button" value="4"/>
-    <param name="scale_angular" value="3"/>
-    <param name="scale_linear" value="2"/>
+    <param name="scale_angular" value="64"/>
+    <param name="scale_linear" value="16"/>
     <param name="axis_angular" value="3"/>
     <param name="axis_linear" value="1"/>
   </node>
