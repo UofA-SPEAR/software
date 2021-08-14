@@ -16,6 +16,5 @@ services:
   - name: /arm_controller/query_state
     type: control_msgs/QueryTrajectoryState
 
-  - name: /image_saver/save
-    type: std_msgs/Empty
-    
+#  - name: /image_saver/save
+#    type: std_msgs/Empty
