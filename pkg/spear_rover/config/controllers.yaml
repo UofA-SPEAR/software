@@ -46,12 +46,12 @@ drive_controller:
 arm_controller:
     type: position_controllers/JointTrajectoryController
     joints:
-        - shoulder_yaw
+        # - shoulder_yaw
         - shoulder_pitch
         - elbow_pitch
-        - wrist_pitch
-        - wrist_roll
-        - grab
+        # - wrist_pitch
+        # - wrist_roll
+        # - grab
 
 # This is called a "controller" but is not. It is actually way to publish
 # the arm/wheel joint angles to /joint_states, since the controllers don't do

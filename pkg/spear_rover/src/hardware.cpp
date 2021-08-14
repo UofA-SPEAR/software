@@ -103,12 +103,12 @@ class CASEArmHardware : public RobotHWChild {
   CASEArmHardware(RobotHW &parent, ros::NodeHandle &nh,
                   CanrosClient &canros_client)
       : canros_client(canros_client) {
-    arm_joint_infos = {{10, ArmJointInfo("shoulder_yaw")},
+    arm_joint_infos = {/*{10, ArmJointInfo("shoulder_yaw")},*/
                        {11, ArmJointInfo("shoulder_pitch")},
                        {12, ArmJointInfo("elbow_pitch")},
-                       {13, ArmJointInfo("wrist_pitch")},
-                       {14, ArmJointInfo("wrist_roll")},
-                       {15, ArmJointInfo("grab")}};
+                       /*{13, ArmJointInfo("wrist_pitch")},*/
+                       /*{14, ArmJointInfo("wrist_roll")},*/
+                       /*{15, ArmJointInfo("grab")}*/};
 
     for (auto &pair : arm_joint_infos) {
       auto &joint_info = pair.second;
