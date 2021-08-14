@@ -28,7 +28,6 @@
   <depend>trajectory_msgs</depend>
   
   <!-- Dependencies from launch files -->
-  <exec_depend>flexbe_app</exec_depend>
   <exec_depend>joy</exec_depend>
   <exec_depend>nimbro_service_transport</exec_depend>
   <exec_depend>nimbro_topic_transport</exec_depend>
