@@ -95,7 +95,7 @@ def main():
         uavcan__equipment__actuator__ArrayCommand,
         queue_size=1)
 
-    shoulder_yaw_controller = CanrosJointSpeedController(10)
+    shoulder_yaw_controller = CanrosJointSpeedController(16)
     wrist_pitch_controller = CanrosJointSpeedController(13)
     wrist_roll_controller = CanrosJointSpeedController(14)
     grab_controller = CanrosJointSpeedController(15)
@@ -106,10 +106,10 @@ def main():
     ]
 
     views = [
-        KeypressedSpeedView('ad', shoulder_yaw_controller.binding(), 1),
-        KeypressedSpeedView('ki', wrist_pitch_controller.binding(), 1),
-        KeypressedSpeedView('lj', wrist_roll_controller.binding(), 1),
-        KeypressedSpeedView('uo', grab_controller.binding(), 1),
+        KeypressedSpeedView('ad', shoulder_yaw_controller.binding(), 0.02),
+        KeypressedSpeedView('ki', wrist_pitch_controller.binding(), 0.1),
+        KeypressedSpeedView('lj', wrist_roll_controller.binding(), 0.1),
+        KeypressedSpeedView('uo', grab_controller.binding(), 0.1),
     ]
 
     rate = rospy.Rate(10)
