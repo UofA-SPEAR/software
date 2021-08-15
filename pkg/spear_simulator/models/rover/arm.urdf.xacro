@@ -72,7 +72,7 @@
     <child link="bicep"/>
     <axis xyz="0 1 0"/>
     <origin xyz="0 0 ${shoulder_height}" rpy= "0 0 0"/>
-    <limit lower="0.78" upper="2.15" effort="1" velocity="0.5"/>
+    <limit lower="-3.1415" upper="3.1415" effort="1" velocity="0.5"/>
   </container></xacro:arm_joint>
 
   <xacro:arm_link name="bicep" length="${bicep_length}"/>
@@ -82,7 +82,7 @@
     <child link="forearm"/>
     <axis xyz="0 1 0"/>
     <origin xyz="0 0 ${bicep_length}" rpy= "0 0 0"/>
-    <limit lower="-2.7" upper="1.54" effort="1" velocity="0.5"/>
+    <limit lower="-3.1415" upper="3.1415" effort="1" velocity="0.5"/>
   </container></xacro:arm_joint>
 
   <xacro:arm_link name="forearm" length="${forearm_length}"/>
