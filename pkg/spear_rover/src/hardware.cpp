@@ -74,8 +74,8 @@ class CASEDriveHardware : public RobotHWChild {
           }
         }));
   }
-  CASEDriveHardware(CASEDriveHardware&) = delete;
-  CASEDriveHardware(CASEDriveHardware&&) = delete;
+  CASEDriveHardware(CASEDriveHardware &) = delete;
+  CASEDriveHardware(CASEDriveHardware &&) = delete;
 
   void write(const ros::Time &time, const ros::Duration &period) override {
     auto command = ActuatorArrayCommand();
