@@ -141,13 +141,6 @@ install(PROGRAMS
     DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
-add_executable(gps_to_frame_server src/gps_to_frame_server.cpp)
-target_link_libraries(gps_to_frame_server ${catkin_LIBRARIES})
-add_dependencies(gps_to_frame_server ${PROJECT_NAME}_gencpp
-   ${${PROJECT_NAME}_EXPORTED_TARGETS}
-   ${catkin_EXPORTED_TARGETS}
-)
-
 #### UAVCAN Mapper Node
 add_executable(mapper_node
     src/mapper.cpp

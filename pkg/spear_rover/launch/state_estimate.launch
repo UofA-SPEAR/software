@@ -49,7 +49,4 @@
   <!-- <node pkg="tf" type="static_transform_publisher" name="base_link" args="0 0 0 x y z base base_link 100"/>
 
   <node pkg="tf" type="static_transform_publisher" name="odom" args="0 0 0 x y z base odom 100"/> -->
-
-  <node name="gps_to_frame_server" pkg="spear_rover" type="gps_to_frame_server" output="screen">
-  </node>
 </launch>
