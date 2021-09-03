@@ -67,7 +67,6 @@ fi
 repos=(
     gareth-cross/rviz_satellite:master
     UofA-SPEAR/nimbro_network:noetic
-    machinekoder/ar_track_alvar:melodic-devel
     UofA-SPEAR/canros:uavcan_v0
     UofA-SPEAR/uavcan_dsdl:master
     roboticsgroup/roboticsgroup_upatras_gazebo_plugins:master
