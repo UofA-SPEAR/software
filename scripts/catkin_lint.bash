@@ -9,7 +9,6 @@ python3 -m catkin_lint ~/ros/src \
   --skip-pkg rviz_satellite \
   --skip-pkg nimbro_cam_transport \
   --skip-pkg tf_throttle \
-  --skip-pkg flexbe_app \
   --skip-pkg ros_numpy \
   --skip-pkg roboticsgroup_upatras_gazebo_plugins \
   --skip-pkg ar_track_alvar \

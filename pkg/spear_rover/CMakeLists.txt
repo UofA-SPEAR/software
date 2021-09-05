@@ -9,6 +9,7 @@ add_compile_options(-std=c++14)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
     actionlib
+    canros
     controller_manager
     cv_bridge
     geometry_msgs
@@ -49,6 +50,7 @@ catkin_package(
 #  LIBRARIES rover2
   CATKIN_DEPENDS
   actionlib
+  canros
   controller_manager
   cv_bridge
   geometry_msgs
@@ -137,13 +139,6 @@ target_link_libraries(hardware_node
 install(PROGRAMS
     nodes/move_with_twist.py
     DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
-
-add_executable(gps_to_frame_server src/gps_to_frame_server.cpp)
-target_link_libraries(gps_to_frame_server ${catkin_LIBRARIES})
-add_dependencies(gps_to_frame_server ${PROJECT_NAME}_gencpp
-   ${${PROJECT_NAME}_EXPORTED_TARGETS}
-   ${catkin_EXPORTED_TARGETS}
 )
 
 #### UAVCAN Mapper Node

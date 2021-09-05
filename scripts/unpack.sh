@@ -66,9 +66,8 @@ fi
 
 repos=(
     gareth-cross/rviz_satellite:master
-    FlexBE/flexbe_app:master
-    eric-wieser/ros_numpy:master
     UofA-SPEAR/nimbro_network:noetic
+    UofA-SPEAR/canros:uavcan_v0
     UofA-SPEAR/uavcan_dsdl:master
     roboticsgroup/roboticsgroup_upatras_gazebo_plugins:master
     machinekoder/ar_track_alvar:noetic-devel
