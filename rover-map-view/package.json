@@ -7,7 +7,7 @@
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-pure-render": "^1.0.2",
-    "react-scripts": "^3.4.4",
+    "react-scripts": "^4.0.3",
     "roslib": "^1.1.0"
   },
   "scripts": {
