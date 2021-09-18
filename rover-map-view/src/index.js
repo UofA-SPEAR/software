@@ -1,16 +1,26 @@
-import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
-import GoogleMapReact from 'google-map-react';
-import markerImage from './m1.png';
-import ROSLib from 'roslib';
-import {API_KEY} from './key';
+import GoogleMapReact from "google-map-react";
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import ROSLib from "roslib";
+import { API_KEY } from "./key";
+import markerImage from "./m1.png";
 
 class Marker extends Component {
   render() {
     return (
-      <div style={{color: 'white', position: 'absolute', transform: 'translate(-50%, -100%)'}}>
+      <div
+        style={{
+          color: "white",
+          position: "absolute",
+          transform: "translate(-50%, -100%)",
+        }}
+      >
         {this.props.text}
-        <img src={markerImage} alt={this.props.text} style={{maxWidth: 50, maxHeight: 50, filter: 'invert(100%)'}}></img>
+        <img
+          src={markerImage}
+          alt={this.props.text}
+          style={{ maxWidth: 50, maxHeight: 50, filter: "invert(100%)" }}
+        ></img>
       </div>
     );
   }
@@ -19,11 +29,11 @@ class Marker extends Component {
 class SimpleMap extends Component {
   constructor(props) {
     super(props);
-    const ros = new ROSLib.Ros({url: 'ws://localhost:9090'});
+    const ros = new ROSLib.Ros({ url: "ws://localhost:9090" });
     const gpsListener = new ROSLib.Topic({
       ros: ros,
-      name: '/gps/fix',
-      messageType: 'sensor_msgs/NavSatFix',
+      name: "/gps/fix",
+      messageType: "sensor_msgs/NavSatFix",
     });
     this.state = {
       ros,
@@ -45,28 +55,37 @@ class SimpleMap extends Component {
     const key = API_KEY;
     const markerComponents = this.props.markers.map((marker) => {
       return (
-        <Marker key={marker.text} lat={marker.lat} lng={marker.lng} text={marker.text}></Marker>
+        <Marker
+          key={marker.text}
+          lat={marker.lat}
+          lng={marker.lng}
+          text={marker.text}
+        ></Marker>
       );
     });
     console.log(markerComponents);
     return (
-      <div style={{height: '100vh', width: '100%'}}>
+      <div style={{ height: "100vh", width: "100%" }}>
         <GoogleMapReact
-          bootstrapURLKeys={{key: key}}
+          bootstrapURLKeys={{ key: key }}
           defaultCenter={this.props.center}
           defaultZoom={this.props.zoom}
           yesIWantToUseGoogleMapApiInternals
-          onGoogleApiLoaded={({map, maps}) => this.handleApiLoaded(map, maps)}
+          onGoogleApiLoaded={({ map, maps }) => this.handleApiLoaded(map, maps)}
         >
           {markerComponents}
-          <Marker lat={this.state.roverLatitude} lng={this.state.roverLongitude} text="Rover"></Marker>
+          <Marker
+            lat={this.state.roverLatitude}
+            lng={this.state.roverLongitude}
+            text="Rover"
+          ></Marker>
         </GoogleMapReact>
       </div>
     );
   }
 
   handleApiLoaded(map, maps) {
-    map.setMapTypeId('hybrid');
+    map.setMapTypeId("hybrid");
   }
 }
 
@@ -86,36 +105,30 @@ SimpleMap.defaultProps = {
     {
       lat: 51.45304,
       lng: -112.71593,
-      text: 'Starting position',
+      text: "Starting position",
     },
     {
       lat: 51.45334,
       lng: -112.71619,
-      text: 'First flag',
+      text: "First flag",
     },
     {
       lat: 51.45372,
       lng: -112.71669,
-      text: 'Second flag',
+      text: "Second flag",
     },
     {
       lat: 51.45409,
       lng: -112.71646,
-      text: 'Third flag',
+      text: "Third flag",
     },
     {
-      lat: 51.45380,
+      lat: 51.4538,
       lng: -112.71619,
-      text: 'Astronaut',
+      text: "Astronaut",
     },
-
   ],
   zoom: 20,
 };
 
-ReactDOM.render(
-  (
-    <SimpleMap />
-  ),
-  document.getElementById('root'),
-);
+ReactDOM.render(<SimpleMap />, document.getElementById("root"));
