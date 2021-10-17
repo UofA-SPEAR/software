@@ -30,3 +30,14 @@ services:
     # Note that this results in interfaces being modified on the host machine.
     cap_add:
       - NET_ADMIN
+
+  spear-prod:
+    depends_on:
+      - spear
+    build:
+      context: submodules/zedcam
+      dockerfile: prod.Dockerfile
+    image: zedcam
+    container_name: zedcam-container
+    privileged: true
+    network_mode: host
