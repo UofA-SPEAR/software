@@ -4,3 +4,6 @@
 [submodule "spear_rover/uavcan_dsdl"]
 	path = submodules/uavcan_dsdl
 	url = https://github.com/UofA-SPEAR/uavcan_dsdl
+[submodule "submodules/zedcam"]
+	path = submodules/zedcam
+	url = git@github.com:mdepp/zedcam.git
