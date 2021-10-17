@@ -15,7 +15,7 @@
 
   <include file="$(find spear_rover)/launch/move_base.launch"/>
   <include file="$(find spear_rover)/launch/state_estimate.launch"/>
-  <include file="$(find spear_rover)/launch/visual_odom.launch" unless="$(arg simulation)"/>
+  <!-- <include file="$(find spear_rover)/launch/visual_odom.launch" unless="$(arg simulation)"/> -->
   <include file="$(find spear_simulator)/launch/visual_odom.launch" if="$(arg simulation)"/>
   <include file="$(find spear_rover)/launch/rtabmap_obstacles.launch"/>
 
